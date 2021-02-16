@@ -1,0 +1,3 @@
+task stage () {
+    dependsOn ':Project-Group-04-Backend:assemble'
+}
