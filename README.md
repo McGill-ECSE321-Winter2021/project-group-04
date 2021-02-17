@@ -6,9 +6,11 @@ project-group-04 created by GitHub Classroom
 | Name          | GitHub        | Major | Year |
 | ------------- |:-------------:|:-----:|-----:|  
 | Mohamad Dimassi | [mdimas2] | Computer Engineering |U2|
+| Artus Julliard | [artus15] | Computer Engineering |U1|
 
 
 [mdimas2]:https://github.com/mdimas2
+[artus15]:https://github.com/artus15
 
 ## Roles and Time Spent
 
