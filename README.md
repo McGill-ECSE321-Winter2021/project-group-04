@@ -6,18 +6,21 @@ project-group-04 created by GitHub Classroom
 | Name          | GitHub        | Major | Year |
 | ------------- |:-------------:|:-----:|-----:|  
 | Mohamad Dimassi | [mdimas2] | Computer Engineering |U2|
-| Artus Julliard | [artus15] | Computer Engineering |U1|
+| Artus Julliard  | [artus15] | Computer Engineering |U1|
+| Cesar Lahoud    | [Czarlhd] | Computer Engineering |U1|
 
 
 [mdimas2]:https://github.com/mdimas2
 [artus15]:https://github.com/artus15
+[Czarlhd]:https://github.com/Czarlhd
 
 ## Roles and Time Spent
 
 | Name          | Tasks        | Time in hours |
 | ------------- |:-------------:|-----:|  
 | Mohamad Dimassi | Use Case Diagrams, Persistence Layer, Build System | 15 |
-| Artus Julliard | Use Case Diagrams, Persistence Layer, Build System | 12 |
+| Artus Julliard  | Use Case Diagrams, Persistence Layer, Build System | 12 |
+| Cesar Lahoud    | Use Case Diagrans, Persistence Layer, Build System | 15 |
 
 Click [here] for meeting minutes!
 
