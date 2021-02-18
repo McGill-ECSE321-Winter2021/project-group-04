@@ -9,12 +9,14 @@ project-group-04 created by GitHub Classroom
 | Artus Julliard  | [artus15]      | Computer Engineering |  U1  |
 | Cesar Lahoud    | [Czarlhd]      | Computer Engineering |  U1  |
 | Yasmina Matta   | [yasminamatta] | Computer Engineering |  U1  |
+| Abrar Fahad     | [abrarfahad]   | Software Engineering |  U2  |
 
 
 [mdimas2]:https://github.com/mdimas2
 [artus15]:https://github.com/artus15
 [Czarlhd]:https://github.com/Czarlhd
 [yasminamatta]:https://github.com/yasminamatta
+[abrarfahad]: https://github.com/abrarfahad7
 
 ## Roles and Time Spent
 
@@ -24,6 +26,7 @@ project-group-04 created by GitHub Classroom
 | Artus Julliard  | Use Case Diagrams, Persistence Layer, Build System | 12 |
 | Cesar Lahoud    | Use Case Diagrans, Persistence Layer, Build System | 15 |
 | Yasmina Matta   | Use Case Diagrans, Persistence Layer, Build System | 13 |
+| Abrar Fahad     | Use Case Diagrams, Domain Model, Persistence Layer | 15 |
 
 Click [here] for meeting minutes!
 
