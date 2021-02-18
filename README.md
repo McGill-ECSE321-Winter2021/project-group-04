@@ -9,14 +9,14 @@ project-group-04 created by GitHub Classroom
 | Artus Julliard  | [artus15]      | Computer Engineering |  U1  |
 | Cesar Lahoud    | [Czarlhd]      | Computer Engineering |  U1  |
 | Yasmina Matta   | [yasminamatta] | Computer Engineering |  U1  |
-| Abrar Fahad Rahman Anik | [abrarfahad]   | Software Engineering |  U2  |
+| Abrar Fahad Rahman Anik | [abrarfahad7]   | Software Engineering |  U2  |
 
 
 [mdimas2]:https://github.com/mdimas2
 [artus15]:https://github.com/artus15
 [Czarlhd]:https://github.com/Czarlhd
 [yasminamatta]:https://github.com/yasminamatta
-[abrarfahad]: https://github.com/abrarfahad7
+[abrarfahad7]: https://github.com/abrarfahad7
 
 ## Roles and Time Spent
 
