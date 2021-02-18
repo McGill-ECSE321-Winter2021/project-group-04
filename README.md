@@ -9,7 +9,7 @@ project-group-04 created by GitHub Classroom
 | Artus Julliard  | [artus15]      | Computer Engineering |  U1  |
 | Cesar Lahoud    | [Czarlhd]      | Computer Engineering |  U1  |
 | Yasmina Matta   | [yasminamatta] | Computer Engineering |  U1  |
-| Abrar Fahad     | [abrarfahad]   | Software Engineering |  U2  |
+| Abrar Fahad Rahman Anik | [abrarfahad]   | Software Engineering |  U2  |
 
 
 [mdimas2]:https://github.com/mdimas2
