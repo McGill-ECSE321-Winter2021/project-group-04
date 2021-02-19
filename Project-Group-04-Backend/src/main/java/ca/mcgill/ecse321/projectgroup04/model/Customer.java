@@ -4,12 +4,11 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
-import javax.persistence.Id;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.Entity;
-import java.sql.Time;
-import java.sql.Date;
+import javax.persistence.Id;
+
 
 @Entity
 public class Customer extends User
@@ -21,6 +20,7 @@ public class Customer extends User
   private Car car;
   private List<Appointment> appointments;
 
+  @Id
   @Override
   public String getUserID(){
     return super.getUserID();
@@ -44,6 +44,7 @@ public class Customer extends User
   public void setReminders(List<Reminder> aReminders){
     this.reminders=aReminders;
   }
+  @OneToMany(cascade = {CascadeType.ALL})
   public List<Reminder> getReminders()
   {
     return this.reminders;
@@ -66,10 +67,12 @@ public class Customer extends User
     return this.car;
   }
 
+  
   public void setappointments (List<Appointment> aAppointments){
     this.appointments=aAppointments;
   }
 
+  @OneToMany(cascade = {CascadeType.ALL})
   public List<Appointment> getAppointments()
   {
     return this.appointments;
