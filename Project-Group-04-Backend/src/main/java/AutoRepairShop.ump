@@ -10,7 +10,6 @@ class User
 class Customer
 {
   isA User;
-  carID;
   1 -- * Reminder;
   1 -- 1 Profile customerProfile;
 }
@@ -158,6 +157,7 @@ class Receipt
 }
 class Profile
 {
+  String profileID
   addressLine;
   phoneNumber;
   firstName;
