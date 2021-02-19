@@ -1,0 +1,167 @@
+namespace ca.mcgill.ecse321.projectgroup04.model;
+
+class User
+{
+  abstract;
+  unique userID;
+  password;
+  }
+
+class Customer
+{
+  isA User;
+  1 -- * Reminder;
+  1 -- 1 Profile customerProfile;
+}
+
+class Owner
+{
+  isA User;
+}
+
+class AdministrativeAssistant
+{
+  isA User;
+}
+
+class Car
+{
+  carID;
+  model;
+  color;
+  year;
+  1 -- 1 Customer carOwner;
+}
+
+class Service
+{
+  string serviceID;
+  int price;
+  abstract;
+  unique name;
+  
+}
+
+class BookableService
+{
+  isA Service;
+  int duration;
+}
+
+class EmergencyService
+{
+  string location;
+  isA Service;
+}
+
+class Appointment
+{
+  string appointmentID;
+  * -- 1 Customer customer;
+  * -- 1 Service services;
+  * -- 1 GarageTechnician technician;
+  * -> 1 TimeSlot timeSlot;
+  1 -- 1 AppointmentReminder reminder;
+  1 -- 1 Receipt receipt;
+  }
+
+class BusinessHour
+{
+  enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
+  DayOfWeek dayOfWeek;
+  Time startTime; 
+Time endTime;
+  
+}
+
+class Business
+{
+  name;
+  address;
+  phoneNumber;
+  emailAddress;
+  
+   
+  0..1 -> * BusinessHour businessHours;
+  0..1 -> * TimeSlot regular;
+}
+
+class Technician
+{
+  string name;
+  string technicianID;
+  abstract;
+}
+
+class FieldTechnician
+{
+  isA Technician;
+}
+
+class GarageTechnician
+{
+  isA Technician;
+}
+
+class TimeSlot
+{
+  Time startTime; 
+Date startDate;
+Time endTime; 
+Date endDate;
+}
+
+class GarageSpot
+{
+  int spotNumber;
+  1 -- * TimeSlot spot;
+}
+
+class AutoRepairShop
+{
+  1 <@>- * User user;
+  1 <@>- * Business business;
+  1 <@>- * Appointment appointments;
+  1 <@>- * TimeSlot timeSlots;
+  1 <@>- * Service services;
+}
+
+
+
+
+
+
+class Reminder
+{
+  String reminderID;
+  Date date; 
+ Time time;
+ message;
+  abstract;
+}
+
+class AppointmentReminder
+{
+    isA Reminder;
+}
+
+class CheckupReminder
+{
+    isA Reminder;
+}
+
+class Receipt
+{
+  string receiptID;
+  double totalPrice;
+}
+class Profile
+{
+  String profileID
+  addressLine;
+  phoneNumber;
+  firstName;
+  lastName;
+  zipCode;
+  emailAddress;
+}

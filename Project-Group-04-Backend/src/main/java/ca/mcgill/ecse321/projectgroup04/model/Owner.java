@@ -5,15 +5,9 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
 
-// line 17 "model.ump"
-// line 212 "model.ump"
+
 public class Owner extends User
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
   //------------------------
   // CONSTRUCTOR
   //------------------------
@@ -23,13 +17,5 @@ public class Owner extends User
     super(aUserID, aPassword, aAutoRepairShop);
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public void delete()
-  {
-    super.delete();
-  }
 
 }

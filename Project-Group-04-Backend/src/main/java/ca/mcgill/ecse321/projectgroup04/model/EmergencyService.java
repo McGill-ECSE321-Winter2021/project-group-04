@@ -4,55 +4,71 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-// line 51 "model.ump"
-// line 250 "model.ump"
+@Entity
 public class EmergencyService extends Service
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //EmergencyService Attributes
   private String location;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public EmergencyService(String aServiceID, int aPrice, String aName, AutoRepairShop aAutoRepairShop, String aLocation)
+  public void setLocation(String aLocation)
   {
-    super(aServiceID, aPrice, aName, aAutoRepairShop);
-    location = aLocation;
+   this.location = aLocation;
   }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setLocation(String aLocation)
-  {
-    boolean wasSet = false;
-    location = aLocation;
-    wasSet = true;
-    return wasSet;
-  }
-
   public String getLocation()
   {
-    return location;
+    return this.location;
   }
 
-  public void delete()
-  {
-    super.delete();
+  @Override
+  public String getName() {
+    return super.getName();
   }
 
+  @Override
+  public void setName(String aName) {
+    super.setName(aName);
+  }
 
-  public String toString()
-  {
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "location" + "=" + (getLocation() != null ? !getLocation().equals(this)  ? getLocation().toString().replaceAll("  ","    ") : "this" : "null");
+  @Id
+  @Override
+  public String getServiceID() {
+    return super.getServiceID();
+  }
+
+  @Override
+  public void setServiceID(String aServiceID) {
+    super.setServiceID(aServiceID);
+  }
+
+  @Override
+  public void setPrice(int aPrice) {
+    super.setPrice(aPrice);
+  }
+
+  @Override
+  public int getPrice() {
+    return super.getPrice();
+  }
+
+  @Override
+  public List<Appointment> getAppointments() {
+    return super.getAppointments();
+  }
+
+  @Override
+  public void setAppointments(List<Appointment> appointments) {
+    super.setAppointments(appointments);
+  }
+
+  @Override
+  public AutoRepairShop getAutoRepairShop() {
+    return super.getAutoRepairShop();
+  }
+
+  @Override
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
+    super.setAutoRepairShop(aAutoRepairShop);
   }
 }
