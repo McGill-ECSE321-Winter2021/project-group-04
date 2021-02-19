@@ -47,10 +47,6 @@ public class BusinessHour
     return endTime;
   }
 
-  public void delete()
-  {}
-
-
   public String toString()
   {
     return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +

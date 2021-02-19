@@ -6,14 +6,12 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import java.sql.Date;
 import java.sql.Time;
 
-// line 134 "model.ump"
-// line 192 "model.ump"
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+
 public abstract class Reminder
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
   //Reminder Attributes
   private String reminderID;
@@ -24,113 +22,58 @@ public abstract class Reminder
   //Reminder Associations
   private Customer customer;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Reminder(String aReminderID, Date aDate, Time aTime, String aMessage, Customer aCustomer)
+  
+  public void setReminderID(String aReminderID)
   {
-    reminderID = aReminderID;
-    date = aDate;
-    time = aTime;
-    message = aMessage;
-    boolean didAddCustomer = setCustomer(aCustomer);
-    if (!didAddCustomer)
-    {
-      throw new RuntimeException("Unable to create reminder due to customer. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
+    this.reminderID=aReminderID;
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setReminderID(String aReminderID)
+  public void setDate(Date aDate)
   {
-    boolean wasSet = false;
-    reminderID = aReminderID;
-    wasSet = true;
-    return wasSet;
+    this.date=aDate;
   }
 
-  public boolean setDate(Date aDate)
+  public void setTime(Time aTime)
   {
-    boolean wasSet = false;
-    date = aDate;
-    wasSet = true;
-    return wasSet;
+    this.time=aTime;
   }
 
-  public boolean setTime(Time aTime)
+  public void setMessage(String aMessage)
   {
-    boolean wasSet = false;
-    time = aTime;
-    wasSet = true;
-    return wasSet;
+    this.message=aMessage;
   }
 
-  public boolean setMessage(String aMessage)
-  {
-    boolean wasSet = false;
-    message = aMessage;
-    wasSet = true;
-    return wasSet;
-  }
-
+  @Id
   public String getReminderID()
   {
-    return reminderID;
+    return this.reminderID;
   }
 
   public Date getDate()
   {
-    return date;
+    return this.date;
   }
 
   public Time getTime()
   {
-    return time;
+    return this.time;
   }
 
   public String getMessage()
   {
-    return message;
+    return this.message;
   }
-  /* Code from template association_GetOne */
+  
+  @ManyToOne
   public Customer getCustomer()
   {
     return customer;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setCustomer(Customer aCustomer)
+
+  public void setCustomer(Customer aCustomer)
   {
-    boolean wasSet = false;
-    if (aCustomer == null)
-    {
-      return wasSet;
-    }
-
-    Customer existingCustomer = customer;
-    customer = aCustomer;
-    if (existingCustomer != null && !existingCustomer.equals(aCustomer))
-    {
-      existingCustomer.removeReminder(this);
-    }
-    customer.addReminder(this);
-    wasSet = true;
-    return wasSet;
+    this.customer=aCustomer;
   }
-
-  public void delete()
-  {
-    Customer placeholderCustomer = customer;
-    this.customer = null;
-    if(placeholderCustomer != null)
-    {
-      placeholderCustomer.removeReminder(this);
-    }
-  }
-
 
   public String toString()
   {

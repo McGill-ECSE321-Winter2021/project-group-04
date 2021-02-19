@@ -5,6 +5,7 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.Entity;
@@ -90,7 +91,7 @@ public class Business
     return this.regular;
   }
 
- 
+  @ManyToOne
   public AutoRepairShop getAutoRepairShop()
   {
     return this.autoRepairShop;

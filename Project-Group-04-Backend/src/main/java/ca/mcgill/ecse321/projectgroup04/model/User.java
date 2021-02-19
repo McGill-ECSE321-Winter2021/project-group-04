@@ -3,7 +3,6 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-import java.util.*;
 import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
 import javax.persistence.Id;
