@@ -3,19 +3,21 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
+import javax.persistence.Id;
 import java.util.*;
 
 
 public class Owner extends User
 {
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
-  public Owner(String aUserID, String aPassword, AutoRepairShop aAutoRepairShop)
-  {
-    super(aUserID, aPassword, aAutoRepairShop);
+  @Id
+  @Override
+  public String getUserID() {
+    return super.getUserID();
   }
 
-
+  @Override
+  public String getPassword() {
+    return super.getPassword();
+  }
 }
