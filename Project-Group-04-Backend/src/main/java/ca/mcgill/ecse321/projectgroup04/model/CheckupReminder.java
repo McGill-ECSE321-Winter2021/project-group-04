@@ -3,21 +3,16 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-import java.sql.Date;
+import java.util.*;
+import javax.persistence.Id;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+import javax.persistence.Entity;
 import java.sql.Time;
+import java.sql.Date;
 
-// line 148 "model.ump"
-// line 202 "model.ump"
 public class CheckupReminder extends Reminder
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
   public CheckupReminder(String aReminderID, Date aDate, Time aTime, String aMessage, Customer aCustomer)
   {
