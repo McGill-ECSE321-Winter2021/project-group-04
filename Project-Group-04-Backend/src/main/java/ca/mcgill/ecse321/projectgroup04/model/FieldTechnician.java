@@ -1,33 +1,31 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
-
-
 package ca.mcgill.ecse321.projectgroup04.model;
-// line 96 "model.ump"
-// line 272 "model.ump"
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class FieldTechnician extends Technician
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public FieldTechnician(String aName, String aTechnicianID)
-  {
-    super(aName, aTechnicianID);
+  @Id
+  @Override
+  public String getTechnicianID() {
+    return super.getTechnicianID();
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public void delete()
-  {
-    super.delete();
+  @Override
+  public void setTechnicianID(String aTechnicianID) {
+    super.setTechnicianID(aTechnicianID);
   }
 
+  @Override
+  public String getName() {
+    return super.getName();
+  }
+
+  @Override
+  public void setName(String aName) {
+    super.setName(aName);
+  }
 }
