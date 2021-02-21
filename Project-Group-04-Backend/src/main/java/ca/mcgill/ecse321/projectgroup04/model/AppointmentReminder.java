@@ -5,57 +5,73 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.sql.Date; 
 import java.sql.Time;
+import javax.persistence.Id;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+import javax.persistence.Entity;
 
-// line 143 "model.ump"
-// line 197 "model.ump"
+@Entity
 public class AppointmentReminder extends Reminder
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
   //AppointmentReminder Associations
   private Appointment appointment;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public AppointmentReminder(String aReminderID, Date aDate, Time aTime, String aMessage, Customer aCustomer, Appointment aAppointment)
+  public void setReminderID(String aReminderID)
   {
-    super(aReminderID, aDate, aTime, aMessage, aCustomer);
-    if (aAppointment == null || aAppointment.getReminder() != null)
-    {
-      throw new RuntimeException("Unable to create AppointmentReminder due to aAppointment. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    appointment = aAppointment;
+    super.setReminderID(aReminderID);
   }
 
-  public AppointmentReminder(String aReminderID, Date aDate, Time aTime, String aMessage, Customer aCustomer, String aAppointmentIDForAppointment, Customer aCustomerForAppointment, Service aServicesForAppointment, GarageTechnician aTechnicianForAppointment, TimeSlot aTimeSlotForAppointment, Receipt aReceiptForAppointment, AutoRepairShop aAutoRepairShopForAppointment)
+  public void setDate(Date aDate)
   {
-    super(aReminderID, aDate, aTime, aMessage, aCustomer);
-    appointment = new Appointment(aAppointmentIDForAppointment, aCustomerForAppointment, aServicesForAppointment, aTechnicianForAppointment, aTimeSlotForAppointment, this, aReceiptForAppointment, aAutoRepairShopForAppointment);
+    super.setDate(aDate);
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetOne */
-  public Appointment getAppointment()
+  public void setTime(Time aTime)
   {
-    return appointment;
+    super.setTime(aTime);
   }
 
-  public void delete()
+  public void setMessage(String aMessage)
   {
-    Appointment existingAppointment = appointment;
-    appointment = null;
-    if (existingAppointment != null)
-    {
-      existingAppointment.delete();
-    }
-    super.delete();
+    super.setMessage(aMessage);
+  }
+
+  public void setAppointment(Appointment aAppointment){ this.appointment = aAppointment;}
+
+  @Id
+  public String getReminderID()
+  {
+    return super.getReminderID();
+  }
+
+  public Date getDate()
+  {
+    return super.getDate();
+  }
+
+  public Time getTime()
+  {
+    return super.getTime();
+  }
+
+  public String getMessage()
+  {
+    return super.getMessage();
+  }
+
+  @ManyToOne
+  public Customer getCustomer()
+  {
+    return super.getCustomer();
+  }
+
+  @OneToMany
+  public Appointment getAppointment() { return this.appointment; }
+
+  public void setCustomer(Customer aCustomer)
+  {
+    super.setCustomer(aCustomer);
   }
 
 }

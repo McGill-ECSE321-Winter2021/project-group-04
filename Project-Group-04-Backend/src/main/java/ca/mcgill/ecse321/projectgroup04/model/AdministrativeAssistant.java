@@ -4,33 +4,21 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
+import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+public class AdministrativeAssistant extends User {
 
-// line 22 "model.ump"
-// line 217 "model.ump"
-public class AdministrativeAssistant extends User
-{
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public AdministrativeAssistant(String aUserID, String aPassword, AutoRepairShop aAutoRepairShop)
-  {
-    super(aUserID, aPassword, aAutoRepairShop);
+  @Id
+  @Override
+  public String getUserID() {
+    return super.getUserID();
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public void delete()
-  {
-    super.delete();
+  @Override
+  public String getPassword() {
+    return super.getPassword();
   }
-
 }

@@ -4,51 +4,74 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
+import javax.persistence.Id;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+import javax.persistence.Entity;
 
-// line 45 "model.ump"
-// line 245 "model.ump"
 public class BookableService extends Service
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
   //BookableService Attributes
   private int duration;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public BookableService(String aServiceID, int aPrice, String aName, AutoRepairShop aAutoRepairShop, int aDuration)
-  {
-    super(aServiceID, aPrice, aName, aAutoRepairShop);
-    duration = aDuration;
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setDuration(int aDuration)
-  {
-    boolean wasSet = false;
-    duration = aDuration;
-    wasSet = true;
-    return wasSet;
-  }
+  public void setDuration(int aDuration) { this.duration = aDuration; }
 
   public int getDuration()
   {
-    return duration;
+    return this.duration;
   }
 
-  public void delete()
-  {
-    super.delete();
+  @Override
+  public String getName() {
+    return super.getName();
   }
 
+  @Override
+  public void setName(String aName) {
+    super.setName(aName);
+  }
+
+  @Id
+  @Override
+  public String getServiceID() {
+    return super.getServiceID();
+  }
+
+  @Override
+  public void setServiceID(String aServiceID) {
+    super.setServiceID(aServiceID);
+  }
+
+  @Override
+  public void setPrice(int aPrice) {
+    super.setPrice(aPrice);
+  }
+
+  @Override
+  public int getPrice() {
+    return super.getPrice();
+  }
+
+  @Override
+  public List<Appointment> getAppointments() {
+    return super.getAppointments();
+  }
+
+  @Override
+  public void setAppointments(List<Appointment> appointments) {
+    super.setAppointments(appointments);
+  }
+
+  @Override
+  public AutoRepairShop getAutoRepairShop() {
+    return super.getAutoRepairShop();
+  }
+
+  @Override
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
+    super.setAutoRepairShop(aAutoRepairShop);
+  }
 
   public String toString()
   {
