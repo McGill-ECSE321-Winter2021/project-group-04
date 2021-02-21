@@ -41,7 +41,7 @@ public abstract class Service {
     //Service Associations
     private List<Appointment> appointments;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = {CascadeType.ALL})
     public List<Appointment> getAppointments() {
         return this.appointments;
     }

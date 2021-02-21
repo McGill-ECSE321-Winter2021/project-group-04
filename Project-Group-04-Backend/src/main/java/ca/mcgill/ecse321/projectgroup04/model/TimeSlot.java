@@ -5,9 +5,7 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.sql.Time;
 import java.sql.Date;
-import javax.persistence.ManyToOne;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TimeSlot {
@@ -49,13 +47,13 @@ public class TimeSlot {
   @Id
   public String getTimeSlotID() { return this.timeSlotID; }
 
-  @ManyToOne(cascade = {CascadeType.ALL})
+  @ManyToOne
   public GarageSpot getGarageSpot()
   {
     return this.garageSpot;
   }
 
-  @OneToOne(cascade = {CascadeType.ALL})
+  @ManyToOne
   public AutoRepairShop getAutoRepairShop()
   {
     return this.autoRepairShop;

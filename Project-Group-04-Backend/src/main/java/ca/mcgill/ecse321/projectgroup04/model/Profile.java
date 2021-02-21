@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 
-// line 158 "model.ump"
-// line 299 "model.ump"
 @Entity
 public class Profile
 {

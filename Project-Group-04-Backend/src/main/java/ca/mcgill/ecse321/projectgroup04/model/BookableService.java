@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.Entity;
 
+@Entity
 public class BookableService extends Service
 {
 

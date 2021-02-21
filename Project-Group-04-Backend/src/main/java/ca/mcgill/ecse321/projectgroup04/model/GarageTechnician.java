@@ -10,38 +10,37 @@ import javax.persistence.OneToMany;
 import java.util.*;
 
 @Entity
-public class GarageTechnician extends Technician
-{
+public class GarageTechnician extends Technician {
 
-  private List<Appointment> appointments;
+    private List<Appointment> appointments;
 
-  @OneToMany(cascade = CascadeType.ALL)
-  public List<Appointment> getAppointments()
-  {
-    return appointments;
-  }
-  public void setAppointments(List<Appointment> appointments) {
-    this.appointments = appointments;
-  }
+    @OneToMany(cascade = {CascadeType.ALL})
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
 
-  @Id
-  @Override
-  public String getTechnicianID() {
-    return super.getTechnicianID();
-  }
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 
-  @Override
-  public void setTechnicianID(String aTechnicianID) {
-    super.setTechnicianID(aTechnicianID);
-  }
+    @Id
+    @Override
+    public String getTechnicianID() {
+        return super.getTechnicianID();
+    }
 
-  @Override
-  public String getName() {
-    return super.getName();
-  }
+    @Override
+    public void setTechnicianID(String aTechnicianID) {
+        super.setTechnicianID(aTechnicianID);
+    }
 
-  @Override
-  public void setName(String aName) {
-    super.setName(aName);
-  }
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public void setName(String aName) {
+        super.setName(aName);
+    }
 }

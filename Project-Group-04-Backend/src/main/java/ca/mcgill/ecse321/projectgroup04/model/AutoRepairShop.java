@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.Entity;
 
+@Entity
 public class AutoRepairShop {
 
   private List<User> user;

@@ -5,10 +5,7 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import java.sql.Date; 
 import java.sql.Time;
 import java.util.*;
-import javax.persistence.Id;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 public class Appointment {
@@ -25,7 +22,7 @@ public class Appointment {
   private AutoRepairShop autoRepairShop;
 
 
-  public void setAppointmentID(String aAppointmentID) { this.appointmentID = aAppointmentID }
+  public void setAppointmentID(String aAppointmentID) { this.appointmentID = aAppointmentID; }
 
   @Id
   public String getAppointmentID()
@@ -33,16 +30,16 @@ public class Appointment {
     return this.appointmentID;
   }
 
-  @OneToOne(cascade = {CascadeType.ALL})
+  @OneToOne
   public Customer getCustomer() { return this.customer; }
 
-  @ManyToOne(cascade = {CascadeType.ALL})
+  @ManyToOne
   public Service getServices()
   {
     return this.services;
   }
 
-  @ManyToOne(cascade = {CascadeType.ALL})
+  @ManyToOne
   public GarageTechnician getTechnician()
   {
     return this.technician;
@@ -54,19 +51,19 @@ public class Appointment {
     return this.timeSlot;
   }
 
-  @ManyToOne(cascade = {CascadeType.ALL})
+  @ManyToOne
   public AppointmentReminder getReminder()
   {
     return this.reminder;
   }
 
-  @ManyToOne(cascade = {CascadeType.ALL})
+  @ManyToOne
   public Receipt getReceipt()
   {
     return this.receipt;
   }
 
-  @OneToOne(cascade = {CascadeType.ALL})
+  @OneToOne
   public AutoRepairShop getAutoRepairShop()
   {
     return this.autoRepairShop;

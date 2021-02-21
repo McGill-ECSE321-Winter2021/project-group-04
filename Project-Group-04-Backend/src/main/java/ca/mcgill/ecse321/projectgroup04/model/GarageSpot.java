@@ -25,7 +25,7 @@ public class GarageSpot
 
   private List<TimeSlot> spot;
 
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = {CascadeType.ALL})
   public List<TimeSlot> getSpot()
   {
     return this.spot;

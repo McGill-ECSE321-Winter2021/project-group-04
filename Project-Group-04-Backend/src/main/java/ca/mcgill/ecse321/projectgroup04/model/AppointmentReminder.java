@@ -5,10 +5,7 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.sql.Date; 
 import java.sql.Time;
-import javax.persistence.Id;
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 public class AppointmentReminder extends Reminder
