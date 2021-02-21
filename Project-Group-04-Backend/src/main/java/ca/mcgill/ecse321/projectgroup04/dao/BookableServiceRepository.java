@@ -1,5 +1,5 @@
 package ca.mcgill.ecse321.projectgroup04.dao;
 
-public class AppointmentRepository {
+public class BookableService {
     
 }
