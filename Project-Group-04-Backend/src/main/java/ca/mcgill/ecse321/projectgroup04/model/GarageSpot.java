@@ -16,7 +16,7 @@ public class GarageSpot
 
   public void setSpotNumber(int aSpotNumber)
   {
-   this.spotNumber = spotNumber;
+   this.spotNumber = aSpotNumber;
   }
   public int getSpotNumber()
   {
