@@ -1,6 +1,3 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
-
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.CascadeType;
@@ -16,7 +13,7 @@ public class GarageSpot
 
   public void setSpotNumber(int aSpotNumber)
   {
-   this.spotNumber = spotNumber;
+   this.spotNumber = aSpotNumber;
   }
   public int getSpotNumber()
   {
