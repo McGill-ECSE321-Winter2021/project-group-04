@@ -4,15 +4,16 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
+import javax.persistence.Entity;
 
-// line 77 "model.ump"
-// line 260 "model.ump"
+
+@Entity
 public class Business
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
   //Business Attributes
   private String name;
@@ -26,288 +27,79 @@ public class Business
   private AutoRepairShop autoRepairShop;
 
   //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Business(String aName, String aAddress, String aPhoneNumber, String aEmailAddress, AutoRepairShop aAutoRepairShop)
-  {
-    name = aName;
-    address = aAddress;
-    phoneNumber = aPhoneNumber;
-    emailAddress = aEmailAddress;
-    businessHours = new ArrayList<BusinessHour>();
-    regular = new ArrayList<TimeSlot>();
-    boolean didAddAutoRepairShop = setAutoRepairShop(aAutoRepairShop);
-    if (!didAddAutoRepairShop)
-    {
-      throw new RuntimeException("Unable to create business due to autoRepairShop. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
-
-  //------------------------
   // INTERFACE
   //------------------------
 
-  public boolean setName(String aName)
+  public void setName(String aName)
   {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
+    this.name=aName;
   }
 
-  public boolean setAddress(String aAddress)
+  public void setAddress(String aAddress)
   {
-    boolean wasSet = false;
-    address = aAddress;
-    wasSet = true;
-    return wasSet;
+    this.address=aAddress;
   }
 
-  public boolean setPhoneNumber(String aPhoneNumber)
+  public void setPhoneNumber(String aPhoneNumber)
   {
-    boolean wasSet = false;
-    phoneNumber = aPhoneNumber;
-    wasSet = true;
-    return wasSet;
+    this.phoneNumber=aPhoneNumber;
   }
 
-  public boolean setEmailAddress(String aEmailAddress)
+  public void setEmailAddress(String aEmailAddress)
   {
-    boolean wasSet = false;
-    emailAddress = aEmailAddress;
-    wasSet = true;
-    return wasSet;
+    this.emailAddress=aEmailAddress;
   }
 
+  @Id
   public String getName()
   {
-    return name;
+    return this.name;
   }
 
   public String getAddress()
   {
-    return address;
+    return this.address;
   }
 
   public String getPhoneNumber()
   {
-    return phoneNumber;
+    return this.phoneNumber;
   }
 
   public String getEmailAddress()
   {
-    return emailAddress;
-  }
-  /* Code from template association_GetMany */
-  public BusinessHour getBusinessHour(int index)
-  {
-    BusinessHour aBusinessHour = businessHours.get(index);
-    return aBusinessHour;
+    return this.emailAddress;
   }
 
+  public void setBusinessHours(List<BusinessHour> aBusinessHours){
+    this.businessHours=aBusinessHours;
+  }
+
+  @OneToMany(cascade = {CascadeType.ALL})
   public List<BusinessHour> getBusinessHours()
   {
-    List<BusinessHour> newBusinessHours = Collections.unmodifiableList(businessHours);
-    return newBusinessHours;
+    return this.businessHours;
   }
 
-  public int numberOfBusinessHours()
-  {
-    int number = businessHours.size();
-    return number;
+  public void setReguar(List<TimeSlot> aRegular){
+    this.regular=aRegular;
   }
 
-  public boolean hasBusinessHours()
-  {
-    boolean has = businessHours.size() > 0;
-    return has;
-  }
-
-  public int indexOfBusinessHour(BusinessHour aBusinessHour)
-  {
-    int index = businessHours.indexOf(aBusinessHour);
-    return index;
-  }
-  /* Code from template association_GetMany */
-  public TimeSlot getRegular(int index)
-  {
-    TimeSlot aRegular = regular.get(index);
-    return aRegular;
-  }
-
+  @OneToMany(cascade = {CascadeType.ALL})
   public List<TimeSlot> getRegular()
   {
-    List<TimeSlot> newRegular = Collections.unmodifiableList(regular);
-    return newRegular;
+    return this.regular;
   }
 
-  public int numberOfRegular()
-  {
-    int number = regular.size();
-    return number;
-  }
-
-  public boolean hasRegular()
-  {
-    boolean has = regular.size() > 0;
-    return has;
-  }
-
-  public int indexOfRegular(TimeSlot aRegular)
-  {
-    int index = regular.indexOf(aRegular);
-    return index;
-  }
-  /* Code from template association_GetOne */
+  @ManyToOne
   public AutoRepairShop getAutoRepairShop()
   {
-    return autoRepairShop;
-  }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfBusinessHours()
-  {
-    return 0;
-  }
-  /* Code from template association_AddUnidirectionalMany */
-  public boolean addBusinessHour(BusinessHour aBusinessHour)
-  {
-    boolean wasAdded = false;
-    if (businessHours.contains(aBusinessHour)) { return false; }
-    businessHours.add(aBusinessHour);
-    wasAdded = true;
-    return wasAdded;
+    return this.autoRepairShop;
   }
 
-  public boolean removeBusinessHour(BusinessHour aBusinessHour)
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop)
   {
-    boolean wasRemoved = false;
-    if (businessHours.contains(aBusinessHour))
-    {
-      businessHours.remove(aBusinessHour);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addBusinessHourAt(BusinessHour aBusinessHour, int index)
-  {  
-    boolean wasAdded = false;
-    if(addBusinessHour(aBusinessHour))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfBusinessHours()) { index = numberOfBusinessHours() - 1; }
-      businessHours.remove(aBusinessHour);
-      businessHours.add(index, aBusinessHour);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveBusinessHourAt(BusinessHour aBusinessHour, int index)
-  {
-    boolean wasAdded = false;
-    if(businessHours.contains(aBusinessHour))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfBusinessHours()) { index = numberOfBusinessHours() - 1; }
-      businessHours.remove(aBusinessHour);
-      businessHours.add(index, aBusinessHour);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addBusinessHourAt(aBusinessHour, index);
-    }
-    return wasAdded;
-  }
-  /* Code from template association_MinimumNumberOfMethod */
-  public static int minimumNumberOfRegular()
-  {
-    return 0;
-  }
-  /* Code from template association_AddUnidirectionalMany */
-  public boolean addRegular(TimeSlot aRegular)
-  {
-    boolean wasAdded = false;
-    if (regular.contains(aRegular)) { return false; }
-    regular.add(aRegular);
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeRegular(TimeSlot aRegular)
-  {
-    boolean wasRemoved = false;
-    if (regular.contains(aRegular))
-    {
-      regular.remove(aRegular);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-  /* Code from template association_AddIndexControlFunctions */
-  public boolean addRegularAt(TimeSlot aRegular, int index)
-  {  
-    boolean wasAdded = false;
-    if(addRegular(aRegular))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRegular()) { index = numberOfRegular() - 1; }
-      regular.remove(aRegular);
-      regular.add(index, aRegular);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveRegularAt(TimeSlot aRegular, int index)
-  {
-    boolean wasAdded = false;
-    if(regular.contains(aRegular))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfRegular()) { index = numberOfRegular() - 1; }
-      regular.remove(aRegular);
-      regular.add(index, aRegular);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addRegularAt(aRegular, index);
-    }
-    return wasAdded;
-  }
-  /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShop(AutoRepairShop aAutoRepairShop)
-  {
-    boolean wasSet = false;
-    if (aAutoRepairShop == null)
-    {
-      return wasSet;
-    }
-
-    AutoRepairShop existingAutoRepairShop = autoRepairShop;
-    autoRepairShop = aAutoRepairShop;
-    if (existingAutoRepairShop != null && !existingAutoRepairShop.equals(aAutoRepairShop))
-    {
-      existingAutoRepairShop.removeBusiness(this);
-    }
-    autoRepairShop.addBusiness(this);
-    wasSet = true;
-    return wasSet;
-  }
-
-  public void delete()
-  {
-    businessHours.clear();
-    regular.clear();
-    AutoRepairShop placeholderAutoRepairShop = autoRepairShop;
-    this.autoRepairShop = null;
-    if(placeholderAutoRepairShop != null)
-    {
-      placeholderAutoRepairShop.removeBusiness(this);
-    }
+    this.autoRepairShop=aAutoRepairShop;
   }
 
 

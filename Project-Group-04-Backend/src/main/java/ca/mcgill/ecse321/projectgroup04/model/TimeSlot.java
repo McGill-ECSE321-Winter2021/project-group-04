@@ -5,168 +5,59 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.sql.Time;
 import java.sql.Date;
+import javax.persistence.*;
 
-// line 106 "model.ump"
-// line 282 "model.ump"
-public class TimeSlot
-{
+@Entity
+public class TimeSlot {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //TimeSlot Attributes
   private Time startTime;
   private Date startDate;
   private Time endTime;
   private Date endDate;
 
-  //TimeSlot Associations
   private GarageSpot garageSpot;
   private AutoRepairShop autoRepairShop;
+  private String timeSlotID;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+  public void setStartTime(Time aStartTime) { this.startTime = aStartTime; }
+  public void setEndtTime(Time aEndtTime) { this.endTime = aEndtTime; }
+  public void setStartDate(Date aStartDate) { this.startDate = aStartDate; }
+  public void setEndDate(Date aEndDate) { this.endDate = aEndDate; }
 
-  public TimeSlot(Time aStartTime, Date aStartDate, Time aEndTime, Date aEndDate, GarageSpot aGarageSpot, AutoRepairShop aAutoRepairShop)
-  {
-    startTime = aStartTime;
-    startDate = aStartDate;
-    endTime = aEndTime;
-    endDate = aEndDate;
-    boolean didAddGarageSpot = setGarageSpot(aGarageSpot);
-    if (!didAddGarageSpot)
-    {
-      throw new RuntimeException("Unable to create spot due to garageSpot. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    boolean didAddAutoRepairShop = setAutoRepairShop(aAutoRepairShop);
-    if (!didAddAutoRepairShop)
-    {
-      throw new RuntimeException("Unable to create timeSlot due to autoRepairShop. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-  }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setStartTime(Time aStartTime)
-  {
-    boolean wasSet = false;
-    startTime = aStartTime;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setStartDate(Date aStartDate)
-  {
-    boolean wasSet = false;
-    startDate = aStartDate;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setEndTime(Time aEndTime)
-  {
-    boolean wasSet = false;
-    endTime = aEndTime;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setEndDate(Date aEndDate)
-  {
-    boolean wasSet = false;
-    endDate = aEndDate;
-    wasSet = true;
-    return wasSet;
-  }
+  public void setGarageSpot(GarageSpot aGarageSpot) { this.garageSpot = aGarageSpot; }
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) { this.autoRepairShop = aAutoRepairShop; }
 
   public Time getStartTime()
   {
-    return startTime;
+    return this.startTime;
   }
 
   public Date getStartDate()
   {
-    return startDate;
+    return this.startDate;
   }
 
   public Time getEndTime()
   {
-    return endTime;
+    return this.endTime;
   }
 
-  public Date getEndDate()
-  {
-    return endDate;
-  }
-  /* Code from template association_GetOne */
+  public Date getEndDate() { return this.endDate; }
+
+  @Id
+  public String getTimeSlotID() { return this.timeSlotID; }
+
+  @ManyToOne
   public GarageSpot getGarageSpot()
   {
-    return garageSpot;
+    return this.garageSpot;
   }
-  /* Code from template association_GetOne */
+
+  @ManyToOne
   public AutoRepairShop getAutoRepairShop()
   {
-    return autoRepairShop;
+    return this.autoRepairShop;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setGarageSpot(GarageSpot aGarageSpot)
-  {
-    boolean wasSet = false;
-    if (aGarageSpot == null)
-    {
-      return wasSet;
-    }
-
-    GarageSpot existingGarageSpot = garageSpot;
-    garageSpot = aGarageSpot;
-    if (existingGarageSpot != null && !existingGarageSpot.equals(aGarageSpot))
-    {
-      existingGarageSpot.removeSpot(this);
-    }
-    garageSpot.addSpot(this);
-    wasSet = true;
-    return wasSet;
-  }
-  /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShop(AutoRepairShop aAutoRepairShop)
-  {
-    boolean wasSet = false;
-    if (aAutoRepairShop == null)
-    {
-      return wasSet;
-    }
-
-    AutoRepairShop existingAutoRepairShop = autoRepairShop;
-    autoRepairShop = aAutoRepairShop;
-    if (existingAutoRepairShop != null && !existingAutoRepairShop.equals(aAutoRepairShop))
-    {
-      existingAutoRepairShop.removeTimeSlot(this);
-    }
-    autoRepairShop.addTimeSlot(this);
-    wasSet = true;
-    return wasSet;
-  }
-
-  public void delete()
-  {
-    GarageSpot placeholderGarageSpot = garageSpot;
-    this.garageSpot = null;
-    if(placeholderGarageSpot != null)
-    {
-      placeholderGarageSpot.removeSpot(this);
-    }
-    AutoRepairShop placeholderAutoRepairShop = autoRepairShop;
-    this.autoRepairShop = null;
-    if(placeholderAutoRepairShop != null)
-    {
-      placeholderAutoRepairShop.removeTimeSlot(this);
-    }
-  }
-
 
   public String toString()
   {

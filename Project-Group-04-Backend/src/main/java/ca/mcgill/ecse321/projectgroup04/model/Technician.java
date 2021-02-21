@@ -4,61 +4,35 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-// line 89 "model.ump"
-// line 267 "model.ump"
+
+import javax.persistence.Id;
+
 public abstract class Technician
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //Technician Attributes
   private String name;
-  private String technicianID;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Technician(String aName, String aTechnicianID)
+  public void setName(String aName)
   {
-    name = aName;
-    technicianID = aTechnicianID;
+    this.name = aName;
   }
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setName(String aName)
-  {
-    boolean wasSet = false;
-    name = aName;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setTechnicianID(String aTechnicianID)
-  {
-    boolean wasSet = false;
-    technicianID = aTechnicianID;
-    wasSet = true;
-    return wasSet;
-  }
-
   public String getName()
   {
-    return name;
+    return this.name;
   }
 
+  private String technicianID;
+
+  public void setTechnicianID(String aTechnicianID)
+  {
+    this.technicianID = aTechnicianID;
+  }
+
+  @Id
   public String getTechnicianID()
   {
-    return technicianID;
+    return this.technicianID;
   }
-
-  public void delete()
-  {}
 
 
   public String toString()

@@ -4,55 +4,81 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
-// line 51 "model.ump"
-// line 250 "model.ump"
-public class EmergencyService extends Service
-{
+@Entity
+public class EmergencyService extends Service {
+    private String location;
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
+    public void setLocation(String aLocation) {
+        this.location = aLocation;
+    }
 
-  //EmergencyService Attributes
-  private String location;
+    public String getLocation() {
+        return this.location;
+    }
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
+    @Override
+    public String getName() {
+        return super.getName();
+    }
 
-  public EmergencyService(String aServiceID, int aPrice, String aName, AutoRepairShop aAutoRepairShop, String aLocation)
-  {
-    super(aServiceID, aPrice, aName, aAutoRepairShop);
-    location = aLocation;
-  }
+    @Override
+    public void setName(String aName) {
+        super.setName(aName);
+    }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
+    @Id
+    @Override
+    public String getServiceID() {
+        return super.getServiceID();
+    }
 
-  public boolean setLocation(String aLocation)
-  {
-    boolean wasSet = false;
-    location = aLocation;
-    wasSet = true;
-    return wasSet;
-  }
+    @Override
+    public void setServiceID(String aServiceID) {
+        super.setServiceID(aServiceID);
+    }
 
-  public String getLocation()
-  {
-    return location;
-  }
+    @Override
+    public void setPrice(int aPrice) {
+        super.setPrice(aPrice);
+    }
 
-  public void delete()
-  {
-    super.delete();
-  }
+    @Override
+    public int getPrice() {
+        return super.getPrice();
+    }
 
+    @Override
+    public List<Appointment> getAppointments() {
+        return super.getAppointments();
+    }
 
-  public String toString()
-  {
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "location" + "=" + (getLocation() != null ? !getLocation().equals(this)  ? getLocation().toString().replaceAll("  ","    ") : "this" : "null");
-  }
+    @Override
+    public void setAppointments(List<Appointment> appointments) {
+        super.setAppointments(appointments);
+    }
+
+    @Override
+    public AutoRepairShop getAutoRepairShop() {
+        return super.getAutoRepairShop();
+    }
+
+    @Override
+    public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
+        super.setAutoRepairShop(aAutoRepairShop);
+    }
+
+    private FieldTechnician technician;
+
+    @OneToOne
+    public FieldTechnician getTechnician() {
+        return this.technician;
+    }
+
+    public void setTechnician(FieldTechnician fieldTechnician) {
+        this.technician = fieldTechnician;
+    }
 }

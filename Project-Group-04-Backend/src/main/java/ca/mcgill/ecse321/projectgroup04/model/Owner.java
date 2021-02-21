@@ -3,33 +3,21 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-// line 17 "model.ump"
-// line 212 "model.ump"
+@Entity
 public class Owner extends User
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Owner(String aUserID, String aPassword, AutoRepairShop aAutoRepairShop)
-  {
-    super(aUserID, aPassword, aAutoRepairShop);
+  @Id
+  @Override
+  public String getUserID() {
+    return super.getUserID();
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public void delete()
-  {
-    super.delete();
+  @Override
+  public String getPassword() {
+    return super.getPassword();
   }
-
 }

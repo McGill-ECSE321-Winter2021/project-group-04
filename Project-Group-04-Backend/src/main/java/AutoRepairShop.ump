@@ -52,6 +52,7 @@ class EmergencyService
 {
   string location;
   isA Service;
+  1 -- 1 FieldTechnician technician;
 }
 
 class Appointment

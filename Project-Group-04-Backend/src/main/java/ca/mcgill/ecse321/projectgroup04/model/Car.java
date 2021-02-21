@@ -3,16 +3,12 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-import java.util.*;
+import javax.persistence.Id;
+import javax.persistence.Entity;
 
-// line 27 "model.ump"
-// line 234 "model.ump"
+@Entity
 public class Car
 {
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
   //Car Attributes
   private String carID;
@@ -21,70 +17,28 @@ public class Car
   private String year;
 
   //Car Associations
-  private Customer carOwner;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public Car(String aCarID, String aModel, String aColor, String aYear, Customer aCarOwner)
+  public void setCarID(String aCarID)
   {
-    carID = aCarID;
-    model = aModel;
-    color = aColor;
-    year = aYear;
-    if (aCarOwner == null || aCarOwner.getCar() != null)
-    {
-      throw new RuntimeException("Unable to create Car due to aCarOwner. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
-    carOwner = aCarOwner;
+    this.carID=aCarID;
   }
 
-  public Car(String aCarID, String aModel, String aColor, String aYear, String aUserIDForCarOwner, String aPasswordForCarOwner, AutoRepairShop aAutoRepairShopForCarOwner, String aCarIDForCarOwner, Profile aCustomerProfileForCarOwner)
+  public void setModel(String aModel)
   {
-    carID = aCarID;
-    model = aModel;
-    color = aColor;
-    year = aYear;
-    carOwner = new Customer(aUserIDForCarOwner, aPasswordForCarOwner, aAutoRepairShopForCarOwner, aCarIDForCarOwner, aCustomerProfileForCarOwner, this);
+    this.model=aModel;
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setCarID(String aCarID)
+  public void setColor(String aColor)
   {
-    boolean wasSet = false;
-    carID = aCarID;
-    wasSet = true;
-    return wasSet;
+    this.color=aColor;
   }
 
-  public boolean setModel(String aModel)
+  public void setYear(String aYear)
   {
-    boolean wasSet = false;
-    model = aModel;
-    wasSet = true;
-    return wasSet;
+    this.year=aYear;
   }
 
-  public boolean setColor(String aColor)
-  {
-    boolean wasSet = false;
-    color = aColor;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setYear(String aYear)
-  {
-    boolean wasSet = false;
-    year = aYear;
-    wasSet = true;
-    return wasSet;
-  }
-
+  @Id
   public String getCarID()
   {
     return carID;
@@ -104,30 +58,5 @@ public class Car
   {
     return year;
   }
-  /* Code from template association_GetOne */
-  public Customer getCarOwner()
-  {
-    return carOwner;
-  }
 
-  public void delete()
-  {
-    Customer existingCarOwner = carOwner;
-    carOwner = null;
-    if (existingCarOwner != null)
-    {
-      existingCarOwner.delete();
-    }
-  }
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "carID" + ":" + getCarID()+ "," +
-            "model" + ":" + getModel()+ "," +
-            "color" + ":" + getColor()+ "," +
-            "year" + ":" + getYear()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "carOwner = "+(getCarOwner()!=null?Integer.toHexString(System.identityHashCode(getCarOwner())):"null");
-  }
 }

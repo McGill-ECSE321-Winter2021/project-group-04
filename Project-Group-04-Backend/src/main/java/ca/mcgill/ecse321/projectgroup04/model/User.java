@@ -3,22 +3,13 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-import java.util.*;
+import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-// line 2 "model.ump"
-// line 222 "model.ump"
+@Entity
 public abstract class User
 {
-
-  //------------------------
-  // STATIC VARIABLES
-  //------------------------
-
-  private static Map<String, User> usersByUserID = new HashMap<String, User>();
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
   //User Attributes
   private String userID;
@@ -27,110 +18,38 @@ public abstract class User
   //User Associations
   private AutoRepairShop autoRepairShop;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
 
-  public User(String aUserID, String aPassword, AutoRepairShop aAutoRepairShop)
+  public void setUserID(String aUserID)
   {
-    password = aPassword;
-    if (!setUserID(aUserID))
-    {
-      throw new RuntimeException("Cannot create due to duplicate userID. See http://manual.umple.org?RE003ViolationofUniqueness.html");
-    }
-    boolean didAddAutoRepairShop = setAutoRepairShop(aAutoRepairShop);
-    if (!didAddAutoRepairShop)
-    {
-      throw new RuntimeException("Unable to create user due to autoRepairShop. See http://manual.umple.org?RE002ViolationofAssociationMultiplicity.html");
-    }
+    this.userID=aUserID;
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setUserID(String aUserID)
+  public void setPassword(String aPassword)
   {
-    boolean wasSet = false;
-    String anOldUserID = getUserID();
-    if (anOldUserID != null && anOldUserID.equals(aUserID)) {
-      return true;
-    }
-    if (hasWithUserID(aUserID)) {
-      return wasSet;
-    }
-    userID = aUserID;
-    wasSet = true;
-    if (anOldUserID != null) {
-      usersByUserID.remove(anOldUserID);
-    }
-    usersByUserID.put(aUserID, this);
-    return wasSet;
+    this.password=aPassword;
   }
 
-  public boolean setPassword(String aPassword)
-  {
-    boolean wasSet = false;
-    password = aPassword;
-    wasSet = true;
-    return wasSet;
-  }
-
+  @Id
   public String getUserID()
   {
     return userID;
-  }
-  /* Code from template attribute_GetUnique */
-  public static User getWithUserID(String aUserID)
-  {
-    return usersByUserID.get(aUserID);
-  }
-  /* Code from template attribute_HasUnique */
-  public static boolean hasWithUserID(String aUserID)
-  {
-    return getWithUserID(aUserID) != null;
   }
 
   public String getPassword()
   {
     return password;
   }
-  /* Code from template association_GetOne */
+  
+  @ManyToOne
   public AutoRepairShop getAutoRepairShop()
   {
     return autoRepairShop;
   }
-  /* Code from template association_SetOneToMany */
-  public boolean setAutoRepairShop(AutoRepairShop aAutoRepairShop)
+  
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop)
   {
-    boolean wasSet = false;
-    if (aAutoRepairShop == null)
-    {
-      return wasSet;
-    }
-
-    AutoRepairShop existingAutoRepairShop = autoRepairShop;
-    autoRepairShop = aAutoRepairShop;
-    if (existingAutoRepairShop != null && !existingAutoRepairShop.equals(aAutoRepairShop))
-    {
-      existingAutoRepairShop.removeUser(this);
-    }
-    autoRepairShop.addUser(this);
-    wasSet = true;
-    return wasSet;
+    this.autoRepairShop=aAutoRepairShop;
   }
-
-  public void delete()
-  {
-    usersByUserID.remove(getUserID());
-    AutoRepairShop placeholderAutoRepairShop = autoRepairShop;
-    this.autoRepairShop = null;
-    if(placeholderAutoRepairShop != null)
-    {
-      placeholderAutoRepairShop.removeUser(this);
-    }
-  }
-
 
   public String toString()
   {

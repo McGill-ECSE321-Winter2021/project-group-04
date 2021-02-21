@@ -3,65 +3,33 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
+import javax.persistence.Entity;
 import java.sql.Time;
 
-// line 68 "model.ump"
-// line 255 "model.ump"
+@Entity
 public class BusinessHour
 {
 
-  //------------------------
-  // ENUMERATIONS
-  //------------------------
-
   public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
-
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
 
   //BusinessHour Attributes
   private DayOfWeek dayOfWeek;
   private Time startTime;
   private Time endTime;
 
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public BusinessHour(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime)
+  public void setDayOfWeek(DayOfWeek aDayOfWeek)
   {
-    dayOfWeek = aDayOfWeek;
-    startTime = aStartTime;
-    endTime = aEndTime;
+    this.dayOfWeek=aDayOfWeek;
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public boolean setDayOfWeek(DayOfWeek aDayOfWeek)
+  public void setStartTime(Time aStartTime)
   {
-    boolean wasSet = false;
-    dayOfWeek = aDayOfWeek;
-    wasSet = true;
-    return wasSet;
+    this.startTime=aStartTime;
   }
 
-  public boolean setStartTime(Time aStartTime)
+  public void setEndTime(Time aEndTime)
   {
-    boolean wasSet = false;
-    startTime = aStartTime;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setEndTime(Time aEndTime)
-  {
-    boolean wasSet = false;
-    endTime = aEndTime;
-    wasSet = true;
-    return wasSet;
+    this.endTime=aEndTime;
   }
 
   public DayOfWeek getDayOfWeek()
@@ -78,10 +46,6 @@ public class BusinessHour
   {
     return endTime;
   }
-
-  public void delete()
-  {}
-
 
   public String toString()
   {

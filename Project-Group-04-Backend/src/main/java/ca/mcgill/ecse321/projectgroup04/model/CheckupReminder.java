@@ -3,34 +3,68 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-import java.sql.Date;
-import java.sql.Time;
 
-// line 148 "model.ump"
-// line 202 "model.ump"
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Entity;
+import java.sql.Time;
+import java.sql.Date;
+
+@Entity
 public class CheckupReminder extends Reminder
 {
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public CheckupReminder(String aReminderID, Date aDate, Time aTime, String aMessage, Customer aCustomer)
+  public void setReminderID(String aReminderID)
   {
-    super(aReminderID, aDate, aTime, aMessage, aCustomer);
+    super.setReminderID(aReminderID);
   }
 
-  //------------------------
-  // INTERFACE
-  //------------------------
-
-  public void delete()
+  public void setDate(Date aDate)
   {
-    super.delete();
+    super.setDate(aDate);
   }
+
+  public void setTime(Time aTime)
+  {
+    super.setTime(aTime);
+  }
+
+  public void setMessage(String aMessage)
+  {
+    super.setMessage(aMessage);
+  }
+
+  @Id
+  public String getReminderID()
+  {
+    return super.getReminderID();
+  }
+
+  public Date getDate()
+  {
+    return super.getDate();
+  }
+
+  public Time getTime()
+  {
+    return super.getTime();
+  }
+
+  public String getMessage()
+  {
+    return super.getMessage();
+  }
+  
+  @ManyToOne
+  public Customer getCustomer()
+  {
+    return super.getCustomer();
+  }
+
+  public void setCustomer(Customer aCustomer)
+  {
+    super.setCustomer(aCustomer);
+  }
+
 
 }
