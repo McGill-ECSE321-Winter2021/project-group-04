@@ -10,106 +10,88 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.Entity;
 
-
 @Entity
-public class Business
-{
+public class Business {
 
-  //Business Attributes
+  // Business Attributes
   private String name;
   private String address;
   private String phoneNumber;
   private String emailAddress;
 
-  //Business Associations
+  // Business Associations
   private List<BusinessHour> businessHours;
   private List<TimeSlot> regular;
   private AutoRepairShop autoRepairShop;
 
-  //------------------------
+  // ------------------------
   // INTERFACE
-  //------------------------
+  // ------------------------
 
-  public void setName(String aName)
-  {
-    this.name=aName;
+  public void setName(String aName) {
+    this.name = aName;
   }
 
-  public void setAddress(String aAddress)
-  {
-    this.address=aAddress;
+  public void setAddress(String aAddress) {
+    this.address = aAddress;
   }
 
-  public void setPhoneNumber(String aPhoneNumber)
-  {
-    this.phoneNumber=aPhoneNumber;
+  public void setPhoneNumber(String aPhoneNumber) {
+    this.phoneNumber = aPhoneNumber;
   }
 
-  public void setEmailAddress(String aEmailAddress)
-  {
-    this.emailAddress=aEmailAddress;
+  public void setEmailAddress(String aEmailAddress) {
+    this.emailAddress = aEmailAddress;
   }
 
   @Id
-  public String getName()
-  {
+  public String getName() {
     return this.name;
   }
 
-  public String getAddress()
-  {
+  public String getAddress() {
     return this.address;
   }
 
-  public String getPhoneNumber()
-  {
+  public String getPhoneNumber() {
     return this.phoneNumber;
   }
 
-  public String getEmailAddress()
-  {
+  public String getEmailAddress() {
     return this.emailAddress;
   }
 
-  public void setBusinessHours(List<BusinessHour> aBusinessHours){
-    this.businessHours=aBusinessHours;
+  public void setBusinessHours(List<BusinessHour> aBusinessHours) {
+    this.businessHours = aBusinessHours;
   }
 
-  @OneToMany(cascade = {CascadeType.ALL})
-  public List<BusinessHour> getBusinessHours()
-  {
+  @OneToMany(cascade = { CascadeType.ALL })
+  public List<BusinessHour> getBusinessHours() {
     return this.businessHours;
   }
 
-  public void setReguar(List<TimeSlot> aRegular){
-    this.regular=aRegular;
+  public void setRegular(List<TimeSlot> aRegular) {
+    this.regular = aRegular;
   }
 
-  @OneToMany(cascade = {CascadeType.ALL})
-  public List<TimeSlot> getRegular()
-  {
+  @OneToMany(cascade = { CascadeType.ALL })
+  public List<TimeSlot> getRegular() {
     return this.regular;
   }
 
   @ManyToOne
-  public AutoRepairShop getAutoRepairShop()
-  {
+  public AutoRepairShop getAutoRepairShop() {
     return this.autoRepairShop;
   }
 
-  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop)
-  {
-    this.autoRepairShop=aAutoRepairShop;
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
+    this.autoRepairShop = aAutoRepairShop;
   }
 
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "name" + ":" + getName()+ "," +
-            "address" + ":" + getAddress()+ "," +
-            "phoneNumber" + ":" + getPhoneNumber()+ "," +
-            "emailAddress" + ":" + getEmailAddress()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShop = "+(getAutoRepairShop()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShop())):"null");
+  public String toString() {
+    return super.toString() + "[" + "name" + ":" + getName() + "," + "address" + ":" + getAddress() + ","
+        + "phoneNumber" + ":" + getPhoneNumber() + "," + "emailAddress" + ":" + getEmailAddress() + "]"
+        + System.getProperties().getProperty("line.separator") + "  " + "autoRepairShop = "
+        + (getAutoRepairShop() != null ? Integer.toHexString(System.identityHashCode(getAutoRepairShop())) : "null");
   }
 }
