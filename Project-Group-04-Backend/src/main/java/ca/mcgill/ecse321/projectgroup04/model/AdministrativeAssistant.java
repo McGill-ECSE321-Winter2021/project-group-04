@@ -19,4 +19,23 @@ public class AdministrativeAssistant extends User {
   public String getPassword() {
     return super.getPassword();
   }
+  
+  @Override
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
+	super.setAutoRepairShop(aAutoRepairShop); 
+  }
+  
+  @Override
+  public AutoRepairShop getAutoRepairShop() {
+	  return super.getAutoRepairShop();
+  }
+  @Override
+  public void setUserID(String userID) {
+	  super.setUserID(userID);
+  }
+  @Override
+  public void setPassword(String aPassword) {
+	  super.setPassword(aPassword);
+  }
+  
 }

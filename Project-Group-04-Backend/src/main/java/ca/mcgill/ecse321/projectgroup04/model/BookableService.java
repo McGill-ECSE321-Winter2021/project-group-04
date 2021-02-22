@@ -2,6 +2,9 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 @Entity
@@ -49,7 +52,9 @@ public class BookableService extends Service
     return super.getPrice();
   }
 
+  
   @Override
+  @OneToMany(cascade = {CascadeType.ALL})
   public List<Appointment> getAppointments() {
     return super.getAppointments();
   }

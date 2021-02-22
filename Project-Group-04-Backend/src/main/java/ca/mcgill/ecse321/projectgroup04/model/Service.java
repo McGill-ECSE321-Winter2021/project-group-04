@@ -56,8 +56,7 @@ public abstract class Service {
     public AutoRepairShop getAutoRepairShop() {
         return this.autoRepairShop;
     }
-
-    /* Code from template association_SetOneToMany */
+    
     public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
       this.autoRepairShop = aAutoRepairShop;
     }

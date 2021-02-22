@@ -181,7 +181,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
-        appointment.setServices(service);
+        appointment.setBookableServices(service);
         appointment.setTechnician(technician);
         appointment.setTimeSlot(ts);
         appointment.setAppointmentID(appointmentID);
@@ -195,7 +195,7 @@ public class TestAutoRepairShopSystemPersistence {
         autoRepairShopSystemRepository.save(auto);
 
         customer.setReminders(reminders);
-        customer.setappointments(appointments);
+        customer.setAppointments(appointments);
         customer.setAutoRepairShop(auto);
 
         customerRepository.save(customer);
@@ -270,7 +270,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
         times.add(ts);
-        garageSpot.setSpot(times);
+        garageSpot.setTimeSlot(times);
 
         ts.setGarageSpot(garageSpot);
 
@@ -294,7 +294,7 @@ public class TestAutoRepairShopSystemPersistence {
         String appointmentID = "a12";
 
         String serviceID = "12345";
-        Service service = new BookableService();
+        BookableService service = new BookableService();
         service.setServiceID(serviceID);
 
         String technicianID = "987";
@@ -334,7 +334,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
-        appointment.setServices(service);
+        appointment.setBookableServices(service);
         appointment.setTechnician(technician);
         appointment.setTimeSlot(ts);
         appointment.setAppointmentID(appointmentID);
@@ -347,7 +347,7 @@ public class TestAutoRepairShopSystemPersistence {
         assertNotNull(appointment);
         assertEquals(appointmentID, appointment.getAppointmentID());
         assertEquals(customer, appointment.getCustomer());
-        assertEquals(service, appointment.getServices());
+        assertEquals(service, appointment.getBookableServices());
         assertEquals(technician, appointment.getTechnician());
         assertEquals(ts, appointment.getTimeSlot());
         assertEquals(receipt, appointment.getReceipt());
@@ -366,7 +366,7 @@ public class TestAutoRepairShopSystemPersistence {
         Date date = Date.valueOf("20-03-18");
         String message = "It is tomorrow";
 
-        Service service = new BookableService();
+        BookableService service = new BookableService();
         service.setName("oil change");
         service.setPrice(20);
         service.setServiceID("9876");
@@ -393,7 +393,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
-        appointment.setServices(service);
+        appointment.setBookableServices(service);
         appointment.setReceipt(receipt);
         appointment.setTechnician(technician);
         appointment.setTimeSlot(ts);
@@ -508,7 +508,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
-        appointment.setServices(service);
+        appointment.setBookableServices(service);
         appointment.setTechnician(technician);
         appointment.setTimeSlot(ts);
         appointment.setAppointmentID(appointmentID);
@@ -586,11 +586,30 @@ public class TestAutoRepairShopSystemPersistence {
     @Test
     public void testPersistAndLoadReminder() {
 
+        String id = "TestUser";
+        String password = "TestPAssword";
+        Customer customer = new Customer();
+        customer.setUserID(id);
+        customer.setPassword(password);
+
         String receiptID = "r1";
         Double totalPrice = 100.0;
         Receipt receipt = new Receipt();
         receipt.setReceiptID(receiptID);
         receipt.setTotalPrice(totalPrice);
+        receiptRepository.save(receipt);
+
+        String appReminderID = "000";
+        Date appReminderDate = Date.valueOf("20-03-18");
+        Time appReminderTime = Time.valueOf("12:00");
+        String appReminderMessage = "It is tomorrow";
+        AppointmentReminder ar = new AppointmentReminder();
+        ar.setCustomer(customer);
+        ar.setReminderID(appReminderID);
+        ar.setDate(appReminderDate);
+        ar.setTime(appReminderTime);
+        ar.setMessage(appReminderMessage);
+        appointmentReminderRepository.save(ar);
 
         String appointmentID = "a1";
         Appointment appointment = new Appointment();

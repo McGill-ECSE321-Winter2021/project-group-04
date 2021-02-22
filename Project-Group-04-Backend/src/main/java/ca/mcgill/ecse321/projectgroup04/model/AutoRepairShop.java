@@ -21,12 +21,12 @@ public class AutoRepairShop {
 
   public void setUser(List<User> aUser){this.user=aUser; }
 
-  private List<Business> business;
+  private Business business;
 
-  @OneToMany(cascade = {CascadeType.ALL})
-  public List<Business> getBusiness() { return this.business; }
+  @OneToOne
+  public Business getBusiness() { return this.business; }
 
-  public void setBusiness(List<Business> aBusiness){this.business=aBusiness; }
+  public void setBusiness(Business aBusiness){this.business=aBusiness; }
 
   private List<Appointment> appointments;
 
