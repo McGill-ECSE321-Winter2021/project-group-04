@@ -20,7 +20,7 @@ public class TimeSlot {
   private String timeSlotID;
 
   public void setStartTime(Time aStartTime) { this.startTime = aStartTime; }
-  public void setEndtTime(Time aEndtTime) { this.endTime = aEndtTime; }
+  public void setEndTime(Time aEndtTime) { this.endTime = aEndtTime; }
   public void setStartDate(Date aStartDate) { this.startDate = aStartDate; }
   public void setEndDate(Date aEndDate) { this.endDate = aEndDate; }
 
