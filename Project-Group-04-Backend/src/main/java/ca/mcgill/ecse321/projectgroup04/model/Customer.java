@@ -40,6 +40,16 @@ public class Customer extends User {
     return super.getPassword();
   }
 
+  @Override
+  public AutoRepairShop getAutoRepairShop() {
+    return super.getAutoRepairShop();
+  }
+
+  @Override
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
+    super.setAutoRepairShop(aAutoRepairShop);
+  }
+
   public void setReminders(List<Reminder> aReminders) {
     this.reminders = aReminders;
   }
@@ -53,6 +63,7 @@ public class Customer extends User {
     this.customerProfile = aCustomerProfile;
   }
 
+  @OneToOne
   public Profile getCustomerProfile() {
     return this.customerProfile;
   }
@@ -61,6 +72,7 @@ public class Customer extends User {
     this.car = aCar;
   }
 
+  @OneToOne
   public Car getCar() {
     return this.car;
   }

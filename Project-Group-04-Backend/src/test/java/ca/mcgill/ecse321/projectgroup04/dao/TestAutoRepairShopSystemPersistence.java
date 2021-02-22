@@ -56,6 +56,16 @@ public class TestAutoRepairShopSystemPersistence {
     private ReminderRepository reminderRepository;
     @Autowired
     private ServiceRepository serviceRepository;
+    @Autowired
+    private AutoRepairShopSystemRepository autoRepairShopSystemRepository;
+    // @Autowired
+    // private EmergencyServiceRepository emergencyServiceRepository;
+    // @Autowired
+    // private FieldTechRepository fieldTechRepository;
+    // @Autowired
+    // private GarageSpotRepository garageSpotRepository;
+    // @Autowired
+    // private OwnerRepository ownerRepository;
 
     @AfterEach
     public void clearDatabase() {
@@ -145,7 +155,7 @@ public class TestAutoRepairShopSystemPersistence {
         Date endDate = Date.valueOf("2021-03-19");
         TimeSlot ts = new TimeSlot();
         ts.setStartTime(startTime);
-        ts.setEndtTime(endTime);
+        ts.setEndTime(endTime);
         ts.setStartDate(startDate);
         ts.setEndDate(endDate);
         timeSlotRepository.save(ts);
@@ -181,8 +191,12 @@ public class TestAutoRepairShopSystemPersistence {
         ArrayList<Appointment> appointments = new ArrayList<Appointment>();
         appointments.add(appointment);
 
+        AutoRepairShop auto = new AutoRepairShop();
+        autoRepairShopSystemRepository.save(auto);
+
         customer.setReminders(reminders);
         customer.setappointments(appointments);
+        customer.setAutoRepairShop(auto);
 
         customerRepository.save(customer);
 
@@ -245,7 +259,7 @@ public class TestAutoRepairShopSystemPersistence {
         String timeSlotID = "testIdts";
         TimeSlot ts = new TimeSlot();
         ts.setStartTime(startTime);
-        ts.setEndtTime(endTime);
+        ts.setEndTime(endTime);
         ts.setStartDate(startDate);
         ts.setEndDate(endDate);
         ts.setTimeSlotID(timeSlotID);
@@ -297,7 +311,7 @@ public class TestAutoRepairShopSystemPersistence {
         Date endDate = Date.valueOf("2021-03-19");
         TimeSlot ts = new TimeSlot();
         ts.setStartTime(startTime);
-        ts.setEndtTime(endTime);
+        ts.setEndTime(endTime);
         ts.setStartDate(startDate);
         ts.setEndDate(endDate);
 
@@ -373,7 +387,7 @@ public class TestAutoRepairShopSystemPersistence {
         Date endDate = Date.valueOf("2021-03-19");
         TimeSlot ts = new TimeSlot();
         ts.setStartTime(startTime);
-        ts.setEndtTime(endTime);
+        ts.setEndTime(endTime);
         ts.setStartDate(startDate);
         ts.setEndDate(endDate);
 
@@ -468,7 +482,7 @@ public class TestAutoRepairShopSystemPersistence {
         Date endDate = Date.valueOf("2021-03-19");
         TimeSlot ts = new TimeSlot();
         ts.setStartTime(startTime);
-        ts.setEndtTime(endTime);
+        ts.setEndTime(endTime);
         ts.setStartDate(startDate);
         ts.setEndDate(endDate);
         timeSlotRepository.save(ts);
