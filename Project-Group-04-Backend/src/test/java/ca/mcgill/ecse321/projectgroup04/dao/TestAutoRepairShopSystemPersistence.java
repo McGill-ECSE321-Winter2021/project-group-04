@@ -523,6 +523,46 @@ public class TestAutoRepairShopSystemPersistence {
     
     @Test
     public void testPersistAndLoadProfile() {
+    	String profileID = "p1";
+    	String address ="this is the test adress";
+    	String phoneNumber = "438-978-6824";
+    	String firstName="FirstName";
+    	String lastName="LastName";
+    	String zipCode="H2X2B5";
+    	String email="thisis@test.com";
+    	Profile profile = new Profile();
+    	profile.setAddressLine(address);
+    	profile.setEmailAddress(email);
+    	profile.setFirstName(firstName);
+    	profile.setLastName(lastName);
+    	profile.setPhoneNumber(phoneNumber);
+    	profile.setZipCode(zipCode);
+    	profile.setProfileID(profileID);
+    	    	
+    	String id = "TestUser";
+        String password = "TestPassword";
+        Customer customer = new Customer();
+        customer.setUserID(id);
+        customer.setPassword(password);
+        
+        customer.setCustomerProfile(profile);
+        profile.setCustomer(customer);
+        
+        profileRepository.save(profile);
+        customerRepository.save(customer);
+        
+        profile=null;
+        profile=profileRepository.findProfileByProfileID(profileID);
+        
+        assertNotNull(profile);
+        assertEquals(profileID, profile.getProfileID());
+        assertEquals(address,profile.getAddressLine());
+        assertEquals(phoneNumber,profile.getPhoneNumber());
+        assertEquals(firstName,profile.getFirstName());        
+        assertEquals(lastName,profile.getLastName());
+        assertEquals(zipCode,profile.getZipCode());
+        assertEquals(email,profile.getEmailAddress());
+        assertEquals(customer, profile.getCustomer());
     	
     }
     @Test 

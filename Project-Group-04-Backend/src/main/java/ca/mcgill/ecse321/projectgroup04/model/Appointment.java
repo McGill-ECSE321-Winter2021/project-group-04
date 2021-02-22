@@ -45,7 +45,7 @@ public class Appointment {
     return this.technician;
   }
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToOne
   public TimeSlot getTimeSlot() {
     return this.timeSlot;
   }

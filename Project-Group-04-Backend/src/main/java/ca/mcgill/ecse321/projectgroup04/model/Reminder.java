@@ -5,11 +5,11 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.sql.Date;
 import java.sql.Time;
-
+import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-
+@Entity
 public abstract class Reminder
 {
 
