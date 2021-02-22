@@ -7,6 +7,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,14 @@ public class TestAutoRepairShopSystemPersistence {
     private CheckupReminderRepository checkupReminderRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
+    @Autowired
+    private ReceiptRepository receiptRepository;
+    @Autowired
+    private ReminderRepository reminderRepository;
+    @Autowired
+    private ServiceRepository serviceRepository;
 
     @AfterEach
 	public void clearDatabase() {
@@ -59,6 +68,10 @@ public class TestAutoRepairShopSystemPersistence {
         carRepository.deleteAll();
         customerRepository.deleteAll();
         checkupReminderRepository.deleteAll();
+        customerRepository.deleteAll();
+        profileRepository.deleteAll();
+        reminderRepository.deleteAll();
+        serviceRepository.deleteAll();
     }
     @Test
     public void testPersistAndLoadAdministrativeAssistant(){
@@ -109,7 +122,7 @@ public class TestAutoRepairShopSystemPersistence {
          ts.setEndtTime(endTime);
          ts.setStartDate(startDate);
          ts.setEndDate(endDate);
-         ts.setTimeSlotId(timeSlotID);
+         ts.setTimeSlotID(timeSlotID);
 
          int GSnum = 123;
          GarageSpot garageSpot = new GarageSpot();
@@ -129,10 +142,10 @@ public class TestAutoRepairShopSystemPersistence {
 
         assertNotNull(ts);
         assertEquals(startTime, ts.getStartTime());
-        assertEquals(endTime, ts.getEndtTime());
+        assertEquals(endTime, ts.getEndTime());
         assertEquals(startDate, ts.getStartDate());
         assertEquals(endDate, ts.getEndDate());
-        assertEquals(timeSlotID, ts.getTimeSlotId());
+        assertEquals(timeSlotID, ts.getTimeSlotID());
         assertEquals(garageSpot, ts.getGarageSpot());
     }
 
@@ -367,7 +380,7 @@ public class TestAutoRepairShopSystemPersistence {
         ArrayList<Appointment> appointments = new ArrayList<Appointment>();
         appointments.add(appointment);
 
-        technician.setappointments(appointments);
+        technician.setAppointments(appointments);
 
         garageTechnicianRepository.save(technician);
 
@@ -506,6 +519,23 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(profile.getProfileID(), customer.getCustomerProfile().getProfileID());
         assertEquals(appointments, customer.getAppointments());
         assertEquals(reminders, customer.getReminders());
+    }
+    
+    @Test
+    public void testPersistAndLoadProfile() {
+    	
+    }
+    @Test 
+    public void testPersistAndLoadReceipt() {
+    	
+    }
+    @Test 
+    public void testPersistAndLoadReminder() {
+    	
+    }
+    @Test 
+    public void testPersistAndLoadService() {
+    	
     }
 
 }
