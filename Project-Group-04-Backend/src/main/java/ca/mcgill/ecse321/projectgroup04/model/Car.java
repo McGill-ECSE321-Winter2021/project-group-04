@@ -4,6 +4,7 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 
 @Entity
@@ -16,7 +17,9 @@ public class Car
   private String color;
   private String year;
 
+
   //Car Associations
+  private Customer owner;
 
   public void setCarID(String aCarID)
   {
@@ -36,6 +39,10 @@ public class Car
   public void setYear(String aYear)
   {
     this.year=aYear;
+  }
+  
+  public void setOwner(Customer aOwner) {
+	  owner=aOwner;
   }
 
   @Id
@@ -57,6 +64,10 @@ public class Car
   public String getYear()
   {
     return year;
+  }
+  @OneToOne
+  public Customer getOwner() {
+	  return owner;
   }
 
 }
