@@ -139,7 +139,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         ts = null;
 
-        ts = timeSlotRepository.findTimeSlotByID(timeSlotID);
+        ts = timeSlotRepository.findTimeSlotByTimeSlotID(timeSlotID);
 
         assertNotNull(ts);
         assertEquals(startTime, ts.getStartTime());
@@ -387,7 +387,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         technician = null;
 
-        technician = garageTechnicianRepository.findGarageTechnicianByID(technicianID);
+        technician = garageTechnicianRepository.findGarageTechnicianByTechnicianID(technicianID);
 
         assertNotNull(technician);
         assertEquals(technicianID, technician.getTechnicianID());

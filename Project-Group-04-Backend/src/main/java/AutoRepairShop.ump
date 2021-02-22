@@ -68,6 +68,7 @@ class Appointment
 
 class BusinessHour
 {
+String hourID;
   enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
   DayOfWeek dayOfWeek;
   Time startTime; 
@@ -106,6 +107,7 @@ class GarageTechnician
 
 class TimeSlot
 {
+String timeSlotID;
   Time startTime; 
 Date startDate;
 Time endTime; 

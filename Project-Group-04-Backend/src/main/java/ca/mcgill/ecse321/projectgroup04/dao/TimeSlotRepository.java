@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup04.model.*;
 
 public interface TimeSlotRepository extends CrudRepository<TimeSlot, String> {
-    TimeSlot findTimeSlotByID(String timeSlotID);
+    TimeSlot findTimeSlotByTimeSlotID(String timeSlotID);
 }
