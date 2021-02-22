@@ -26,6 +26,7 @@ public class TimeSlot {
 
   public void setGarageSpot(GarageSpot aGarageSpot) { this.garageSpot = aGarageSpot; }
   public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) { this.autoRepairShop = aAutoRepairShop; }
+  public void setTimeSlotID(String aTimeSlotID){this.timeSlotID = aTimeSlotID;}
 
   public Time getStartTime()
   {
