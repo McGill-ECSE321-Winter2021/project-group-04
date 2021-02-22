@@ -1,4 +1,5 @@
 package ca.mcgill.ecse321.projectgroup04.dao;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -126,7 +127,7 @@ public class TestAutoRepairShopSystemPersistence {
 
          int GSnum = 123;
          GarageSpot garageSpot = new GarageSpot();
-        garageSpot.setSpotNumber(GSnum);
+         garageSpot.setSpotNumber(GSnum);
 
          ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
          times.add(ts);
@@ -520,22 +521,20 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(appointments, customer.getAppointments());
         assertEquals(reminders, customer.getReminders());
     }
-    
     @Test
     public void testPersistAndLoadProfile() {
-    	
+
     }
     @Test 
     public void testPersistAndLoadReceipt() {
-    	
+
     }
     @Test 
     public void testPersistAndLoadReminder() {
-    	
+
     }
     @Test 
     public void testPersistAndLoadService() {
-    	
-    }
 
+    }
 }
