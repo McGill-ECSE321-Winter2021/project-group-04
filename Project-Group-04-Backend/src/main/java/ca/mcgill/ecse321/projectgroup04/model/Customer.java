@@ -6,15 +6,14 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-
 @Entity
-public class Customer extends User
-{
+public class Customer extends User {
 
-  //Customer Associations
+  // Customer Associations
   private List<Reminder> reminders;
   private Profile customerProfile;
   private Car car;
@@ -22,59 +21,56 @@ public class Customer extends User
 
   @Id
   @Override
-  public String getUserID(){
+  public String getUserID() {
     return super.getUserID();
   }
 
   @Override
-  public void setUserID(String aUserID){
+  public void setUserID(String aUserID) {
     super.setUserID(aUserID);
   }
 
   @Override
-  public void setPassword(String aPassword){
+  public void setPassword(String aPassword) {
     super.setPassword(aPassword);
   }
 
   @Override
-  public String getPassword(){
+  public String getPassword() {
     return super.getPassword();
   }
 
-  public void setReminders(List<Reminder> aReminders){
-    this.reminders=aReminders;
+  public void setReminders(List<Reminder> aReminders) {
+    this.reminders = aReminders;
   }
-  @OneToMany(cascade = {CascadeType.ALL})
-  public List<Reminder> getReminders()
-  {
+
+  @OneToMany(cascade = { CascadeType.ALL })
+  public List<Reminder> getReminders() {
     return this.reminders;
   }
 
-  public void setCustomerProfile(Profile aCustomerProfile){
-    this.customerProfile=aCustomerProfile;
+  public void setCustomerProfile(Profile aCustomerProfile) {
+    this.customerProfile = aCustomerProfile;
   }
 
-  public Profile getCustomerProfile()
-  {
+  public Profile getCustomerProfile() {
     return this.customerProfile;
   }
 
-  public void setCar(Car aCar){
-    this.car=aCar;
+  public void setCar(Car aCar) {
+    this.car = aCar;
   }
-  public Car getCar()
-  {
+
+  public Car getCar() {
     return this.car;
   }
 
-  
-  public void setappointments (List<Appointment> aAppointments){
-    this.appointments=aAppointments;
+  public void setappointments(List<Appointment> aAppointments) {
+    this.appointments = aAppointments;
   }
 
-  @OneToMany(cascade = {CascadeType.ALL})
-  public List<Appointment> getAppointments()
-  {
+  @OneToMany(cascade = { CascadeType.ALL })
+  public List<Appointment> getAppointments() {
     return this.appointments;
   }
 

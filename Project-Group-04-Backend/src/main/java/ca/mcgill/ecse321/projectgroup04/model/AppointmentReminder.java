@@ -63,7 +63,7 @@ public class AppointmentReminder extends Reminder
     return super.getCustomer();
   }
 
-  @OneToMany
+  @OneToOne
   public Appointment getAppointment() { return this.appointment; }
 
   public void setCustomer(Customer aCustomer)

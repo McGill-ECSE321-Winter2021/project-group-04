@@ -521,16 +521,83 @@ public class TestAutoRepairShopSystemPersistence {
 
     @Test
     public void testPersistAndLoadProfile() {
+        String profileID = "p1";
+        String address = "this is the test adress";
+        String phoneNumber = "438-978-6824";
+        String firstName = "FirstName";
+        String lastName = "LastName";
+        String zipCode = "H2X2B5";
+        String email = "thisis@test.com";
+        Profile profile = new Profile();
+        profile.setAddressLine(address);
+        profile.setEmailAddress(email);
+        profile.setFirstName(firstName);
+        profile.setLastName(lastName);
+        profile.setPhoneNumber(phoneNumber);
+        profile.setZipCode(zipCode);
+        profile.setProfileID(profileID);
+
+        String id = "TestUser";
+        String password = "TestPassword";
+        Customer customer = new Customer();
+        customer.setUserID(id);
+        customer.setPassword(password);
+
+        customer.setCustomerProfile(profile);
+        profile.setCustomer(customer);
+
+        profileRepository.save(profile);
+        customerRepository.save(customer);
+
+        profile = null;
+        profile = profileRepository.findProfileByProfileID(profileID);
+
+        assertNotNull(profile);
+        assertEquals(profileID, profile.getProfileID());
+        assertEquals(address, profile.getAddressLine());
+        assertEquals(phoneNumber, profile.getPhoneNumber());
+        assertEquals(firstName, profile.getFirstName());
+        assertEquals(lastName, profile.getLastName());
+        assertEquals(zipCode, profile.getZipCode());
+        assertEquals(email, profile.getEmailAddress());
+        assertEquals(customer, profile.getCustomer());
 
     }
 
     @Test
     public void testPersistAndLoadReceipt() {
 
+        String receiptID = "r1";
+        Double totalPrice = 100.0;
+        Receipt receipt = new Receipt();
+        receipt.setReceiptID(receiptID);
+        receipt.setTotalPrice(totalPrice);
+
+        String appointmentID = "a1";
+        Appointment appointment = new Appointment();
+        appointment.setAppointmentID(appointmentID);
+
+        receipt.setAppointment(appointment);
+        appointment.setReceipt(receipt);
+
+        receiptRepository.save(receipt);
+        appointmentRepository.save(appointment);
+
+        receipt = null;
+        receipt = receiptRepository.findReceiptByReceiptID(receiptID);
+
+        assertNotNull(receipt);
+        assertEquals(totalPrice, receipt.getTotalPrice());
+        assertEquals(receiptID, receipt.getReceiptID());
+        assertEquals(appointment, receipt.getAppointment());
     }
 
     @Test
     public void testPersistAndLoadReminder() {
+        String reminderID = "rd1";
+        String message = "It is tmrw";
+        Date reminderDate = Date.valueOf("20-03-18");
+        Time reminderTime = Time.valueOf("12:30");
 
     }
 
