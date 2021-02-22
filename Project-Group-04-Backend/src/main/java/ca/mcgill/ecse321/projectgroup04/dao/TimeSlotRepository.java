@@ -6,6 +6,6 @@ import java.sql.Time;
 import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup04.model.*;
 
-public interface TimeSlotRepository entends CrudRepository<TimeSlot, Date, Time>{
-    TimeSlot findTimeSlotByDateAndTime(Date startDate, Time startTime);
-        }
+public interface TimeSlotRepository extends CrudRepository<TimeSlot, String> {
+    TimeSlot findTimeSlotByID(String timeSlotID);
+}
