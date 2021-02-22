@@ -112,10 +112,8 @@ public class TestAutoRepairShopSystemPersistence {
          ts.setTimeSlotId(timeSlotID);
 
          int GSnum = 123;
-         String garageID = "garage test";
          GarageSpot garageSpot = new GarageSpot();
         garageSpot.setSpotNumber(GSnum);
-        garageSpot.setGarageID(garageID);
 
          ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
          times.add(ts);
