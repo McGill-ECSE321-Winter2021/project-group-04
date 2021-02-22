@@ -1,4 +1,5 @@
 package ca.mcgill.ecse321.projectgroup04.dao;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -126,7 +127,7 @@ public class TestAutoRepairShopSystemPersistence {
 
          int GSnum = 123;
          GarageSpot garageSpot = new GarageSpot();
-        garageSpot.setSpotNumber(GSnum);
+         garageSpot.setSpotNumber(GSnum);
 
          ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
          times.add(ts);
@@ -138,7 +139,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         ts = null;
 
-        ts = timeSlotRepository.findTimeSlotByID(timeSlotID);
+        ts = timeSlotRepository.findTimeSlotByTimeSlotID(timeSlotID);
 
         assertNotNull(ts);
         assertEquals(startTime, ts.getStartTime());
@@ -386,7 +387,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         technician = null;
 
-        technician = garageTechnicianRepository.findGarageTechnicianByID(technicianID);
+        technician = garageTechnicianRepository.findGarageTechnicianByTechnicianID(technicianID);
 
         assertNotNull(technician);
         assertEquals(technicianID, technician.getTechnicianID());
@@ -520,9 +521,9 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(appointments, customer.getAppointments());
         assertEquals(reminders, customer.getReminders());
     }
-    
     @Test
     public void testPersistAndLoadProfile() {
+
     	String profileID = "p1";
     	String address ="this is the test adress";
     	String phoneNumber = "438-978-6824";
@@ -564,9 +565,17 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(email,profile.getEmailAddress());
         assertEquals(customer, profile.getCustomer());
     	
+
     }
     @Test 
     public void testPersistAndLoadReceipt() {
+
+
+    }
+    @Test 
+    public void testPersistAndLoadReminder() {
+
+
     	
     	String receiptID ="r1";
     	Double totalPrice = 100.0;
@@ -592,17 +601,9 @@ public class TestAutoRepairShopSystemPersistence {
     	assertEquals(receiptID,receipt.getReceiptID());
     	assertEquals(appointment,receipt.getAppointment());
     }
-    @Test 
-    public void testPersistAndLoadReminder() {
-    	String reminderID = "rd1";
-    	String message="It is tmrw";
-    	Date reminderDate = Date.valueOf("20-03-18");
-        Time reminderTime = Time.valueOf("12:30");        
-    	
-    }
+  
     @Test 
     public void testPersistAndLoadService() {
-    	
-    }
 
+    }
 }
