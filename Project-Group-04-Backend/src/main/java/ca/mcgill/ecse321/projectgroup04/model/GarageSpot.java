@@ -15,6 +15,8 @@ public class GarageSpot
   {
    this.spotNumber = aSpotNumber;
   }
+
+  @Id
   public int getSpotNumber()
   {
     return this.spotNumber;
@@ -32,14 +34,4 @@ public class GarageSpot
     this.spot = spot;
   }
 
-  private String garageID;
-
-  @Id
-  public String getGarageID() {
-    return garageID;
-  }
-
-  public void setGarageID(String garageID) {
-    this.garageID = garageID;
-  }
 }

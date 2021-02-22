@@ -121,7 +121,7 @@ class GarageSpot
 class AutoRepairShop
 {
   1 <@>- * User user;
-  1 <@>- * Business business;
+  1 <@>- 1 Business business;
   1 <@>- * Appointment appointments;
   1 <@>- * TimeSlot timeSlots;
   1 <@>- * Service services;
