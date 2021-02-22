@@ -54,7 +54,7 @@ public class Customer extends User
   public void setCustomerProfile(Profile aCustomerProfile){
     this.customerProfile=aCustomerProfile;
   }
-
+  @OneToOne
   public Profile getCustomerProfile()
   {
     return this.customerProfile;
