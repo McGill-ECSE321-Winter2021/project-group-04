@@ -1,4 +1,5 @@
 package ca.mcgill.ecse321.projectgroup04.dao;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -7,6 +8,8 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -20,30 +23,177 @@ import ca.mcgill.ecse321.projectgroup04.model.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestAutoRepairShopSystemPersistence {
-    
+
     @Autowired
     private AdministrativeAssistantRepository administrativeAssistantRepository;
+    @Autowired
     private AppointmentReminderRepository appointmentReminderRepository;
+    @Autowired
     private AppointmentRepository appointmentRepository;
+    @Autowired
     private BookableServiceRepository bookableServiceRepository;
+    @Autowired
     private TimeSlotRepository timeSlotRepository;
+    @Autowired
     private TechnicianRepository technicianRepository;
+    @Autowired
     private GarageTechnicianRepository garageTechnicianRepository;
-    
+    @Autowired
+    private BusinessRepository businessRepository;
+    @Autowired
+    private BusinessHourRepository businessHourRepository;
+    @Autowired
+    private CarRepository carRepository;
+    @Autowired
+    private CheckupReminderRepository checkupReminderRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @AfterEach
-	public void clearDatabase() {
+    public void clearDatabase() {
+        businessRepository.deleteAll();
+        businessHourRepository.deleteAll();
         appointmentRepository.deleteAll();
         appointmentReminderRepository.deleteAll();
         administrativeAssistantRepository.deleteAll();
         bookableServiceRepository.deleteAll();
         technicianRepository.deleteAll();
         timeSlotRepository.deleteAll();
-
+        carRepository.deleteAll();
+        customerRepository.deleteAll();
+        checkupReminderRepository.deleteAll();
     }
+
     @Test
-    public void testPersistAndLoadAdministrativeAssistant(){
-        String  id = "TestAdministrativeAssistance";
+    public void testPersistAndLoadCustomer() {
+
+        String id = "TestUser";
+        String password = "TestPAssword";
+        Customer customer = new Customer();
+        customer.setUserID(id);
+        customer.setPassword(password);
+
+        Profile profile = new Profile();
+        String profileID = "TestProfileID";
+        String addressLine = "TestAddressLine";
+        String phoneNumber = "0123456789";
+        String firstName = "TestFirstName";
+        String lastName = "TestLastName";
+        String zipCode = "zipCode";
+        String emailAddress = "testEmailAddress";
+        profile.setAddressLine(addressLine);
+        profile.setProfileID(profileID);
+        profile.setPhoneNumber(phoneNumber);
+        profile.setFirstName(firstName);
+        profile.setLastName(lastName);
+        profile.setZipCode(zipCode);
+        profile.setEmailAddress(emailAddress);
+        profileRepository.save(profile);
+
+        Car car = new Car();
+        String carID = "testID";
+        String model = "testModel";
+        String color = "testColor";
+        String year = "testYear";
+        car.setCarID(carID);
+        car.setColor(color);
+        car.setModel(model);
+        car.setYear(year);
+        carRepository.save(car);
+
+        CheckupReminder reminder = new CheckupReminder();
+        String reminderID = "testReminderID";
+        String message = "testMessage";
+        Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
+        Time time = java.sql.Time.valueOf(LocalTime.of(11, 35));
+        reminder.setCustomer(customer);
+        reminder.setReminderID(reminderID);
+        reminder.setMessage(message);
+        reminder.setDate(date);
+        reminder.setTime(time);
+        checkupReminderRepository.save(reminder);
+        ArrayList<Reminder> reminders = new ArrayList<Reminder>();
+        reminders.add(reminder);
+
+        String appointmentID = "a12";
+
+        String serviceID = "12345";
+        BookableService service = new BookableService();
+        service.setServiceID(serviceID);
+        int price = 37;
+        service.setPrice(price);
+        String serviceName = "testServiceName";
+        service.setName(serviceName);
+        bookableServiceRepository.save(service);
+
+        String technicianID = "987";
+        GarageTechnician technician = new GarageTechnician();
+        technician.setTechnicianID(technicianID);
+        garageTechnicianRepository.save(technician);
+
+        Time startTime = Time.valueOf("10:00");
+        Time endTime = Time.valueOf("11:00");
+        Date startDate = Date.valueOf("2021-03-19");
+        Date endDate = Date.valueOf("2021-03-19");
+        TimeSlot ts = new TimeSlot();
+        ts.setStartTime(startTime);
+        ts.setEndtTime(endTime);
+        ts.setStartDate(startDate);
+        ts.setEndDate(endDate);
+        timeSlotRepository.save(ts);
+
+        String receiptID = "r12";
+        double totalPrice = 90;
+        Receipt receipt = new Receipt();
+        receipt.setReceiptID(receiptID);
+        receipt.setTotalPrice(totalPrice);
+        receiptRepository.save(receipt);
+
+        String appReminderID = "000";
+        Date appReminderDate = Date.valueOf("20-03-18");
+        Time appReminderTime = Time.valueOf("12:00");
+        String appReminderMessage = "It is tomorrow";
+        AppointmentReminder ar = new AppointmentReminder();
+        ar.setCustomer(customer);
+        ar.setReminderID(reminderID);
+        ar.setDate(date);
+        ar.setTime(time);
+        ar.setMessage(message);
+        appointmentReminderRepository.save(ar);
+
+        Appointment appointment = new Appointment();
+        appointment.setCustomer(customer);
+        appointment.setServices(service);
+        appointment.setTechnician(technician);
+        appointment.setTimeSlot(ts);
+        appointment.setAppointmentID(appointmentID);
+        appointment.setReceipt(receipt);
+        appointment.setReminder(ar);
+        appointmentRepository.save(appointment);
+        ArrayList<Appointment> appointments = new ArrayList<Appointment>();
+        appointments.add(appointment);
+
+        customer.setReminders(reminders);
+        customer.setappointments(appointments);
+
+        customerRepository.save(customer);
+
+        customer = null;
+
+        customer = customerRepository.findByUserID(id);
+
+        assertNotNull(customer);
+        assertEquals(id, customer.getUserID());
+        assertEquals(password, customer.getPassword());
+        assertEquals(car.getCarID(), customer.getCar().getCarID());
+        assertEquals(profile.getProfileID(), customer.getCustomerProfile().getProfileID());
+        assertEquals(appointments, customer.getAppointments());
+        assertEquals(reminders, customer.getReminders());
+    }
+
+    @Test
+    public void testPersistAndLoadAdministrativeAssistant() {
+        String id = "TestAdministrativeAssistance";
         String password = "TestAdministrativePassword";
         AdministrativeAssistant ad = new AdministrativeAssistant();
         ad.setUserID(id);
@@ -57,7 +207,7 @@ public class TestAutoRepairShopSystemPersistence {
     }
 
     @Test
-    public void testPersistAndLoadBookableService(){
+    public void testPersistAndLoadBookableService() {
         String id = "1234";
         int duration = 30;
         String name = "wash";
@@ -77,8 +227,9 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(duration, bs.getDuration());
         assertEquals(price, bs.getPrice());
     }
+
     @Test
-    public void testPersistAndLoadGarageTechnician(){
+    public void testPersistAndLoadGarageTechnician() {
         String name = "TestGarageTechnician";
         String id = "9876";
         GarageTechnician gt = new GarageTechnician();
@@ -93,19 +244,18 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(id, gt.getTechnicianID());
     }
 
-
     // @Test
     // public void testPersistAndLoadTimeSlot(){
-    //     Time startTime = Time.valueOf("10:00");
-    //     Time endTime = Time.valueOf("11:00");
-    //     Date startDate = Date.valueOf("2021-03-19");
-    //     Date endDate = Date.valueOf("2021-03-19");
-    //     String 
-    //     TimeSlot ts = new TimeSlot();
-    //     ts.setStartTime(startTime);
-    //     ts.setEndtTime(endTime);
-    //     ts.setStartDate(startDate);
-    //     ts.setEndDate(endDate);
-    //     ts.setGarageSpot();
+    // Time startTime = Time.valueOf("10:00");
+    // Time endTime = Time.valueOf("11:00");
+    // Date startDate = Date.valueOf("2021-03-19");
+    // Date endDate = Date.valueOf("2021-03-19");
+    // String
+    // TimeSlot ts = new TimeSlot();
+    // ts.setStartTime(startTime);
+    // ts.setEndtTime(endTime);
+    // ts.setStartDate(startDate);
+    // ts.setEndDate(endDate);
+    // ts.setGarageSpot();
     // }
 }
