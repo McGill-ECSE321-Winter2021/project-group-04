@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Table(name ="appointment")
 public class Appointment {
 
-  private Long appointmentID;
+  private Long appointmentId;
 
   // Appointment Associations
   private Customer customer;
@@ -18,8 +18,8 @@ public class Appointment {
   private Receipt receipt;
   private AutoRepairShop autoRepairShop;
 
-  public void setAppointmentID(Long aAppointmentID) {
-    this.appointmentID = aAppointmentID;
+  public void setAppointmentId(Long aAppointmentId) {
+    this.appointmentId = aAppointmentId;
   }
 
   public void setReminder(AppointmentReminder aReminder) {
@@ -28,8 +28,8 @@ public class Appointment {
 
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public Long getAppointmentID() {
-    return this.appointmentID;
+  public Long getAppointmentId() {
+    return this.appointmentId;
   }
 
   @ManyToOne
@@ -92,10 +92,10 @@ public class Appointment {
   }
 
   public String toString() {
-    return super.toString() + "[" + "]" + System.getProperties().getProperty("line.separator") + "  " + "appointmentID"
+    return super.toString() + "[" + "]" + System.getProperties().getProperty("line.separator") + "  " + "appointmentId"
         + "="
-        + (getAppointmentID() != null
-            ? !getAppointmentID().equals(this) ? getAppointmentID().toString().replaceAll("  ", "    ") : "this"
+        + (getAppointmentId() != null
+            ? !getAppointmentId().equals(this) ? getAppointmentId().toString().replaceAll("  ", "    ") : "this"
             : "null")
         + System.getProperties().getProperty("line.separator") + "  " + "customer = "
         + (getCustomer() != null ? Integer.toHexString(System.identityHashCode(getCustomer())) : "null")

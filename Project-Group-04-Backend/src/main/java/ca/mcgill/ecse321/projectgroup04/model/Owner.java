@@ -14,8 +14,8 @@ public class Owner extends User
 
   
   @Override
-  public String getUserID() {
-    return super.getUserID();
+  public String getUserId() {
+    return super.getUserId();
   }
 
   @Override
@@ -33,8 +33,8 @@ public class Owner extends User
 	  return super.getAutoRepairShop();
   }
   @Override
-  public void setUserID(String userID) {
-	  super.setUserID(userID);
+  public void setUserId(String userId) {
+	  super.setUserId(userId);
   }
   @Override
   public void setPassword(String aPassword) {

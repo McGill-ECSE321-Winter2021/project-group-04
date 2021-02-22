@@ -25,8 +25,8 @@ public class Customer extends User
 
   
  @Override
-  public String getUserID(){
-    return super.getUserID();
+  public String getUserId(){
+    return super.getUserId();
   }
   @Override
   public Long getId() {
@@ -37,8 +37,8 @@ public class Customer extends User
 	  super.setId(id);
   }
   @Override
-  public void setUserID(String aUserID){
-	  super.setUserID(aUserID);
+  public void setUserId(String aUserId){
+	  super.setUserId(aUserId);
   }
 
   @Override

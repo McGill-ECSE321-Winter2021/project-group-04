@@ -28,13 +28,13 @@ public class GarageTechnician extends Technician {
 
     
     @Override
-    public Long getTechnicianID() {
-        return super.getTechnicianID();
+    public Long getTechnicianId() {
+        return super.getTechnicianId();
     }
 
     @Override
-    public void setTechnicianID(Long aTechnicianID) {
-        super.setTechnicianID(aTechnicianID);
+    public void setTechnicianId(Long aTechnicianId) {
+        super.setTechnicianId(aTechnicianId);
     }
 
     @Override

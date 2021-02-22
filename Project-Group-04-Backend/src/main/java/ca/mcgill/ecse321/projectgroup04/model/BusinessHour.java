@@ -10,14 +10,14 @@ import javax.persistence.*;
 @Table(name = "businessHour")
 public class BusinessHour
 {
-  private Long hourID;
-  public void setHourID(Long aID) {
-	  hourID=aID;
+  private Long hourId;
+  public void setHourId(Long aId) {
+	  hourId=aId;
   }
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public Long getHourID() {
-	  return this.hourID;
+  public Long getHourId() {
+	  return this.hourId;
   }
   public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 

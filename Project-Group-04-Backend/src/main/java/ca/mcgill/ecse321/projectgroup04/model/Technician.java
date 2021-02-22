@@ -27,18 +27,18 @@ public abstract class Technician
     return this.name;
   }
 
-  private Long technicianID;
+  private Long technicianId;
 
-  public void setTechnicianID(Long aTechnicianID)
+  public void setTechnicianId(Long aTechnicianId)
   {
-    this.technicianID = aTechnicianID;
+    this.technicianId = aTechnicianId;
   }
   
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  public Long getTechnicianID()
+  public Long getTechnicianId()
   {
-    return this.technicianID;
+    return this.technicianId;
   }
 
 
@@ -46,6 +46,6 @@ public abstract class Technician
   {
     return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "name" + "=" + (getName() != null ? !getName().equals(this)  ? getName().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "technicianID" + "=" + (getTechnicianID() != null ? !getTechnicianID().equals(this)  ? getTechnicianID().toString().replaceAll("  ","    ") : "this" : "null");
+            "  " + "technicianId" + "=" + (getTechnicianId() != null ? !getTechnicianId().equals(this)  ? getTechnicianId().toString().replaceAll("  ","    ") : "this" : "null");
   }
 }

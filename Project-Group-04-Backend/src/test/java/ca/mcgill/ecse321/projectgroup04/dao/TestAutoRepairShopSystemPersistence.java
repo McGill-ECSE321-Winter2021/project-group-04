@@ -559,7 +559,7 @@ public class TestAutoRepairShopSystemPersistence {
         Customer customer = new Customer();
         String  userId ="TestUser";
         customer.setId(id);
-        customer.setUserID(userId);
+        customer.setUserId(userId);
         customer.setPassword(password);
         
         customer.setCustomerProfile(profile);

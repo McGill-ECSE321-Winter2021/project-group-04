@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup04.model.CheckupReminder;
 
 public interface CheckupReminderRepository extends CrudRepository<CheckupReminder, Long>{
-    CheckupReminder findByReminderID(Long reminderId);
+    CheckupReminder findByReminderId(Long reminderId);
 }

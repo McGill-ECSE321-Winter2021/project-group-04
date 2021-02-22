@@ -4,7 +4,6 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
@@ -17,12 +16,12 @@ public class AdministrativeAssistant extends User {
 		  return super.getId();
 	  }
 	  @Override
- public void setId(Long id) {
-		  super.setId(id);
+ public void setId(Long Id) {
+		  super.setId(Id);
 	  }
   @Override
-  public String getUserID() {
-    return super.getUserID();
+  public String getUserId() {
+    return super.getUserId();
   }
 
   @Override
@@ -40,8 +39,8 @@ public class AdministrativeAssistant extends User {
 	  return super.getAutoRepairShop();
   }
   @Override
-  public void setUserID(String userID) {
-	  super.setUserID(userID);
+  public void setUserId(String userId) {
+	  super.setUserId(userId);
   }
   @Override
   public void setPassword(String aPassword) {
