@@ -1,13 +1,19 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*; 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 public class AutoRepairShop {
 
+	
+  private String name;
+  public void setName(String aName) {name=aName;}
+  @Id
+  public String getName() {
+	  return name;
+  }
+	
   private List<User> user;
 
   @OneToMany(cascade = {CascadeType.ALL})
