@@ -569,13 +569,13 @@ public class TestAutoRepairShopSystemPersistence {
     }
     @Test 
     public void testPersistAndLoadReceipt() {
-<<<<<<< HEAD
+
 
     }
     @Test 
     public void testPersistAndLoadReminder() {
 
-=======
+
     	
     	String receiptID ="r1";
     	Double totalPrice = 100.0;
@@ -601,15 +601,7 @@ public class TestAutoRepairShopSystemPersistence {
     	assertEquals(receiptID,receipt.getReceiptID());
     	assertEquals(appointment,receipt.getAppointment());
     }
-    @Test 
-    public void testPersistAndLoadReminder() {
-    	String reminderID = "rd1";
-    	String message="It is tmrw";
-    	Date reminderDate = Date.valueOf("20-03-18");
-        Time reminderTime = Time.valueOf("12:30");        
-    	
->>>>>>> d494897efddb9d6860faaefdd7cef47f130c373b
-    }
+  
     @Test 
     public void testPersistAndLoadService() {
 

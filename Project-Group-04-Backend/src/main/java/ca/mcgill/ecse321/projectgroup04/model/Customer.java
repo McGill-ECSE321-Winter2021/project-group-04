@@ -6,6 +6,7 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -62,6 +63,7 @@ public class Customer extends User
   public void setCar(Car aCar){
     this.car=aCar;
   }
+  @OneToOne
   public Car getCar()
   {
     return this.car;
