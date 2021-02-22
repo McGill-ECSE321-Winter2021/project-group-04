@@ -22,16 +22,16 @@ public class GarageSpot
     return this.spotNumber;
   }
 
-  private List<TimeSlot> spot;
+  private List<TimeSlot> timeSlot;
 
   @OneToMany(cascade = {CascadeType.ALL})
-  public List<TimeSlot> getSpot()
+  public List<TimeSlot> getTimeSlot()
   {
-    return this.spot;
+    return this.timeSlot;
   }
 
-  public void setSpot(List<TimeSlot> spot) {
-    this.spot = spot;
+  public void setTimeSlot(List<TimeSlot> timeSlot) {
+    this.timeSlot = timeSlot;
   }
 
 }

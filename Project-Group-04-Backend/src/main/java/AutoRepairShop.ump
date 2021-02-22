@@ -59,7 +59,7 @@ class Appointment
 {
   string appointmentID;
   * -- 1 Customer customer;
-  * -- 1 Service services;
+  * -- 1 BookableService bookableServices;
   * -- 1 GarageTechnician technician;
   * -> 1 TimeSlot timeSlot;
   1 -- 1 AppointmentReminder reminder;
@@ -117,11 +117,12 @@ Date endDate;
 class GarageSpot
 {
   int spotNumber;
-  1 -- * TimeSlot spot;
+  1 -- * TimeSlot timeSlot;
 }
 
 class AutoRepairShop
 {
+	String name;
   1 <@>- * User user;
   1 <@>- 1 Business business;
   1 <@>- * Appointment appointments;

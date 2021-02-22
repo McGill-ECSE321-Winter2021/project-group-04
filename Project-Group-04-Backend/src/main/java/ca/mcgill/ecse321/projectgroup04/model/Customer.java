@@ -70,7 +70,7 @@ public class Customer extends User
   }
 
   
-  public void setappointments (List<Appointment> aAppointments){
+  public void setAppointments (List<Appointment> aAppointments){
     this.appointments=aAppointments;
   }
 

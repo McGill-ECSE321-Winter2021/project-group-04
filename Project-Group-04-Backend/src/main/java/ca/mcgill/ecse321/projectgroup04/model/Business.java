@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 
 @Entity
@@ -79,7 +80,7 @@ public class Business {
     return this.regular;
   }
 
-  @ManyToOne
+  @OneToOne
   public AutoRepairShop getAutoRepairShop() {
     return this.autoRepairShop;
   }

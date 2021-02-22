@@ -10,7 +10,7 @@ public class Appointment {
 
   // Appointment Associations
   private Customer customer;
-  private Service services;
+  private BookableService bookableServices;
   private GarageTechnician technician;
   private TimeSlot timeSlot;
   private AppointmentReminder reminder;
@@ -30,14 +30,14 @@ public class Appointment {
     return this.appointmentID;
   }
 
-  @OneToOne
+  @ManyToOne
   public Customer getCustomer() {
     return this.customer;
   }
 
   @ManyToOne
-  public Service getServices() {
-    return this.services;
+  public BookableService getBookableServices() {
+    return this.bookableServices;
   }
 
   @ManyToOne
@@ -45,12 +45,12 @@ public class Appointment {
     return this.technician;
   }
 
-  @OneToOne
+  @ManyToOne
   public TimeSlot getTimeSlot() {
     return this.timeSlot;
   }
 
-  @ManyToOne
+  @OneToOne
   public AppointmentReminder getReminder() {
     return this.reminder;
   }
@@ -59,12 +59,12 @@ public class Appointment {
     this.receipt = aReceipt;
   }
 
-  @ManyToOne
+  @OneToOne
   public Receipt getReceipt() {
     return this.receipt;
   }
 
-  @OneToOne
+  @ManyToOne
   public AutoRepairShop getAutoRepairShop() {
     return this.autoRepairShop;
   }
@@ -73,8 +73,8 @@ public class Appointment {
     this.customer = aCustomer;
   }
 
-  public void setServices(Service aServices) {
-    this.services = aServices;
+  public void setBookableServices(BookableService aServices) {
+    this.bookableServices = aServices;
   }
 
   public void setTechnician(GarageTechnician aTechnician) {
@@ -98,7 +98,7 @@ public class Appointment {
         + System.getProperties().getProperty("line.separator") + "  " + "customer = "
         + (getCustomer() != null ? Integer.toHexString(System.identityHashCode(getCustomer())) : "null")
         + System.getProperties().getProperty("line.separator") + "  " + "services = "
-        + (getServices() != null ? Integer.toHexString(System.identityHashCode(getServices())) : "null")
+        + (getBookableServices() != null ? Integer.toHexString(System.identityHashCode(getBookableServices())) : "null")
         + System.getProperties().getProperty("line.separator") + "  " + "technician = "
         + (getTechnician() != null ? Integer.toHexString(System.identityHashCode(getTechnician())) : "null")
         + System.getProperties().getProperty("line.separator") + "  " + "timeSlot = "

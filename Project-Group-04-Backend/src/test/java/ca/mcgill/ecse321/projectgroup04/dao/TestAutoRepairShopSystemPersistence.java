@@ -131,7 +131,7 @@ public class TestAutoRepairShopSystemPersistence {
 
          ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
          times.add(ts);
-        garageSpot.setSpot(times);
+        garageSpot.setTimeSlot(times);
 
         ts.setGarageSpot(garageSpot);
 
@@ -155,7 +155,7 @@ public class TestAutoRepairShopSystemPersistence {
         String appointmentID = "a12";
 
         String serviceID = "12345";
-        Service service = new BookableService();
+        BookableService service = new BookableService();
         service.setServiceID(serviceID);
         
         String technicianID = "987";
@@ -197,7 +197,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
-        appointment.setServices(service);
+        appointment.setBookableServices(service);
         appointment.setTechnician(technician);
         appointment.setTimeSlot(ts);
         appointment.setAppointmentID(appointmentID);
@@ -210,7 +210,7 @@ public class TestAutoRepairShopSystemPersistence {
         assertNotNull(appointment);
         assertEquals(appointmentID, appointment.getAppointmentID());
         assertEquals(customer, appointment.getCustomer());
-        assertEquals(service, appointment.getServices());
+        assertEquals(service, appointment.getBookableServices());
         assertEquals(technician, appointment.getTechnician());
         assertEquals(ts, appointment.getTimeSlot());
         assertEquals(receipt, appointment.getReceipt());
@@ -229,7 +229,7 @@ public class TestAutoRepairShopSystemPersistence {
         String message = "It is tomorrow";
 
        
-        Service service = new BookableService();
+        BookableService service = new BookableService();
         service.setName("oil change");
         service.setPrice(20);
         service.setServiceID("9876");
@@ -256,7 +256,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
-        appointment.setServices(service);
+        appointment.setBookableServices(service);
         appointment.setReceipt(receipt);
         appointment.setTechnician(technician);
         appointment.setTimeSlot(ts);
@@ -363,15 +363,15 @@ public class TestAutoRepairShopSystemPersistence {
         String appReminderMessage = "It is tomorrow";
         AppointmentReminder ar = new AppointmentReminder();
         ar.setCustomer(customer);
-        ar.setReminderID(reminderID);
-        ar.setDate(date);
-        ar.setTime(time);
-        ar.setMessage(message);
+        ar.setReminderID(appReminderID);
+        ar.setDate(appReminderDate);
+        ar.setTime(appReminderTime);
+        ar.setMessage(appReminderMessage);
         appointmentReminderRepository.save(ar);
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
-        appointment.setServices(service);
+        appointment.setBookableServices(service);
         appointment.setTechnician(technician);
         appointment.setTimeSlot(ts);
         appointment.setAppointmentID(appointmentID);
@@ -486,15 +486,15 @@ public class TestAutoRepairShopSystemPersistence {
         String appReminderMessage = "It is tomorrow";
         AppointmentReminder ar = new AppointmentReminder();
         ar.setCustomer(customer);
-        ar.setReminderID(reminderID);
-        ar.setDate(date);
-        ar.setTime(time);
-        ar.setMessage(message);
+        ar.setReminderID(appReminderID);
+        ar.setDate(appReminderDate);
+        ar.setTime(appReminderTime);
+        ar.setMessage(appReminderMessage);
         appointmentReminderRepository.save(ar);
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
-        appointment.setServices(service);
+        appointment.setBookableServices(service);
         appointment.setTechnician(technician);
         appointment.setTimeSlot(ts);
         appointment.setAppointmentID(appointmentID);
@@ -505,7 +505,7 @@ public class TestAutoRepairShopSystemPersistence {
         appointments.add(appointment);
 
         customer.setReminders(reminders);
-        customer.setappointments(appointments);
+        customer.setAppointments(appointments);
 
         customerRepository.save(customer);
 

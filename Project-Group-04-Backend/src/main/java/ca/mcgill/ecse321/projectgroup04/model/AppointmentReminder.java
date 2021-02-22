@@ -13,22 +13,22 @@ public class AppointmentReminder extends Reminder
 
   //AppointmentReminder Associations
   private Appointment appointment;
-
+  @Override
   public void setReminderID(String aReminderID)
   {
     super.setReminderID(aReminderID);
   }
-
+  @Override
   public void setDate(Date aDate)
   {
     super.setDate(aDate);
   }
-
+  @Override
   public void setTime(Time aTime)
   {
     super.setTime(aTime);
   }
-
+  @Override
   public void setMessage(String aMessage)
   {
     super.setMessage(aMessage);
@@ -37,26 +37,28 @@ public class AppointmentReminder extends Reminder
   public void setAppointment(Appointment aAppointment){ this.appointment = aAppointment;}
 
   @Id
+  @Override
   public String getReminderID()
   {
     return super.getReminderID();
   }
 
+  @Override
   public Date getDate()
   {
     return super.getDate();
   }
-
+  @Override
   public Time getTime()
   {
     return super.getTime();
   }
-
+  @Override
   public String getMessage()
   {
     return super.getMessage();
   }
-
+  @Override
   @ManyToOne
   public Customer getCustomer()
   {
@@ -66,6 +68,7 @@ public class AppointmentReminder extends Reminder
   @OneToOne
   public Appointment getAppointment() { return this.appointment; }
 
+  @Override
   public void setCustomer(Customer aCustomer)
   {
     super.setCustomer(aCustomer);

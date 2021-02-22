@@ -23,7 +23,7 @@ public class AutoRepairShop {
 
   private List<Business> business;
 
-  @OneToMany(cascade = {CascadeType.ALL})
+  @OneToOne
   public List<Business> getBusiness() { return this.business; }
 
   public void setBusiness(List<Business> aBusiness){this.business=aBusiness; }

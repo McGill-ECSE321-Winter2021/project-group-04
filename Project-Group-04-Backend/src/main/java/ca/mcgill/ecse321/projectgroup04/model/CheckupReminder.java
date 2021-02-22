@@ -13,54 +13,54 @@ import java.sql.Date;
 @Entity
 public class CheckupReminder extends Reminder
 {
-
+	@Override
   public void setReminderID(String aReminderID)
   {
     super.setReminderID(aReminderID);
   }
-
+	@Override
   public void setDate(Date aDate)
   {
     super.setDate(aDate);
   }
-
+	@Override
   public void setTime(Time aTime)
   {
     super.setTime(aTime);
   }
-
+	@Override
   public void setMessage(String aMessage)
   {
     super.setMessage(aMessage);
   }
-
+	@Override
   @Id
   public String getReminderID()
   {
     return super.getReminderID();
   }
-
+	@Override
   public Date getDate()
   {
     return super.getDate();
   }
-
+	@Override
   public Time getTime()
   {
     return super.getTime();
   }
-
+	@Override
   public String getMessage()
   {
     return super.getMessage();
   }
-  
+	@Override
   @ManyToOne
   public Customer getCustomer()
   {
     return super.getCustomer();
   }
-
+	@Override
   public void setCustomer(Customer aCustomer)
   {
     super.setCustomer(aCustomer);
