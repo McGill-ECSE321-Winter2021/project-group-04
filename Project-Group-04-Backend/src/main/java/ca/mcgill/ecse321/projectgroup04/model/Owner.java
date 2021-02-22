@@ -5,12 +5,14 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "owner")
 public class Owner extends User
 {
 
-  @Id
+  
   @Override
   public String getUserID() {
     return super.getUserID();

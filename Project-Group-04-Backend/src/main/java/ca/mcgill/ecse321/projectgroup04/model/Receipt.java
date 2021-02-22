@@ -3,20 +3,21 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "receipt")
 public class Receipt {
 
-  private String receiptID;
+  private Long receiptID;
   private double totalPrice;
 
   
   private Appointment appointment;
 
-  public void setReceiptID(String aReceiptID) { this.receiptID = aReceiptID; }
+  public void setReceiptID(Long aReceiptID) { this.receiptID = aReceiptID; }
 
   public void setTotalPrice(double aTotalPrice) { this.totalPrice = aTotalPrice; }
-
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public String getReceiptID()
+  public Long getReceiptID()
   {
     return this.receiptID;
   }

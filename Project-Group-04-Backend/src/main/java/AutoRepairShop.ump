@@ -107,7 +107,7 @@ class GarageTechnician
 
 class TimeSlot
 {
-String timeSlotID;
+ timeSlotID;
   Time startTime; 
 Date startDate;
 Time endTime; 
@@ -122,6 +122,7 @@ class GarageSpot
 
 class AutoRepairShop
 {
+	
 	String name;
   1 <@>- * User user;
   1 <@>- 1 Business business;

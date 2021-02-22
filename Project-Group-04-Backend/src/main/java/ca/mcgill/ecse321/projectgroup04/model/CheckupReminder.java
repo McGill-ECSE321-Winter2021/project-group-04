@@ -6,15 +6,17 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Entity;
 import java.sql.Time;
 import java.sql.Date;
 
 @Entity
+@Table(name = "checkupReminder")
 public class CheckupReminder extends Reminder
 {
 	@Override
-  public void setReminderID(String aReminderID)
+  public void setReminderID(Long aReminderID)
   {
     super.setReminderID(aReminderID);
   }
@@ -34,8 +36,7 @@ public class CheckupReminder extends Reminder
     super.setMessage(aMessage);
   }
 	@Override
-  @Id
-  public String getReminderID()
+  public Long getReminderID()
   {
     return super.getReminderID();
   }

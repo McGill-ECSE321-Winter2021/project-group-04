@@ -7,8 +7,10 @@ import java.util.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "emergencyService")
 public class EmergencyService extends Service {
     private String location;
 
@@ -30,14 +32,14 @@ public class EmergencyService extends Service {
         super.setName(aName);
     }
 
-    @Id
+   
     @Override
-    public String getServiceID() {
+    public Long getServiceID() {
         return super.getServiceID();
     }
 
     @Override
-    public void setServiceID(String aServiceID) {
+    public void setServiceID(Long aServiceID) {
         super.setServiceID(aServiceID);
     }
 

@@ -6,9 +6,13 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "technician")
 public abstract class Technician
 {
 
@@ -23,15 +27,16 @@ public abstract class Technician
     return this.name;
   }
 
-  private String technicianID;
+  private Long technicianID;
 
-  public void setTechnicianID(String aTechnicianID)
+  public void setTechnicianID(Long aTechnicianID)
   {
     this.technicianID = aTechnicianID;
   }
-
+  
   @Id
-  public String getTechnicianID()
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getTechnicianID()
   {
     return this.technicianID;
   }

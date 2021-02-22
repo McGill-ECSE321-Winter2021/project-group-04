@@ -4,9 +4,10 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name ="appointment")
 public class Appointment {
 
-  private String appointmentID;
+  private Long appointmentID;
 
   // Appointment Associations
   private Customer customer;
@@ -17,7 +18,7 @@ public class Appointment {
   private Receipt receipt;
   private AutoRepairShop autoRepairShop;
 
-  public void setAppointmentID(String aAppointmentID) {
+  public void setAppointmentID(Long aAppointmentID) {
     this.appointmentID = aAppointmentID;
   }
 
@@ -25,8 +26,9 @@ public class Appointment {
     this.reminder = aReminder;
   }
 
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public String getAppointmentID() {
+  public Long getAppointmentID() {
     return this.appointmentID;
   }
 

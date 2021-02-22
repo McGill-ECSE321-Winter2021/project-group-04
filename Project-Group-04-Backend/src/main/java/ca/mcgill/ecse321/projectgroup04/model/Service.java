@@ -7,15 +7,18 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Table(name = "service")
 public abstract class Service {
 
-    private String serviceID;
+    private Long serviceID;
+    
     @Id
-    public String getServiceID() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getServiceID() {
         return serviceID;
     }
 
-    public void setServiceID(String aServiceID) {
+    public void setServiceID(Long aServiceID) {
         this.serviceID = aServiceID;
     }
 

@@ -4,8 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.projectgroup04.model.*;
 
-public interface ReceiptRepository extends CrudRepository <Receipt, String> {
-	Receipt findReceiptByReceiptID(String receiptID);
+public interface ReceiptRepository extends CrudRepository <Receipt, Long> {
+	Receipt findReceiptByReceiptID(Long receiptId);
     Receipt findByAppointment(Appointment appointment);
 
 }

@@ -4,10 +4,12 @@ import java.util.*;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 @Entity
+@Table(name = "bookableService")
 public class BookableService extends Service
 {
 
@@ -31,14 +33,14 @@ public class BookableService extends Service
     super.setName(aName);
   }
 
-  @Id
+  
   @Override
-  public String getServiceID() {
+  public Long getServiceID() {
     return super.getServiceID();
   }
 
   @Override
-  public void setServiceID(String aServiceID) {
+  public void setServiceID(Long aServiceID) {
     super.setServiceID(aServiceID);
   }
 

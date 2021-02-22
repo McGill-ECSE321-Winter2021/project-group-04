@@ -6,15 +6,14 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import java.sql.Date;
 import java.sql.Time;
 import javax.persistence.*;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
+@Table(name = "reminder")
 public abstract class Reminder
 {
 
   //Reminder Attributes
-  private String reminderID;
+  private Long reminderID;
   private Date date;
   private Time time;
   private String message;
@@ -23,7 +22,7 @@ public abstract class Reminder
   private Customer customer;
 
   
-  public void setReminderID(String aReminderID)
+  public void setReminderID(Long aReminderID)
   {
     this.reminderID=aReminderID;
   }
@@ -42,9 +41,9 @@ public abstract class Reminder
   {
     this.message=aMessage;
   }
-
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public String getReminderID()
+  public Long getReminderID()
   {
     return this.reminderID;
   }

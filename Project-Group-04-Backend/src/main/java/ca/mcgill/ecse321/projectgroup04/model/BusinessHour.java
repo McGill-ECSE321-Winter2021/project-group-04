@@ -7,15 +7,16 @@ import java.sql.Time;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "businessHour")
 public class BusinessHour
 {
-  private String hourID;
-  public void setHourID(String aID) {
+  private Long hourID;
+  public void setHourID(Long aID) {
 	  hourID=aID;
   }
-  
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public String getHourID() {
+  public Long getHourID() {
 	  return this.hourID;
   }
   public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }

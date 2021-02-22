@@ -4,12 +4,22 @@ import java.util.*;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "autoRepairShop")
 public class AutoRepairShop {
 
-	
+	private Long id;
   private String name;
   public void setName(String aName) {name=aName;}
+  
+  
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getId() {
+    return id;
+  }
+  public void setId(Long id) {
+	  this.id = id;
+  }
   public String getName() {
 	  return name;
   }

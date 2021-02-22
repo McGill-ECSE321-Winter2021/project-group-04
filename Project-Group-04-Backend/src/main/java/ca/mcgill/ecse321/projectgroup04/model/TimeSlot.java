@@ -8,6 +8,7 @@ import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "timeSlot")
 public class TimeSlot {
 
   private Time startTime;
@@ -17,7 +18,7 @@ public class TimeSlot {
 
   private GarageSpot garageSpot;
   private AutoRepairShop autoRepairShop;
-  private String timeSlotID;
+  private Long timeSlotID;
 
   public void setStartTime(Time aStartTime) { this.startTime = aStartTime; }
   public void setEndTime(Time aEndtTime) { this.endTime = aEndtTime; }
@@ -26,7 +27,7 @@ public class TimeSlot {
 
   public void setGarageSpot(GarageSpot aGarageSpot) { this.garageSpot = aGarageSpot; }
   public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) { this.autoRepairShop = aAutoRepairShop; }
-  public void setTimeSlotID(String aTimeSlotID){this.timeSlotID = aTimeSlotID;}
+  public void setTimeSlotID(Long aTimeSlotID){this.timeSlotID = aTimeSlotID;}
 
   public Time getStartTime()
   {
@@ -44,9 +45,10 @@ public class TimeSlot {
   }
 
   public Date getEndDate() { return this.endDate; }
-
+  
   @Id
-  public String getTimeSlotID() { return this.timeSlotID; }
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getTimeSlotID() { return this.timeSlotID; }
 
   @ManyToOne
   public GarageSpot getGarageSpot()
