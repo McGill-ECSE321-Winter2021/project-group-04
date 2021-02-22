@@ -1,7 +1,3 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
-
-
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.*;
@@ -12,7 +8,7 @@ public class Receipt {
   private String receiptID;
   private double totalPrice;
 
-  //Receipt Associations
+  
   private Appointment appointment;
 
   public void setReceiptID(String aReceiptID) { this.receiptID = aReceiptID; }
@@ -30,11 +26,13 @@ public class Receipt {
     return this.totalPrice;
   }
 
-  @OneToMany(cascade = {CascadeType.ALL})
+  @OneToOne
   public Appointment getAppointment()
   {
     return appointment;
   }
+  public void setAppointment(Appointment aAppointment) {this.appointment=aAppointment;}
+  
 
   public String toString()
   {
