@@ -568,9 +568,36 @@ public class TestAutoRepairShopSystemPersistence {
     @Test 
     public void testPersistAndLoadReceipt() {
     	
+    	String receiptID ="r1";
+    	Double totalPrice = 100.0;
+    	Receipt receipt= new Receipt();
+    	receipt.setReceiptID(receiptID);
+    	receipt.setTotalPrice(totalPrice);
+    	
+    	String appointmentID="a1";
+    	Appointment appointment= new Appointment();
+    	appointment.setAppointmentID(appointmentID);
+    	
+    	receipt.setAppointment(appointment);
+    	appointment.setReceipt(receipt);
+    	
+    	receiptRepository.save(receipt);
+    	appointmentRepository.save(appointment);
+    	
+    	receipt=null;
+    	receipt=receiptRepository.findReceiptByReceiptID(receiptID);
+    	
+    	assertNotNull(receipt);
+    	assertEquals(totalPrice,receipt.getTotalPrice());
+    	assertEquals(receiptID,receipt.getReceiptID());
+    	assertEquals(appointment,receipt.getAppointment());
     }
     @Test 
     public void testPersistAndLoadReminder() {
+    	String reminderID = "rd1";
+    	String message="It is tmrw";
+    	Date reminderDate = Date.valueOf("20-03-18");
+        Time reminderTime = Time.valueOf("12:30");        
     	
     }
     @Test 
