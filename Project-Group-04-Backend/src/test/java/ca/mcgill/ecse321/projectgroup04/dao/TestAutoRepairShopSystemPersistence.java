@@ -217,6 +217,7 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(ar, appointment.getReminder());
 
     }
+    
     public void testPersistAndLoadAppointmentReminder(){
         String customerID = "234";
         Customer customer = new Customer();
@@ -567,11 +568,7 @@ public class TestAutoRepairShopSystemPersistence {
     	
 
     }
-    @Test 
-    public void testPersistAndLoadReceipt() {
-
-
-    }
+    
     @Test 
     public void testPersistAndLoadReminder() {
 
@@ -602,8 +599,4 @@ public class TestAutoRepairShopSystemPersistence {
     	assertEquals(appointment,receipt.getAppointment());
     }
   
-    @Test 
-    public void testPersistAndLoadService() {
-
-    }
 }

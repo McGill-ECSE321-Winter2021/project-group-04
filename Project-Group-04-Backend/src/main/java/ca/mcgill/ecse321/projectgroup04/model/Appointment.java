@@ -59,7 +59,7 @@ public class Appointment {
     this.receipt = aReceipt;
   }
 
-  @ManyToOne
+  @OneToOne
   public Receipt getReceipt() {
     return this.receipt;
   }
