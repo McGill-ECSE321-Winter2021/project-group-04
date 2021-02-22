@@ -278,7 +278,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         ts = null;
 
-        ts = timeSlotRepository.findTimeSlotByID(timeSlotID);
+        ts = timeSlotRepository.findTimeSlotByTimeSlotID(timeSlotID);
 
         assertNotNull(ts);
         assertEquals(startTime, ts.getStartTime());
@@ -524,7 +524,7 @@ public class TestAutoRepairShopSystemPersistence {
 
         technician = null;
 
-        technician = garageTechnicianRepository.findGarageTechnicianByID(technicianID);
+        technician = garageTechnicianRepository.findGarageTechnicianByTechnicianID(technicianID);
 
         assertNotNull(technician);
         assertEquals(technicianID, technician.getTechnicianID());
@@ -581,6 +581,11 @@ public class TestAutoRepairShopSystemPersistence {
     @Test
     public void testPersistAndLoadReceipt() {
 
+    }
+
+    @Test
+    public void testPersistAndLoadReminder() {
+
         String receiptID = "r1";
         Double totalPrice = 100.0;
         Receipt receipt = new Receipt();
@@ -607,17 +612,7 @@ public class TestAutoRepairShopSystemPersistence {
     }
 
     @Test
-    public void testPersistAndLoadReminder() {
-        String reminderID = "rd1";
-        String message = "It is tmrw";
-        Date reminderDate = Date.valueOf("20-03-18");
-        Time reminderTime = Time.valueOf("12:30");
-
-    }
-
-    @Test
     public void testPersistAndLoadService() {
 
     }
-
 }

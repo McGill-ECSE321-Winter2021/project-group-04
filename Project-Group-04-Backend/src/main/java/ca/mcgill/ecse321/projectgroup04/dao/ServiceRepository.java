@@ -7,6 +7,6 @@ import ca.mcgill.ecse321.projectgroup04.model.*;
 
 public interface ServiceRepository extends CrudRepository <Service, String> {
 	Service findServiceByServiceID(String serviceID);
-	Service findServiceByAppoitnemnt(Appointment appointnemnt);
+	Service findServiceByAppointments(Appointment appointments);
 
 }
