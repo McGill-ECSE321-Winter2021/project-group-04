@@ -2,9 +2,14 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 @Entity
+@Table(name = "bookableService")
 public class BookableService extends Service
 {
 
@@ -28,15 +33,15 @@ public class BookableService extends Service
     super.setName(aName);
   }
 
-  @Id
+  
   @Override
-  public String getServiceID() {
-    return super.getServiceID();
+  public Long getServiceId() {
+    return super.getServiceId();
   }
 
   @Override
-  public void setServiceID(String aServiceID) {
-    super.setServiceID(aServiceID);
+  public void setServiceId(Long aServiceId) {
+    super.setServiceId(aServiceId);
   }
 
   @Override
@@ -49,7 +54,9 @@ public class BookableService extends Service
     return super.getPrice();
   }
 
+  
   @Override
+  @OneToMany(cascade = {CascadeType.ALL})
   public List<Appointment> getAppointments() {
     return super.getAppointments();
   }

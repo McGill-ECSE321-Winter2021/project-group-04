@@ -2,23 +2,28 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Id;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "profile")
 public class Profile
 {
 
-  private String profileID;
+  private Long profileId;
   
-  public void setProfileID(String aProfileID)
+  public void setProfileId(Long aProfileId)
   {
-	  profileID=aProfileID;
+	  profileId=aProfileId;
   }
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public String getProfileID()
+  public Long getProfileId()
   {
-	  return profileID;
+	  return profileId;
   }
   private String addressLine;
   

@@ -1,13 +1,29 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*; 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToMany;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "autoRepairShop")
 public class AutoRepairShop {
 
+	private Long Id;
+  private String name;
+  public void setName(String aName) {name=aName;}
+  
+  
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getId() {
+    return Id;
+  }
+  public void setId(Long Id) {
+	  this.Id = Id;
+  }
+  public String getName() {
+	  return name;
+  }
+	
   private List<User> user;
 
   @OneToMany(cascade = {CascadeType.ALL})
@@ -15,12 +31,12 @@ public class AutoRepairShop {
 
   public void setUser(List<User> aUser){this.user=aUser; }
 
-  private List<Business> business;
+  private Business business;
 
-  @OneToMany(cascade = {CascadeType.ALL})
-  public List<Business> getBusiness() { return this.business; }
+  @OneToOne
+  public Business getBusiness() { return this.business; }
 
-  public void setBusiness(List<Business> aBusiness){this.business=aBusiness; }
+  public void setBusiness(Business aBusiness){this.business=aBusiness; }
 
   private List<Appointment> appointments;
 

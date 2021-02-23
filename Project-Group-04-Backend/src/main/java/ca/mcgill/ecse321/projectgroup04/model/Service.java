@@ -7,16 +7,19 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Table(name = "service")
 public abstract class Service {
 
-    private String serviceID;
+    private Long serviceId;
+    
     @Id
-    public String getServiceID() {
-        return serviceID;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getServiceId() {
+        return serviceId;
     }
 
-    public void setServiceID(String aServiceID) {
-        this.serviceID = aServiceID;
+    public void setServiceId(Long aServiceId) {
+        this.serviceId = aServiceId;
     }
 
     private int price;
@@ -56,8 +59,7 @@ public abstract class Service {
     public AutoRepairShop getAutoRepairShop() {
         return this.autoRepairShop;
     }
-
-    /* Code from template association_SetOneToMany */
+    
     public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
       this.autoRepairShop = aAutoRepairShop;
     }
@@ -66,7 +68,7 @@ public abstract class Service {
         return super.toString() + "[" +
                 "price" + ":" + getPrice() + "," +
                 "name" + ":" + getName() + "]" + System.getProperties().getProperty("line.separator") +
-                "  " + "serviceID" + "=" + (getServiceID() != null ? !getServiceID().equals(this) ? getServiceID().toString().replaceAll("  ", "    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+                "  " + "serviceId" + "=" + (getServiceId() != null ? !getServiceId().equals(this) ? getServiceId().toString().replaceAll("  ", "    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
                 "  " + "autoRepairShop = " + (getAutoRepairShop() != null ? Integer.toHexString(System.identityHashCode(getAutoRepairShop())) : "null");
     }
 }

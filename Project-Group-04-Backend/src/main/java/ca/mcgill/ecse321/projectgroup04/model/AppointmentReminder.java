@@ -8,27 +8,28 @@ import java.sql.Time;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "appointmentReminder")
 public class AppointmentReminder extends Reminder
 {
 
   //AppointmentReminder Associations
   private Appointment appointment;
-
-  public void setReminderID(String aReminderID)
+  @Override
+  public void setReminderId(Long aReminderId)
   {
-    super.setReminderID(aReminderID);
+    super.setReminderId(aReminderId);
   }
-
+  @Override
   public void setDate(Date aDate)
   {
     super.setDate(aDate);
   }
-
+  @Override
   public void setTime(Time aTime)
   {
     super.setTime(aTime);
   }
-
+  @Override
   public void setMessage(String aMessage)
   {
     super.setMessage(aMessage);
@@ -36,36 +37,39 @@ public class AppointmentReminder extends Reminder
 
   public void setAppointment(Appointment aAppointment){ this.appointment = aAppointment;}
 
-  @Id
-  public String getReminderID()
+ 
+  @Override
+  public Long getReminderId()
   {
-    return super.getReminderID();
+    return super.getReminderId();
   }
 
+  @Override
   public Date getDate()
   {
     return super.getDate();
   }
-
+  @Override
   public Time getTime()
   {
     return super.getTime();
   }
-
+  @Override
   public String getMessage()
   {
     return super.getMessage();
   }
-
+  @Override
   @ManyToOne
   public Customer getCustomer()
   {
     return super.getCustomer();
   }
 
-  @OneToMany
+  @OneToOne
   public Appointment getAppointment() { return this.appointment; }
 
+  @Override
   public void setCustomer(Customer aCustomer)
   {
     super.setCustomer(aCustomer);

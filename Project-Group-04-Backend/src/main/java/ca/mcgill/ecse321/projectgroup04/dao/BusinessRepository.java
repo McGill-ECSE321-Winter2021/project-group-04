@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup04.model.Business;
 
 
-public interface BusinessRepository extends CrudRepository<Business, String>{
-    Business findBusinessByName(String name);
+public interface BusinessRepository extends CrudRepository<Business, Long>{
+    Business findBusinessById(Long Id);
 }

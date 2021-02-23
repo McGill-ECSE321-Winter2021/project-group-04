@@ -6,11 +6,14 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 
 @Entity
+@Table(name = "customer")
 public class Customer extends User
 {
 
@@ -20,15 +23,22 @@ public class Customer extends User
   private Car car;
   private List<Appointment> appointments;
 
-  @Id
-  @Override
-  public String getUserID(){
-    return super.getUserID();
+  
+ @Override
+  public String getUserId(){
+    return super.getUserId();
   }
-
   @Override
-  public void setUserID(String aUserID){
-    super.setUserID(aUserID);
+  public Long getId() {
+	  return super.getId();
+  }
+  @Override
+  public void setId(Long id) {
+	  super.setId(id);
+  }
+  @Override
+  public void setUserId(String aUserId){
+	  super.setUserId(aUserId);
   }
 
   @Override
@@ -44,7 +54,7 @@ public class Customer extends User
   public void setReminders(List<Reminder> aReminders){
     this.reminders=aReminders;
   }
-  @OneToMany(cascade = {CascadeType.ALL})
+  @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL})
   public List<Reminder> getReminders()
   {
     return this.reminders;
@@ -53,7 +63,7 @@ public class Customer extends User
   public void setCustomerProfile(Profile aCustomerProfile){
     this.customerProfile=aCustomerProfile;
   }
-
+  @OneToOne
   public Profile getCustomerProfile()
   {
     return this.customerProfile;
@@ -62,17 +72,18 @@ public class Customer extends User
   public void setCar(Car aCar){
     this.car=aCar;
   }
+  @OneToOne
   public Car getCar()
   {
     return this.car;
   }
 
   
-  public void setappointments (List<Appointment> aAppointments){
+  public void setAppointments (List<Appointment> aAppointments){
     this.appointments=aAppointments;
   }
 
-  @OneToMany(cascade = {CascadeType.ALL})
+  @OneToMany(mappedBy = "customer",cascade = {CascadeType.ALL})
   public List<Appointment> getAppointments()
   {
     return this.appointments;

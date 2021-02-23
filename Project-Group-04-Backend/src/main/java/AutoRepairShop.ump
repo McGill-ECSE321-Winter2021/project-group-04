@@ -63,11 +63,12 @@ class Appointment
   * -> 1 TimeSlot timeSlot;
   1 -- 1 AppointmentReminder reminder;
   1 -- 1 Receipt receipt;
-  * -- 1 BookableService;
+  * -- 1 BookableService bookableServices;
 }
 
 class BusinessHour
 {
+String hourID;
   enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
   DayOfWeek dayOfWeek;
   Time startTime; 
@@ -106,6 +107,7 @@ class GarageTechnician
 
 class TimeSlot
 {
+ timeSlotID;
   Time startTime; 
 Date startDate;
 Time endTime; 
@@ -115,11 +117,13 @@ Date endDate;
 class GarageSpot
 {
   int spotNumber;
-  1 -- * TimeSlot spot;
+  1 -- * TimeSlot timeSlot;
 }
 
 class AutoRepairShop
 {
+	
+	String name;
   1 <@>- * User user;
   1 <@>- 1 Business business;
   1 <@>- * Appointment appointments;

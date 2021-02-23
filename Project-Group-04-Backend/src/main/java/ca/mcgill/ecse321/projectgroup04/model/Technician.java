@@ -5,8 +5,14 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "technician")
 public abstract class Technician
 {
 
@@ -21,17 +27,18 @@ public abstract class Technician
     return this.name;
   }
 
-  private String technicianID;
+  private Long technicianId;
 
-  public void setTechnicianID(String aTechnicianID)
+  public void setTechnicianId(Long aTechnicianId)
   {
-    this.technicianID = aTechnicianID;
+    this.technicianId = aTechnicianId;
   }
-
+  
   @Id
-  public String getTechnicianID()
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getTechnicianId()
   {
-    return this.technicianID;
+    return this.technicianId;
   }
 
 
@@ -39,6 +46,6 @@ public abstract class Technician
   {
     return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "name" + "=" + (getName() != null ? !getName().equals(this)  ? getName().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "technicianID" + "=" + (getTechnicianID() != null ? !getTechnicianID().equals(this)  ? getTechnicianID().toString().replaceAll("  ","    ") : "this" : "null");
+            "  " + "technicianId" + "=" + (getTechnicianId() != null ? !getTechnicianId().equals(this)  ? getTechnicianId().toString().replaceAll("  ","    ") : "this" : "null");
   }
 }

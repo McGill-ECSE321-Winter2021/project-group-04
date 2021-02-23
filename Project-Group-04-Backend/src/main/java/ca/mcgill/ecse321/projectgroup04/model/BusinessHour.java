@@ -3,13 +3,22 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-import javax.persistence.Entity;
 import java.sql.Time;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "businessHour")
 public class BusinessHour
 {
-
+  private Long hourId;
+  public void setHourId(Long aId) {
+	  hourId=aId;
+  }
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Id
+  public Long getHourId() {
+	  return this.hourId;
+  }
   public enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
 
   //BusinessHour Attributes

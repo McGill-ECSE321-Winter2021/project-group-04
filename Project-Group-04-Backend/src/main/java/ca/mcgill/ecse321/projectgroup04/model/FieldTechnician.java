@@ -5,18 +5,20 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "fieldTechnician")
 public class FieldTechnician extends Technician {
-    @Id
+    
     @Override
-    public String getTechnicianID() {
-        return super.getTechnicianID();
+    public Long getTechnicianId() {
+        return super.getTechnicianId();
     }
 
     @Override
-    public void setTechnicianID(String aTechnicianID) {
-        super.setTechnicianID(aTechnicianID);
+    public void setTechnicianId(Long aTechnicianId) {
+        super.setTechnicianId(aTechnicianId);
     }
 
     @Override
@@ -29,14 +31,14 @@ public class FieldTechnician extends Technician {
         super.setName(aName);
     }
 
-    private EmergencyService service;
+    private EmergencyService emergencyService;
 
     @OneToOne
-    public EmergencyService getService() {
-        return this.service;
+    public EmergencyService getEmergencyService() {
+        return this.emergencyService;
     }
 
-    public void setService(EmergencyService emergencyService) {
-        this.service = emergencyService;
+    public void setEmergencyService(EmergencyService emergencyService) {
+        this.emergencyService = emergencyService;
     }
 }

@@ -5,16 +5,15 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.sql.Date;
 import java.sql.Time;
+import javax.persistence.*;
 
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-
+@Entity
+@Table(name = "reminder")
 public abstract class Reminder
 {
 
   //Reminder Attributes
-  private String reminderID;
+  private Long reminderId;
   private Date date;
   private Time time;
   private String message;
@@ -23,9 +22,9 @@ public abstract class Reminder
   private Customer customer;
 
   
-  public void setReminderID(String aReminderID)
+  public void setReminderId(Long aReminderId)
   {
-    this.reminderID=aReminderID;
+    this.reminderId=aReminderId;
   }
 
   public void setDate(Date aDate)
@@ -42,11 +41,11 @@ public abstract class Reminder
   {
     this.message=aMessage;
   }
-
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public String getReminderID()
+  public Long getReminderId()
   {
-    return this.reminderID;
+    return this.reminderId;
   }
 
   public Date getDate()
@@ -78,7 +77,7 @@ public abstract class Reminder
   public String toString()
   {
     return super.toString() + "["+
-            "reminderID" + ":" + getReminderID()+ "," +
+            "reminderId" + ":" + getReminderId()+ "," +
             "message" + ":" + getMessage()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
