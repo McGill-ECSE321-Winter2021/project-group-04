@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour;
 
-public interface BusinessHourRepository extends CrudRepository<BusinessHour, String> {
-    BusinessHour findBusinessHourByHourID(String hourID);
+public interface BusinessHourRepository extends CrudRepository<BusinessHour, Long> {
+    BusinessHour findBusinessHourByHourID(Long hourID);
 }

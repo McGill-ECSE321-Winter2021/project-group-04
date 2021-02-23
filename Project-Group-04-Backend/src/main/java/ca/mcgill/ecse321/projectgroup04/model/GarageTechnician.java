@@ -7,9 +7,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import java.util.*;
 
 @Entity
+@Table(name = "garageTechnician")
 public class GarageTechnician extends Technician {
 
     private List<Appointment> appointments;
@@ -23,14 +26,14 @@ public class GarageTechnician extends Technician {
         this.appointments = appointments;
     }
 
-    @Id
+    
     @Override
-    public String getTechnicianID() {
+    public Long getTechnicianID() {
         return super.getTechnicianID();
     }
 
     @Override
-    public void setTechnicianID(String aTechnicianID) {
+    public void setTechnicianID(Long aTechnicianID) {
         super.setTechnicianID(aTechnicianID);
     }
 

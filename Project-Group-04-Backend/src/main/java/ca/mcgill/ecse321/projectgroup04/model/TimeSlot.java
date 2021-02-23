@@ -8,6 +8,7 @@ import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "timeSlot")
 public class TimeSlot {
 
   private Time startTime;
@@ -17,7 +18,7 @@ public class TimeSlot {
 
   private GarageSpot garageSpot;
   private AutoRepairShop autoRepairShop;
-  private String timeSlotID;
+  private Long timeSlotID;
 
   public void setStartTime(Time aStartTime) {
     this.startTime = aStartTime;
@@ -43,7 +44,7 @@ public class TimeSlot {
     this.autoRepairShop = aAutoRepairShop;
   }
 
-  public void setTimeSlotID(String aTimeSlotID) {
+  public void setTimeSlotID(Long aTimeSlotID) {
     this.timeSlotID = aTimeSlotID;
   }
 
@@ -64,7 +65,8 @@ public class TimeSlot {
   }
 
   @Id
-  public String getTimeSlotID() {
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getTimeSlotID() {
     return this.timeSlotID;
   }
 

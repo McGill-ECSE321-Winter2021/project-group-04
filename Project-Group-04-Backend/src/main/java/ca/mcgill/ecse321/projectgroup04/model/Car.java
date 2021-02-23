@@ -5,14 +5,18 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
+@Table(name = "car")
 public class Car
 {
 
   //Car Attributes
-  private String carID;
+  private Long carID;
   private String model;
   private String color;
   private String year;
@@ -21,7 +25,7 @@ public class Car
   //Car Associations
   private Customer owner;
 
-  public void setCarID(String aCarID)
+  public void setCarID(Long aCarID)
   {
     this.carID=aCarID;
   }
@@ -44,9 +48,9 @@ public class Car
   public void setOwner(Customer aOwner) {
 	  owner=aOwner;
   }
-
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public String getCarID()
+  public Long getCarID()
   {
     return carID;
   }

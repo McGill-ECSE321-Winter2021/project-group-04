@@ -7,15 +7,17 @@ import java.sql.Time;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "businessHour")
 public class BusinessHour {
-  private String hourID;
+  private Long hourID;
 
-  public void setHourID(String aID) {
-    this.hourID = aID;
+  public void setHourID(Long aID) {
+    hourID = aID;
   }
 
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public String getHourID() {
+  public Long getHourID() {
     return this.hourID;
   }
 

@@ -9,9 +9,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
+@Table(name = "business")
 public class Business {
 
   // Business Attributes
@@ -19,7 +23,7 @@ public class Business {
   private String address;
   private String phoneNumber;
   private String emailAddress;
-
+  private Long id;
   // Business Associations
   private List<BusinessHour> businessHours;
   private List<TimeSlot> regular;
@@ -44,8 +48,15 @@ public class Business {
   public void setEmailAddress(String aEmailAddress) {
     this.emailAddress = aEmailAddress;
   }
-
+  
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getId() {
+    return id;
+  }
+  public void setId(Long id) {
+	  this.id = id;
+  }
   public String getName() {
     return this.name;
   }

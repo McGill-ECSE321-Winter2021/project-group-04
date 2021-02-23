@@ -5,11 +5,21 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "adminstrativeAssistant")
 public class AdministrativeAssistant extends User {
 
-  @Id
+
+	@Override
+	public Long getId() {
+		  return super.getId();
+	  }
+	  @Override
+ public void setId(Long id) {
+		  super.setId(id);
+	  }
   @Override
   public String getUserID() {
     return super.getUserID();

@@ -4,8 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.projectgroup04.model.*;
 
-public interface ProfileRepository extends CrudRepository <Profile, String> {
-	Profile findProfileByProfileID(String profileID);
+public interface ProfileRepository extends CrudRepository <Profile, Long> {
+	Profile findProfileByProfileId(Long profileID);
     Profile findByCustomer(Customer customer);
 
 }

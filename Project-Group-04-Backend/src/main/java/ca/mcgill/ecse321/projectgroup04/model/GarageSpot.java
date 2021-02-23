@@ -2,21 +2,34 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import java.util.*;
 
 @Entity
+@Table(name = "garageSpot")
 public class GarageSpot
 {
   private int spotNumber;
+  private Long id;
 
   public void setSpotNumber(int aSpotNumber)
   {
    this.spotNumber = aSpotNumber;
   }
-
+  
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getId() {
+	    return id;
+	  }
+  public void setId(Long id) {
+	  this.id = id;
+  }
   public int getSpotNumber()
   {
     return this.spotNumber;

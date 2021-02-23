@@ -4,16 +4,21 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@Table(name = "\"User\"")
 public abstract class User
 {
 
   //User Attributes
   private String userID;
   private String password;
+  private Long id;
 
   //User Associations
   private AutoRepairShop autoRepairShop;
@@ -28,8 +33,15 @@ public abstract class User
   {
     this.password=aPassword;
   }
-
+  
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getId() {
+    return id;
+  }
+  public void setId(Long id) {
+	  this.id = id;
+  }
   public String getUserID()
   {
     return userID;

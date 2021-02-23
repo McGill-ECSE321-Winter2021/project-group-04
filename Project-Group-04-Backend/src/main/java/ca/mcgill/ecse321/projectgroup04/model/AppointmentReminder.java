@@ -8,13 +8,14 @@ import java.sql.Time;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "appointmentReminder")
 public class AppointmentReminder extends Reminder
 {
 
   //AppointmentReminder Associations
   private Appointment appointment;
   @Override
-  public void setReminderID(String aReminderID)
+  public void setReminderID(Long aReminderID)
   {
     super.setReminderID(aReminderID);
   }
@@ -36,9 +37,9 @@ public class AppointmentReminder extends Reminder
 
   public void setAppointment(Appointment aAppointment){ this.appointment = aAppointment;}
 
-  @Id
+ 
   @Override
-  public String getReminderID()
+  public Long getReminderID()
   {
     return super.getReminderID();
   }

@@ -7,10 +7,12 @@ import java.util.*;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@Table(name = "customer")
 public class Customer extends User {
 
   // Customer Associations
@@ -19,10 +21,19 @@ public class Customer extends User {
   private Car car;
   private List<Appointment> appointments;
 
-  @Id
   @Override
   public String getUserID() {
     return super.getUserID();
+  }
+
+  @Override
+  public Long getId() {
+    return super.getId();
+  }
+
+  @Override
+  public void setId(Long id) {
+    super.setId(id);
   }
 
   @Override
