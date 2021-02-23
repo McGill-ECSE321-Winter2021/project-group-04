@@ -52,7 +52,7 @@ public class Appointment {
     return this.timeSlot;
   }
 
-  @OneToOne
+  @OneToOne(mappedBy = "appointment", cascade = {CascadeType.ALL})
   public AppointmentReminder getReminder() {
     return this.reminder;
   }

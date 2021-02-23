@@ -23,7 +23,7 @@ public class Business {
   private String address;
   private String phoneNumber;
   private String emailAddress;
-  private Long Id;
+  private Long id;
   // Business Associations
   private List<BusinessHour> businessHours;
   private List<TimeSlot> regular;
@@ -52,10 +52,10 @@ public class Business {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
-    return Id;
+    return id;
   }
   public void setId(Long Id) {
-	  this.Id = Id;
+	  this.id = Id;
   }
   public String getName() {
     return this.name;

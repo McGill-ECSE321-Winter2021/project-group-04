@@ -46,5 +46,5 @@ public class AdministrativeAssistant extends User {
   public void setPassword(String aPassword) {
 	  super.setPassword(aPassword);
   }
-  
+ 
 }

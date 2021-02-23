@@ -14,6 +14,9 @@ import javax.persistence.Id;
 @Table(name = "\"User\"")
 public abstract class User
 {
+	public User() {
+		
+	}
 
   //User Attributes
   private String userId;

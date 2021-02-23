@@ -54,7 +54,7 @@ public class Customer extends User
   public void setReminders(List<Reminder> aReminders){
     this.reminders=aReminders;
   }
-  @OneToMany(cascade = {CascadeType.ALL})
+  @OneToMany(mappedBy = "customer", cascade = {CascadeType.ALL})
   public List<Reminder> getReminders()
   {
     return this.reminders;
@@ -83,7 +83,7 @@ public class Customer extends User
     this.appointments=aAppointments;
   }
 
-  @OneToMany(cascade = {CascadeType.ALL})
+  @OneToMany(mappedBy = "customer",cascade = {CascadeType.ALL})
   public List<Appointment> getAppointments()
   {
     return this.appointments;
