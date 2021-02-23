@@ -37,7 +37,7 @@ public class TestAutoRepairShopSystemPersistence {
     private BookableServiceRepository bookableServiceRepository;
     @Autowired
     private TimeSlotRepository timeSlotRepository;
-  
+
     @Autowired
     private GarageTechnicianRepository garageTechnicianRepository;
     @Autowired
@@ -65,10 +65,9 @@ public class TestAutoRepairShopSystemPersistence {
     private EmergencyServiceRepository emergencyServiceRepository;
     @Autowired
     private OwnerRepository ownerRepository;
- 
-    
+
     @AfterEach
-	public void clearDatabase() {
+    public void clearDatabase() {
         administrativeAssistantRepository.deleteAll();
         appointmentRepository.deleteAll();
         profileRepository.deleteAll();
@@ -81,18 +80,19 @@ public class TestAutoRepairShopSystemPersistence {
         receiptRepository.deleteAll();
         bookableServiceRepository.deleteAll();
         garageTechnicianRepository.deleteAll();
-    	timeSlotRepository.deleteAll();
+        timeSlotRepository.deleteAll();
 
-       garageSpotRepository.deleteAll();
+        garageSpotRepository.deleteAll();
 
         checkupReminderRepository.deleteAll();
         fieldTechnicianRepository.deleteAll();
         emergencyServiceRepository.deleteAll();
 
     }
+
     @Test
     @Transactional
-    public void testPersistAndLoadAdministrativeAssistant(){
+    public void testPersistAndLoadAdministrativeAssistant() {
         String userId = "qq";
         String password = "TestAdministrativePassword";
         AdministrativeAssistant ad = new AdministrativeAssistant();
@@ -111,7 +111,7 @@ public class TestAutoRepairShopSystemPersistence {
 
     @Test
     @Transactional
-    public void testPersistAndLoadBookableService(){
+    public void testPersistAndLoadBookableService() {
         int duration = 30;
         String name = "wash";
         int price = 10;
@@ -134,23 +134,23 @@ public class TestAutoRepairShopSystemPersistence {
 
     @Test
     @Transactional
-    public void testPersistAndLoadTimeSlot(){
+    public void testPersistAndLoadTimeSlot() {
         Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
         Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
         Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
         Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
-         TimeSlot ts = new TimeSlot();
-         ts.setStartTime(startTime);
-         ts.setEndTime(endTime);
-         ts.setStartDate(startDate);
-         ts.setEndDate(endDate);
+        TimeSlot ts = new TimeSlot();
+        ts.setStartTime(startTime);
+        ts.setEndTime(endTime);
+        ts.setStartDate(startDate);
+        ts.setEndDate(endDate);
 
-         int GSnum = 123;
-         GarageSpot garageSpot = new GarageSpot();
-         garageSpot.setSpotNumber(GSnum);
+        int GSnum = 123;
+        GarageSpot garageSpot = new GarageSpot();
+        garageSpot.setSpotNumber(GSnum);
 
-         ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
-         times.add(ts);
+        ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
+        times.add(ts);
         garageSpot.setTimeSlot(times);
 
         ts.setGarageSpot(garageSpot);
@@ -158,7 +158,7 @@ public class TestAutoRepairShopSystemPersistence {
         garageSpotRepository.save(garageSpot);
         Long garageId = garageSpot.getId();
         timeSlotRepository.save(ts);
- 
+
         Long timeSlotID = ts.getTimeSlotId();
 
         ts = null;
@@ -175,22 +175,22 @@ public class TestAutoRepairShopSystemPersistence {
 
     }
 
-     @Test  
-     @Transactional
-    public void testPersistAndLoadAppointment(){
+    @Test
+    @Transactional
+    public void testPersistAndLoadAppointment() {
 
         BookableService service = new BookableService();
-        
+
         GarageTechnician technician = new GarageTechnician();
-        
+
         String customerID = "TestId";
         Customer customer = new Customer();
         customer.setUserId(customerID);
-        
-       Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-       Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-      Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
-      Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
+
+        Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
+        Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
+        Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
+        Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
         TimeSlot ts = new TimeSlot();
         ts.setStartTime(startTime);
         ts.setEndTime(endTime);
@@ -201,16 +201,14 @@ public class TestAutoRepairShopSystemPersistence {
         Receipt receipt = new Receipt();
         receipt.setTotalPrice(totalPrice);
 
-
         Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
         Time time = java.sql.Time.valueOf(LocalTime.of(11, 35));
         String message = "It is tomorrow";
-        AppointmentReminder ar =  new AppointmentReminder();
+        AppointmentReminder ar = new AppointmentReminder();
         ar.setCustomer(customer);
         ar.setDate(date);
         ar.setTime(time);
         ar.setMessage(message);
-
 
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
@@ -224,7 +222,7 @@ public class TestAutoRepairShopSystemPersistence {
         customerRepository.save(customer);
         Long customerId = customer.getId();
         appointmentReminderRepository.save(ar);
-        Long arID =ar.getReminderId();
+        Long arID = ar.getReminderId();
         garageTechnicianRepository.save(technician);
         Long techId = technician.getTechnicianId();
         timeSlotRepository.save(ts);
@@ -246,10 +244,10 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(arID, appointment.getReminder().getReminderId());
     }
 
-     @Test
-     @Transactional
+    @Test
+    @Transactional
 
-    public void testPersistAndLoadAppointmentReminder(){
+    public void testPersistAndLoadAppointmentReminder() {
         String customerID = "cizo";
         Customer customer = new Customer();
         customer.setUserId(customerID);
@@ -261,7 +259,7 @@ public class TestAutoRepairShopSystemPersistence {
         BookableService service = new BookableService();
         service.setName("oil change");
         service.setPrice(20);
-        
+
         double totalPrice = 90;
         Receipt receipt = new Receipt();
         receipt.setTotalPrice(totalPrice);
@@ -270,16 +268,14 @@ public class TestAutoRepairShopSystemPersistence {
 
         Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
         Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-       Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
-       Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
+        Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
+        Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
         TimeSlot ts = new TimeSlot();
         ts.setStartTime(startTime);
         ts.setEndTime(endTime);
         ts.setStartDate(startDate);
         ts.setEndDate(endDate);
 
-       
-        
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
         appointment.setBookableServices(service);
@@ -293,7 +289,7 @@ public class TestAutoRepairShopSystemPersistence {
         appointmentReminder.setMessage(message);
         appointmentReminder.setTime(time);
         appointmentReminder.setAppointment(appointment);
-        
+
         receiptRepository.save(receipt);
         Long receiptID = receipt.getReceiptId();
         customerRepository.save(customer);
@@ -307,13 +303,12 @@ public class TestAutoRepairShopSystemPersistence {
         appointmentRepository.save(appointment);
         Long appointmentID = appointment.getAppointmentId();
         appointmentReminderRepository.save(appointmentReminder);
-        Long arID =appointmentReminder.getReminderId();
+        Long arID = appointmentReminder.getReminderId();
 
-        
-        appointmentReminder =null;
-        
-        appointmentReminder  = appointmentReminderRepository.findAppointmentReminderByReminderId(arID);
-        
+        appointmentReminder = null;
+
+        appointmentReminder = appointmentReminderRepository.findAppointmentReminderByReminderId(arID);
+
         assertNotNull(appointmentReminder);
         assertEquals(appointmentID, appointmentReminder.getAppointment().getAppointmentId());
         assertEquals(customerId, appointmentReminder.getCustomer().getId());
@@ -326,11 +321,10 @@ public class TestAutoRepairShopSystemPersistence {
 
     @Test
     @Transactional
-    public void testPersistAndLoadGarageTechnician(){
+    public void testPersistAndLoadGarageTechnician() {
         String techName = "cizo";
         GarageTechnician technician = new GarageTechnician();
         technician.setName(techName);
-
 
         Appointment appointment = new Appointment();
         appointment.setTechnician(technician);
@@ -342,7 +336,6 @@ public class TestAutoRepairShopSystemPersistence {
         technician.setAppointments(appointments);
         garageTechnicianRepository.save(technician);
         Long technicianID = technician.getTechnicianId();
-
 
         technician = null;
 
@@ -358,7 +351,7 @@ public class TestAutoRepairShopSystemPersistence {
     @Transactional
     public void testPersistAndLoadCustomer() {
 
-    	String userId = "test";
+        String userId = "test";
         String password = "TestPAssword";
         Customer customer = new Customer();
         customer.setPassword(password);
@@ -415,7 +408,6 @@ public class TestAutoRepairShopSystemPersistence {
         Long arId = ar.getReminderId();
         reminders.add(ar);
 
-
         Appointment appointment = new Appointment();
         appointment.setCustomer(customer);
         appointment.setReminder(ar);
@@ -447,93 +439,92 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(userId, customer.getUserId());
 
     }
+
     @Test
     @Transactional
     public void testPersistAndLoadProfile() {
 
-    	String address ="this is the test adress";
-    	String phoneNumber = "438-978-6824";
-    	String firstName="FirstName";
-    	String lastName="LastName";
-    	String zipCode="H2X2B5";
-    	String email="thisis@test.com";
-    	Profile profile = new Profile();
-    	profile.setAddressLine(address);
-    	profile.setEmailAddress(email);
-    	profile.setFirstName(firstName);
-    	profile.setLastName(lastName);
-    	profile.setPhoneNumber(phoneNumber);
-    	profile.setZipCode(zipCode);
-    	    
+        String address = "this is the test adress";
+        String phoneNumber = "438-978-6824";
+        String firstName = "FirstName";
+        String lastName = "LastName";
+        String zipCode = "H2X2B5";
+        String email = "thisis@test.com";
+        Profile profile = new Profile();
+        profile.setAddressLine(address);
+        profile.setEmailAddress(email);
+        profile.setFirstName(firstName);
+        profile.setLastName(lastName);
+        profile.setPhoneNumber(phoneNumber);
+        profile.setZipCode(zipCode);
+
         String password = "TestPassword";
         Customer customer = new Customer();
-        String  userId ="TestUser";
+        String userId = "TestUser";
         customer.setUserId(userId);
         customer.setPassword(password);
-        
+
         customer.setCustomerProfile(profile);
         profile.setCustomer(customer);
         customerRepository.save(customer);
         Long id = customer.getId();
         profileRepository.save(profile);
         Long profileId = profile.getProfileId();
-        
-        profile=null;
-        profile=profileRepository.findProfileByProfileId(profileId);
-        
+
+        profile = null;
+        profile = profileRepository.findProfileByProfileId(profileId);
+
         assertNotNull(profile);
         assertEquals(profileId, profile.getProfileId());
-        assertEquals(address,profile.getAddressLine());
-        assertEquals(phoneNumber,profile.getPhoneNumber());
-        assertEquals(firstName,profile.getFirstName());        
-        assertEquals(lastName,profile.getLastName());
-        assertEquals(zipCode,profile.getZipCode());
-        assertEquals(email,profile.getEmailAddress());
+        assertEquals(address, profile.getAddressLine());
+        assertEquals(phoneNumber, profile.getPhoneNumber());
+        assertEquals(firstName, profile.getFirstName());
+        assertEquals(lastName, profile.getLastName());
+        assertEquals(zipCode, profile.getZipCode());
+        assertEquals(email, profile.getEmailAddress());
         assertEquals(id, profile.getCustomer().getId());
-    	
 
     }
 
-    @Test 
+    @Test
     @Transactional
     public void testPersistAndLoadReceipt() {
 
-    	
-	Double totalPrice = 100.0;
-	Receipt receipt= new Receipt();
-	receipt.setTotalPrice(totalPrice);
-	
-	Appointment appointment= new Appointment();
-	
-	receipt.setAppointment(appointment);
-	appointment.setReceipt(receipt);
-	
-	receiptRepository.save(receipt);
-	Long receiptId = receipt.getReceiptId();
-	appointmentRepository.save(appointment);
-	Long appointmentId = appointment.getAppointmentId();
-	
-	receipt=null;
-	receipt=receiptRepository.findReceiptByReceiptId(receiptId);
-	
-	assertNotNull(receipt);
-	assertEquals(totalPrice,receipt.getTotalPrice());
-	assertEquals(receiptId,receipt.getReceiptId());
-	assertEquals(appointmentId,receipt.getAppointment().getAppointmentId());
+        Double totalPrice = 100.0;
+        Receipt receipt = new Receipt();
+        receipt.setTotalPrice(totalPrice);
+
+        Appointment appointment = new Appointment();
+
+        receipt.setAppointment(appointment);
+        appointment.setReceipt(receipt);
+
+        receiptRepository.save(receipt);
+        Long receiptId = receipt.getReceiptId();
+        appointmentRepository.save(appointment);
+        Long appointmentId = appointment.getAppointmentId();
+
+        receipt = null;
+        receipt = receiptRepository.findReceiptByReceiptId(receiptId);
+
+        assertNotNull(receipt);
+        assertEquals(totalPrice, receipt.getTotalPrice());
+        assertEquals(receiptId, receipt.getReceiptId());
+        assertEquals(appointmentId, receipt.getAppointment().getAppointmentId());
 
     }
-    
+
     @Test
     @Transactional
     public void testPersistAndLoadGarageSpot() {
- 	   int gSpot = 2;
- 	   GarageSpot garageSpot = new GarageSpot();
- 	   garageSpot.setSpotNumber(gSpot);
- 	   
-       Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-       Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-      Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
-      Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
+        int gSpot = 2;
+        GarageSpot garageSpot = new GarageSpot();
+        garageSpot.setSpotNumber(gSpot);
+
+        Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
+        Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
+        Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
+        Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
         TimeSlot ts = new TimeSlot();
         ts.setStartTime(startTime);
         ts.setEndTime(endTime);
@@ -544,136 +535,124 @@ public class TestAutoRepairShopSystemPersistence {
         ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
         times.add(ts);
         garageSpot.setTimeSlot(times);
-        
+
         garageSpotRepository.save(garageSpot);
         Long gsId = garageSpot.getId();
         timeSlotRepository.save(ts);
         Long tsId = ts.getTimeSlotId();
-       
-
 
         garageSpot = null;
-        
-        garageSpot = garageSpotRepository.findGarageSpotById(gsId);
-        
-        assertNotNull(garageSpot);    
-        assertEquals(tsId, garageSpot.getTimeSlot().get(0).getTimeSlotId()); 
-        assertEquals(gSpot, garageSpot.getSpotNumber()); 
-        assertEquals(gsId, garageSpot.getId()); 
-    }
-    
-    @Test
-    @Transactional
-    public void testPersistAndLoadOwner(){
- 	   String userId = "ooo";
- 	   String password = "TestOwnerPassword";
- 	   Owner ow = new Owner();
- 	   ow.setUserId(userId);
- 	   ow.setPassword(password);
- 	   ownerRepository.save(ow);
- 	   Long owId = ow.getId();
- 
- 	   ow = null;
- 	   ow = ownerRepository.findOwnerById(owId);
- 	   assertNotNull(ow);
- 	   assertEquals(owId, ow.getId());
- 	   assertEquals(userId, ow.getUserId());
-  }
-    
-    @Test
-    @Transactional
-    public void testPersistAndLoadEmergencyService(){
-       String location = "Montreal";
-       String name = "Towing";
-       int price = 10;
-       EmergencyService es = new EmergencyService();
-       //Long id = es.getServiceID();
-       es.setLocation(location);
-       es.setName(name);
-       es.setPrice(price);
-       emergencyServiceRepository.save(es);
-       Long esId = es.getServiceId();
 
-       es = null;
-       es = emergencyServiceRepository.findEmergencyServiceByServiceId(esId);
-       assertNotNull(es);
-       assertEquals(name, es.getName());
-       assertEquals(esId, es.getServiceId());
-       assertEquals(location, es.getLocation());
-       assertEquals(price, es.getPrice());
-   }
-    
+        garageSpot = garageSpotRepository.findGarageSpotById(gsId);
+
+        assertNotNull(garageSpot);
+        assertEquals(tsId, garageSpot.getTimeSlot().get(0).getTimeSlotId());
+        assertEquals(gSpot, garageSpot.getSpotNumber());
+        assertEquals(gsId, garageSpot.getId());
+    }
+
     @Test
     @Transactional
-    public void testPersistAndLoadFieldTechnician(){
+    public void testPersistAndLoadOwner() {
+        String userId = "ooo";
+        String password = "TestOwnerPassword";
+        Owner ow = new Owner();
+        ow.setUserId(userId);
+        ow.setPassword(password);
+        ownerRepository.save(ow);
+        Long owId = ow.getId();
+
+        ow = null;
+        ow = ownerRepository.findOwnerById(owId);
+        assertNotNull(ow);
+        assertEquals(owId, ow.getId());
+        assertEquals(userId, ow.getUserId());
+    }
+
+    @Test
+    @Transactional
+    public void testPersistAndLoadEmergencyService() {
+        String location = "Montreal";
+        String name = "Towing";
+        int price = 10;
+        EmergencyService es = new EmergencyService();
+        // Long id = es.getServiceID();
+        es.setLocation(location);
+        es.setName(name);
+        es.setPrice(price);
+        emergencyServiceRepository.save(es);
+        Long esId = es.getServiceId();
+
+        es = null;
+        es = emergencyServiceRepository.findEmergencyServiceByServiceId(esId);
+        assertNotNull(es);
+        assertEquals(name, es.getName());
+        assertEquals(esId, es.getServiceId());
+        assertEquals(location, es.getLocation());
+        assertEquals(price, es.getPrice());
+    }
+
+    @Test
+    @Transactional
+    public void testPersistAndLoadFieldTechnician() {
         String fieldTechName = "cizor";
         FieldTechnician fieldTech = new FieldTechnician();
         fieldTech.setName(fieldTechName);
         fieldTechnicianRepository.save(fieldTech);
         Long ftId = fieldTech.getTechnicianId();
-        
+
         fieldTech = null;
-        
+
         fieldTech = fieldTechnicianRepository.findFieldTechnicianByTechnicianId(ftId);
 
-    
-    @Test 
-    public void testPersistAndLoadReminder() {
-
-
-        assertNotNull(fieldTech);
-        assertEquals(ftId, fieldTech.getTechnicianId());
-        assertEquals(fieldTechName, fieldTech.getName());
     }
-    
+
     @Test
     @Transactional
     public void testPersistAndLoadBusiness() {
-    	String name = "cizo";
-    	String adress ="mohammadStreet";
-    	String phoneNumber = "0602010201";
-    	String emailAdress = "yasmineMatta";
-    	Business bus = new Business();
-    	bus.setAddress(adress);
-    	bus.setEmailAddress(emailAdress);
-    	bus.setName(name);
-    	bus.setPhoneNumber(phoneNumber);
-    	
-    	BusinessHour bush=new BusinessHour();
+        String name = "cizo";
+        String adress = "mohammadStreet";
+        String phoneNumber = "0602010201";
+        String emailAdress = "yasmineMatta";
+        Business bus = new Business();
+        bus.setAddress(adress);
+        bus.setEmailAddress(emailAdress);
+        bus.setName(name);
+        bus.setPhoneNumber(phoneNumber);
+
+        BusinessHour bush = new BusinessHour();
         ArrayList<BusinessHour> bh = new ArrayList<BusinessHour>();
         bh.add(bush);
         businessHourRepository.save(bush);
         Long bushId = bush.getHourId();
 
-    	TimeSlot ts = new TimeSlot();
+        TimeSlot ts = new TimeSlot();
         ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
         times.add(ts);
         timeSlotRepository.save(ts);
         Long tsId = ts.getTimeSlotId();
 
-    	
-    	bus.setBusinessHours(bh);
-    	bus.setRegular(times);
-    	
-    	businessRepository.save(bus);
-    	Long busId = bus.getId();
-    	
-    	bus = null;
-    	
-    	bus = businessRepository.findBusinessById(busId);
-    	
-    	assertNotNull(bus);
-    	assertEquals(name, bus.getName());
-    	assertEquals(adress, bus.getAddress());
-    	assertEquals(phoneNumber, bus.getPhoneNumber());
-    	assertEquals(emailAdress, bus.getEmailAddress());
-    	assertEquals(busId, bus.getId());
-    	assertEquals(bushId, bus.getBusinessHours().get(0).getHourId());
-    	assertEquals(tsId, bus.getRegular().get(0).getTimeSlotId());
-    	
+        bus.setBusinessHours(bh);
+        bus.setRegular(times);
+
+        businessRepository.save(bus);
+        Long busId = bus.getId();
+
+        bus = null;
+
+        bus = businessRepository.findBusinessById(busId);
+
+        assertNotNull(bus);
+        assertEquals(name, bus.getName());
+        assertEquals(adress, bus.getAddress());
+        assertEquals(phoneNumber, bus.getPhoneNumber());
+        assertEquals(emailAdress, bus.getEmailAddress());
+        assertEquals(busId, bus.getId());
+        assertEquals(bushId, bus.getBusinessHours().get(0).getHourId());
+        assertEquals(tsId, bus.getRegular().get(0).getTimeSlotId());
+
     }
 
-   
     @Test
     @Transactional
     public void testPersistAndLoadBusinessHour() {
@@ -696,7 +675,7 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(bhId, bh.getHourId());
 
     }
-    
+
     @Test
     @Transactional
     public void testPersistAndLoadCar() {
@@ -722,6 +701,7 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(year, car.getYear());
 
     }
+
     @Test
     @Transactional
     public void testPersistAndLoadCheckupReminder() {
