@@ -245,8 +245,10 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(receiptID, appointment.getReceipt().getReceiptId());
         assertEquals(arID, appointment.getReminder().getReminderId());
     }
+
      @Test
      @Transactional
+
     public void testPersistAndLoadAppointmentReminder(){
         String customerID = "cizo";
         Customer customer = new Customer();
@@ -491,6 +493,7 @@ public class TestAutoRepairShopSystemPersistence {
     	
 
     }
+
     @Test 
     @Transactional
     public void testPersistAndLoadReceipt() {
@@ -613,6 +616,11 @@ public class TestAutoRepairShopSystemPersistence {
         
         fieldTech = fieldTechnicianRepository.findFieldTechnicianByTechnicianId(ftId);
 
+    
+    @Test 
+    public void testPersistAndLoadReminder() {
+
+
         assertNotNull(fieldTech);
         assertEquals(ftId, fieldTech.getTechnicianId());
         assertEquals(fieldTechName, fieldTech.getName());
@@ -664,6 +672,7 @@ public class TestAutoRepairShopSystemPersistence {
     	assertEquals(tsId, bus.getRegular().get(0).getTimeSlotId());
     	
     }
+
    
     @Test
     @Transactional
