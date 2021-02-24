@@ -16,7 +16,7 @@ public class Car
 {
 
   //Car Attributes
-  private Long carID;
+  private Long carId;
   private String model;
   private String color;
   private String year;
@@ -25,9 +25,9 @@ public class Car
   //Car Associations
   private Customer owner;
 
-  public void setCarID(Long aCarID)
+  public void setCarId(Long aCarId)
   {
-    this.carID=aCarID;
+    this.carId=aCarId;
   }
 
   public void setModel(String aModel)
@@ -50,9 +50,9 @@ public class Car
   }
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public Long getCarID()
+  public Long getCarId()
   {
-    return carID;
+    return carId;
   }
 
   public String getModel()

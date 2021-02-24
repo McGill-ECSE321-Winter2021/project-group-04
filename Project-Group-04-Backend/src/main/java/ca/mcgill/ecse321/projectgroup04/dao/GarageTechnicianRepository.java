@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup04.model.*;
 
 public interface GarageTechnicianRepository extends CrudRepository<GarageTechnician, Long> {
-    GarageTechnician findGarageTechnicianByTechnicianID(Long technicianId);
+    GarageTechnician findGarageTechnicianByTechnicianId(Long technicianId);
 }

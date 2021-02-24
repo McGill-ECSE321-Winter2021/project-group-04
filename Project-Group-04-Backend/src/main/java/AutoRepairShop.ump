@@ -59,12 +59,12 @@ class Appointment
 {
   string appointmentID;
   * -- 1 Customer customer;
-  * -- 1 BookableService bookableServices;
   * -- 1 GarageTechnician technician;
   * -> 1 TimeSlot timeSlot;
   1 -- 1 AppointmentReminder reminder;
   1 -- 1 Receipt receipt;
-  }
+  * -- 1 BookableService bookableServices;
+}
 
 class BusinessHour
 {
@@ -130,11 +130,6 @@ class AutoRepairShop
   1 <@>- * TimeSlot timeSlots;
   1 <@>- * Service services;
 }
-
-
-
-
-
 
 class Reminder
 {

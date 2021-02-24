@@ -6,20 +6,20 @@ import javax.persistence.*;
 @Table(name = "receipt")
 public class Receipt {
 
-  private Long receiptID;
+  private Long receiptId;
   private double totalPrice;
 
   
   private Appointment appointment;
 
-  public void setReceiptID(Long aReceiptID) { this.receiptID = aReceiptID; }
+  public void setReceiptId(Long aReceiptId) { this.receiptId = aReceiptId; }
 
   public void setTotalPrice(double aTotalPrice) { this.totalPrice = aTotalPrice; }
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public Long getReceiptID()
+  public Long getReceiptId()
   {
-    return this.receiptID;
+    return this.receiptId;
   }
 
   public double getTotalPrice()
@@ -39,7 +39,7 @@ public class Receipt {
   {
     return super.toString() + "["+
             "totalPrice" + ":" + getTotalPrice()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "receiptID" + "=" + (getReceiptID() != null ? !getReceiptID().equals(this)  ? getReceiptID().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "receiptId" + "=" + (getReceiptId() != null ? !getReceiptId().equals(this)  ? getReceiptId().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "appointment = "+(getAppointment()!=null?Integer.toHexString(System.identityHashCode(getAppointment())):"null");
   }
 }

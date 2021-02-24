@@ -15,7 +15,7 @@ import java.util.*;
 public class GarageSpot
 {
   private int spotNumber;
-  private Long id;
+  private Long Id;
 
   public void setSpotNumber(int aSpotNumber)
   {
@@ -25,10 +25,10 @@ public class GarageSpot
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
-	    return id;
+	    return Id;
 	  }
-  public void setId(Long id) {
-	  this.id = id;
+  public void setId(Long Id) {
+	  this.Id = Id;
   }
   public int getSpotNumber()
   {

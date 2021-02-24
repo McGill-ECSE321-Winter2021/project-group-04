@@ -16,9 +16,9 @@ import java.sql.Date;
 public class CheckupReminder extends Reminder
 {
 	@Override
-  public void setReminderID(Long aReminderID)
+  public void setReminderId(Long aReminderId)
   {
-    super.setReminderID(aReminderID);
+    super.setReminderId(aReminderId);
   }
 	@Override
   public void setDate(Date aDate)
@@ -36,9 +36,9 @@ public class CheckupReminder extends Reminder
     super.setMessage(aMessage);
   }
 	@Override
-  public Long getReminderID()
+  public Long getReminderId()
   {
-    return super.getReminderID();
+    return super.getReminderId();
   }
 	@Override
   public Date getDate()

@@ -6,5 +6,5 @@ import ca.mcgill.ecse321.projectgroup04.model.Car;
 
 
 public interface CarRepository extends CrudRepository<Car, Long>{
-    Car findByCarID(Long carID);
+    Car findByCarId(Long carId);
 }

@@ -9,7 +9,7 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
     List<Appointment> findByTimeSlot(TimeSlot timeSlot);
     List<Appointment> findByTechnician(GarageTechnician technician);
     List<Appointment> findByBookableServices(BookableService services);
-    Appointment findByAppointmentID(Long appointmentID);
+    Appointment findByAppointmentId(Long appointmentId);
     Appointment findByReminder(Reminder reminder);
     Appointment findByBookableServicesAndCustomer(BookableService services, Customer customer);
     Appointment findByTimeSlotAndCustomer(TimeSlot timeSlot, Customer customer);

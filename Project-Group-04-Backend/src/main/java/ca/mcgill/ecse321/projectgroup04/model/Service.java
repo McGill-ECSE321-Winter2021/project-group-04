@@ -10,16 +10,16 @@ import java.util.*;
 @Table(name = "service")
 public abstract class Service {
 
-    private Long serviceID;
+    private Long serviceId;
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getServiceID() {
-        return serviceID;
+    public Long getServiceId() {
+        return serviceId;
     }
 
-    public void setServiceID(Long aServiceID) {
-        this.serviceID = aServiceID;
+    public void setServiceId(Long aServiceId) {
+        this.serviceId = aServiceId;
     }
 
     private int price;
@@ -68,7 +68,7 @@ public abstract class Service {
         return super.toString() + "[" +
                 "price" + ":" + getPrice() + "," +
                 "name" + ":" + getName() + "]" + System.getProperties().getProperty("line.separator") +
-                "  " + "serviceID" + "=" + (getServiceID() != null ? !getServiceID().equals(this) ? getServiceID().toString().replaceAll("  ", "    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+                "  " + "serviceId" + "=" + (getServiceId() != null ? !getServiceId().equals(this) ? getServiceId().toString().replaceAll("  ", "    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
                 "  " + "autoRepairShop = " + (getAutoRepairShop() != null ? Integer.toHexString(System.identityHashCode(getAutoRepairShop())) : "null");
     }
 }

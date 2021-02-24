@@ -9,16 +9,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "businessHour")
 public class BusinessHour {
-  private Long hourID;
+  private Long hourId;
 
-  public void setHourID(Long aID) {
-    hourID = aID;
+  public void setHourId(Long aId) {
+    hourId = aId;
   }
 
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public Long getHourID() {
-    return this.hourID;
+  public Long getHourId() {
+    return this.hourId;
   }
 
   public enum DayOfWeek {

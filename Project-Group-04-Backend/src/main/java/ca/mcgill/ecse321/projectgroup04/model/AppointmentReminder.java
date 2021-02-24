@@ -15,9 +15,9 @@ public class AppointmentReminder extends Reminder
   //AppointmentReminder Associations
   private Appointment appointment;
   @Override
-  public void setReminderID(Long aReminderID)
+  public void setReminderId(Long aReminderId)
   {
-    super.setReminderID(aReminderID);
+    super.setReminderId(aReminderId);
   }
   @Override
   public void setDate(Date aDate)
@@ -39,9 +39,9 @@ public class AppointmentReminder extends Reminder
 
  
   @Override
-  public Long getReminderID()
+  public Long getReminderId()
   {
-    return super.getReminderID();
+    return super.getReminderId();
   }
 
   @Override

@@ -13,7 +13,7 @@ public abstract class Reminder
 {
 
   //Reminder Attributes
-  private Long reminderID;
+  private Long reminderId;
   private Date date;
   private Time time;
   private String message;
@@ -22,9 +22,9 @@ public abstract class Reminder
   private Customer customer;
 
   
-  public void setReminderID(Long aReminderID)
+  public void setReminderId(Long aReminderId)
   {
-    this.reminderID=aReminderID;
+    this.reminderId=aReminderId;
   }
 
   public void setDate(Date aDate)
@@ -43,9 +43,9 @@ public abstract class Reminder
   }
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public Long getReminderID()
+  public Long getReminderId()
   {
-    return this.reminderID;
+    return this.reminderId;
   }
 
   public Date getDate()
@@ -77,7 +77,7 @@ public abstract class Reminder
   public String toString()
   {
     return super.toString() + "["+
-            "reminderID" + ":" + getReminderID()+ "," +
+            "reminderId" + ":" + getReminderId()+ "," +
             "message" + ":" + getMessage()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +

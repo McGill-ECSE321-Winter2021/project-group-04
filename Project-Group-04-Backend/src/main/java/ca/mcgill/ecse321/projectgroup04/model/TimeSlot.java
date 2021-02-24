@@ -18,7 +18,7 @@ public class TimeSlot {
 
   private GarageSpot garageSpot;
   private AutoRepairShop autoRepairShop;
-  private Long timeSlotID;
+  private Long timeSlotId;
 
   public void setStartTime(Time aStartTime) {
     this.startTime = aStartTime;
@@ -44,8 +44,8 @@ public class TimeSlot {
     this.autoRepairShop = aAutoRepairShop;
   }
 
-  public void setTimeSlotID(Long aTimeSlotID) {
-    this.timeSlotID = aTimeSlotID;
+  public void setTimeSlotId(Long aTimeSlotId) {
+    this.timeSlotId = aTimeSlotId;
   }
 
   public Time getStartTime() {
@@ -66,8 +66,8 @@ public class TimeSlot {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  public Long getTimeSlotID() {
-    return this.timeSlotID;
+  public Long getTimeSlotId() {
+    return this.timeSlotId;
   }
 
   @ManyToOne

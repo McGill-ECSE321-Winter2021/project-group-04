@@ -22,8 +22,8 @@ public class Customer extends User {
   private List<Appointment> appointments;
 
   @Override
-  public String getUserID() {
-    return super.getUserID();
+  public String getUserId() {
+    return super.getUserId();
   }
 
   @Override
@@ -37,8 +37,8 @@ public class Customer extends User {
   }
 
   @Override
-  public void setUserID(String aUserID) {
-    super.setUserID(aUserID);
+  public void setUserId(String aUserId) {
+    super.setUserId(aUserId);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class Customer extends User {
     this.reminders = aReminders;
   }
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany(mappedBy = "customer", cascade = { CascadeType.ALL })
   public List<Reminder> getReminders() {
     return this.reminders;
   }
@@ -92,7 +92,7 @@ public class Customer extends User {
     this.appointments = aAppointments;
   }
 
-  @OneToMany(cascade = { CascadeType.ALL })
+  @OneToMany(mappedBy = "customer", cascade = { CascadeType.ALL })
   public List<Appointment> getAppointments() {
     return this.appointments;
   }

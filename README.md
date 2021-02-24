@@ -22,11 +22,11 @@ project-group-04 created by GitHub Classroom
 
 | Name            | Tasks                                   | Time in hours |
 | --------------- |:------------------------------------------------:|-----:|  
-| Mohamad Dimassi | Use Case Diagrams, Persistence Layer, Build System | 15 |
-| Artus Julliard  | Use Case Diagrams, Persistence Layer, Build System | 15 |
-| Cesar Lahoud    | Use Case Diagrams, Persistence Layer, Build System | 15 |
-| Yasmina Matta   | Use Case Diagrams, Persistence Layer, Build System | 15 |
-| Abrar Fahad     | Use Case Diagrams, Domain Model, Persistence Layer | 15 |
+| Mohamad Dimassi | Use Case Diagrams, Persistence Layer, Build System, Test Persistence | 40 |
+| Artus Julliard  | Use Case Diagrams, Persistence Layer, Build System, Test Persistence | 40 |
+| Cesar Lahoud    | Use Case Diagrams, Persistence Layer, Build System, Test Persistence | 40 |
+| Yasmina Matta   | Use Case Diagrams, Persistence Layer, Build System, Test Persistence | 40 |
+| Abrar Fahad     | Use Case Diagrams, Domain Model, Persistence Layer, Test Persistence | 40 |
 
 Click [here] for meeting minutes!
 

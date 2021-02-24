@@ -35,13 +35,13 @@ public class BookableService extends Service
 
   
   @Override
-  public Long getServiceID() {
-    return super.getServiceID();
+  public Long getServiceId() {
+    return super.getServiceId();
   }
 
   @Override
-  public void setServiceID(Long aServiceID) {
-    super.setServiceID(aServiceID);
+  public void setServiceId(Long aServiceId) {
+    super.setServiceId(aServiceId);
   }
 
   @Override
