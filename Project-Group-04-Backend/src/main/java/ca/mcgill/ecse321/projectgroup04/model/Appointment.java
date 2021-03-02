@@ -11,7 +11,7 @@ public class Appointment {
 
   // Appointment Associations
   private Customer customer;
-  private BookableService bookableServices;
+  private BookableService bookableService;
   private GarageTechnician technician;
   private TimeSlot timeSlot;
   private AppointmentReminder reminder;
@@ -39,7 +39,7 @@ public class Appointment {
 
   @ManyToOne
   public BookableService getBookableServices() {
-    return this.bookableServices;
+    return this.bookableService;
   }
 
   @ManyToOne
@@ -75,8 +75,8 @@ public class Appointment {
     this.customer = aCustomer;
   }
 
-  public void setBookableServices(BookableService aServices) {
-    this.bookableServices = aServices;
+  public void setBookableServices(BookableService aService) {
+    this.bookableService = aService;
   }
 
   public void setTechnician(GarageTechnician aTechnician) {

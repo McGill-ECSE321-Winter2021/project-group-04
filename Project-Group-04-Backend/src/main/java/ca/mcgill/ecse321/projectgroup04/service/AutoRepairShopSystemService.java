@@ -126,6 +126,7 @@ public class AutoRepairShopSystemService {
 		return appointmentRepository.findByBookableService(service);
 	}
 	
+	
 	@Transactional
 	public List<Appointment> getAllAppointments(){
 		return (List<Appointment>) appointmentRepository.findAll();
