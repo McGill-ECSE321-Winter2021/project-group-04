@@ -103,7 +103,7 @@ public class TestAutoRepairShopSystemPersistence {
         System.out.print(ad.getId());
         System.out.println(ad.getId().getClass());
         ad = null;
-        ad = administrativeAssistantRepository.findAdminstrativeAssistantById(id);
+        ad = administrativeAssistantRepository.findAdministrativeAssistantById(id);
         assertNotNull(ad);
         assertEquals(id, ad.getId());
 

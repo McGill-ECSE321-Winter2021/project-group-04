@@ -6,7 +6,7 @@ import java.util.List;
 import ca.mcgill.ecse321.projectgroup04.model.*;
 
 public interface AppointmentReminderRepository extends CrudRepository<AppointmentReminder, Long>{
-   List<AppointmentReminder> findByCustomer(Customer customer);
+   List<AppointmentReminder> findAppointmentReminderByCustomer(Customer customer);
    AppointmentReminder findByCustomerAndAppointment(Customer customer, Appointment appointment);
    AppointmentReminder findAppointmentReminderByReminderId (Long reminderId);
 }

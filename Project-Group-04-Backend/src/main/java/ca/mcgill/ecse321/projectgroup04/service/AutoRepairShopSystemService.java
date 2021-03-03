@@ -22,6 +22,19 @@ public class AutoRepairShopSystemService {
 	@Autowired
 	AppointmentRepository appointmentRepository;
 	
+	@Autowired
+	AdministrativeAssistantRepository administrativeAssistantRepository;
+	
+	@Autowired
+	AppointmentReminderRepository appointmentReminderRepository;
+	
+	@Autowired 
+	BookableServiceRepository bookableServiceRepository;
+	
+	@Autowired
+	GarageTechnicianRepository garageTechnicianRepository;
+	
+	
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber,String aFirstName, String aLastName, String aZipCode, String aEmailAddress, Customer aCustomer) {
 		Profile profile = new Profile();
@@ -130,6 +143,91 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public List<Appointment> getAllAppointments(){
 		return (List<Appointment>) appointmentRepository.findAll();
+	}
+	
+	@Transactional
+	public AdministrativeAssistant createAdministrativeAssistant(AutoRepairShop aAutoRepairShop, String userId, String password) {
+		AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
+		administrativeAssistant.setAutoRepairShop(aAutoRepairShop);
+		administrativeAssistant.setUserId(userId);
+		administrativeAssistant.setPassword(password);
+		administrativeAssistantRepository.save(administrativeAssistant);
+		return administrativeAssistant;
+		
+	}
+	
+	@Transactional
+	public AdministrativeAssistant getAdministrativeAssistantByUserId(String userId) {
+		return administrativeAssistantRepository.findAdministrativeAssistantByUserId(userId);
+	}
+	
+	@Transactional
+	public List<AdministrativeAssistant> getAllAdministrativeAssistants() {
+		return (List<AdministrativeAssistant>) administrativeAssistantRepository.findAll();
+	}
+	
+	
+	@Transactional
+	public AppointmentReminder createAppointmentReminder(AutoRepairShop aAutoRepairShop,Appointment appointment, Customer customer, Date date, Time time, String message ) {
+		AppointmentReminder appointmentReminder = new AppointmentReminder();
+		appointmentReminder.setCustomer(customer);
+		appointmentReminder.setDate(date);
+		appointmentReminder.setTime(time);
+		appointmentReminder.setMessage(message);
+		appointmentReminder.setAppointment(appointment);
+		appointmentReminderRepository.save(appointmentReminder);
+		return appointmentReminder;
+
+	}
+	
+	@Transactional
+	public List<AppointmentReminder> getAppointmentReminderByCustomer(Customer customer) {
+		return (List<AppointmentReminder>) appointmentReminderRepository.findAppointmentReminderByCustomer(customer);
+	}
+	
+	@Transactional
+	public AppointmentReminder getAppointmentReminderByCustomerAndAppointment(Customer customer, Appointment appointment) {
+		return appointmentReminderRepository.findByCustomerAndAppointment(customer, appointment);
+	}
+	
+	@Transactional
+	public List<AppointmentReminder> getAllAppointmentReminders() {
+		return (List<AppointmentReminder>) appointmentReminderRepository.findAll();
+
+	}
+	
+	@Transactional 
+	public BookableService createBookableService(AutoRepairShop autoRepairShop, String name, int price, int duration ) {
+		BookableService bookableService = new BookableService();
+		bookableService.setAutoRepairShop(autoRepairShop);
+		bookableService.setDuration(duration);
+		bookableService.setName(name);
+		bookableService.setPrice(price);
+		bookableServiceRepository.save(bookableService);
+		return bookableService;
+	}
+	
+	@Transactional
+	public BookableService getBookableServiceByAppointment(Appointment appointment) {
+		return bookableServiceRepository.findBookableServiceByAppointments(appointment);
+	}
+	
+	@Transactional
+	public List <BookableService> getAllBookableServices(){
+		return (List <BookableService>) bookableServiceRepository.findAll();
+	}
+	
+	@Transactional
+	public GarageTechnician createGarageTechnician(AutoRepairShop autoRepairShop, String name, List<Appointment> appointments ) {
+		GarageTechnician garageTechnician = new GarageTechnician();
+		garageTechnician.setName(name);
+		garageTechnician.setAppointments(appointments);
+		garageTechnicianRepository.save(garageTechnician);
+		return garageTechnician;
+	}
+	
+	public List<GarageTechnician> getAllGarageTechnicians(){
+		return (List<GarageTechnician>) garageTechnicianRepository.findAll();
 	}
 	
 	
