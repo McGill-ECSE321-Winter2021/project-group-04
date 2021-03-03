@@ -20,56 +20,85 @@ public class TimeSlot {
   private AutoRepairShop autoRepairShop;
   private Long timeSlotId;
 
-  public void setStartTime(Time aStartTime) { this.startTime = aStartTime; }
-  public void setEndTime(Time aEndtTime) { this.endTime = aEndtTime; }
-  public void setStartDate(Date aStartDate) { this.startDate = aStartDate; }
-  public void setEndDate(Date aEndDate) { this.endDate = aEndDate; }
+  public void setStartTime(Time aStartTime) {
+    this.startTime = aStartTime;
+  }
 
-  public void setGarageSpot(GarageSpot aGarageSpot) { this.garageSpot = aGarageSpot; }
-  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) { this.autoRepairShop = aAutoRepairShop; }
-  public void setTimeSlotId(Long aTimeSlotId){this.timeSlotId = aTimeSlotId;}
+  public void setEndTime(Time aEndtTime) {
+    this.endTime = aEndtTime;
+  }
 
-  public Time getStartTime()
-  {
+  public void setStartDate(Date aStartDate) {
+    this.startDate = aStartDate;
+  }
+
+  public void setEndDate(Date aEndDate) {
+    this.endDate = aEndDate;
+  }
+
+  public void setGarageSpot(GarageSpot aGarageSpot) {
+    this.garageSpot = aGarageSpot;
+  }
+
+  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
+    this.autoRepairShop = aAutoRepairShop;
+  }
+
+  public void setTimeSlotId(Long aTimeSlotId) {
+    this.timeSlotId = aTimeSlotId;
+  }
+
+  public Time getStartTime() {
     return this.startTime;
   }
 
-  public Date getStartDate()
-  {
+  public Date getStartDate() {
     return this.startDate;
   }
 
-  public Time getEndTime()
-  {
+  public Time getEndTime() {
     return this.endTime;
   }
 
-  public Date getEndDate() { return this.endDate; }
-  
+  public Date getEndDate() {
+    return this.endDate;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  public Long getTimeSlotId() { return this.timeSlotId; }
+  public Long getTimeSlotId() {
+    return this.timeSlotId;
+  }
 
   @ManyToOne
-  public GarageSpot getGarageSpot()
-  {
+  public GarageSpot getGarageSpot() {
     return this.garageSpot;
   }
 
   @ManyToOne
-  public AutoRepairShop getAutoRepairShop()
-  {
+  public AutoRepairShop getAutoRepairShop() {
     return this.autoRepairShop;
   }
 
-  public String toString()
-  {
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "garageSpot = "+(getGarageSpot()!=null?Integer.toHexString(System.identityHashCode(getGarageSpot())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShop = "+(getAutoRepairShop()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShop())):"null");
+  public String toString() {
+    return super.toString() + "[" + "]" + System.getProperties().getProperty("line.separator") + "  " + "startTime"
+        + "="
+        + (getStartTime() != null
+            ? !getStartTime().equals(this) ? getStartTime().toString().replaceAll("  ", "    ") : "this"
+            : "null")
+        + System.getProperties().getProperty("line.separator") + "  " + "startDate" + "="
+        + (getStartDate() != null
+            ? !getStartDate().equals(this) ? getStartDate().toString().replaceAll("  ", "    ") : "this"
+            : "null")
+        + System.getProperties().getProperty("line.separator") + "  " + "endTime" + "="
+        + (getEndTime() != null ? !getEndTime().equals(this) ? getEndTime().toString().replaceAll("  ", "    ") : "this"
+            : "null")
+        + System.getProperties().getProperty("line.separator") + "  " + "endDate" + "="
+        + (getEndDate() != null ? !getEndDate().equals(this) ? getEndDate().toString().replaceAll("  ", "    ") : "this"
+            : "null")
+        + System.getProperties().getProperty("line.separator") + "  " + "garageSpot = "
+        + (getGarageSpot() != null ? Integer.toHexString(System.identityHashCode(getGarageSpot())) : "null")
+        + System.getProperties().getProperty("line.separator") + "  " + "autoRepairShop = "
+        + (getAutoRepairShop() != null ? Integer.toHexString(System.identityHashCode(getAutoRepairShop())) : "null");
   }
 }

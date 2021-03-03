@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
+import javax.transaction.Transactional;
 
 import javax.transaction.Transactional;
 
@@ -723,7 +724,7 @@ public class TestAutoRepairShopSystemPersistence {
         Long crId = cr.getReminderId();
 
         cr = null;
-        cr = checkupReminderRepository.findByReminderId(crId);
+        cr = checkupReminderRepository.findCheckupReminderByReminderId(crId);
 
         assertNotNull(cr);
         assertEquals(crId, cr.getReminderId());

@@ -9,10 +9,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "owner")
-public class Owner extends User
-{
+public class Owner extends User {
 
-  
   @Override
   public String getUserId() {
     return super.getUserId();
@@ -22,23 +20,25 @@ public class Owner extends User
   public String getPassword() {
     return super.getPassword();
   }
- 
+
   @Override
   public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
-	super.setAutoRepairShop(aAutoRepairShop); 
+    super.setAutoRepairShop(aAutoRepairShop);
   }
-  
+
   @Override
   public AutoRepairShop getAutoRepairShop() {
-	  return super.getAutoRepairShop();
+    return super.getAutoRepairShop();
   }
+
   @Override
   public void setUserId(String userId) {
-	  super.setUserId(userId);
+    super.setUserId(userId);
   }
+
   @Override
   public void setPassword(String aPassword) {
-	  super.setPassword(aPassword);
+    super.setPassword(aPassword);
   }
-  
+
 }
