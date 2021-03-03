@@ -72,4 +72,7 @@ public class BusinessDto {
         return regular;
     }
 
+    public AutoRepairShop gAutoRepairShop() {
+        return autoRepairShop;
+    }
 }
