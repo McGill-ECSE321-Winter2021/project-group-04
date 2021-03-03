@@ -22,6 +22,15 @@ public class AutoRepairShopSystemService {
 	@Autowired
 	AppointmentRepository appointmentRepository;
 	
+	@Autowired
+	CarRepository carRepository;
+	
+	@Autowired
+	CustomerRepository customerRepository;
+	
+	@Autowired
+	TimeSlotRepository timeSlotRepository;
+	
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber,String aFirstName, String aLastName, String aZipCode, String aEmailAddress, Customer aCustomer) {
 		Profile profile = new Profile();
@@ -100,7 +109,7 @@ public class AutoRepairShopSystemService {
 		appointmentRepository.save(appointment);
 		return appointment;
 	}
-	
+		
 	@Transactional
 	public Appointment getAppointmentByReminder(AppointmentReminder reminder) {
 		return appointmentRepository.findByReminder(reminder);
@@ -132,6 +141,56 @@ public class AutoRepairShopSystemService {
 		return (List<Appointment>) appointmentRepository.findAll();
 	}
 	
+	@Transactional
+	public Car createCar(String model, String year, String color, Customer customer) {
+		Car car = new Car();
+		car.setColor(color);
+		car.setModel(model);
+		car.setOwner(customer);
+		car.setYear(year);
+		carRepository.save(car);
+		return car;
+	}
 	
-
+	@Transactional
+	public Car getCarByCarId(Long carId) {
+		return carRepository.findByCarId(carId);
+	}
+	
+	@Transactional
+	public Customer createCustomer(String userId, String password, List<Appointment> appointment, AutoRepairShop auto, List<Reminder> reminder, Car car, Profile profile) {
+		Customer customer = new Customer();
+		customer.setAppointments(appointment);
+		customer.setAutoRepairShop(auto);
+		customer.setPassword(password);
+		customer.setUserId(userId);
+		customer.setReminders(reminder);
+		customer.setCar(car);
+		customer.setCustomerProfile(profile);
+		customerRepository.save(customer);
+		return customer;
+	}
+	
+	@Transactional
+	public Customer getCustomerById(Long id) {
+		return customerRepository.findCustomerById(id);
+	}
+	
+	@Transactional
+	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, GarageSpot garageSpot, AutoRepairShop auto) {
+		TimeSlot timeSlot = new TimeSlot();
+		timeSlot.setStartDate(startDate);
+		timeSlot.setStartTime(startTime);
+		timeSlot.setEndDate(endDate);
+		timeSlot.setEndTime(endTime);
+		timeSlot.setGarageSpot(garageSpot);
+		timeSlot.setAutoRepairShop(auto);
+		timeSlotRepository.save(timeSlot);
+		return timeSlot;
+		}
+	
+	@Transactional
+	public TimeSlot getTimeSlotByTimeSlotId(Long timeSlotId) {
+		return timeSlotRepository.findTimeSlotByTimeSlotId(timeSlotId);
+	}
 }
