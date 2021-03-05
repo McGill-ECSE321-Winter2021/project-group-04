@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
-import ca.mcgill.ecse321.projectgroup04.dao.*;
+import ca.mcgill.ecse321.projectgroup04.dao.*;  
 import ca.mcgill.ecse321.projectgroup04.model.*;
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
 
@@ -25,8 +25,7 @@ public class AutoRepairShopSystemService {
 	@Autowired
 	AppointmentRepository appointmentRepository;
 	
-	@Autowired
-<<<<<<< HEAD
+    @Autowired
 	CarRepository carRepository;
 	
 	@Autowired
@@ -35,8 +34,11 @@ public class AutoRepairShopSystemService {
 	@Autowired
 	TimeSlotRepository timeSlotRepository;
 	
-=======
+    @Autowired
 	AdministrativeAssistantRepository administrativeAssistantRepository;
+
+	@Autowired
+	OwnerRepository ownerRepository;
 	
 	@Autowired
 	AppointmentReminderRepository appointmentReminderRepository;
@@ -45,8 +47,13 @@ public class AutoRepairShopSystemService {
 	BookableServiceRepository bookableServiceRepository;
 	
 	@Autowired
+	EmergencyServiceRepository emergencyServiceRepository;
+	
+	@Autowired
 	GarageTechnicianRepository garageTechnicianRepository;
 	
+	@Autowired
+	FieldTechnicianRepository fieldTechnicianRepository;
 
 	@Autowired
 	BusinessRepository businessRepository;
@@ -56,9 +63,11 @@ public class AutoRepairShopSystemService {
 
 	@Autowired
 	CheckupReminderRepository checkupReminderRepository;
+	
+	@Autowired
+	GarageSpotRepository garageSpotRepository;
 
 
->>>>>>> 582538f4693e1bacd827d38f0de9ce9dbe436741
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
 			String aZipCode, String aEmailAddress, Customer aCustomer) {
@@ -140,11 +149,7 @@ public class AutoRepairShopSystemService {
 		appointmentRepository.save(appointment);
 		return appointment;
 	}
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> 582538f4693e1bacd827d38f0de9ce9dbe436741
 	@Transactional
 	public Appointment getAppointmentByReminder(AppointmentReminder reminder) {
 		return appointmentRepository.findByReminder(reminder);
@@ -197,6 +202,25 @@ public class AutoRepairShopSystemService {
 		return (List<AdministrativeAssistant>) administrativeAssistantRepository.findAll();
 	}
 	
+	/////////////////////////////////////////////////////////////////////////////
+	
+	@Transactional
+	public Owner createOwner(AutoRepairShop aAutoRepairShop, String userId, String password) {
+		Owner owner = new Owner();
+		owner.setAutoRepairShop(aAutoRepairShop);
+		owner.setUserId(userId);
+		owner.setPassword(password);
+		ownerRepository.save(owner);
+		return owner;
+	}
+	
+	@Transactional
+	public Owner getOwnerByUserId(String userId) {
+		return ownerRepository.findOwnerByUserId(userId);
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////
+	
 	@Transactional
 	public Car createCar(String model, String year, String color, Customer customer) {
 		Car car = new Car();
@@ -209,7 +233,6 @@ public class AutoRepairShopSystemService {
 	}
 	
 	@Transactional
-<<<<<<< HEAD
 	public Car getCarByCarId(Long carId) {
 		return carRepository.findByCarId(carId);
 	}
@@ -249,7 +272,8 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public TimeSlot getTimeSlotByTimeSlotId(Long timeSlotId) {
 		return timeSlotRepository.findTimeSlotByTimeSlotId(timeSlotId);
-=======
+	}
+
 	public AppointmentReminder createAppointmentReminder(AutoRepairShop aAutoRepairShop,Appointment appointment, Customer customer, Date date, Time time, String message ) {
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
 		appointmentReminder.setCustomer(customer);
@@ -299,6 +323,33 @@ public class AutoRepairShopSystemService {
 		return (List <BookableService>) bookableServiceRepository.findAll();
 	}
 	
+	///////////////////////////////////////////////////////////////////////////
+	
+	@Transactional
+	public EmergencyService createEmergencyService(AutoRepairShop aAutoRepairShop, String name, int price, String aLocation, 
+			FieldTechnician aFieldTechnician) {
+		EmergencyService emergencyService = new EmergencyService();
+		emergencyService.setAutoRepairShop(aAutoRepairShop);
+		emergencyService.setName(name);
+		emergencyService.setPrice(price);
+		emergencyService.setLocation(aLocation);
+		emergencyService.setTechnician(aFieldTechnician);
+		emergencyServiceRepository.save(emergencyService);
+		return emergencyService;
+	}
+	
+	@Transactional
+	public EmergencyService getEmergencyServiceByServiceId(Long serviceId) {
+		return emergencyServiceRepository.findEmergencyServiceByServiceId(serviceId);
+	}
+	
+	@Transactional
+	public List<EmergencyService> getAllEmergencyServices(){
+		return (List <EmergencyService>) emergencyServiceRepository.findAll();
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////
+	
 	@Transactional
 	public GarageTechnician createGarageTechnician(AutoRepairShop autoRepairShop, String name, List<Appointment> appointments ) {
 		GarageTechnician garageTechnician = new GarageTechnician();
@@ -311,6 +362,29 @@ public class AutoRepairShopSystemService {
 	public List<GarageTechnician> getAllGarageTechnicians(){
 		return (List<GarageTechnician>) garageTechnicianRepository.findAll();
 	}
+	
+	/////////////////////////////////////////////////////////////////////////////////
+	
+	@Transactional
+	public FieldTechnician createFieldTechnician(AutoRepairShop aAutoRepairShop, String name, EmergencyService emergencyService) {
+		FieldTechnician fieldTechnician = new FieldTechnician();
+		fieldTechnician.setName(name);
+		fieldTechnician.setEmergencyService(emergencyService);
+		fieldTechnicianRepository.save(fieldTechnician);
+		return fieldTechnician;
+	}
+	
+	@Transactional
+	public FieldTechnician getFieldTechnicianById(Long technicianId) {
+		return fieldTechnicianRepository.findFieldTechnicianByTechnicianId(technicianId);
+	}
+	
+	@Transactional
+	public List<FieldTechnician> getAllFieldTechnicians(){
+		return (List<FieldTechnician>) fieldTechnicianRepository.findAll();
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////
 	
 
 	@Transactional
@@ -357,6 +431,34 @@ public class AutoRepairShopSystemService {
 	public Business getBusinessByTimeSlots(List<TimeSlot> timeSlot) {
 		return businessRepository.findBusinessByTimeSlot(timeSlot);
 	}
+	
+	////////////////////////////////////////////////////////////////////
+	
+	@Transactional
+	public GarageSpot createGarageSpot(int aSpotNumber, List<TimeSlot> bookedHours) {
+		GarageSpot garageSpot = new GarageSpot();
+		garageSpot.setSpotNumber(aSpotNumber);
+		garageSpot.setTimeSlot(bookedHours);
+		garageSpotRepository.save(garageSpot);
+		return garageSpot;
+	}
+	
+	@Transactional
+	public GarageSpot getGarageSpotById(Long garageSpotId) {
+		return garageSpotRepository.findGarageSpotById(garageSpotId);
+	}
+		
+	@Transactional
+	public GarageSpot getGarageSpotBySpotNumber(int aSpotNumber) {
+		return garageSpotRepository.findGarageSpotBySpotNumber(aSpotNumber);
+	}
+	
+	@Transactional
+	public GarageSpot getGarageSpotbyTimeSlot(List<TimeSlot> timeSlot) {
+		return garageSpotRepository.findGarageSpotByTimeSlot(timeSlot);
+	}
+	
+	///////////////////////////////////////////////////////////////////////
 
 	@Transactional
 	public BusinessHour createBusinessHours(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime) {
@@ -417,6 +519,5 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public List<CheckupReminder> getAllCheckupReminder() {
 		return (List<CheckupReminder>) checkupReminderRepository.findAll();
->>>>>>> 582538f4693e1bacd827d38f0de9ce9dbe436741
 	}
 }
