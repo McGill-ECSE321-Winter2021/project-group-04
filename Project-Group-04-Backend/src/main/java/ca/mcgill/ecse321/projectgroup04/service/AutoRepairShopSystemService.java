@@ -26,7 +26,7 @@ public class AutoRepairShopSystemService {
 	AppointmentRepository appointmentRepository;
 	
 	@Autowired
-<<<<<<< HEAD
+
 	CarRepository carRepository;
 	
 	@Autowired
@@ -35,7 +35,6 @@ public class AutoRepairShopSystemService {
 	@Autowired
 	TimeSlotRepository timeSlotRepository;
 	
-=======
 	AdministrativeAssistantRepository administrativeAssistantRepository;
 	
 	@Autowired
@@ -58,7 +57,6 @@ public class AutoRepairShopSystemService {
 	CheckupReminderRepository checkupReminderRepository;
 
 
->>>>>>> 582538f4693e1bacd827d38f0de9ce9dbe436741
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
 			String aZipCode, String aEmailAddress, Customer aCustomer) {
@@ -140,11 +138,7 @@ public class AutoRepairShopSystemService {
 		appointmentRepository.save(appointment);
 		return appointment;
 	}
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> 582538f4693e1bacd827d38f0de9ce9dbe436741
 	@Transactional
 	public Appointment getAppointmentByReminder(AppointmentReminder reminder) {
 		return appointmentRepository.findByReminder(reminder);
@@ -209,7 +203,6 @@ public class AutoRepairShopSystemService {
 	}
 	
 	@Transactional
-<<<<<<< HEAD
 	public Car getCarByCarId(Long carId) {
 		return carRepository.findByCarId(carId);
 	}
@@ -249,7 +242,8 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public TimeSlot getTimeSlotByTimeSlotId(Long timeSlotId) {
 		return timeSlotRepository.findTimeSlotByTimeSlotId(timeSlotId);
-=======
+	}
+
 	public AppointmentReminder createAppointmentReminder(AutoRepairShop aAutoRepairShop,Appointment appointment, Customer customer, Date date, Time time, String message ) {
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
 		appointmentReminder.setCustomer(customer);
@@ -417,6 +411,5 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public List<CheckupReminder> getAllCheckupReminder() {
 		return (List<CheckupReminder>) checkupReminderRepository.findAll();
->>>>>>> 582538f4693e1bacd827d38f0de9ce9dbe436741
 	}
 }
