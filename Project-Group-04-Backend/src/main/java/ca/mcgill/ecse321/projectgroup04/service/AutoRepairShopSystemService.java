@@ -522,4 +522,17 @@ public class AutoRepairShopSystemService {
 	public List<CheckupReminder> getAllCheckupReminder() {
 		return (List<CheckupReminder>) checkupReminderRepository.findAll();
 	}
+	
+	@Autowired
+	ReminderRepository reminderRepository;
+	
+	@Transactional
+	public List<Reminder> getAllReminder(){
+		return (List<Reminder>) reminderRepository.findAll();
+	}
+	
+	@Transactional
+	public List<Reminder> getCustomerReminders(Customer customer){
+		return reminderRepository.findByCustomer(customer);
+	}
 }

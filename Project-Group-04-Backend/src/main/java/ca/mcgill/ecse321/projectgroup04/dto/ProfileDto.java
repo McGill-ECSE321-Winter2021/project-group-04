@@ -15,14 +15,16 @@ public class ProfileDto {
 	public ProfileDto() {
 		
 	}
-	public ProfileDto(String aAddressLine,String aPhoneNumber,String aFirstName,String aLastName,String aZipCode,String aEmailAddress,CustomerDto aCustomer) {
+	public ProfileDto(String aAddressLine,String aPhoneNumber,
+			String aFirstName,String aLastName,String aZipCode,
+			String aEmailAddress) {
 		addressLine=aAddressLine;
 		phoneNumber=aPhoneNumber;
 		firstName=aFirstName;
 		lastName=aLastName;
 		zipCode=aZipCode;
 		emailAddress=aEmailAddress;
-		customer=aCustomer;
+		
 	}
 	
 	public void setAddressLine(String aAddressLine)
