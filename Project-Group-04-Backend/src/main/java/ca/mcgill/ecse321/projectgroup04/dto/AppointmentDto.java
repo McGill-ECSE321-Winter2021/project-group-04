@@ -61,4 +61,7 @@ public class AppointmentDto {
 	  public void setGarageTechnician(GarageTechnicianDto aTechnician) {
 		  technician=aTechnician;
 	  }
+	  public TimeSlotDto getTimeSlot() {
+		  return timeSlot;
+	  }
 }

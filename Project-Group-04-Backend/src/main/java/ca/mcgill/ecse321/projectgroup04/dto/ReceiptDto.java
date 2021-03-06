@@ -11,10 +11,7 @@ public class ReceiptDto {
 	public ReceiptDto(double totalPrice) {
 		this.totalPrice=totalPrice;
 	}
-	public ReceiptDto(double aTotalPrice, AppointmentDto aAppointment) {
-		totalPrice=aTotalPrice;
-		appointment=aAppointment;
-	}
+
 	
 	public double getTotalPrice() {
 		return totalPrice;

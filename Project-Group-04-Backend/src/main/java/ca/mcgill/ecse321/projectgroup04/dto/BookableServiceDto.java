@@ -1,11 +1,13 @@
 package ca.mcgill.ecse321.projectgroup04.dto;
 
+import java.util.List;
+
 public class BookableServiceDto {
 	private Long serviceId;
 	private int duration;
 	private int price;
 	private String name;
-	
+	private List<AppointmentDto> appointments;
 	public BookableServiceDto() {
 		
 	}
@@ -22,6 +24,12 @@ public class BookableServiceDto {
 	}
 	public String getName() {
 		return name;
+	}
+	public void setAppointments(List<AppointmentDto> aAppointments) {
+		appointments=aAppointments;
+	}
+	public List<AppointmentDto> getAppointments(){
+		return appointments;
 	}
 	
 

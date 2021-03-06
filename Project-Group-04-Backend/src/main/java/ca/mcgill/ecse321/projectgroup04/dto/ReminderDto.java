@@ -15,5 +15,13 @@ public class ReminderDto {
 		date=aDate;
 		time=aTime;
 	}
+	
+	public void setCustomer(CustomerDto aCustomer) {
+		customer=aCustomer;
+	}
+	
+	public CustomerDto getCustomer() {
+		return customer;
+	}
 
 }

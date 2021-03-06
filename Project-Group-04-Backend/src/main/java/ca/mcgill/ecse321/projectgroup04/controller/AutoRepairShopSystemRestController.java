@@ -34,6 +34,62 @@ public class AutoRepairShopSystemRestController {
 		
 	}
 	
+	public AdministrativeAssistantDto convertToDto(AdministrativeAssistant a) {
+		if(a==null) {
+			throw new IllegalArgumentException("There is no such AdministrativeAssistant!");
+		}
+		AdministrativeAssistantDto administrativeAssistantDto = new AdministrativeAssistantDto(a.getUserId(),a.getPassword());
+		return administrativeAssistantDto;
+	}
+	public OwnerDto convertToDto(Owner o) {
+		if(o==null) {
+			throw new IllegalArgumentException("There is no such Owner!");
+		}
+		OwnerDto ownerDto = new OwnerDto(o.getUserId(),o.getPassword());
+		return ownerDto;
+	}
+	
+	public AppointmentReminderDto convertToDto(AppointmentReminder appointmentReminder) {
+		if(appointmentReminder==null) {
+			throw new IllegalArgumentException("There is no such AppointmentReminder!");
+		}
+		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getDate(),appointmentReminder.getTime(),appointmentReminder.getMessage());
+		return appointmentReminderDto;
+		
+	}
+	public ReceiptDto convertToDto(Receipt r) {
+		if(r==null) {
+			throw new IllegalArgumentException("There is no such Receipt!");
+		}
+		ReceiptDto receiptDto= new ReceiptDto(r.getTotalPrice());
+		return receiptDto;
+	}
+	
+	public TimeSlotDto convertToDto(TimeSlot timeSlot) {
+		if(timeSlot==null) {
+			throw new IllegalArgumentException("There is no such TimeSlot!");
+		}
+		TimeSlotDto timeSlotDto = new TimeSlotDto();
+		return timeSlotDto;
+	}
+	
+	public GarageTechnicianDto convertToDto(GarageTechnician garageTechnician) {
+		if(garageTechnician==null) {
+			throw new IllegalArgumentException("There is no such GarageTechnician!");
+		}
+		GarageTechnicianDto garageTechnicianDto = new GarageTechnicianDto(garageTechnician.getName());
+		return garageTechnicianDto;
+		
+	}
+	
+	public BookableServiceDto convertToDto(BookableService bookableService) {
+		if(bookableService==null) {
+			throw new IllegalArgumentException("There is no such BookableService!");
+		}
+		BookableServiceDto bookableServiceDto = new BookableServiceDto(bookableService.getDuration(),bookableService.getPrice(),bookableService.getName());
+		return bookableServiceDto;
+	}
+	
 	/**
 	 * 
 	 * @param c is a Car -> CarDto
@@ -74,8 +130,17 @@ public class AutoRepairShopSystemRestController {
 	}
 	
 	private AppointmentDto convertToDto(Appointment a) {
-		// TODO Auto-generated method stub
-		return null;
+		if(a==null) {
+			throw new IllegalArgumentException("There is no such Customer!");
+		}
+		AppointmentDto appointmentDto = new AppointmentDto();
+		appointmentDto.setCustomer(convertToDto(a.getCustomer()));
+		appointmentDto.setGarageTechnician(convertToDto(a.getTechnician()));
+		appointmentDto.setReceipt(convertToDto(a.getReceipt()));
+		appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
+		appointmentDto.setReminder(convertToDto(a.getReminder()));
+		//appointment.setTimeSlot
+		return appointmentDto;
 	}
 
 	/**
@@ -90,9 +155,17 @@ public class AutoRepairShopSystemRestController {
 		CustomerDto customerDto =  new CustomerDto(c.getUserId(),c.getUserId());
 		customerDto.setProfile(convertToDto(c.getCustomerProfile()));	
 		customerDto.setCar(convertToDto(c.getCar()));
-		customerDto.setAppointments(createAppointmentsDtosForCustomer(c));
 		customerDto.setReminders(createRemindersDtosForCustomer(c));
 		return customerDto;
+	}
+	
+	public BusinessHourDto convertToDto(BusinessHour b) {
+		if(b==null) {
+			throw new IllegalArgumentException("There is no such BusinessHour!");
+		}
+		BusinessHourDto businessHourDto = new BusinessHourDto();
+		
+		return businessHourDto;
 	}
 	
 	

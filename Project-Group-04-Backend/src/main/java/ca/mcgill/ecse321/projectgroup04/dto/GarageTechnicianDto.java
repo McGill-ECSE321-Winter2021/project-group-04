@@ -7,24 +7,27 @@ import ca.mcgill.ecse321.projectgroup04.model.Appointment;
 public class GarageTechnicianDto {
 	private String name;
 	private Long technicianId;
-	private List<Appointment> appointments;
+	private List<AppointmentDto> appointments;
 	
 	
 	
 	public GarageTechnicianDto() {
 	}
 	
-	public GarageTechnicianDto(String name, List<Appointment> appointments) {
+	public GarageTechnicianDto(String name) {
 		this.name = name;
-		this.appointments = appointments;
+		
 		
 	}
 
 	public String getName() {
 		return name;
 	}
-	public List<Appointment> getAppointments() {
+	public List<AppointmentDto> getAppointments() {
 		return appointments;
+	}
+	public void setAppointments(List<AppointmentDto> aAppointments) {
+		appointments=aAppointments;
 	}
 	
 

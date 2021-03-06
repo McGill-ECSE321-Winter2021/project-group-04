@@ -15,12 +15,10 @@ public class AppointmentReminderDto {
 
 	public AppointmentReminderDto() {}
 	
-	public AppointmentReminderDto (CustomerDto customer,Date date, Time time,String message, AppointmentDto appointment) {
-		this.customer = customer;
+	public AppointmentReminderDto (Date date, Time time,String message) {
 		this.date = date;
 		this.time = time;
 		this.message = message;
-		this.appointment = appointment;
 	}
 
 	public Long getReminderId() {
@@ -44,6 +42,12 @@ public class AppointmentReminderDto {
 	}
 	public AppointmentDto getAppointment() {
 		return appointment;
+	}
+	public void setAppointment(AppointmentDto aAppointment) {
+		appointment=aAppointment;
+	}
+	public void setCustomer(CustomerDto aCustomer) {
+		customer=aCustomer;
 	}
 
 	

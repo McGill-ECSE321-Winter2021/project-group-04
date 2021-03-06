@@ -5,13 +5,13 @@ import java.util.List;
 public class GarageSpotDto {
 	private Long garageSpotId;
 	private int spotNumber;
-	private List<TimeSlot> timeSlot;
+	private List<TimeSlotDto> timeSlot;
 	
 	public GarageSpotDto() {
 		
 	}
 	
-	public GarageSpotDto(int aSpotNumber, List<TimeSlot> aTimeSlot) {
+	public GarageSpotDto(int aSpotNumber, List<TimeSlotDto> aTimeSlot) {
 		this.spotNumber = aSpotNumber;
 		timeSlot = aTimeSlot;
 	}
@@ -20,7 +20,7 @@ public class GarageSpotDto {
 		return spotNumber;
 	}
 	
-	public List<TimeSlot> getTimeSlot(){
+	public List<TimeSlotDto> getTimeSlot(){
 		return timeSlot;
 	}
 	
@@ -28,7 +28,7 @@ public class GarageSpotDto {
 		spotNumber = mySpotNumber;
 	}
 	
-	public void setTimeSlot(List<TimeSlot> myTimeSlot){
+	public void setTimeSlot(List<TimeSlotDto> myTimeSlot){
 		timeSlot = myTimeSlot;
 	}
 }
