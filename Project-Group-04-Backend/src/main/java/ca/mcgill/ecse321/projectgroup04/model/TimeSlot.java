@@ -16,7 +16,7 @@ public class TimeSlot {
   private Time endTime;
   private Date endDate;
 
- private int garageSpot;
+ private Integer garageSpot;
   private AutoRepairShop autoRepairShop;
   private Long timeSlotId;
 
