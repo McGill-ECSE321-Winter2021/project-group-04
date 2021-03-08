@@ -69,7 +69,7 @@ public class AutoRepairShopSystemRestController {
 		if(timeSlot==null) {
 			throw new IllegalArgumentException("There is no such TimeSlot!");
 		}
-		TimeSlotDto timeSlotDto = new TimeSlotDto();
+		TimeSlotDto timeSlotDto = new TimeSlotDto(timeSlot.getTimeSlotId(),timeSlot.getStartTime(),timeSlot.getEndTime(),timeSlot.getStartDate(),timeSlot.getEndDate(),timeSlot.getGarageSpot());
 		return timeSlotDto;
 	}
 	
@@ -139,7 +139,7 @@ public class AutoRepairShopSystemRestController {
 		appointmentDto.setReceipt(convertToDto(a.getReceipt()));
 		appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
 		appointmentDto.setReminder(convertToDto(a.getReminder()));
-		//appointment.setTimeSlot
+		appointmentDto.setTimeSlot(convertToDto(a.getTimeSlot()));
 		return appointmentDto;
 	}
 
