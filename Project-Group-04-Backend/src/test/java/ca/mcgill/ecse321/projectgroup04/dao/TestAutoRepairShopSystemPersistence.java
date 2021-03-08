@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.projectgroup04.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.awt.List;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -57,8 +56,7 @@ public class TestAutoRepairShopSystemPersistence {
     @Autowired
     private ReminderRepository reminderRepository;
 
-    @Autowired
-    private GarageSpotRepository garageSpotRepository;
+    
     @Autowired
     private FieldTechnicianRepository fieldTechnicianRepository;
     @Autowired
@@ -82,7 +80,7 @@ public class TestAutoRepairShopSystemPersistence {
         garageTechnicianRepository.deleteAll();
         timeSlotRepository.deleteAll();
 
-        garageSpotRepository.deleteAll();
+      
 
         checkupReminderRepository.deleteAll();
         fieldTechnicianRepository.deleteAll();
@@ -103,7 +101,7 @@ public class TestAutoRepairShopSystemPersistence {
         System.out.print(ad.getId());
         System.out.println(ad.getId().getClass());
         ad = null;
-        ad = administrativeAssistantRepository.findAdminstrativeAssistantById(id);
+        ad = administrativeAssistantRepository.findAdministrativeAssistantById(id);
         assertNotNull(ad);
         assertEquals(id, ad.getId());
 
@@ -145,18 +143,18 @@ public class TestAutoRepairShopSystemPersistence {
         ts.setStartDate(startDate);
         ts.setEndDate(endDate);
 
-        int GSnum = 123;
-        GarageSpot garageSpot = new GarageSpot();
-        garageSpot.setSpotNumber(GSnum);
+//        int GSnum = 123;
+//        GarageSpot garageSpot = new GarageSpot();
+//        garageSpot.setSpotNumber(GSnum);
 
         ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
         times.add(ts);
-        garageSpot.setTimeSlot(times);
-
+//        garageSpot.setTimeSlot(times);
+        int garageSpot = 1;
         ts.setGarageSpot(garageSpot);
-
-        garageSpotRepository.save(garageSpot);
-        Long garageId = garageSpot.getId();
+//
+//        garageSpotRepository.save(garageSpot);
+//        Long garageId = garageSpot.getId();
         timeSlotRepository.save(ts);
 
         Long timeSlotID = ts.getTimeSlotId();
@@ -171,7 +169,7 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(startDate, ts.getStartDate());
         assertEquals(endDate, ts.getEndDate());
         assertEquals(timeSlotID, ts.getTimeSlotId());
-        assertEquals(garageId, ts.getGarageSpot().getId());
+        assertEquals(garageSpot, ts.getGarageSpot());
 
     }
 
@@ -514,42 +512,42 @@ public class TestAutoRepairShopSystemPersistence {
 
     }
 
-    @Test
-    @Transactional
-    public void testPersistAndLoadGarageSpot() {
-        int gSpot = 2;
-        GarageSpot garageSpot = new GarageSpot();
-        garageSpot.setSpotNumber(gSpot);
-
-        Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-        Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-        Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
-        Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
-        TimeSlot ts = new TimeSlot();
-        ts.setStartTime(startTime);
-        ts.setEndTime(endTime);
-        ts.setStartDate(startDate);
-        ts.setEndDate(endDate);
-        ts.setGarageSpot(garageSpot);
-
-        ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
-        times.add(ts);
-        garageSpot.setTimeSlot(times);
-
-        garageSpotRepository.save(garageSpot);
-        Long gsId = garageSpot.getId();
-        timeSlotRepository.save(ts);
-        Long tsId = ts.getTimeSlotId();
-
-        garageSpot = null;
-
-        garageSpot = garageSpotRepository.findGarageSpotById(gsId);
-
-        assertNotNull(garageSpot);
-        assertEquals(tsId, garageSpot.getTimeSlot().get(0).getTimeSlotId());
-        assertEquals(gSpot, garageSpot.getSpotNumber());
-        assertEquals(gsId, garageSpot.getId());
-    }
+//    @Test
+//    @Transactional
+//    public void testPersistAndLoadGarageSpot() {
+//        int gSpot = 2;
+////        GarageSpot garageSpot = new GarageSpot();
+////        garageSpot.setSpotNumber(gSpot);
+//        int garageSpot = 1;
+//        Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
+//        Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
+//        Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
+//        Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
+//        TimeSlot ts = new TimeSlot();
+//        ts.setStartTime(startTime);
+//        ts.setEndTime(endTime);
+//        ts.setStartDate(startDate);
+//        ts.setEndDate(endDate);
+//        ts.setGarageSpot(garageSpot);
+//
+//        ArrayList<TimeSlot> times = new ArrayList<TimeSlot>();
+//        times.add(ts);
+////        garageSpot.setTimeSlot(times);
+//
+////        garageSpotRepository.save(garageSpot);
+////        Long gsId = garageSpot.getId();
+//        timeSlotRepository.save(ts);
+//        Long tsId = ts.getTimeSlotId();
+//
+//        garageSpot = null;
+//
+////        garageSpot = garageSpotRepository.findGarageSpotById(gsId);
+//
+//        assertNotNull(garageSpot);
+//        assertEquals(tsId, garageSpot.getTimeSlot().get(0).getTimeSlotId());
+//        assertEquals(gSpot, garageSpot.getSpotNumber());
+//        assertEquals(gsId, garageSpot.getId());
+//    }
 
     @Test
     @Transactional

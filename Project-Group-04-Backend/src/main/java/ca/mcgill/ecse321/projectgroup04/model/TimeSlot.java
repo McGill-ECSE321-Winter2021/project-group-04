@@ -16,7 +16,7 @@ public class TimeSlot {
   private Time endTime;
   private Date endDate;
 
-  private GarageSpot garageSpot;
+ private int garageSpot;
   private AutoRepairShop autoRepairShop;
   private Long timeSlotId;
 
@@ -25,7 +25,7 @@ public class TimeSlot {
   public void setStartDate(Date aStartDate) { this.startDate = aStartDate; }
   public void setEndDate(Date aEndDate) { this.endDate = aEndDate; }
 
-  public void setGarageSpot(GarageSpot aGarageSpot) { this.garageSpot = aGarageSpot; }
+  public void setGarageSpot(int garageSpot2) { this.garageSpot = garageSpot2; }
   public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) { this.autoRepairShop = aAutoRepairShop; }
   public void setTimeSlotId(Long aTimeSlotId){this.timeSlotId = aTimeSlotId;}
 
@@ -50,8 +50,8 @@ public class TimeSlot {
   @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getTimeSlotId() { return this.timeSlotId; }
 
-  @ManyToOne
-  public GarageSpot getGarageSpot()
+
+  public int getGarageSpot()
   {
     return this.garageSpot;
   }
@@ -69,7 +69,7 @@ public class TimeSlot {
             "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "garageSpot = "+(getGarageSpot()!=null?Integer.toHexString(System.identityHashCode(getGarageSpot())):"null") + System.getProperties().getProperty("line.separator") +
+//            "  " + "garageSpot = "+(getGarageSpot()!=0?Integer.toHexString(System.identityHashCode(getGarageSpot())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "autoRepairShop = "+(getAutoRepairShop()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShop())):"null");
   }
 }
