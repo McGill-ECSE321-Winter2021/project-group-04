@@ -23,7 +23,7 @@ public class Car
 
 
   //Car Associations
-  private Customer owner;
+
 
   public void setCarId(Long aCarId)
   {
@@ -44,10 +44,7 @@ public class Car
   {
     this.year=aYear;
   }
-  
-  public void setOwner(Customer aOwner) {
-	  owner=aOwner;
-  }
+
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
   public Long getCarId()
@@ -69,9 +66,6 @@ public class Car
   {
     return year;
   }
-  @OneToOne
-  public Customer getOwner() {
-	  return owner;
-  }
+
 
 }

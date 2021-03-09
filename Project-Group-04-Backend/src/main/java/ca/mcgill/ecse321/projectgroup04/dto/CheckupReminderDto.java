@@ -9,16 +9,16 @@ public class CheckupReminderDto {
     private Date date;
     private Time time;
     private String message;
-    private Customer customer;
+
 
     public CheckupReminderDto() {
     }
 
-    public CheckupReminderDto(Date aDate, Time aTime, String aMessage, Customer aCustomer) {
+    public CheckupReminderDto(Date aDate, Time aTime, String aMessage) {
         this.date = aDate;
         this.time = aTime;
         this.message = aMessage;
-        this.customer = aCustomer;
+     
     }
 
     /**
@@ -42,11 +42,6 @@ public class CheckupReminderDto {
         return message;
     }
 
-    /**
-     * @return Customer return the customer
-     */
-    public Customer getCustomer() {
-        return customer;
-    }
+
 
 }

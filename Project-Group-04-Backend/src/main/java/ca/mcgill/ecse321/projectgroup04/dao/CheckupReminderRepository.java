@@ -12,7 +12,7 @@ public interface CheckupReminderRepository extends CrudRepository<CheckupReminde
 //
 //	CheckupReminder findCheckupReminderByDate(Date date);
 //
-	List<CheckupReminder> findCheckupReminderByCustomer(Customer customer);
+
 //
 //	CheckupReminder findCheckupReminderByMessage(String message);
 }

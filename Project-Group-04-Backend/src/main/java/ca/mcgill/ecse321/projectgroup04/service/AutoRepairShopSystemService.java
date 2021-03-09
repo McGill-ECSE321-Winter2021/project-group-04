@@ -65,10 +65,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
-			String aZipCode, String aEmailAddress, Customer aCustomer) {
+			String aZipCode, String aEmailAddress) {
 		Profile profile = new Profile();
 		profile.setAddressLine(aAddressLine);
-		profile.setCustomer(aCustomer);
 		profile.setEmailAddress(aEmailAddress);
 		profile.setFirstName(aFirstName);
 		profile.setLastName(aLastName);
@@ -84,11 +83,7 @@ public class AutoRepairShopSystemService {
 		return profile;
 	}
 
-	@Transactional
-	public Profile getProfileByCustomer(Customer aCustomer) {
-		Profile profile = profileRepository.findByCustomer(aCustomer);
-		return profile;
-	}
+
 
 	@Transactional
 	public List<Profile> getAllProfiles() {
@@ -96,9 +91,8 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public Receipt createReceipt(Appointment aAppointment, double aTotalPrice) {
+	public Receipt createReceipt(double aTotalPrice) {
 		Receipt receipt = new Receipt();
-		receipt.setAppointment(aAppointment);
 		receipt.setTotalPrice(aTotalPrice);
 		return receipt;
 	}
@@ -109,11 +103,6 @@ public class AutoRepairShopSystemService {
 		return receipt;
 	}
 
-	@Transactional
-	public Receipt getReceiptByAppointment(Appointment aAppointment) {
-		Receipt receipt = receiptRepository.findByAppointment(aAppointment);
-		return receipt;
-	}
 
 	@Transactional
 	public List<Receipt> getAllReceipts() {
@@ -125,6 +114,9 @@ public class AutoRepairShopSystemService {
 		List<Receipt> customerReceipts = new ArrayList<>();
 		for (Appointment a : appointmentRepository.findByCustomer(customer)) {
 			customerReceipts.add(a.getReceipt());
+		}
+		for(EmergencyService emergencyService : emergencyServiceRepository.findByCustomer(customer)) {
+			customerReceipts.add(emergencyService.getReceipt());
 		}
 		return customerReceipts;
 	}
@@ -176,10 +168,9 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public AdministrativeAssistant createAdministrativeAssistant(AutoRepairShop aAutoRepairShop, String userId,
+	public AdministrativeAssistant createAdministrativeAssistant(String userId,
 			String password) {
 		AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
-		administrativeAssistant.setAutoRepairShop(aAutoRepairShop);
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
 		administrativeAssistantRepository.save(administrativeAssistant);
@@ -200,9 +191,8 @@ public class AutoRepairShopSystemService {
 	/////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public Owner createOwner(AutoRepairShop aAutoRepairShop, String userId, String password) {
+	public Owner createOwner(String userId, String password) {
 		Owner owner = new Owner();
-		owner.setAutoRepairShop(aAutoRepairShop);
 		owner.setUserId(userId);
 		owner.setPassword(password);
 		ownerRepository.save(owner);
@@ -217,11 +207,10 @@ public class AutoRepairShopSystemService {
 	//////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public Car createCar(String model, String year, String color, Customer customer) {
+	public Car createCar(String model, String year, String color) {
 		Car car = new Car();
 		car.setColor(color);
 		car.setModel(model);
-		car.setOwner(customer);
 		car.setYear(year);
 		carRepository.save(car);
 		return car;
@@ -233,11 +222,9 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public Customer createCustomer(String userId, String password, List<Appointment> appointment, AutoRepairShop auto,
+	public Customer createCustomer(String userId, String password,
 			List<Reminder> reminder, Car car, Profile profile) {
 		Customer customer = new Customer();
-		customer.setAppointments(appointment);
-		customer.setAutoRepairShop(auto);
 		customer.setPassword(password);
 		customer.setUserId(userId);
 		customer.setReminders(reminder);
@@ -253,15 +240,13 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot,
-			AutoRepairShop auto) {
+	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
 		TimeSlot timeSlot = new TimeSlot();
 		timeSlot.setStartDate(startDate);
 		timeSlot.setStartTime(startTime);
 		timeSlot.setEndDate(endDate);
 		timeSlot.setEndTime(endTime);
 //		timeSlot.setGarageSpot(garageSpot); //TODO: change this one
-		timeSlot.setAutoRepairShop(auto);
 		timeSlotRepository.save(timeSlot);
 		return timeSlot;
 	}
@@ -278,26 +263,26 @@ public class AutoRepairShopSystemService {
 	public AppointmentReminder createAppointmentReminder(AutoRepairShop aAutoRepairShop, Appointment appointment,
 			Customer customer, Date date, Time time, String message) {
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
-		appointmentReminder.setCustomer(customer);
+
 		appointmentReminder.setDate(date);
 		appointmentReminder.setTime(time);
 		appointmentReminder.setMessage(message);
-		appointmentReminder.setAppointment(appointment);
+
 		appointmentReminderRepository.save(appointmentReminder);
 		return appointmentReminder;
 
 	}
 
-	@Transactional
-	public List<AppointmentReminder> getAppointmentReminderByCustomer(Customer customer) {
-		return (List<AppointmentReminder>) appointmentReminderRepository.findByCustomer(customer);
-	}
-
-	@Transactional
-	public AppointmentReminder getAppointmentReminderByCustomerAndAppointment(Customer customer,
-			Appointment appointment) {
-		return appointmentReminderRepository.findByCustomerAndAppointment(customer, appointment);
-	}
+//	@Transactional
+//	public List<AppointmentReminder> getAppointmentReminderByCustomer(Customer customer) {
+//		return (List<AppointmentReminder>) appointmentReminderRepository.findByCustomer(customer);
+//	}
+//
+//	@Transactional
+//	public AppointmentReminder getAppointmentReminderByCustomerAndAppointment(Customer customer,
+//			Appointment appointment) {
+//		return appointmentReminderRepository.findByCustomerAndAppointment(customer, appointment);
+//	}
 
 	@Transactional
 	public List<AppointmentReminder> getAllAppointmentReminders() {
@@ -329,14 +314,15 @@ public class AutoRepairShopSystemService {
 	///////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public EmergencyService createEmergencyService(AutoRepairShop aAutoRepairShop, String name, int price,
-			String aLocation, FieldTechnician aFieldTechnician) {
+	public EmergencyService createEmergencyService(String name, int price,
+			String aLocation, FieldTechnician aFieldTechnician,Customer aCustomer,Receipt aReceipt) {
 		EmergencyService emergencyService = new EmergencyService();
-		emergencyService.setAutoRepairShop(aAutoRepairShop);
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
 		emergencyService.setLocation(aLocation);
 		emergencyService.setTechnician(aFieldTechnician);
+		emergencyService.setCustomer(aCustomer);
+		emergencyService.setReceipt(aReceipt);
 		emergencyServiceRepository.save(emergencyService);
 		return emergencyService;
 	}
@@ -350,15 +336,21 @@ public class AutoRepairShopSystemService {
 	public List<EmergencyService> getAllEmergencyServices() {
 		return (List<EmergencyService>) emergencyServiceRepository.findAll();
 	}
+	@Transactional
+	public List<EmergencyService> getCustomerEmergencyServices(Customer customer) {
+		return (List<EmergencyService>) emergencyServiceRepository.findByCustomer(customer);
+	}
+	@Transactional
+	public EmergencyService getEmergencyServiceByReceipt(Receipt receipt) {
+		return  emergencyServiceRepository.findByReceipt(receipt);
+	}
 
 	///////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public GarageTechnician createGarageTechnician(AutoRepairShop autoRepairShop, String name,
-			List<Appointment> appointments) {
+	public GarageTechnician createGarageTechnician(AutoRepairShop autoRepairShop, String name) {
 		GarageTechnician garageTechnician = new GarageTechnician();
 		garageTechnician.setName(name);
-		garageTechnician.setAppointments(appointments);
 		garageTechnicianRepository.save(garageTechnician);
 		return garageTechnician;
 	}
@@ -370,11 +362,10 @@ public class AutoRepairShopSystemService {
 	/////////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public FieldTechnician createFieldTechnician(AutoRepairShop aAutoRepairShop, String name,
-			EmergencyService emergencyService) {
+	public FieldTechnician createFieldTechnician(AutoRepairShop aAutoRepairShop, String name) {
 		FieldTechnician fieldTechnician = new FieldTechnician();
 		fieldTechnician.setName(name);
-		fieldTechnician.setEmergencyService(emergencyService);
+
 		fieldTechnicianRepository.save(fieldTechnician);
 		return fieldTechnician;
 	}
@@ -393,7 +384,7 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Business createBusiness(String aName, String aAddress, String aPhoneNumber, String aEmailAddress,
-			List<BusinessHour> aBusinessHours, List<TimeSlot> regular, AutoRepairShop aAutoRepairShop) {
+			List<BusinessHour> aBusinessHours, List<TimeSlot> regular) {
 		Business business = new Business();
 		business.setName(aName);
 		business.setAddress(aAddress);
@@ -401,7 +392,6 @@ public class AutoRepairShopSystemService {
 		business.setEmailAddress(aEmailAddress);
 		business.setBusinessHours(aBusinessHours);
 		business.setRegular(regular);
-		business.setAutoRepairShop(aAutoRepairShop);
 		businessRepository.save(business);
 		return business;
 	}
@@ -461,7 +451,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public CheckupReminder createCheckupReminder(Date aDate, Time aTime, String aMessage, Customer aCustomer) {
 		CheckupReminder checkupReminder = new CheckupReminder();
-		checkupReminder.setCustomer(aCustomer);
+
 		checkupReminder.setDate(aDate);
 		checkupReminder.setMessage(aMessage);
 		checkupReminder.setTime(aTime);
@@ -474,10 +464,10 @@ public class AutoRepairShopSystemService {
 		return checkupReminderRepository.findByReminderId(checkupReminderId);
 	}
 
-	@Transactional
-	public List<CheckupReminder> getCheckupReminderByCustomer(Customer customer) {
-		return (List<CheckupReminder>) checkupReminderRepository.findCheckupReminderByCustomer(customer);
-	}
+//	@Transactional
+//	public List<CheckupReminder> getCheckupReminderByCustomer(Customer customer) {
+//		return (List<CheckupReminder>) checkupReminderRepository.findCheckupReminderByCustomer(customer);
+//	}
 
 //	@Transactional
 //	public CheckupReminder getCheckupReminderByDate(Date date) {
@@ -507,8 +497,8 @@ public class AutoRepairShopSystemService {
 		return (List<Reminder>) reminderRepository.findAll();
 	}
 
-	@Transactional
-	public List<Reminder> getCustomerReminders(Customer customer) {
-		return reminderRepository.findByCustomer(customer);
-	}
+//	@Transactional
+//	public List<Reminder> getCustomerReminders(Customer customer) {
+//		return reminderRepository.findByCustomer(customer);
+//	}
 }

@@ -24,7 +24,7 @@ public abstract class User
   private Long Id;
 
   //User Associations
-  private AutoRepairShop autoRepairShop;
+
 
 
   public void setUserId(String aUserId)
@@ -55,22 +55,7 @@ public abstract class User
     return password;
   }
   
-  @ManyToOne
-  public AutoRepairShop getAutoRepairShop()
-  {
-    return autoRepairShop;
-  }
-  
-  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop)
-  {
-    this.autoRepairShop=aAutoRepairShop;
-  }
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "userId" + ":" + getUserId()+ "," +
-            "password" + ":" + getPassword()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShop = "+(getAutoRepairShop()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShop())):"null");
-  }
+
+
 }

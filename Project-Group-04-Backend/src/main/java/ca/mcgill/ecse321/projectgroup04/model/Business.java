@@ -27,7 +27,7 @@ public class Business {
   // Business Associations
   private List<BusinessHour> businessHours;
   private List<TimeSlot> regular;
-  private AutoRepairShop autoRepairShop;
+
 
   // ------------------------
   // INTERFACE
@@ -91,19 +91,7 @@ public class Business {
     return this.regular;
   }
 
-  @OneToOne
-  public AutoRepairShop getAutoRepairShop() {
-    return this.autoRepairShop;
-  }
 
-  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
-    this.autoRepairShop = aAutoRepairShop;
-  }
 
-  public String toString() {
-    return super.toString() + "[" + "name" + ":" + getName() + "," + "address" + ":" + getAddress() + ","
-        + "phoneNumber" + ":" + getPhoneNumber() + "," + "emailAddress" + ":" + getEmailAddress() + "]"
-        + System.getProperties().getProperty("line.separator") + "  " + "autoRepairShop = "
-        + (getAutoRepairShop() != null ? Integer.toHexString(System.identityHashCode(getAutoRepairShop())) : "null");
-  }
+
 }

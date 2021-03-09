@@ -4,7 +4,7 @@ public class CarDto {
 	private String model;
 	private String color;
 	private String year;
-	private CustomerDto customer;
+
 
 	public CarDto() {
 
@@ -16,13 +16,7 @@ public class CarDto {
 		year = aYear;
 	}
 
-	public CustomerDto getCustomer() {
-		return customer;
-	}
 
-	public void setCustomer(CustomerDto aCustomer) {
-		customer = aCustomer;
-	}
 
 	/**
 	 * @return String return the model

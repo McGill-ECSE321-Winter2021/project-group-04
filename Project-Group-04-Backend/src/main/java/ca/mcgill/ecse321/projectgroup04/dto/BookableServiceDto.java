@@ -7,7 +7,7 @@ public class BookableServiceDto {
 	private int duration;
 	private int price;
 	private String name;
-	private List<AppointmentDto> appointments;
+
 
 	public BookableServiceDto() {
 
@@ -31,12 +31,6 @@ public class BookableServiceDto {
 		return name;
 	}
 
-	public void setAppointments(List<AppointmentDto> aAppointments) {
-		appointments = aAppointments;
-	}
 
-	public List<AppointmentDto> getAppointments() {
-		return appointments;
-	}
 
 }

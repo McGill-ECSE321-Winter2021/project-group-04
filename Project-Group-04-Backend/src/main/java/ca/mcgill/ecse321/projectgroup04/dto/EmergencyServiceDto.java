@@ -6,16 +6,18 @@ public class EmergencyServiceDto {
 	private String name;
 	private String location;
 	private FieldTechnicianDto fieldTechnician;
+	private CustomerDto customer;
+	private ReceiptDto receipt;
 	
 	public EmergencyServiceDto() {
 		
 	}
 	
-	public EmergencyServiceDto(int aPrice, String aName, String aLocation, FieldTechnicianDto aFieldTechnician) {
+	public EmergencyServiceDto(int aPrice, String aName, String aLocation) {
 		price = aPrice;
 		name = aName;
 		location = aLocation;
-		fieldTechnician = aFieldTechnician;
+
 	}
 	
 	public int getPrice() {
@@ -48,6 +50,19 @@ public class EmergencyServiceDto {
 	
 	public void setFieldTechnician(FieldTechnicianDto myFieldTech) {
 		fieldTechnician = myFieldTech;
+	}
+	
+	public void setCustomer(CustomerDto aCustomer) {
+		customer=aCustomer;
+	}
+	public void setReceipt(ReceiptDto aReceipt) {
+		receipt=aReceipt;
+	}
+	public CustomerDto getCustomer() {
+		return customer;
+	}
+	public ReceiptDto getReceipt() {
+		return receipt;
 	}
 	
 }
