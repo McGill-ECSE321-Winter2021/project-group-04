@@ -32,7 +32,6 @@ public class EmergencyService extends Service {
         super.setName(aName);
     }
 
-   
     @Override
     public Long getServiceId() {
         return super.getServiceId();
@@ -52,29 +51,28 @@ public class EmergencyService extends Service {
     public int getPrice() {
         return super.getPrice();
     }
-    
+
     private Customer customer;
+
     @OneToOne
     public Customer getCustomer() {
         return customer;
     }
 
     public void setCustomer(Customer aCustomer) {
-        customer=aCustomer;
+        customer = aCustomer;
     }
+
     private Receipt receipt;
+
     @OneToOne
     public Receipt getReceipt() {
         return receipt;
     }
 
     public void setReceipt(Receipt aReceipt) {
-        receipt=aReceipt;
+        receipt = aReceipt;
     }
-
-
-
-
 
     private FieldTechnician technician;
 

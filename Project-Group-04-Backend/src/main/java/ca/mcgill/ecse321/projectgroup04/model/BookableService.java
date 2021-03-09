@@ -10,16 +10,16 @@ import javax.persistence.Entity;
 
 @Entity
 @Table(name = "bookableService")
-public class BookableService extends Service
-{
+public class BookableService extends Service {
 
-  //BookableService Attributes
+  // BookableService Attributes
   private int duration;
 
-  public void setDuration(int aDuration) { this.duration = aDuration; }
+  public void setDuration(int aDuration) {
+    this.duration = aDuration;
+  }
 
-  public int getDuration()
-  {
+  public int getDuration() {
     return this.duration;
   }
 
@@ -33,7 +33,6 @@ public class BookableService extends Service
     super.setName(aName);
   }
 
-  
   @Override
   public Long getServiceId() {
     return super.getServiceId();
@@ -54,9 +53,6 @@ public class BookableService extends Service
     return super.getPrice();
   }
 
-  
- 
-
   @Override
   public AutoRepairShop getAutoRepairShop() {
     return super.getAutoRepairShop();
@@ -67,9 +63,7 @@ public class BookableService extends Service
     super.setAutoRepairShop(aAutoRepairShop);
   }
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "duration" + ":" + getDuration()+ "]";
+  public String toString() {
+    return super.toString() + "[" + "duration" + ":" + getDuration() + "]";
   }
 }
