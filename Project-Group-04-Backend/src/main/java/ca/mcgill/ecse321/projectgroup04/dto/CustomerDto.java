@@ -8,7 +8,7 @@ public class CustomerDto {
 	private Long id;
 	private CarDto car;
 	private ProfileDto profile;
-	private List<AppointmentDto> appointments;
+
 	private List<ReminderDto> reminders;
 	
 	
@@ -36,9 +36,7 @@ public class CustomerDto {
 	public ProfileDto getProfile() {
 		return profile;
 	}
-	public List<AppointmentDto> getAppointments(){
-		return appointments;
-	}
+
 	public List<ReminderDto> getReminders(){
 		return reminders;
 	}
@@ -48,9 +46,7 @@ public class CustomerDto {
 	public void setProfile(ProfileDto aProfile) {
 		profile=aProfile;
 	}
-	public void setAppointments(List<AppointmentDto> aAppointments) {
-		appointments=aAppointments;
-	}
+
 	public void setReminders(List<ReminderDto> aReminders) {
 		reminders=aReminders;
 	}

@@ -203,7 +203,7 @@ public class TestAutoRepairShopSystemPersistence {
         Time time = java.sql.Time.valueOf(LocalTime.of(11, 35));
         String message = "It is tomorrow";
         AppointmentReminder ar = new AppointmentReminder();
-        ar.setCustomer(customer);
+        
         ar.setDate(date);
         ar.setTime(time);
         ar.setMessage(message);
@@ -246,60 +246,17 @@ public class TestAutoRepairShopSystemPersistence {
     @Transactional
 
     public void testPersistAndLoadAppointmentReminder() {
-        String customerID = "cizo";
-        Customer customer = new Customer();
-        customer.setUserId(customerID);
+      
 
         Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
         Time time = java.sql.Time.valueOf(LocalTime.of(11, 35));
         String message = "It is tomorrow";
-
-        BookableService service = new BookableService();
-        service.setName("oil change");
-        service.setPrice(20);
-
-        double totalPrice = 90;
-        Receipt receipt = new Receipt();
-        receipt.setTotalPrice(totalPrice);
-
-        GarageTechnician technician = new GarageTechnician();
-
-        Date startDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-        Date endDate = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
-        Time startTime = java.sql.Time.valueOf(LocalTime.of(11, 35));
-        Time endTime = java.sql.Time.valueOf(LocalTime.of(12, 35));
-        TimeSlot ts = new TimeSlot();
-        ts.setStartTime(startTime);
-        ts.setEndTime(endTime);
-        ts.setStartDate(startDate);
-        ts.setEndDate(endDate);
-
-        Appointment appointment = new Appointment();
-        appointment.setCustomer(customer);
-        appointment.setBookableServices(service);
-        appointment.setReceipt(receipt);
-        appointment.setTechnician(technician);
-        appointment.setTimeSlot(ts);
-
         AppointmentReminder appointmentReminder = new AppointmentReminder();
-        appointmentReminder.setCustomer(customer);
+
         appointmentReminder.setDate(date);
         appointmentReminder.setMessage(message);
         appointmentReminder.setTime(time);
-        appointmentReminder.setAppointment(appointment);
-
-        receiptRepository.save(receipt);
-        Long receiptID = receipt.getReceiptId();
-        customerRepository.save(customer);
-        Long customerId = customer.getId();
-        garageTechnicianRepository.save(technician);
-        Long techId = technician.getTechnicianId();
-        timeSlotRepository.save(ts);
-        Long tsId = ts.getTimeSlotId();
-        bookableServiceRepository.save(service);
-        Long serviceId = service.getServiceId();
-        appointmentRepository.save(appointment);
-        Long appointmentID = appointment.getAppointmentId();
+        
         appointmentReminderRepository.save(appointmentReminder);
         Long arID = appointmentReminder.getReminderId();
 
@@ -308,12 +265,6 @@ public class TestAutoRepairShopSystemPersistence {
         appointmentReminder = appointmentReminderRepository.findAppointmentReminderByReminderId(arID);
 
         assertNotNull(appointmentReminder);
-        assertEquals(appointmentID, appointmentReminder.getAppointment().getAppointmentId());
-        assertEquals(customerId, appointmentReminder.getCustomer().getId());
-        assertEquals(serviceId, appointmentReminder.getAppointment().getBookableServices().getServiceId());
-        assertEquals(techId, appointmentReminder.getAppointment().getTechnician().getTechnicianId());
-        assertEquals(tsId, appointmentReminder.getAppointment().getTimeSlot().getTimeSlotId());
-        assertEquals(receiptID, appointmentReminder.getAppointment().getReceipt().getReceiptId());
         assertEquals(arID, appointmentReminder.getReminderId());
     }
 
@@ -323,26 +274,14 @@ public class TestAutoRepairShopSystemPersistence {
         String techName = "cizo";
         GarageTechnician technician = new GarageTechnician();
         technician.setName(techName);
-
-        Appointment appointment = new Appointment();
-        appointment.setTechnician(technician);
-        appointmentRepository.save(appointment);
-        Long apId = appointment.getAppointmentId();
-        ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-        appointments.add(appointment);
-
-        technician.setAppointments(appointments);
         garageTechnicianRepository.save(technician);
         Long technicianID = technician.getTechnicianId();
-
         technician = null;
-
         technician = garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianID);
-
         assertNotNull(technician);
         assertEquals(technicianID, technician.getTechnicianId());
         assertEquals(techName, technician.getName());
-        assertEquals(apId, technician.getAppointments().get(0).getAppointmentId());
+
     }
 
     @Test
@@ -385,7 +324,7 @@ public class TestAutoRepairShopSystemPersistence {
         String message = "testMessage";
         Date date = java.sql.Date.valueOf(LocalDate.of(2020, Month.JANUARY, 31));
         Time time = java.sql.Time.valueOf(LocalTime.of(11, 35));
-        reminder.setCustomer(customer);
+        
         reminder.setMessage(message);
         reminder.setDate(date);
         reminder.setTime(time);
@@ -398,7 +337,6 @@ public class TestAutoRepairShopSystemPersistence {
         Time artime = java.sql.Time.valueOf(LocalTime.of(11, 35));
         String appReminderMessage = "It is tomorrow";
         AppointmentReminder ar = new AppointmentReminder();
-        ar.setCustomer(customer);
         ar.setDate(ardate);
         ar.setTime(artime);
         ar.setMessage(appReminderMessage);
@@ -406,16 +344,9 @@ public class TestAutoRepairShopSystemPersistence {
         Long arId = ar.getReminderId();
         reminders.add(ar);
 
-        Appointment appointment = new Appointment();
-        appointment.setCustomer(customer);
-        appointment.setReminder(ar);
-        appointmentRepository.save(appointment);
-        Long appointmentId = appointment.getAppointmentId();
-        ArrayList<Appointment> appointments = new ArrayList<Appointment>();
-        appointments.add(appointment);
+       
 
         customer.setReminders(reminders);
-        customer.setAppointments(appointments);
         customer.setCar(car);
         customer.setCustomerProfile(profile);
 
@@ -431,7 +362,6 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(password, customer.getPassword());
         assertEquals(carId, customer.getCar().getCarId());
         assertEquals(profileId, customer.getCustomerProfile().getProfileId());
-        assertEquals(appointmentId, customer.getAppointments().get(0).getAppointmentId());
         assertEquals(reminderId, customer.getReminders().get(0).getReminderId());
         assertEquals(arId, customer.getReminders().get(1).getReminderId());
         assertEquals(userId, customer.getUserId());
@@ -456,16 +386,7 @@ public class TestAutoRepairShopSystemPersistence {
         profile.setPhoneNumber(phoneNumber);
         profile.setZipCode(zipCode);
 
-        String password = "TestPassword";
-        Customer customer = new Customer();
-        String userId = "TestUser";
-        customer.setUserId(userId);
-        customer.setPassword(password);
-
-        customer.setCustomerProfile(profile);
-        profile.setCustomer(customer);
-        customerRepository.save(customer);
-        Long id = customer.getId();
+     
         profileRepository.save(profile);
         Long profileId = profile.getProfileId();
 
@@ -480,7 +401,7 @@ public class TestAutoRepairShopSystemPersistence {
         assertEquals(lastName, profile.getLastName());
         assertEquals(zipCode, profile.getZipCode());
         assertEquals(email, profile.getEmailAddress());
-        assertEquals(id, profile.getCustomer().getId());
+
 
     }
 
@@ -492,15 +413,12 @@ public class TestAutoRepairShopSystemPersistence {
         Receipt receipt = new Receipt();
         receipt.setTotalPrice(totalPrice);
 
-        Appointment appointment = new Appointment();
 
-        receipt.setAppointment(appointment);
-        appointment.setReceipt(receipt);
+
 
         receiptRepository.save(receipt);
         Long receiptId = receipt.getReceiptId();
-        appointmentRepository.save(appointment);
-        Long appointmentId = appointment.getAppointmentId();
+
 
         receipt = null;
         receipt = receiptRepository.findReceiptByReceiptId(receiptId);
@@ -508,7 +426,7 @@ public class TestAutoRepairShopSystemPersistence {
         assertNotNull(receipt);
         assertEquals(totalPrice, receipt.getTotalPrice());
         assertEquals(receiptId, receipt.getReceiptId());
-        assertEquals(appointmentId, receipt.getAppointment().getAppointmentId());
+
 
     }
 
@@ -708,11 +626,9 @@ public class TestAutoRepairShopSystemPersistence {
         Time time = java.sql.Time.valueOf(LocalTime.of(11, 35));
         String message = "testMessage";
 
-        Customer cust = new Customer();
-        customerRepository.save(cust);
-        Long custId = cust.getId();
 
-        cr.setCustomer(cust);
+
+       
         cr.setDate(date);
         cr.setTime(time);
         cr.setMessage(message);
@@ -726,7 +642,6 @@ public class TestAutoRepairShopSystemPersistence {
         assertNotNull(cr);
         assertEquals(crId, cr.getReminderId());
         assertEquals(message, cr.getMessage());
-        assertEquals(custId, cr.getCustomer().getId());
         assertEquals(date, cr.getDate());
         assertEquals(time, cr.getTime());
 

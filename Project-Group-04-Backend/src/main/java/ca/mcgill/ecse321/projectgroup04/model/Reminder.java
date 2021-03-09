@@ -19,7 +19,7 @@ public abstract class Reminder
   private String message;
 
   //Reminder Associations
-  private Customer customer;
+  
 
   
   public void setReminderId(Long aReminderId)
@@ -63,24 +63,7 @@ public abstract class Reminder
     return this.message;
   }
   
-  @ManyToOne
-  public Customer getCustomer()
-  {
-    return customer;
-  }
 
-  public void setCustomer(Customer aCustomer)
-  {
-    this.customer=aCustomer;
-  }
 
-  public String toString()
-  {
-    return super.toString() + "["+
-            "reminderId" + ":" + getReminderId()+ "," +
-            "message" + ":" + getMessage()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "time" + "=" + (getTime() != null ? !getTime().equals(this)  ? getTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null");
-  }
+
 }

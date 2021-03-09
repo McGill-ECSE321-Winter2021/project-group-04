@@ -8,7 +8,7 @@ public class ProfileDto {
 	private String lastName;
 	private String zipCode;
 	private String emailAddress;
-	private CustomerDto customer;
+
 
 	public ProfileDto() {
 
@@ -81,12 +81,5 @@ public class ProfileDto {
 		return emailAddress;
 	}
 
-	public void setCustomer(CustomerDto aCustomer) {
-		customer = aCustomer;
 
-	}
-
-	public CustomerDto getCustomer() {
-		return customer;
-	}
 }

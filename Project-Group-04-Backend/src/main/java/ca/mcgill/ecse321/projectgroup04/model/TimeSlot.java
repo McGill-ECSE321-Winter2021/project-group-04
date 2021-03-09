@@ -16,8 +16,7 @@ public class TimeSlot {
   private Time endTime;
   private Date endDate;
 
- private int garageSpot;
-  private AutoRepairShop autoRepairShop;
+ private Integer garageSpot;
   private Long timeSlotId;
 
   public void setStartTime(Time aStartTime) { this.startTime = aStartTime; }
@@ -26,7 +25,6 @@ public class TimeSlot {
   public void setEndDate(Date aEndDate) { this.endDate = aEndDate; }
 
   public void setGarageSpot(int garageSpot2) { this.garageSpot = garageSpot2; }
-  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) { this.autoRepairShop = aAutoRepairShop; }
   public void setTimeSlotId(Long aTimeSlotId){this.timeSlotId = aTimeSlotId;}
 
   public Time getStartTime()
@@ -51,25 +49,12 @@ public class TimeSlot {
   public Long getTimeSlotId() { return this.timeSlotId; }
 
 
-  public int getGarageSpot()
+  public Integer getGarageSpot()
   {
     return this.garageSpot;
   }
 
-  @ManyToOne
-  public AutoRepairShop getAutoRepairShop()
-  {
-    return this.autoRepairShop;
-  }
 
-  public String toString()
-  {
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-//            "  " + "garageSpot = "+(getGarageSpot()!=0?Integer.toHexString(System.identityHashCode(getGarageSpot())):"null") + System.getProperties().getProperty("line.separator") +
-            "  " + "autoRepairShop = "+(getAutoRepairShop()!=null?Integer.toHexString(System.identityHashCode(getAutoRepairShop())):"null");
-  }
+
+
 }

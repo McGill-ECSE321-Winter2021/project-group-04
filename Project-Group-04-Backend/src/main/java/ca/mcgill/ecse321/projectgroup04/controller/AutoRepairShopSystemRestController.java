@@ -103,14 +103,14 @@ public class AutoRepairShopSystemRestController {
 		return carDto;
 	}
 	
-	private List<ReminderDto> createRemindersDtosForCustomer(Customer c) {
-		List<Reminder> allReminders =service.getCustomerReminders(c);
-		List<ReminderDto> reminders = new ArrayList<>();
-		for(Reminder r : allReminders) {
-			reminders.add(convertToDto(r));
-		}
-		return reminders;
-	}
+//	private List<ReminderDto> createRemindersDtosForCustomer(Customer c) {
+//		List<Reminder> allReminders =service.getCustomerReminders(c);
+//		List<ReminderDto> reminders = new ArrayList<>();
+//		for(Reminder r : allReminders) {
+//			reminders.add(convertToDto(r));
+//		}
+//		return reminders;
+//	}
 	
 	private ReminderDto convertToDto(Reminder r) {
 		if(r==null) {
@@ -120,18 +120,25 @@ public class AutoRepairShopSystemRestController {
 		return reminderDto;
 	}
 	
-	private List<AppointmentDto> createAppointmentsDtosForCustomer(Customer c) {
+	private List<AppointmentDto> createAppointmentsDtosForCustomer(Customer c,CustomerDto cDto) {
 		List<Appointment> allAppointments =service.getAppointmentsByCustomer(c);
 		List<AppointmentDto> appointments = new ArrayList<>();
 		for(Appointment a : allAppointments) {
-			appointments.add(convertToDto(a));
+			AppointmentDto appointmentDto = new AppointmentDto();
+			appointmentDto.setCustomer(cDto);
+			appointmentDto.setGarageTechnician(convertToDto(a.getTechnician()));
+			appointmentDto.setReceipt(convertToDto(a.getReceipt()));
+			appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
+			appointmentDto.setReminder(convertToDto(a.getReminder()));
+			appointmentDto.setTimeSlot(convertToDto(a.getTimeSlot()));
+			appointments.add(appointmentDto);
 		}
 		return appointments;
 	}
 	
 	private AppointmentDto convertToDto(Appointment a) {
 		if(a==null) {
-			throw new IllegalArgumentException("There is no such Customer!");
+			throw new IllegalArgumentException("There is no such Appointment!");
 		}
 		AppointmentDto appointmentDto = new AppointmentDto();
 		appointmentDto.setCustomer(convertToDto(a.getCustomer()));
@@ -155,7 +162,8 @@ public class AutoRepairShopSystemRestController {
 		CustomerDto customerDto =  new CustomerDto(c.getUserId(),c.getUserId());
 		customerDto.setProfile(convertToDto(c.getCustomerProfile()));	
 		customerDto.setCar(convertToDto(c.getCar()));
-		customerDto.setReminders(createRemindersDtosForCustomer(c));
+//		customerDto.setReminders(createRemindersDtosForCustomer(c));
+
 		return customerDto;
 	}
 	

@@ -15,16 +15,7 @@ import java.util.*;
 @Table(name = "garageTechnician")
 public class GarageTechnician extends Technician {
 
-    private List<Appointment> appointments;
-
-    @OneToMany(cascade = {CascadeType.ALL})
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
+    
 
     
     @Override

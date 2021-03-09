@@ -7,7 +7,7 @@ import ca.mcgill.ecse321.projectgroup04.model.*;
 
 public interface BookableServiceRepository extends CrudRepository <BookableService, Long> {
     BookableService findBookableServiceByServiceId(Long serviceId);
-    BookableService findByAppointments(Appointment appointments);
+//    BookableService findByAppointments(Appointment appointments);
 
 
 }

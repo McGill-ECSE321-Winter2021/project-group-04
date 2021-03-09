@@ -29,15 +29,7 @@ public class AdministrativeAssistant extends User {
     return super.getPassword();
   }
   
-  @Override
-  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
-	super.setAutoRepairShop(aAutoRepairShop); 
-  }
-  
-  @Override
-  public AutoRepairShop getAutoRepairShop() {
-	  return super.getAutoRepairShop();
-  }
+
   @Override
   public void setUserId(String userId) {
 	  super.setUserId(userId);

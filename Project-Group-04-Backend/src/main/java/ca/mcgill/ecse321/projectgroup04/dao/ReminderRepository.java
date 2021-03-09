@@ -8,6 +8,6 @@ import ca.mcgill.ecse321.projectgroup04.model.*;
 
 public interface ReminderRepository extends CrudRepository <Reminder, Long> {
 	Reminder findReminderByReminderId(Long reminderId);
-    List<Reminder> findByCustomer(Customer customer);
+
 
 }

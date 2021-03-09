@@ -31,14 +31,5 @@ public class FieldTechnician extends Technician {
         super.setName(aName);
     }
 
-    private EmergencyService emergencyService;
 
-    @OneToOne
-    public EmergencyService getEmergencyService() {
-        return this.emergencyService;
-    }
-
-    public void setEmergencyService(EmergencyService emergencyService) {
-        this.emergencyService = emergencyService;
-    }
 }

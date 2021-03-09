@@ -40,7 +40,7 @@ public class ReminderDto {
 	private String message;
 	private Date date;
 	private Time time;
-	private CustomerDto customer;
+
 	
 	public ReminderDto(String aMessage,Date aDate,Time aTime) {
 		message=aMessage;
@@ -48,12 +48,7 @@ public class ReminderDto {
 		time=aTime;
 	}
 	
-	public void setCustomer(CustomerDto aCustomer) {
-		customer=aCustomer;
-	}
-	
-	public CustomerDto getCustomer() {
-		return customer;
-	}
+
+
 
 }

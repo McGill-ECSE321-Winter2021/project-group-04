@@ -5,7 +5,7 @@ import java.util.List;
 public class GarageTechnicianDto {
 	private String name;
 	private Long technicianId;
-	private List<AppointmentDto> appointments;
+
 
 	public GarageTechnicianDto() {
 	}
@@ -19,12 +19,6 @@ public class GarageTechnicianDto {
 		return name;
 	}
 
-	public List<AppointmentDto> getAppointments() {
-		return appointments;
-	}
 
-	public void setAppointments(List<AppointmentDto> aAppointments) {
-		appointments = aAppointments;
-	}
 
 }

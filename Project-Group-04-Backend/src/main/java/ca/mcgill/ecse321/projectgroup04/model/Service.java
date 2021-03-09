@@ -41,17 +41,7 @@ public abstract class Service {
         return this.name;
     }
 
-    //Service Associations
-    private List<Appointment> appointments;
 
-    @OneToMany(cascade = {CascadeType.ALL})
-    public List<Appointment> getAppointments() {
-        return this.appointments;
-    }
-
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
 
     private AutoRepairShop autoRepairShop;
 
@@ -64,11 +54,5 @@ public abstract class Service {
       this.autoRepairShop = aAutoRepairShop;
     }
 
-    public String toString() {
-        return super.toString() + "[" +
-                "price" + ":" + getPrice() + "," +
-                "name" + ":" + getName() + "]" + System.getProperties().getProperty("line.separator") +
-                "  " + "serviceId" + "=" + (getServiceId() != null ? !getServiceId().equals(this) ? getServiceId().toString().replaceAll("  ", "    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-                "  " + "autoRepairShop = " + (getAutoRepairShop() != null ? Integer.toHexString(System.identityHashCode(getAutoRepairShop())) : "null");
-    }
+ 
 }

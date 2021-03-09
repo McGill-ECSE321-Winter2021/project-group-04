@@ -52,26 +52,29 @@ public class EmergencyService extends Service {
     public int getPrice() {
         return super.getPrice();
     }
-
-    @Override
-    public List<Appointment> getAppointments() {
-        return super.getAppointments();
+    
+    private Customer customer;
+    @OneToOne
+    public Customer getCustomer() {
+        return customer;
     }
 
-    @Override
-    public void setAppointments(List<Appointment> appointments) {
-        super.setAppointments(appointments);
+    public void setCustomer(Customer aCustomer) {
+        customer=aCustomer;
+    }
+    private Receipt receipt;
+    @OneToOne
+    public Receipt getReceipt() {
+        return receipt;
     }
 
-    @Override
-    public AutoRepairShop getAutoRepairShop() {
-        return super.getAutoRepairShop();
+    public void setReceipt(Receipt aReceipt) {
+        receipt=aReceipt;
     }
 
-    @Override
-    public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
-        super.setAutoRepairShop(aAutoRepairShop);
-    }
+
+
+
 
     private FieldTechnician technician;
 

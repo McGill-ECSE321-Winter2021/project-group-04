@@ -12,20 +12,20 @@ public class BusinessDto {
 
     private List<BusinessHourDto> businessHours;
     private List<TimeSlotDto> regular;
-    private AutoRepairShop autoRepairShop;
+
 
     public BusinessDto() {
     }
 
     public BusinessDto(String aName, String aAddress, String aPhoneNumber, String aEmailAddress,
-            List<BusinessHourDto> aBusinessHours, List<TimeSlotDto> regular, AutoRepairShop aAuto) {
+            List<BusinessHourDto> aBusinessHours, List<TimeSlotDto> regular) {
         this.name = aName;
         this.address = aAddress;
         this.phoneNumber = aPhoneNumber;
         this.emailAddress = aEmailAddress;
         this.businessHours = aBusinessHours;
         this.regular = regular;
-        this.autoRepairShop = aAuto;
+
     }
 
     /**
@@ -70,9 +70,7 @@ public class BusinessDto {
         return regular;
     }
 
-    public AutoRepairShop gAutoRepairShop() {
-        return autoRepairShop;
-    }
+
 
     public void setBusinessHours(List<BusinessHourDto> aBusinessHours) {
         businessHours = aBusinessHours;

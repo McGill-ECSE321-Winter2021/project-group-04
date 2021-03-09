@@ -55,17 +55,7 @@ public class CheckupReminder extends Reminder
   {
     return super.getMessage();
   }
-	@Override
-  @ManyToOne
-  public Customer getCustomer()
-  {
-    return super.getCustomer();
-  }
-	@Override
-  public void setCustomer(Customer aCustomer)
-  {
-    super.setCustomer(aCustomer);
-  }
+
 
 
 }

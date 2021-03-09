@@ -13,7 +13,7 @@ public class AppointmentReminder extends Reminder
 {
 
   //AppointmentReminder Associations
-  private Appointment appointment;
+
   @Override
   public void setReminderId(Long aReminderId)
   {
@@ -35,7 +35,7 @@ public class AppointmentReminder extends Reminder
     super.setMessage(aMessage);
   }
 
-  public void setAppointment(Appointment aAppointment){ this.appointment = aAppointment;}
+
 
  
   @Override
@@ -59,20 +59,6 @@ public class AppointmentReminder extends Reminder
   {
     return super.getMessage();
   }
-  @Override
-  @ManyToOne
-  public Customer getCustomer()
-  {
-    return super.getCustomer();
-  }
-
-  @OneToOne
-  public Appointment getAppointment() { return this.appointment; }
-
-  @Override
-  public void setCustomer(Customer aCustomer)
-  {
-    super.setCustomer(aCustomer);
-  }
+  
 
 }

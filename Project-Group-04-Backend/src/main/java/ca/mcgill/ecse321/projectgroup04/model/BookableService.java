@@ -55,16 +55,7 @@ public class BookableService extends Service
   }
 
   
-  @Override
-  @OneToMany(cascade = {CascadeType.ALL})
-  public List<Appointment> getAppointments() {
-    return super.getAppointments();
-  }
-
-  @Override
-  public void setAppointments(List<Appointment> appointments) {
-    super.setAppointments(appointments);
-  }
+ 
 
   @Override
   public AutoRepairShop getAutoRepairShop() {

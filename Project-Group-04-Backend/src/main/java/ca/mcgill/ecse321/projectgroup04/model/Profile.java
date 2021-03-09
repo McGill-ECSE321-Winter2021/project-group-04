@@ -103,41 +103,5 @@ public class Profile
   }
 
 
-  private Customer customer;
-  
-  public void setCustomer(Customer aCustomer)
-  {
-	  customer=aCustomer;
-	  
-  }
-  @OneToOne
-  public Customer getCustomer()
-  {
-    return customer;
-  }
 
-
-
-
-
- 
-
-  
-  /* Code from template association_GetOne */
-  
-
-
-
-
-  public String toString()
-  {
-    return super.toString() + "["+
-            "addressLine" + ":" + getAddressLine()+ "," +
-            "phoneNumber" + ":" + getPhoneNumber()+ "," +
-            "firstName" + ":" + getFirstName()+ "," +
-            "lastName" + ":" + getLastName()+ "," +
-            "zipCode" + ":" + getZipCode()+ "," +
-            "emailAddress" + ":" + getEmailAddress()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "customer = "+(getCustomer()!=null?Integer.toHexString(System.identityHashCode(getCustomer())):"null");
-  }
 }
