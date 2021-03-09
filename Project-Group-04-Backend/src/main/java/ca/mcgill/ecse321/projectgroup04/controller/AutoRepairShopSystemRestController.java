@@ -114,7 +114,7 @@ public class AutoRepairShopSystemRestController {
 	
 	private ReminderDto convertToDto(Reminder r) {
 		if(r==null) {
-			throw new IllegalArgumentException("There is no such Car!");
+			throw new IllegalArgumentException("There is no such Reminder!");
 		}
 		ReminderDto reminderDto = new ReminderDto(r.getMessage(),r.getDate(),r.getTime());
 		return reminderDto;
@@ -131,7 +131,7 @@ public class AutoRepairShopSystemRestController {
 	
 	private AppointmentDto convertToDto(Appointment a) {
 		if(a==null) {
-			throw new IllegalArgumentException("There is no such Customer!");
+			throw new IllegalArgumentException("There is no such Appointment!");
 		}
 		AppointmentDto appointmentDto = new AppointmentDto();
 		appointmentDto.setCustomer(convertToDto(a.getCustomer()));
@@ -168,7 +168,39 @@ public class AutoRepairShopSystemRestController {
 		return businessHourDto;
 	}
 	
+	/**
+	 * @param fieldTechnician is an FieldTechnician -> FieldTechnicianDto
+	 * @return Converted FieldTechnicianDto
+	 */
 	
+	private FieldTechnicianDto convertToDto(FieldTechnician fieldTechnician) {
+		if(fieldTechnician == null) {
+			throw new IllegalArgumentException("There is no such Field Technician!");
+		}
+		
+		FieldTechnicianDto fieldTechnicianDto = new FieldTechnicianDto(fieldTechnician.getName());
+		return fieldTechnicianDto;	
+		
+	}
 	
+	/**
+	 * @param es is an EmergencyService -> EmergencyServiceDto
+	 * @return Converted EmergencyServiceDto
+	 */
+	
+	private EmergencyServiceDto convertToDto(EmergencyService es) {
+		if(es == null) {
+			throw new IllegalArgumentException("There is no such Emergency Service!");
+		}
+		
+		EmergencyServiceDto emergencyServiceDto = new EmergencyServiceDto();
+		emergencyServiceDto.setName(es.getName());
+		emergencyServiceDto.setPrice(es.getPrice());
+		emergencyServiceDto.setLocation(es.getLocation());
+		emergencyServiceDto.setFieldTechnician(convertToDto(es.getTechnician()));
+		
+		return emergencyServiceDto;
+		
+	}	
 
 }
