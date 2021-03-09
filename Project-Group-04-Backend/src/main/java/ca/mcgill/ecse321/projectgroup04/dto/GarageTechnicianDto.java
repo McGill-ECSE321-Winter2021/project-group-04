@@ -6,7 +6,6 @@ public class GarageTechnicianDto {
 	private String name;
 	private Long technicianId;
 
-
 	public GarageTechnicianDto() {
 	}
 
@@ -18,7 +17,5 @@ public class GarageTechnicianDto {
 	public String getName() {
 		return name;
 	}
-
-
 
 }

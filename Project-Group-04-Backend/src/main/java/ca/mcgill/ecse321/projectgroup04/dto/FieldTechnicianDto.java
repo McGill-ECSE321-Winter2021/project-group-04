@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.projectgroup04.dto;
 
 public class FieldTechnicianDto {
-	private Long technicianId;
 	private String name;
 	
 	public FieldTechnicianDto() {
