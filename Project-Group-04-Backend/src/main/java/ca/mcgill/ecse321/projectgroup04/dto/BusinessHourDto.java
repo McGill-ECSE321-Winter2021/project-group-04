@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.projectgroup04.dto;
 
 import java.sql.Time;
 
+import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
+
 public class BusinessHourDto {
     public enum DayOfWeek {
         Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
@@ -43,4 +45,22 @@ public class BusinessHourDto {
         return endTime;
     }
 
+    public void setDayOfWeek(DayOfWeek dow) {
+        if (dow.toString().equals("Monday")) {
+            dayOfWeek = dow;
+        } else if (dow.toString().equals("Tuesday")) {
+            dayOfWeek = dow;
+        } else if (dow.toString().equals("Wednseday")) {
+            dayOfWeek = dow;
+        } else if (dow.toString().equals("Thursday")) {
+            dayOfWeek = dow;
+        } else if (dow.toString().equals("Friday")) {
+            dayOfWeek = dow;
+        } else if (dow.toString().equals("Saturday")) {
+            dayOfWeek = dow;
+        } else if (dow.toString().equals("Sunday")) {
+            dayOfWeek = dow;
+        }
+
+    }
 }
