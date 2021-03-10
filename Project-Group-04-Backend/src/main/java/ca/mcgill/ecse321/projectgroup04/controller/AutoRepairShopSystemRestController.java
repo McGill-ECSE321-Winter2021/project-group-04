@@ -103,22 +103,41 @@ public class AutoRepairShopSystemRestController {
 		return carDto;
 	}
 	
-//	private List<ReminderDto> createRemindersDtosForCustomer(Customer c) {
-//		List<Reminder> allReminders =service.getCustomerReminders(c);
-//		List<ReminderDto> reminders = new ArrayList<>();
-//		for(Reminder r : allReminders) {
-//			reminders.add(convertToDto(r));
-//		}
-//		return reminders;
-//	}
+	/**
+	 * 
+	 * @param c to get the reminders as Reminder, convert them to REminderDto
+	 * @return List of ReminderDto 
+	 */
+	
+	private List<ReminderDto> createRemindersDtosForCustomer(Customer c) {
+		List<Reminder> allReminders =c.getReminders();
+		List<ReminderDto> reminders = new ArrayList<>();
+		for(Reminder r : allReminders) {
+			reminders.add(convertToDto(r));
+		}
+		return reminders;
+	}
+	
+	/**
+	 * 
+	 * @param r is a Reminder -> ReminderDto
+	 * @return Converted to ReminderDto
+	 */
 	
 	private ReminderDto convertToDto(Reminder r) {
 		if(r==null) {
-			throw new IllegalArgumentException("There is no such Car!");
+			throw new IllegalArgumentException("There is no such Reminder!");
 		}
 		ReminderDto reminderDto = new ReminderDto(r.getMessage(),r.getDate(),r.getTime());
 		return reminderDto;
 	}
+	
+	/**
+	 * 
+	 * @param c to get the reminders as Reminder
+	 * @param cDto 
+	 * @return
+	 */
 	
 	private List<AppointmentDto> createAppointmentsDtosForCustomer(Customer c,CustomerDto cDto) {
 		List<Appointment> allAppointments =service.getAppointmentsByCustomer(c);
@@ -136,17 +155,23 @@ public class AutoRepairShopSystemRestController {
 		return appointments;
 	}
 	
-	private AppointmentDto convertToDto(Appointment a) {
-		if(a==null) {
+	/**
+	 * 
+	 * @param appointment is an Appointment -> AppointmentDto
+	 * @return Converted to AppointmentDto
+	 */
+	
+	private AppointmentDto convertToDto(Appointment appointment) {
+		if(appointment==null) {
 			throw new IllegalArgumentException("There is no such Appointment!");
 		}
 		AppointmentDto appointmentDto = new AppointmentDto();
-		appointmentDto.setCustomer(convertToDto(a.getCustomer()));
-		appointmentDto.setGarageTechnician(convertToDto(a.getTechnician()));
-		appointmentDto.setReceipt(convertToDto(a.getReceipt()));
-		appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
-		appointmentDto.setReminder(convertToDto(a.getReminder()));
-		appointmentDto.setTimeSlot(convertToDto(a.getTimeSlot()));
+		appointmentDto.setCustomer(convertToDto(appointment.getCustomer()));
+		appointmentDto.setGarageTechnician(convertToDto(appointment.getTechnician()));
+		appointmentDto.setReceipt(convertToDto(appointment.getReceipt()));
+		appointmentDto.setBookableService(convertToDto(appointment.getBookableServices()));
+		appointmentDto.setReminder(convertToDto(appointment.getReminder()));
+		appointmentDto.setTimeSlot(convertToDto(appointment.getTimeSlot()));
 		return appointmentDto;
 	}
 
@@ -162,21 +187,126 @@ public class AutoRepairShopSystemRestController {
 		CustomerDto customerDto =  new CustomerDto(c.getUserId(),c.getUserId());
 		customerDto.setProfile(convertToDto(c.getCustomerProfile()));	
 		customerDto.setCar(convertToDto(c.getCar()));
-//		customerDto.setReminders(createRemindersDtosForCustomer(c));
+		customerDto.setReminders(createRemindersDtosForCustomer(c));
 
 		return customerDto;
 	}
 	
-	public BusinessHourDto convertToDto(BusinessHour b) {
-		if(b==null) {
+	/**
+	 * 
+	 * @param businessHour is a BusinessHour -> BusinessHourDto
+	 * @return Converted to BusinessHourDto
+	 */
+	
+	public BusinessHourDto convertToDto(BusinessHour businessHour) {
+		if(businessHour==null) {
 			throw new IllegalArgumentException("There is no such BusinessHour!");
 		}
 		BusinessHourDto businessHourDto = new BusinessHourDto();
-		
+		//TODO;
 		return businessHourDto;
 	}
 	
+	/**
+	 * @param fieldTechnician is an FieldTechnician -> FieldTechnicianDto
+	 * @return Converted FieldTechnicianDto
+	 */
 	
+	private FieldTechnicianDto convertToDto(FieldTechnician fieldTechnician) {
+		if(fieldTechnician == null) {
+			throw new IllegalArgumentException("There is no such Field Technician!");
+		}
+		
+		FieldTechnicianDto fieldTechnicianDto = new FieldTechnicianDto(fieldTechnician.getName());
+		return fieldTechnicianDto;	
+		
+	}
+	
+	/**
+	 * @param es is an EmergencyService -> EmergencyServiceDto
+	 * @return Converted EmergencyServiceDto
+	 */
+	
+	private EmergencyServiceDto convertToDto(EmergencyService emergencyService) {
+		if(emergencyService == null) {
+			throw new IllegalArgumentException("There is no such Emergency Service!");
+		}
+		
+		EmergencyServiceDto emergencyServiceDto = new EmergencyServiceDto();
+		emergencyServiceDto.setName(emergencyService.getName());
+		emergencyServiceDto.setPrice(emergencyService.getPrice());
+		emergencyServiceDto.setLocation(emergencyService.getLocation());
+		emergencyServiceDto.setFieldTechnician(convertToDto(emergencyService.getTechnician()));
+		emergencyServiceDto.setCustomer(convertToDto(emergencyService.getCustomer()));
+		emergencyServiceDto.setReceipt(convertToDto(emergencyService.getReceipt()));
+
+		
+		return emergencyServiceDto;
+		
+	}
+	
+	/**
+	 * 
+	 * @param b
+	 * @return
+	 */
+
+	private List<TimeSlotDto> createTimeSlotsDtosForBusiness(Business b) {
+		List<TimeSlot> allTimeSlots = b.getRegular();
+		List<TimeSlotDto> TimeSlots = new ArrayList<>();
+		for (TimeSlot t : allTimeSlots) {
+			TimeSlots.add(convertToDto(t));
+		}
+		return TimeSlots;
+	}
+
+	/**
+	 * 
+	 * @param bh
+	 * @return
+	 */
+
+	private List<BusinessHourDto> createBusinessHoursDtosForBusiness(Business b) {
+		List<BusinessHour> allBusinessHours = b.getBusinessHours();
+		List<BusinessHourDto> BusinessHours = new ArrayList<>();
+		for (BusinessHour bh : allBusinessHours) {
+			BusinessHours.add(convertToDto(bh));
+		}
+		return BusinessHours;
+	}
+
+	/**
+	 * 
+	 * @param b
+	 * @return
+	 */
+	private BusinessDto convertToDto(Business b) {
+		if (b == null) {
+			throw new IllegalArgumentException("There is no such business!");
+		}
+
+		BusinessDto businessDto = new BusinessDto(b.getName(), b.getAddress(), b.getPhoneNumber(), b.getEmailAddress(),
+				createBusinessHoursDtosForBusiness(b), createTimeSlotsDtosForBusiness(b));
+		return businessDto;
+	}
+	
+	/**
+	 * 
+	 * @param cr
+	 * @return
+	 */
+
+	private CheckupReminderDto convertToDto(CheckupReminder cr) {
+		if (cr == null) {
+			throw new IllegalArgumentException("There is no such checkup reminder!");
+		}
+
+		CheckupReminderDto checkupReminderDto = new CheckupReminderDto(cr.getDate(), cr.getTime(), cr.getMessage());
+
+		return checkupReminderDto;
+	}
+
+
 	
 
 }
