@@ -110,14 +110,26 @@ public class AutoRepairShopSystemRestController {
 		return carDto;
 	}
 
-	// private List<ReminderDto> createRemindersDtosForCustomer(Customer c) {
-	// List<Reminder> allReminders = c.getCustomerReminders(c);
-	// List<ReminderDto> reminders = new ArrayList<>();
-	// for (Reminder r : allReminders) {
-	// reminders.add(convertToDto(r));
-	// }
-	// return reminders;
-	// }
+	/**
+	 * 
+	 * @param c to get the reminders as Reminder, convert them to REminderDto
+	 * @return List of ReminderDto
+	 */
+
+	private List<ReminderDto> createRemindersDtosForCustomer(Customer c) {
+		List<Reminder> allReminders = c.getReminders();
+		List<ReminderDto> reminders = new ArrayList<>();
+		for (Reminder r : allReminders) {
+			reminders.add(convertToDto(r));
+		}
+		return reminders;
+	}
+
+	/**
+	 * 
+	 * @param r is a Reminder -> ReminderDto
+	 * @return Converted to ReminderDto
+	 */
 
 	private ReminderDto convertToDto(Reminder r) {
 		if (r == null) {
@@ -126,6 +138,13 @@ public class AutoRepairShopSystemRestController {
 		ReminderDto reminderDto = new ReminderDto(r.getMessage(), r.getDate(), r.getTime());
 		return reminderDto;
 	}
+
+	/**
+	 * 
+	 * @param c    to get the reminders as Reminder
+	 * @param cDto
+	 * @return
+	 */
 
 	private List<AppointmentDto> createAppointmentsDtosForCustomer(Customer c, CustomerDto cDto) {
 		List<Appointment> allAppointments = service.getAppointmentsByCustomer(c);
@@ -143,17 +162,23 @@ public class AutoRepairShopSystemRestController {
 		return appointments;
 	}
 
-	private AppointmentDto convertToDto(Appointment a) {
-		if (a == null) {
+	/**
+	 * 
+	 * @param appointment is an Appointment -> AppointmentDto
+	 * @return Converted to AppointmentDto
+	 */
+
+	private AppointmentDto convertToDto(Appointment appointment) {
+		if (appointment == null) {
 			throw new IllegalArgumentException("There is no such Appointment!");
 		}
 		AppointmentDto appointmentDto = new AppointmentDto();
-		appointmentDto.setCustomer(convertToDto(a.getCustomer()));
-		appointmentDto.setGarageTechnician(convertToDto(a.getTechnician()));
-		appointmentDto.setReceipt(convertToDto(a.getReceipt()));
-		appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
-		appointmentDto.setReminder(convertToDto(a.getReminder()));
-		appointmentDto.setTimeSlot(convertToDto(a.getTimeSlot()));
+		appointmentDto.setCustomer(convertToDto(appointment.getCustomer()));
+		appointmentDto.setGarageTechnician(convertToDto(appointment.getTechnician()));
+		appointmentDto.setReceipt(convertToDto(appointment.getReceipt()));
+		appointmentDto.setBookableService(convertToDto(appointment.getBookableServices()));
+		appointmentDto.setReminder(convertToDto(appointment.getReminder()));
+		appointmentDto.setTimeSlot(convertToDto(appointment.getTimeSlot()));
 		return appointmentDto;
 	}
 
