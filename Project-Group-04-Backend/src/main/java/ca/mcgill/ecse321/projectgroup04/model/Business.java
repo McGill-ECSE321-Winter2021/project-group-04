@@ -5,10 +5,8 @@ package ca.mcgill.ecse321.projectgroup04.model;
 
 import java.util.*;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +25,6 @@ public class Business {
   // Business Associations
   private List<BusinessHour> businessHours;
   private List<TimeSlot> regular;
-
 
   // ------------------------
   // INTERFACE
@@ -48,15 +45,17 @@ public class Business {
   public void setEmailAddress(String aEmailAddress) {
     this.emailAddress = aEmailAddress;
   }
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   public Long getId() {
     return id;
   }
+
   public void setId(Long Id) {
-	  this.id = Id;
+    this.id = Id;
   }
+
   public String getName() {
     return this.name;
   }
@@ -90,8 +89,5 @@ public class Business {
   public List<TimeSlot> getRegular() {
     return this.regular;
   }
-
-
-
 
 }

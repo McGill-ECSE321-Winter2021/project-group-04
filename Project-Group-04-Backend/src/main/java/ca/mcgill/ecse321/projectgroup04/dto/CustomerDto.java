@@ -5,17 +5,14 @@ import java.util.List;
 public class CustomerDto {
 	private String userID;
 	private String password;
-	private Long id;
 	private CarDto car;
 	private ProfileDto profile;
 
 	private List<ReminderDto> reminders;
-	
-	
+
 	public CustomerDto() {
 	}
 
-	
 	public CustomerDto(String userID, String password) {
 		super();
 		this.userID = userID;
@@ -25,31 +22,33 @@ public class CustomerDto {
 	public String getUserID() {
 		return userID;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public CarDto getCar() {
 		return car;
 	}
+
 	public ProfileDto getProfile() {
 		return profile;
 	}
 
-	public List<ReminderDto> getReminders(){
+	public List<ReminderDto> getReminders() {
 		return reminders;
 	}
+
 	public void setCar(CarDto aCar) {
-		car=aCar;
+		car = aCar;
 	}
+
 	public void setProfile(ProfileDto aProfile) {
-		profile=aProfile;
+		profile = aProfile;
 	}
 
 	public void setReminders(List<ReminderDto> aReminders) {
-		reminders=aReminders;
+		reminders = aReminders;
 	}
-
 
 }

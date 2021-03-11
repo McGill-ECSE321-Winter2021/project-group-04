@@ -3,14 +3,12 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "fieldTechnician")
 public class FieldTechnician extends Technician {
-    
+
     @Override
     public Long getTechnicianId() {
         return super.getTechnicianId();
@@ -30,6 +28,5 @@ public class FieldTechnician extends Technician {
     public void setName(String aName) {
         super.setName(aName);
     }
-
 
 }

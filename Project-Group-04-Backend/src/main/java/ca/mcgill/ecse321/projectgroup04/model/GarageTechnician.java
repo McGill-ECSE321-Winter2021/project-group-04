@@ -3,21 +3,13 @@
 
 package ca.mcgill.ecse321.projectgroup04.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import java.util.*;
 
 @Entity
 @Table(name = "garageTechnician")
 public class GarageTechnician extends Technician {
 
-    
-
-    
     @Override
     public Long getTechnicianId() {
         return super.getTechnicianId();

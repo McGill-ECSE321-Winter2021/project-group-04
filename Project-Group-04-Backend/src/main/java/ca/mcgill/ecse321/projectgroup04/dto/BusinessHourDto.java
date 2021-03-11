@@ -2,8 +2,6 @@ package ca.mcgill.ecse321.projectgroup04.dto;
 
 import java.sql.Time;
 
-import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
-
 public class BusinessHourDto {
     public enum DayOfWeek {
         Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday

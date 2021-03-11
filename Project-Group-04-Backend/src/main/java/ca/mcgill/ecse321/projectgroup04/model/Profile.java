@@ -4,104 +4,90 @@ import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "profile")
-public class Profile
-{
+public class Profile {
 
   private Long profileId;
-  
-  public void setProfileId(Long aProfileId)
-  {
-	  profileId=aProfileId;
+
+  public void setProfileId(Long aProfileId) {
+    profileId = aProfileId;
   }
+
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
-  public Long getProfileId()
-  {
-	  return profileId;
+  public Long getProfileId() {
+    return profileId;
   }
+
   private String addressLine;
-  
-  public void setAddressLine(String aAddressLine)
-  {    
+
+  public void setAddressLine(String aAddressLine) {
     addressLine = aAddressLine;
   }
-  
-  public String getAddressLine()
-  {
+
+  public String getAddressLine() {
     return addressLine;
   }
 
   private String phoneNumber;
-  
-  public void setPhoneNumber(String aPhoneNumber)
-  {
+
+  public void setPhoneNumber(String aPhoneNumber) {
 
     phoneNumber = aPhoneNumber;
 
   }
-  
-  public String getPhoneNumber()
-  {
+
+  public String getPhoneNumber() {
     return phoneNumber;
   }
+
   private String firstName;
-  
-  public void setFirstName(String aFirstName)
-  {
+
+  public void setFirstName(String aFirstName) {
     firstName = aFirstName;
 
   }
-  
-  public String getFirstName()
-  {
+
+  public String getFirstName() {
     return firstName;
   }
 
   private String lastName;
-  
-  public void setLastName(String aLastName)
-  {
+
+  public void setLastName(String aLastName) {
     lastName = aLastName;
 
   }
-  
-  public String getLastName()
-  {
+
+  public String getLastName() {
     return lastName;
   }
 
   private String zipCode;
-  
-  public void setZipCode(String aZipCode)
-  {
+
+  public void setZipCode(String aZipCode) {
 
     zipCode = aZipCode;
 
   }
-  public String getZipCode()
-  {
+
+  public String getZipCode() {
     return zipCode;
   }
 
   private String emailAddress;
-  
-  public void setEmailAddress(String aEmailAddress)
-  {
+
+  public void setEmailAddress(String aEmailAddress) {
 
     emailAddress = aEmailAddress;
 
   }
-  public String getEmailAddress()
-  {
+
+  public String getEmailAddress() {
     return emailAddress;
   }
-
-
 
 }

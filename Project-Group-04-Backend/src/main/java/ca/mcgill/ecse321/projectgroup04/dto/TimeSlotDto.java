@@ -5,7 +5,6 @@ import java.sql.Time;
 
 public class TimeSlotDto {
 
-	private Long timeSlotId;
 	private Time startTime, endTime;
 	private Date startDate, endDate;
 	private Integer garageSpot;
@@ -13,9 +12,7 @@ public class TimeSlotDto {
 	public TimeSlotDto() {
 	}
 
-	public TimeSlotDto(Long timeSlotId, Time startTime, Time endTime, Date startDate, Date endDate,
-			Integer agarageSpot) {
-		this.timeSlotId = timeSlotId;
+	public TimeSlotDto(Time startTime, Time endTime, Date startDate, Date endDate, Integer agarageSpot) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.startDate = startDate;

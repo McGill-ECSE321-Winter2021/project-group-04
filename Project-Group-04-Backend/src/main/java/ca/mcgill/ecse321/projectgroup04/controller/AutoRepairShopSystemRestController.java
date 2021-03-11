@@ -74,8 +74,8 @@ public class AutoRepairShopSystemRestController {
 		if (timeSlot == null) {
 			throw new IllegalArgumentException("There is no such TimeSlot!");
 		}
-		TimeSlotDto timeSlotDto = new TimeSlotDto(timeSlot.getTimeSlotId(), timeSlot.getStartTime(),
-				timeSlot.getEndTime(), timeSlot.getStartDate(), timeSlot.getEndDate(), timeSlot.getGarageSpot());
+		TimeSlotDto timeSlotDto = new TimeSlotDto(timeSlot.getStartTime(), timeSlot.getEndTime(),
+				timeSlot.getStartDate(), timeSlot.getEndDate(), timeSlot.getGarageSpot());
 		return timeSlotDto;
 	}
 

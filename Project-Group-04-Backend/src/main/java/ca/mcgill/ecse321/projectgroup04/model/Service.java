@@ -4,14 +4,13 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.*;
-import java.util.*;
 
 @Entity
 @Table(name = "service")
 public abstract class Service {
 
     private Long serviceId;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getServiceId() {
@@ -33,6 +32,7 @@ public abstract class Service {
     }
 
     private String name;
+
     public void setName(String aName) {
         this.name = aName;
     }
@@ -41,18 +41,15 @@ public abstract class Service {
         return this.name;
     }
 
-
-
     private AutoRepairShop autoRepairShop;
 
     @ManyToOne
     public AutoRepairShop getAutoRepairShop() {
         return this.autoRepairShop;
     }
-    
+
     public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
-      this.autoRepairShop = aAutoRepairShop;
+        this.autoRepairShop = aAutoRepairShop;
     }
 
- 
 }

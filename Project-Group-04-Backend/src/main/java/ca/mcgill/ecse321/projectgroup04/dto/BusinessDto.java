@@ -2,8 +2,6 @@ package ca.mcgill.ecse321.projectgroup04.dto;
 
 import java.util.List;
 
-import ca.mcgill.ecse321.projectgroup04.model.AutoRepairShop;
-
 public class BusinessDto {
     private String name;
     private String address;
@@ -12,7 +10,6 @@ public class BusinessDto {
 
     private List<BusinessHourDto> businessHours;
     private List<TimeSlotDto> regular;
-
 
     public BusinessDto() {
     }
@@ -69,8 +66,6 @@ public class BusinessDto {
     public List<TimeSlotDto> getRegular() {
         return regular;
     }
-
-
 
     public void setBusinessHours(List<BusinessHourDto> aBusinessHours) {
         businessHours = aBusinessHours;

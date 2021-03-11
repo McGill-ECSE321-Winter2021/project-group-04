@@ -3,13 +3,10 @@ package ca.mcgill.ecse321.projectgroup04.dto;
 import java.sql.Date;
 import java.sql.Time;
 
-import ca.mcgill.ecse321.projectgroup04.model.Customer;
-
 public class CheckupReminderDto {
     private Date date;
     private Time time;
     private String message;
-
 
     public CheckupReminderDto() {
     }
@@ -18,7 +15,7 @@ public class CheckupReminderDto {
         this.date = aDate;
         this.time = aTime;
         this.message = aMessage;
-     
+
     }
 
     /**
@@ -41,7 +38,5 @@ public class CheckupReminderDto {
     public String getMessage() {
         return message;
     }
-
-
 
 }
