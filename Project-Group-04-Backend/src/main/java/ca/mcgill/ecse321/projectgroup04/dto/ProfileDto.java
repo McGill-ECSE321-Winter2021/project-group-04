@@ -8,6 +8,7 @@ public class ProfileDto {
 	private String lastName;
 	private String zipCode;
 	private String emailAddress;
+	private Long profileId;
 
 
 	public ProfileDto() {
@@ -15,13 +16,14 @@ public class ProfileDto {
 	}
 
 	public ProfileDto(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName, String aZipCode,
-			String aEmailAddress) {
+			String aEmailAddress,Long aProfileId) {
 		addressLine = aAddressLine;
 		phoneNumber = aPhoneNumber;
 		firstName = aFirstName;
 		lastName = aLastName;
 		zipCode = aZipCode;
 		emailAddress = aEmailAddress;
+		profileId=aProfileId;
 
 	}
 
@@ -79,6 +81,10 @@ public class ProfileDto {
 
 	public String getEmailAddress() {
 		return emailAddress;
+	}
+	
+	public Long getProfileId() {
+		return profileId;
 	}
 
 

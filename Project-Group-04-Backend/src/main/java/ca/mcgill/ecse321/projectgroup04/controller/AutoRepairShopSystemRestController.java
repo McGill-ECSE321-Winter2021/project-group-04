@@ -38,7 +38,7 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such Profile!");
 		}
 		ProfileDto profileDto = new ProfileDto(profile.getAddressLine(), profile.getPhoneNumber(),
-				profile.getFirstName(), profile.getLastName(), profile.getZipCode(), profile.getEmailAddress());
+				profile.getFirstName(), profile.getLastName(), profile.getZipCode(), profile.getEmailAddress(),profile.getProfileId());
 		return profileDto;
 
 	}
@@ -74,7 +74,7 @@ public class AutoRepairShopSystemRestController {
 		if (receipt == null) {
 			throw new IllegalArgumentException("There is no such Receipt!");
 		}
-		ReceiptDto receiptDto = new ReceiptDto(receipt.getTotalPrice());
+		ReceiptDto receiptDto = new ReceiptDto(receipt.getTotalPrice(),receipt.getReceiptId());
 		return receiptDto;
 	}
 
@@ -589,5 +589,7 @@ public class AutoRepairShopSystemRestController {
 		}
 		return null;
 	}
+	
+	
 	
 }
