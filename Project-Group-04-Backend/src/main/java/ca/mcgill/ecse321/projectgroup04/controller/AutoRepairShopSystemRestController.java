@@ -547,4 +547,98 @@ public class AutoRepairShopSystemRestController {
 	// BusinessHourDto businessHourDto = convertToDto(businessHour);
 	// return businessHourDto;
 	// }
+	
+	///////////////////////////////////////ADMINISTRATIVE ASSISTANT///////////////////////////
+	
+	@GetMapping(value = {"/administrativeAssistants", "/administrativeAssistants/"})
+	public List <AdministrativeAssistantDto> getAdministrativeAssistants(){
+		List<AdministrativeAssistantDto> administrativeAssistantDtos = new ArrayList<>();
+		for(AdministrativeAssistant admnistrativeAssistant : service.getAllAdministrativeAssistants()) {
+			administrativeAssistantDtos.add(convertToDto(admnistrativeAssistant));
+		}
+		return administrativeAssistantDtos;
+	}
+	
+	@GetMapping(value = {"/register/administrativeAsisstant/{Id}", "/register/administrativeAsisstant/{Id}/"})
+	public AdministrativeAssistantDto getAdministrativeAssistantById (@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		return convertToDto(service.getAdministrativeAssistantById(Id));
+	}
+	
+	@PostMapping(value = {"/administrativeAssistant/{userId}", "/administrativeAssistant/{userId}/"})
+	public AdministrativeAssistantDto createAdministrativeAssistant (@PathVariable("userId") String userId, @RequestParam String password) throws IllegalArgumentException{
+		AdministrativeAssistant administrativeAssistant = service.createAdministrativeAssistant(userId, password);
+		AdministrativeAssistantDto administrativeAssistantDto = convertToDto(administrativeAssistant);
+		return administrativeAssistantDto;
+	}
+		
+	///////////////////////////////////////APPOINTMENT REMINDER///////////////////////////
+	@GetMapping(value= {"/appointmentReminders" , "/appointmentReminders/"})
+	public List <AppointmentReminderDto> getAppointmentReminders(){
+		List<AppointmentReminderDto> appointmentReminderDtos = new ArrayList<>();
+		for(AppointmentReminder appointmentReminder : service.getAllAppointmentReminders()) {
+			appointmentReminderDtos.add(convertToDto(appointmentReminder));
+		}
+		return appointmentReminderDtos;
+	}
+		
+	@GetMapping(value = { "/appointmentReminder/{Id}", "/appointmentReminder/{Id}/" })
+	public AppointmentReminderDto getAppointmentRemindertById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		return convertToDto(service.getAppointmentReminderById(Id));
+	}
+	@PostMapping(value = { "/appointmentReminder/{message}", "/appointmentReminder/{message}/" })
+	public AppointmentReminderDto createAppointmentReminder(@PathVariable("message") String message, @RequestParam Date date,
+			@RequestParam Time time) throws IllegalArgumentException {
+		AppointmentReminder appointmentReminder = service.createAppointmentReminder(date, time, message);
+		AppointmentReminderDto appointmentReminderDto = convertToDto(appointmentReminder);
+		return appointmentReminderDto;
+	}
+	
+		///////////////////////////////////////BOOKABLE SERVICE//////////////////////////////
+	
+	@GetMapping(value = { "/bookableServices", "/bookableServices/" })
+	public List<BookableServiceDto> getAllBookabableServices() {
+		List<BookableServiceDto> bookableServiceDtos = new ArrayList<>();
+		for (BookableService bookableService : service.getAllBookableServices()) {
+			bookableServiceDtos.add(convertToDto(bookableService));
+		}
+
+		return bookableServiceDtos;
+	}
+
+	@GetMapping(value = { "/bookableService/{Id}", "/bookableService/{Id}/" })
+	public BookableServiceDto getBookableServiceById(@PathVariable("Id") Long Id) {
+		return convertToDto(service.getBookableServiceById(Id));
+	}
+	
+	@PostMapping(value = {"/bookableService/{name}" , "/bookableService/{name}/" })
+	public BookableServiceDto createBookableService(@PathVariable("name") String name, @RequestParam int duration , @RequestParam int price) {
+		BookableService bookableService = service.createBookableService(name, price, duration);
+		BookableServiceDto bookableServiceDto = convertToDto(bookableService);
+		return bookableServiceDto;
+	}
+	
+
+	///////////////////////////////////////GARAGE TECHNICIAN////////////////////////////
+	@GetMapping(value = { "/garageTechnicians", "/garageTechnicians/" })
+	public List<GarageTechnicianDto> getGarageTechnicians() {
+		List<GarageTechnicianDto> garageTechnicianDtos = new ArrayList<>();
+		for (GarageTechnician garageTechnician : service.getAllGarageTechnicians()) {
+			garageTechnicianDtos.add(convertToDto(garageTechnician));
+		}
+
+		return garageTechnicianDtos;
+	}
+
+	@GetMapping(value = { "/garageTechnician/{Id}", "/garageTechnician/{Id}/" })
+	public GarageTechnicianDto getGarageTechnicianById(@PathVariable("Id") Long Id) {
+		return convertToDto(service.getGarageTechnicianById(Id));
+	}
+	@PostMapping(value = {"/garageTechnician/{name}", "/garageTechnician/{name}/"})
+	public GarageTechnicianDto createGarageTechnician(@PathVariable("name") String name)
+		 throws IllegalArgumentException{
+		GarageTechnician garageTechnician = service.createGarageTechnician (name);
+		GarageTechnicianDto garageTechnicianDto = convertToDto(garageTechnician);
+		return garageTechnicianDto;
+	}
+	
 }

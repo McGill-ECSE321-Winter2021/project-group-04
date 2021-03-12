@@ -175,7 +175,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public AdministrativeAssistant getAdministrativeAssistantByUserId(Long userId) {
+	public AdministrativeAssistant getAdministrativeAssistantById(Long userId) {
 		return administrativeAssistantRepository.findAdministrativeAssistantById(userId);
 	}
 
@@ -272,6 +272,10 @@ public class AutoRepairShopSystemService {
 
 	}
 
+	@Transactional 
+	public AppointmentReminder getAppointmentReminderById(Long id){
+		return appointmentReminderRepository.findAppointmentReminderByReminderId(id)
+;	}
 	// @Transactional
 	// public List<AppointmentReminder> getAppointmentReminderByCustomer(Customer
 	// customer) {
@@ -294,9 +298,8 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public BookableService createBookableService(AutoRepairShop autoRepairShop, String name, int price, int duration) {
+	public BookableService createBookableService( String name, int price, int duration) {
 		BookableService bookableService = new BookableService();
-		bookableService.setAutoRepairShop(autoRepairShop);
 		bookableService.setDuration(duration);
 		bookableService.setName(name);
 		bookableService.setPrice(price);
@@ -310,7 +313,10 @@ public class AutoRepairShopSystemService {
 	// return
 	// bookableServiceRepository.findBookableServiceByAppointments(appointment);
 	// }
-
+	@Transactional
+	public BookableService getBookableServiceById(Long serviceId) {
+		return bookableServiceRepository.findBookableServiceByServiceId(serviceId);
+	}
 	@Transactional
 	public List<BookableService> getAllBookableServices() {
 		return (List<BookableService>) bookableServiceRepository.findAll();
@@ -355,21 +361,25 @@ public class AutoRepairShopSystemService {
 	///////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public GarageTechnician createGarageTechnician(AutoRepairShop autoRepairShop, String name) {
+	public GarageTechnician createGarageTechnician(String name) {
 		GarageTechnician garageTechnician = new GarageTechnician();
 		garageTechnician.setName(name);
 		garageTechnicianRepository.save(garageTechnician);
 		return garageTechnician;
 	}
-
+	@Transactional
 	public List<GarageTechnician> getAllGarageTechnicians() {
 		return (List<GarageTechnician>) garageTechnicianRepository.findAll();
 	}
-
+	
+	@Transactional
+	public GarageTechnician getGarageTechnicianById(Long technicianId) {
+		return garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
+	}
 	/////////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public FieldTechnician createFieldTechnician(AutoRepairShop aAutoRepairShop, String name) {
+	public FieldTechnician createFieldTechnician(String name) {
 		FieldTechnician fieldTechnician = new FieldTechnician();
 		fieldTechnician.setName(name);
 
