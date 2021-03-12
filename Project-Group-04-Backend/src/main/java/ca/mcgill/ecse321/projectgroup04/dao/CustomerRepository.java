@@ -11,4 +11,5 @@ public interface CustomerRepository extends CrudRepository<Customer, Long> {
     Customer findCustomerById(Long userId);
     Customer findByCustomerProfile(Profile customerProfile);
     Customer findByCar(Car car);
+    Customer findCustomerByUserId(String userId);
 }
