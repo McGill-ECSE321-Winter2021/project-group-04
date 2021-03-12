@@ -501,4 +501,9 @@ public class AutoRepairShopSystemService {
 //	public List<Reminder> getCustomerReminders(Customer customer) {
 //		return reminderRepository.findByCustomer(customer);
 //	}
+	
+	@Transactional
+	public Appointment getAppointment(Long Id) {
+		return appointmentRepository.findByAppointmentId(Id);
+	}
 }
