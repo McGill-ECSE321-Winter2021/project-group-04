@@ -1,11 +1,13 @@
 package ca.mcgill.ecse321.projectgroup04.controller;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -376,5 +378,82 @@ public class AutoRepairShopSystemRestController {
 	public ReceiptDto getReceiptById(@PathVariable("Id") Long Id)throws IllegalArgumentException {
 		return convertToDto(service.getReceipt(Id));
 	} 
+	
+	/////////////////////////////////OWNER//////////////////////////////////////
+	
+	@GetMapping(value= {"/owner", "/owner/"})
+	public List<OwnerDto> getOwner() {       			//will return only one owner either ways
+		List<OwnerDto> ownerDtos = new ArrayList<>();
+		for(Owner owner : service.getOwner()) {
+			ownerDtos.add(convertToDto(owner));
+		}
+		
+		return ownerDtos;
+	}
+	
+	@GetMapping(value= {"/owner/{Id}", "/owner/{Id}/"})
+	public OwnerDto getOwnerById(@PathVariable("Id") Long Id) throws IllegalArgumentException{
+		return convertToDto(service.getOwnerByUserId(Id));
+	}
+	
+	@PostMapping(value= {"/register/owner/{name}", "/register/owner/{name}/"}) //VERIFY PATH
+	public OwnerDto registerOwner(@PathVariable("name") String name,
+			@RequestParam String password) throws IllegalArgumentException {
+		Owner owner = service.createOwner(name, password);
+		OwnerDto ownerDto = convertToDto(owner);
+		return ownerDto;
+	}
+	
+	/////////////////////////////////EMERGENCY SERVICE//////////////////////////////////////
+	
+	@GetMapping(value= {"/emergencyservice", "/emergencyservice/"})
+	public List<EmergencyServiceDto> getAllEmergencyServices(){
+		List<EmergencyServiceDto> emergencyServiceDtos = new ArrayList<>();
+		for (EmergencyService emergencyService : service.getAllEmergencyServices()) {
+			emergencyServiceDtos.add(convertToDto(emergencyService));
+		}
+		
+		return emergencyServiceDtos;
+	}
+	
+	@GetMapping(value= {"/emergencyservice/{Id}", "/emergencyservice/{Id}/"})
+	public EmergencyServiceDto getEmergencyServiceById(@PathVariable("Id") Long Id) {
+		return convertToDto(service.getEmergencyServiceByServiceId(Id));
+	}
+	
+//	@PostMapping(value= {"/book/emergencyservice", "/book/emergencyservice/"})  //VERIFY PATH
+//	public EmergencyServiceDto createEmergencyService(@RequestParam String serviceName,
+//			@RequestParam int price, @RequestParam String location, 
+//			@RequestParam (name = "fieldTechnicianName") FieldTechnicianDto fieldTechnicianDto,
+//			@RequestParam (name = "customerName") CustomerDto customerDto,
+//			@RequestParam (name = "receiptId") ReceiptDto receiptDto) throws IllegalArgumentException {
+//		FieldTechnician fieldTechnician = service.getFieldTechnicianByName(fieldTechnicianDto.getName());
+//		Customer customer = service.getCustomerById()
+//		
+//	}
+	
+	//////////////////////////////// FIELD TECHNICIAN ///////////////////////////////////
+	
+	@GetMapping(value= {"/fieldtechnician", "/fieldtechnician/"})
+	public List<FieldTechnicianDto> getFieldTechnicians(){
+		List<FieldTechnicianDto> fieldTechnicianDtos = new ArrayList<>();
+		for(FieldTechnician fieldTechnician : service.getAllFieldTechnicians()) {
+			fieldTechnicianDtos.add(convertToDto(fieldTechnician));
+		}
+		
+		return fieldTechnicianDtos;
+	}
+	
+	@GetMapping(value= {"/fieldtechnician/{Id}", "/fieldtechnician/{Id}/"})
+	public FieldTechnicianDto getFieldTechnicianById(@PathVariable("Id") Long Id) {
+		return convertToDto(service.getFieldTechnicianById(Id));
+	}
+	
+//	@PostMapping(value= {"/register/fieldtechnician","/register/fieldtechnician/"})
+//	public FieldTechnicianDto createFieldTechnician(@PathVariable("name") String name) throws IllegalArgumentException {
+//		FieldTechnician fieldTechnician = service.createFieldTechnician(null, name);  //add AutoRepairShop in null
+//		FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
+//		return fieldTechnicianDto;
+//	}	
 
 }
