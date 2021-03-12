@@ -556,4 +556,16 @@ public class AutoRepairShopSystemService {
 		return bookableServiceRepository.findBookableServiceByName(name);
 	}
 	
+
+
+	@Transactional
+	public Profile getProfileByFirstAndLast(String firstName,String lastName) {
+		for(Profile profile:profileRepository.findAll()) {
+			if(profile.getFirstName().equals(firstName) && profile.getLastName().equals(lastName)) {
+				return profile;
+			}
+		}
+		return null;
+	}
+
 }
