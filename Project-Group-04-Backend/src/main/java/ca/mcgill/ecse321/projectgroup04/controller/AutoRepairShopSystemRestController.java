@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.projectgroup04.controller;
 
-import java.util.ArrayList; 
+import java.sql.Date;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +34,8 @@ public class AutoRepairShopSystemRestController {
 		if (profile == null) {
 			throw new IllegalArgumentException("There is no such Profile!");
 		}
-		ProfileDto profileDto = new ProfileDto(profile.getAddressLine(), profile.getPhoneNumber(), profile.getFirstName(),
-				profile.getLastName(), profile.getZipCode(), profile.getEmailAddress());
+		ProfileDto profileDto = new ProfileDto(profile.getAddressLine(), profile.getPhoneNumber(),
+				profile.getFirstName(), profile.getLastName(), profile.getZipCode(), profile.getEmailAddress());
 		return profileDto;
 
 	}
@@ -42,8 +44,8 @@ public class AutoRepairShopSystemRestController {
 		if (administrativeAssistant == null) {
 			throw new IllegalArgumentException("There is no such AdministrativeAssistant!");
 		}
-		AdministrativeAssistantDto administrativeAssistantDto = new AdministrativeAssistantDto(administrativeAssistant.getUserId(),
-				administrativeAssistant.getPassword());
+		AdministrativeAssistantDto administrativeAssistantDto = new AdministrativeAssistantDto(
+				administrativeAssistant.getUserId(), administrativeAssistant.getPassword());
 		return administrativeAssistantDto;
 	}
 
@@ -313,8 +315,9 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such business!");
 		}
 
-		BusinessDto businessDto = new BusinessDto(business.getName(), business.getAddress(), business.getPhoneNumber(), business.getEmailAddress(),
-				createBusinessHoursDtosForBusiness(business), createTimeSlotsDtosForBusiness(business));
+		BusinessDto businessDto = new BusinessDto(business.getName(), business.getAddress(), business.getPhoneNumber(),
+				business.getEmailAddress(), createBusinessHoursDtosForBusiness(business),
+				createTimeSlotsDtosForBusiness(business));
 		return businessDto;
 	}
 
@@ -329,130 +332,219 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such checkup reminder!");
 		}
 
-		CheckupReminderDto checkupReminderDto = new CheckupReminderDto(checkupReminder.getDate(), checkupReminder.getTime(), checkupReminder.getMessage());
+		CheckupReminderDto checkupReminderDto = new CheckupReminderDto(checkupReminder.getDate(),
+				checkupReminder.getTime(), checkupReminder.getMessage());
 
 		return checkupReminderDto;
 	}
-	
-	@GetMapping(value= {"/profiles","/profiles/"})
-	public List<ProfileDto> getAllProfiles(){
+
+	@GetMapping(value = { "/profiles", "/profiles/" })
+	public List<ProfileDto> getAllProfiles() {
 		List<ProfileDto> profileDtos = new ArrayList<>();
-		for(Profile profile : service.getAllProfiles()) {
+		for (Profile profile : service.getAllProfiles()) {
 			profileDtos.add(convertToDto(profile));
 		}
 		return profileDtos;
 	}
-	
-	@GetMapping(value= {"/profiles/{Id}","/profiles/{Id}/"})
-	public ProfileDto getProfileById(@PathVariable("Id") Long Id)throws IllegalArgumentException {
+
+	@GetMapping(value = { "/profiles/{Id}", "/profiles/{Id}/" })
+	public ProfileDto getProfileById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getProfile(Id));
-	} 
-	
-	
-	
-	@GetMapping(value= {"/appointments","/appointments/"})
-	public List<AppointmentDto> getAllAppointments(){
+	}
+
+	@GetMapping(value = { "/appointments", "/appointments/" })
+	public List<AppointmentDto> getAllAppointments() {
 		List<AppointmentDto> appointmentDtos = new ArrayList<>();
-		for(Appointment appointment : service.getAllAppointments()) {
+		for (Appointment appointment : service.getAllAppointments()) {
 			appointmentDtos.add(convertToDto(appointment));
 		}
 		return appointmentDtos;
 	}
-	
-	@GetMapping(value= {"/appointments/{Id}","/appointments/{Id}/"})
-	public AppointmentDto getAppointmentById(@PathVariable("Id") Long Id)throws IllegalArgumentException {
+
+	@GetMapping(value = { "/appointments/{Id}", "/appointments/{Id}/" })
+	public AppointmentDto getAppointmentById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getAppointment(Id));
-	} 
-	
-	@GetMapping(value= {"/receipts","/receipts/"})
-	public List<ReceiptDto> getAllReceipts(){
+	}
+
+	@GetMapping(value = { "/receipts", "/receipts/" })
+	public List<ReceiptDto> getAllReceipts() {
 		List<ReceiptDto> receiptDtos = new ArrayList<>();
-		for(Receipt receipt : service.getAllReceipts()) {
+		for (Receipt receipt : service.getAllReceipts()) {
 			receiptDtos.add(convertToDto(receipt));
 		}
 		return receiptDtos;
 	}
-	
-	@GetMapping(value= {"/receipts/{Id}","/receipts/{Id}/"})
-	public ReceiptDto getReceiptById(@PathVariable("Id") Long Id)throws IllegalArgumentException {
+
+	@GetMapping(value = { "/receipts/{Id}", "/receipts/{Id}/" })
+	public ReceiptDto getReceiptById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getReceipt(Id));
-	} 
-	
-	/////////////////////////////////OWNER//////////////////////////////////////
-	
-	@GetMapping(value= {"/owner", "/owner/"})
-	public List<OwnerDto> getOwner() {       			//will return only one owner either ways
+	}
+
+	///////////////////////////////// OWNER//////////////////////////////////////
+
+	@GetMapping(value = { "/owner", "/owner/" })
+	public List<OwnerDto> getOwner() { // will return only one owner either ways
 		List<OwnerDto> ownerDtos = new ArrayList<>();
-		for(Owner owner : service.getOwner()) {
+		for (Owner owner : service.getOwner()) {
 			ownerDtos.add(convertToDto(owner));
 		}
-		
+
 		return ownerDtos;
 	}
-	
-	@GetMapping(value= {"/owner/{Id}", "/owner/{Id}/"})
-	public OwnerDto getOwnerById(@PathVariable("Id") Long Id) throws IllegalArgumentException{
+
+	@GetMapping(value = { "/owner/{Id}", "/owner/{Id}/" })
+	public OwnerDto getOwnerById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getOwnerByUserId(Id));
 	}
-	
-	@PostMapping(value= {"/register/owner/{name}", "/register/owner/{name}/"}) //VERIFY PATH
-	public OwnerDto registerOwner(@PathVariable("name") String name,
-			@RequestParam String password) throws IllegalArgumentException {
+
+	@PostMapping(value = { "/register/owner/{name}", "/register/owner/{name}/" }) // VERIFY PATH
+	public OwnerDto registerOwner(@PathVariable("name") String name, @RequestParam String password)
+			throws IllegalArgumentException {
 		Owner owner = service.createOwner(name, password);
 		OwnerDto ownerDto = convertToDto(owner);
 		return ownerDto;
 	}
-	
-	/////////////////////////////////EMERGENCY SERVICE//////////////////////////////////////
-	
-	@GetMapping(value= {"/emergencyservice", "/emergencyservice/"})
-	public List<EmergencyServiceDto> getAllEmergencyServices(){
+
+	///////////////////////////////// EMERGENCY
+	///////////////////////////////// SERVICE//////////////////////////////////////
+
+	@GetMapping(value = { "/emergencyservice", "/emergencyservice/" })
+	public List<EmergencyServiceDto> getAllEmergencyServices() {
 		List<EmergencyServiceDto> emergencyServiceDtos = new ArrayList<>();
 		for (EmergencyService emergencyService : service.getAllEmergencyServices()) {
 			emergencyServiceDtos.add(convertToDto(emergencyService));
 		}
-		
+
 		return emergencyServiceDtos;
 	}
-	
-	@GetMapping(value= {"/emergencyservice/{Id}", "/emergencyservice/{Id}/"})
+
+	@GetMapping(value = { "/emergencyservice/{Id}", "/emergencyservice/{Id}/" })
 	public EmergencyServiceDto getEmergencyServiceById(@PathVariable("Id") Long Id) {
 		return convertToDto(service.getEmergencyServiceByServiceId(Id));
 	}
-	
-//	@PostMapping(value= {"/book/emergencyservice", "/book/emergencyservice/"})  //VERIFY PATH
-//	public EmergencyServiceDto createEmergencyService(@RequestParam String serviceName,
-//			@RequestParam int price, @RequestParam String location, 
-//			@RequestParam (name = "fieldTechnicianName") FieldTechnicianDto fieldTechnicianDto,
-//			@RequestParam (name = "customerName") CustomerDto customerDto,
-//			@RequestParam (name = "receiptId") ReceiptDto receiptDto) throws IllegalArgumentException {
-//		FieldTechnician fieldTechnician = service.getFieldTechnicianByName(fieldTechnicianDto.getName());
-//		Customer customer = service.getCustomerById()
-//		
-//	}
-	
-	//////////////////////////////// FIELD TECHNICIAN ///////////////////////////////////
-	
-	@GetMapping(value= {"/fieldtechnician", "/fieldtechnician/"})
-	public List<FieldTechnicianDto> getFieldTechnicians(){
+
+	// @PostMapping(value= {"/book/emergencyservice", "/book/emergencyservice/"})
+	// //VERIFY PATH
+	// public EmergencyServiceDto createEmergencyService(@RequestParam String
+	// serviceName,
+	// @RequestParam int price, @RequestParam String location,
+	// @RequestParam (name = "fieldTechnicianName") FieldTechnicianDto
+	// fieldTechnicianDto,
+	// @RequestParam (name = "customerName") CustomerDto customerDto,
+	// @RequestParam (name = "receiptId") ReceiptDto receiptDto) throws
+	// IllegalArgumentException {
+	// FieldTechnician fieldTechnician =
+	// service.getFieldTechnicianByName(fieldTechnicianDto.getName());
+	// Customer customer = service.getCustomerById()
+	//
+	// }
+
+	//////////////////////////////// FIELD TECHNICIAN
+	//////////////////////////////// ///////////////////////////////////
+
+	@GetMapping(value = { "/fieldtechnician", "/fieldtechnician/" })
+	public List<FieldTechnicianDto> getFieldTechnicians() {
 		List<FieldTechnicianDto> fieldTechnicianDtos = new ArrayList<>();
-		for(FieldTechnician fieldTechnician : service.getAllFieldTechnicians()) {
+		for (FieldTechnician fieldTechnician : service.getAllFieldTechnicians()) {
 			fieldTechnicianDtos.add(convertToDto(fieldTechnician));
 		}
-		
+
 		return fieldTechnicianDtos;
 	}
-	
-	@GetMapping(value= {"/fieldtechnician/{Id}", "/fieldtechnician/{Id}/"})
+
+	@GetMapping(value = { "/fieldtechnician/{Id}", "/fieldtechnician/{Id}/" })
 	public FieldTechnicianDto getFieldTechnicianById(@PathVariable("Id") Long Id) {
 		return convertToDto(service.getFieldTechnicianById(Id));
 	}
-	
-//	@PostMapping(value= {"/register/fieldtechnician","/register/fieldtechnician/"})
-//	public FieldTechnicianDto createFieldTechnician(@PathVariable("name") String name) throws IllegalArgumentException {
-//		FieldTechnician fieldTechnician = service.createFieldTechnician(null, name);  //add AutoRepairShop in null
-//		FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
-//		return fieldTechnicianDto;
-//	}	
 
+	// @PostMapping(value=
+	// {"/register/fieldtechnician","/register/fieldtechnician/"})
+	// public FieldTechnicianDto createFieldTechnician(@PathVariable("name") String
+	// name) throws IllegalArgumentException {
+	// FieldTechnician fieldTechnician = service.createFieldTechnician(null, name);
+	// //add AutoRepairShop in null
+	// FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
+	// return fieldTechnicianDto;
+	// }
+
+	/////////////////////////////////////////////////////////////////////////////
+
+	@GetMapping(value = { "/business", "/business/" })
+	public List<BusinessDto> getBusiness() {
+		List<BusinessDto> businessDtos = new ArrayList<>();
+		for (Business business : service.getBusiness()) {
+			businessDtos.add(convertToDto(business));
+		}
+
+		return businessDtos;
+	}
+
+	@GetMapping(value = { "/business/{Id}", "/business/{Id}/" })
+	public BusinessDto getBusinessById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		return convertToDto(service.getBusinessById(Id));
+	}
+
+	@PostMapping(value = { "/register/business/{name}", "/register/business/{name}/" }) // VERIFY PATH
+	public BusinessDto registerBusiness(@PathVariable("name") String name, @RequestParam String address,
+			@RequestParam String phoneNumber, @RequestParam String emailAddress,
+			@RequestParam List<BusinessHour> businessHours, @RequestParam List<TimeSlot> timeSlots)
+			throws IllegalArgumentException {
+		Business business = service.createBusiness(name, address, phoneNumber, emailAddress, businessHours, timeSlots);
+		BusinessDto businessDto = convertToDto(business);
+		return businessDto;
+	}
+
+	////////////////////////////////////////////////////////////////////////
+
+	@GetMapping(value = { "/chekupReminder", "/checkupReminder/" })
+	public List<CheckupReminderDto> getAllCheckupReminders() {
+		List<CheckupReminderDto> checkupReminderDtos = new ArrayList<>();
+		for (CheckupReminder checkupReminder : service.getAllCheckupReminder()) {
+			checkupReminderDtos.add(convertToDto(checkupReminder));
+		}
+		return checkupReminderDtos;
+	}
+
+	@GetMapping(value = { "/checkupReminder/{Id}", "/checkupReminder/{Id}/" })
+	public CheckupReminderDto getCheckupRemindertById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		return convertToDto(service.getCheckupReminderById(Id));
+	}
+
+	@PostMapping(value = { "/create/checkupReminder/{message}", "/create/checkupReminder/{message}/" })
+	public CheckupReminderDto createCheckupReminder(@PathVariable("message") String message, @RequestParam Date date,
+			@RequestParam Time time) throws IllegalArgumentException {
+		CheckupReminder checkupReminder = service.createCheckupReminder(date, time, message);
+		CheckupReminderDto checkupReminderDto = convertToDto(checkupReminder);
+		return checkupReminderDto;
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	@GetMapping(value = { "/businessHours", "/businessHours/" })
+	public List<BusinessHourDto> getBusinessHours() {
+		List<BusinessHourDto> businessHourDtos = new ArrayList<>();
+		for (BusinessHour businessHour : service.getAllBusinessHours()) {
+			businessHourDtos.add(convertToDto(businessHour));
+		}
+
+		return businessHourDtos;
+	}
+
+	@GetMapping(value = { "/businessHour/{Id}", "/businessHour/{Id}/" })
+	public BusinessHourDto getBusinessHourById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		return convertToDto(service.getBusinessHourById(Id));
+	}
+
+	// TODO check the DayOfWeek problem
+	// @PostMapping(value = { "/add/businessHour/{dayOfWeek}",
+	// "/add/businessHour/{dayOfWeek}/" }) // VERIFY PATH
+	// public BusinessHourDto addBusinessHours(@PathVariable("dayOfWeek") DayOfWeek
+	// dayOfWeek,
+	// @RequestParam Time startTime, @RequestParam Time endTime) throws
+	// IllegalArgumentException {
+	// BusinessHour businessHour = service.createBusinessHour(dayOfWeek, startTime,
+	// endTime);
+	// BusinessHourDto businessHourDto = convertToDto(businessHour);
+	// return businessHourDto;
+	// }
 }

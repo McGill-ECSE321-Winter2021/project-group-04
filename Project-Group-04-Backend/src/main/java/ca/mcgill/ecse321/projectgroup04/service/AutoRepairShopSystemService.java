@@ -83,8 +83,6 @@ public class AutoRepairShopSystemService {
 		return profile;
 	}
 
-
-
 	@Transactional
 	public List<Profile> getAllProfiles() {
 		return (List<Profile>) profileRepository.findAll();
@@ -103,7 +101,6 @@ public class AutoRepairShopSystemService {
 		return receipt;
 	}
 
-
 	@Transactional
 	public List<Receipt> getAllReceipts() {
 		return (List<Receipt>) receiptRepository.findAll();
@@ -115,7 +112,7 @@ public class AutoRepairShopSystemService {
 		for (Appointment a : appointmentRepository.findByCustomer(customer)) {
 			customerReceipts.add(a.getReceipt());
 		}
-		for(EmergencyService emergencyService : emergencyServiceRepository.findByCustomer(customer)) {
+		for (EmergencyService emergencyService : emergencyServiceRepository.findByCustomer(customer)) {
 			customerReceipts.add(emergencyService.getReceipt());
 		}
 		return customerReceipts;
@@ -168,8 +165,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public AdministrativeAssistant createAdministrativeAssistant(String userId,
-			String password) {
+	public AdministrativeAssistant createAdministrativeAssistant(String userId, String password) {
 		AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
@@ -203,9 +199,9 @@ public class AutoRepairShopSystemService {
 	public Owner getOwnerByUserId(Long userId) {
 		return ownerRepository.findOwnerById(userId);
 	}
-	
+
 	@Transactional
-	public List<Owner> getOwner(){
+	public List<Owner> getOwner() {
 		return (List<Owner>) ownerRepository.findAll();
 	}
 
@@ -227,8 +223,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public Customer createCustomer(String userId, String password,
-			List<Reminder> reminder, Car car, Profile profile) {
+	public Customer createCustomer(String userId, String password, List<Reminder> reminder, Car car, Profile profile) {
 		Customer customer = new Customer();
 		customer.setPassword(password);
 		customer.setUserId(userId);
@@ -251,7 +246,7 @@ public class AutoRepairShopSystemService {
 		timeSlot.setStartTime(startTime);
 		timeSlot.setEndDate(endDate);
 		timeSlot.setEndTime(endTime);
-//		timeSlot.setGarageSpot(garageSpot); //TODO: change this one
+		// timeSlot.setGarageSpot(garageSpot); //TODO: change this one
 		timeSlotRepository.save(timeSlot);
 		return timeSlot;
 	}
@@ -261,12 +256,11 @@ public class AutoRepairShopSystemService {
 		return timeSlotRepository.findTimeSlotByTimeSlotId(timeSlotId);
 	}
 
-//	public List<TimeSlot> getTimeSlotByGarageSpot(Integer garageSpot) {
-//		return timeSlotRepository.findTimeSlotByGarageSpot(garageSpot);
-//	}
+	// public List<TimeSlot> getTimeSlotByGarageSpot(Integer garageSpot) {
+	// return timeSlotRepository.findTimeSlotByGarageSpot(garageSpot);
+	// }
 
-	public AppointmentReminder createAppointmentReminder(AutoRepairShop aAutoRepairShop, Appointment appointment,
-			Customer customer, Date date, Time time, String message) {
+	public AppointmentReminder createAppointmentReminder(Date date, Time time, String message) {
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
 
 		appointmentReminder.setDate(date);
@@ -278,16 +272,20 @@ public class AutoRepairShopSystemService {
 
 	}
 
-//	@Transactional
-//	public List<AppointmentReminder> getAppointmentReminderByCustomer(Customer customer) {
-//		return (List<AppointmentReminder>) appointmentReminderRepository.findByCustomer(customer);
-//	}
-//
-//	@Transactional
-//	public AppointmentReminder getAppointmentReminderByCustomerAndAppointment(Customer customer,
-//			Appointment appointment) {
-//		return appointmentReminderRepository.findByCustomerAndAppointment(customer, appointment);
-//	}
+	// @Transactional
+	// public List<AppointmentReminder> getAppointmentReminderByCustomer(Customer
+	// customer) {
+	// return (List<AppointmentReminder>)
+	// appointmentReminderRepository.findByCustomer(customer);
+	// }
+	//
+	// @Transactional
+	// public AppointmentReminder
+	// getAppointmentReminderByCustomerAndAppointment(Customer customer,
+	// Appointment appointment) {
+	// return appointmentReminderRepository.findByCustomerAndAppointment(customer,
+	// appointment);
+	// }
 
 	@Transactional
 	public List<AppointmentReminder> getAllAppointmentReminders() {
@@ -306,10 +304,12 @@ public class AutoRepairShopSystemService {
 		return bookableService;
 	}
 
-//	@Transactional
-//	public BookableService getBookableServiceByAppointment(Appointment appointment) {
-//		return bookableServiceRepository.findBookableServiceByAppointments(appointment);
-//	}
+	// @Transactional
+	// public BookableService getBookableServiceByAppointment(Appointment
+	// appointment) {
+	// return
+	// bookableServiceRepository.findBookableServiceByAppointments(appointment);
+	// }
 
 	@Transactional
 	public List<BookableService> getAllBookableServices() {
@@ -319,8 +319,8 @@ public class AutoRepairShopSystemService {
 	///////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public EmergencyService createEmergencyService(String name, int price,
-			String aLocation, FieldTechnician aFieldTechnician,Customer aCustomer,Receipt aReceipt) {
+	public EmergencyService createEmergencyService(String name, int price, String aLocation,
+			FieldTechnician aFieldTechnician, Customer aCustomer, Receipt aReceipt) {
 		EmergencyService emergencyService = new EmergencyService();
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
@@ -341,13 +341,15 @@ public class AutoRepairShopSystemService {
 	public List<EmergencyService> getAllEmergencyServices() {
 		return (List<EmergencyService>) emergencyServiceRepository.findAll();
 	}
+
 	@Transactional
 	public List<EmergencyService> getCustomerEmergencyServices(Customer customer) {
 		return (List<EmergencyService>) emergencyServiceRepository.findByCustomer(customer);
 	}
+
 	@Transactional
 	public EmergencyService getEmergencyServiceByReceipt(Receipt receipt) {
-		return  emergencyServiceRepository.findByReceipt(receipt);
+		return emergencyServiceRepository.findByReceipt(receipt);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -384,8 +386,8 @@ public class AutoRepairShopSystemService {
 	public List<FieldTechnician> getAllFieldTechnicians() {
 		return (List<FieldTechnician>) fieldTechnicianRepository.findAll();
 	}
-	
-	@Transactional 
+
+	@Transactional
 	public FieldTechnician getFieldTechnicianByName(String name) {
 		return fieldTechnicianRepository.findFieldTechnicianByName(name);
 	}
@@ -406,35 +408,41 @@ public class AutoRepairShopSystemService {
 		return business;
 	}
 
-//	@Transactional
-//	public Business getBusinessByName(String name) {
-//		return businessRepository.findBusinessByName(name);
-//	}
+	// @Transactional
+	// public Business getBusinessByName(String name) {
+	// return businessRepository.findBusinessByName(name);
+	// }
 
 	@Transactional
 	public Business getBusinessById(Long businessId) {
 		return businessRepository.findBusinessById(businessId);
 	}
 
-//	@Transactional
-//	public Business getBusinessByEmailAddress(String emailAddress) {
-//		return businessRepository.findBusinessByEmailAddress(emailAddress);
-//	}
-//
-//	@Transactional
-//	public Business getBusinessByPhoneNumber(String phoneNumber) {
-//		return businessRepository.findBusinessByPhoneNumber(phoneNumber);
-//	}
+	@Transactional
+	public List<Business> getBusiness() {
+		return (List<Business>) businessRepository.findAll();
+	}
 
-//	@Transactional
-//	public Business getBusinessByBusinessHours(List<BusinessHour> businessHours) {
-//		return businessRepository.findBusinessByBusinessHours(businessHours);
-//	}
-//
-//	@Transactional
-//	public Business getBusinessByTimeSlots(List<TimeSlot> timeSlot) {
-//		return businessRepository.findBusinessByTimeSlot(timeSlot);
-//	}
+	// @Transactional
+	// public Business getBusinessByEmailAddress(String emailAddress) {
+	// return businessRepository.findBusinessByEmailAddress(emailAddress);
+	// }
+	//
+	// @Transactional
+	// public Business getBusinessByPhoneNumber(String phoneNumber) {
+	// return businessRepository.findBusinessByPhoneNumber(phoneNumber);
+	// }
+
+	// @Transactional
+	// public Business getBusinessByBusinessHours(List<BusinessHour> businessHours)
+	// {
+	// return businessRepository.findBusinessByBusinessHours(businessHours);
+	// }
+	//
+	// @Transactional
+	// public Business getBusinessByTimeSlots(List<TimeSlot> timeSlot) {
+	// return businessRepository.findBusinessByTimeSlot(timeSlot);
+	// }
 
 	////////////////////////////////////////////////////////////////////
 
@@ -459,7 +467,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public CheckupReminder createCheckupReminder(Date aDate, Time aTime, String aMessage, Customer aCustomer) {
+	public CheckupReminder createCheckupReminder(Date aDate, Time aTime, String aMessage) {
 		CheckupReminder checkupReminder = new CheckupReminder();
 
 		checkupReminder.setDate(aDate);
@@ -474,25 +482,27 @@ public class AutoRepairShopSystemService {
 		return checkupReminderRepository.findByReminderId(checkupReminderId);
 	}
 
-//	@Transactional
-//	public List<CheckupReminder> getCheckupReminderByCustomer(Customer customer) {
-//		return (List<CheckupReminder>) checkupReminderRepository.findCheckupReminderByCustomer(customer);
-//	}
+	// @Transactional
+	// public List<CheckupReminder> getCheckupReminderByCustomer(Customer customer)
+	// {
+	// return (List<CheckupReminder>)
+	// checkupReminderRepository.findCheckupReminderByCustomer(customer);
+	// }
 
-//	@Transactional
-//	public CheckupReminder getCheckupReminderByDate(Date date) {
-//		return checkupReminderRepository.findCheckupReminderByDate(date);
-//	}
-//
-//	@Transactional
-//	public CheckupReminder getCheckupReminderByMessage(String message) {
-//		return checkupReminderRepository.findCheckupReminderByMessage(message);
-//	}
-//
-//	@Transactional
-//	public CheckupReminder getCheckupReminderByTime(Time time) {
-//		return checkupReminderRepository.findCheckupReminderByTime(time);
-//	}
+	// @Transactional
+	// public CheckupReminder getCheckupReminderByDate(Date date) {
+	// return checkupReminderRepository.findCheckupReminderByDate(date);
+	// }
+	//
+	// @Transactional
+	// public CheckupReminder getCheckupReminderByMessage(String message) {
+	// return checkupReminderRepository.findCheckupReminderByMessage(message);
+	// }
+	//
+	// @Transactional
+	// public CheckupReminder getCheckupReminderByTime(Time time) {
+	// return checkupReminderRepository.findCheckupReminderByTime(time);
+	// }
 
 	@Transactional
 	public List<CheckupReminder> getAllCheckupReminder() {
@@ -507,11 +517,11 @@ public class AutoRepairShopSystemService {
 		return (List<Reminder>) reminderRepository.findAll();
 	}
 
-//	@Transactional
-//	public List<Reminder> getCustomerReminders(Customer customer) {
-//		return reminderRepository.findByCustomer(customer);
-//	}
-	
+	// @Transactional
+	// public List<Reminder> getCustomerReminders(Customer customer) {
+	// return reminderRepository.findByCustomer(customer);
+	// }
+
 	@Transactional
 	public Appointment getAppointment(Long Id) {
 		return appointmentRepository.findByAppointmentId(Id);
