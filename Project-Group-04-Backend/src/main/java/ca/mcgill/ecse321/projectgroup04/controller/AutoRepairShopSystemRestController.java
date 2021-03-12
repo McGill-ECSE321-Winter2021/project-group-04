@@ -2,10 +2,13 @@ package ca.mcgill.ecse321.projectgroup04.controller;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +38,7 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such Profile!");
 		}
 		ProfileDto profileDto = new ProfileDto(profile.getAddressLine(), profile.getPhoneNumber(),
-				profile.getFirstName(), profile.getLastName(), profile.getZipCode(), profile.getEmailAddress());
+				profile.getFirstName(), profile.getLastName(), profile.getZipCode(), profile.getEmailAddress(),profile.getProfileId());
 		return profileDto;
 
 	}
@@ -71,7 +74,7 @@ public class AutoRepairShopSystemRestController {
 		if (receipt == null) {
 			throw new IllegalArgumentException("There is no such Receipt!");
 		}
-		ReceiptDto receiptDto = new ReceiptDto(receipt.getTotalPrice());
+		ReceiptDto receiptDto = new ReceiptDto(receipt.getTotalPrice(),receipt.getReceiptId());
 		return receiptDto;
 	}
 
@@ -88,7 +91,7 @@ public class AutoRepairShopSystemRestController {
 		if (garageTechnician == null) {
 			throw new IllegalArgumentException("There is no such GarageTechnician!");
 		}
-		GarageTechnicianDto garageTechnicianDto = new GarageTechnicianDto(garageTechnician.getName());
+		GarageTechnicianDto garageTechnicianDto = new GarageTechnicianDto(garageTechnician.getName(),garageTechnician.getTechnicianId());
 		return garageTechnicianDto;
 
 	}
@@ -548,6 +551,7 @@ public class AutoRepairShopSystemRestController {
 	// return businessHourDto;
 	// }
 	
+
 	///////////////////////////////////////ADMINISTRATIVE ASSISTANT///////////////////////////
 	
 	@GetMapping(value = {"/administrativeAssistants", "/administrativeAssistants/"})
@@ -640,5 +644,47 @@ public class AutoRepairShopSystemRestController {
 		GarageTechnicianDto garageTechnicianDto = convertToDto(garageTechnician);
 		return garageTechnicianDto;
 	}
+
+	@PostMapping(value= {"/appointments/{userId}/{serviceName}","/appointments/{userId}/{serviceName}/"})
+	public AppointmentDto bookAppointment(@PathVariable("userId") String userId ,
+			@PathVariable("serviceName") String serviceName,
+			@RequestParam Date date,
+			@RequestParam Integer garageSpot,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
+			@RequestParam(name="Garage Technician") GarageTechnicianDto garageTechnicianDto ) 
+					throws IllegalArgumentException{
+		Customer customer = service.getCustomerByUserId(userId);
+		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
+
+		 java.sql.Time myTimeEnd = startTime;
+		 LocalTime localTimeEnd = myTimeEnd.toLocalTime();
+		 localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
+		 java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
+		 
+		TimeSlot timeSlot =service.createTimeSlot(startTime, endTime, date, date, garageSpot);
+		Receipt receipt=service.createReceipt(bookableService.getPrice());
+		GarageTechnician garageTechnician = service.getGarageTechnicianById(garageTechnicianDto.getTechnicianId());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime ( date ); // convert your date to Calendar object
+		int daysToDecrement = -1;
+		cal.add(Calendar.DATE, daysToDecrement);
+		date = (Date) cal.getTime(); // again get back your date object
+		AppointmentReminder appReminder=service.createAppointmentReminder(date, startTime, "You have an appointment in 24hours");
+		Appointment appointment = service.createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder, receipt, null);
+		return convertToDto(appointment);
+	}
+	
+	private GarageTechnician convertToDomainObject(GarageTechnicianDto garageTechnicianDto) {
+		List<GarageTechnician> garageTechnicians = service.getAllGarageTechnicians();
+		for(GarageTechnician garageTechnician : garageTechnicians) {
+			if(garageTechnician.getTechnicianId().equals(garageTechnicianDto.getTechnicianId())) {
+				return garageTechnician;
+			}
+		}
+		return null;
+	}
+	
+	
+
 	
 }

@@ -536,4 +536,24 @@ public class AutoRepairShopSystemService {
 	public Appointment getAppointment(Long Id) {
 		return appointmentRepository.findByAppointmentId(Id);
 	}
+	@Transactional
+	public List<Appointment> getAppointmentsByDate(Date date){
+		List<Appointment> appointments = new ArrayList<>();
+		for(Appointment appointment : appointmentRepository.findAll()) {
+			if(appointment.getTimeSlot().getStartDate()==date) {
+				appointments.add(appointment);
+			}
+		}
+		return appointments;
+	}
+	@Transactional
+	public Customer getCustomerByUserId(String userId) {
+		return customerRepository.findCustomerByUserId(userId);
+	}
+	
+	@Transactional 
+	public BookableService getBookableServiceByServiceName(String name) {
+		return bookableServiceRepository.findBookableServiceByName(name);
+	}
+	
 }
