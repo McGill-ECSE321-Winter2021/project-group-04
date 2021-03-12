@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse321.projectgroup04.dto.*;
 import ca.mcgill.ecse321.projectgroup04.dto.BusinessHourDto.DayOfWeek;
 import ca.mcgill.ecse321.projectgroup04.model.*;
-// import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
 import ca.mcgill.ecse321.projectgroup04.service.AutoRepairShopSystemService;
 
 @CrossOrigin(origins = "*")
