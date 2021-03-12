@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.projectgroup04.dto.*;
@@ -330,5 +332,49 @@ public class AutoRepairShopSystemRestController {
 
 		return checkupReminderDto;
 	}
+	
+	@GetMapping(value= {"/profiles","/profiles/"})
+	public List<ProfileDto> getAllProfiles(){
+		List<ProfileDto> profileDtos = new ArrayList<>();
+		for(Profile profile : service.getAllProfiles()) {
+			profileDtos.add(convertToDto(profile));
+		}
+		return profileDtos;
+	}
+	
+	@GetMapping(value= {"/profiles/{Id}","/profiles/{Id}/"})
+	public ProfileDto getProfileById(@PathVariable("Id") Long Id)throws IllegalArgumentException {
+		return convertToDto(service.getProfile(Id));
+	} 
+	
+	
+	
+	@GetMapping(value= {"/appointments","/appointments/"})
+	public List<AppointmentDto> getAllAppointments(){
+		List<AppointmentDto> appointmentDtos = new ArrayList<>();
+		for(Appointment appointment : service.getAllAppointments()) {
+			appointmentDtos.add(convertToDto(appointment));
+		}
+		return appointmentDtos;
+	}
+	
+	@GetMapping(value= {"/appointments/{Id}","/appointments/{Id}/"})
+	public AppointmentDto getAppointmentById(@PathVariable("Id") Long Id)throws IllegalArgumentException {
+		return convertToDto(service.getAppointment(Id));
+	} 
+	
+	@GetMapping(value= {"/receipts","/receipts/"})
+	public List<ReceiptDto> getAllReceipts(){
+		List<ReceiptDto> receiptDtos = new ArrayList<>();
+		for(Receipt receipt : service.getAllReceipts()) {
+			receiptDtos.add(convertToDto(receipt));
+		}
+		return receiptDtos;
+	}
+	
+	@GetMapping(value= {"/receipts/{Id}","/receipts/{Id}/"})
+	public ReceiptDto getReceiptById(@PathVariable("Id") Long Id)throws IllegalArgumentException {
+		return convertToDto(service.getReceipt(Id));
+	} 
 
 }
