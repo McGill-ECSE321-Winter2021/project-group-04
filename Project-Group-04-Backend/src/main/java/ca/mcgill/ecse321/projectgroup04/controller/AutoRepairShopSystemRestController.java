@@ -590,6 +590,20 @@ public class AutoRepairShopSystemRestController {
 		return null;
 	}
 	
+	@PostMapping(value= {"profiles/{first}/{last}","profiles/{first}/{last}/"})
+	public ProfileDto createProfile(@PathVariable("first") String firstName,@PathVariable("last") String lastName,
+			@RequestParam(name = "Email Address") String emailAddress,
+			@RequestParam(name = "Phone Number") String phoneNumber,
+			@RequestParam(name = "Address Line") String addressLine,
+			@RequestParam(name = "Zip Code") String zipCode)throws IllegalArgumentException{
+		Profile profile =service.createProfile(addressLine, phoneNumber, firstName, lastName, zipCode, emailAddress);
+		return convertToDto(profile);
+	}
 	
+	@GetMapping(value = {"profiles/{first}/{last}","profiles/{first}/{last}/"})
+	public ProfileDto getProfileByFirstAndLast(@PathVariable("first") String firstName,
+			@PathVariable("last") String lastName)throws IllegalArgumentException{
+		return convertToDto(service.getProfileByFirstAndLast(firstName, lastName));
+	}
 	
 }

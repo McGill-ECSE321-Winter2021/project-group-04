@@ -550,4 +550,13 @@ public class AutoRepairShopSystemService {
 	public GarageTechnician getGarageTechnicianById(Long id) {
 		return garageTechnicianRepository.findGarageTechnicianByTechnicianId(id);
 	}
+	@Transactional
+	public Profile getProfileByFirstAndLast(String firstName,String lastName) {
+		for(Profile profile:profileRepository.findAll()) {
+			if(profile.getFirstName().equals(firstName) && profile.getLastName().equals(lastName)) {
+				return profile;
+			}
+		}
+		return null;
+	}
 }
