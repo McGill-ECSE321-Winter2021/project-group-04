@@ -10,8 +10,8 @@ class User
 class Customer
 {
   isA User;
-  1 -- * Reminder;
-  1 -- 1 Profile customerProfile;
+  1 -> * Reminder;
+  1 -> 1 Profile customerProfile;
 }
 
 class Owner
@@ -30,7 +30,7 @@ class Car
   model;
   color;
   year;
-  1 -- 1 Customer carOwner;
+  1 -> 1 Customer carOwner;
 }
 
 class Service
@@ -52,18 +52,18 @@ class EmergencyService
 {
   string location;
   isA Service;
-  1 -- 1 FieldTechnician technician;
+  1 -> 1 FieldTechnician technician;
 }
 
 class Appointment
 {
   string appointmentID;
-  * -- 1 Customer customer;
-  * -- 1 GarageTechnician technician;
+  * -> 1 Customer customer;
+  * -> 1 GarageTechnician technician;
   * -> 1 TimeSlot timeSlot;
-  1 -- 1 AppointmentReminder reminder;
-  1 -- 1 Receipt receipt;
-  * -- 1 BookableService bookableServices;
+  1 -> 1 AppointmentReminder reminder;
+  1 -> 1 Receipt receipt;
+  * -> 1 BookableService bookableServices;
 }
 
 class BusinessHour
@@ -107,18 +107,14 @@ class GarageTechnician
 
 class TimeSlot
 {
- timeSlotID;
-  Time startTime; 
+timeSlotID;
+Time startTime; 
 Date startDate;
 Time endTime; 
 Date endDate;
+Integer garageSpot;
 }
 
-class GarageSpot
-{
-  int spotNumber;
-  1 -- * TimeSlot timeSlot;
-}
 
 class AutoRepairShop
 {

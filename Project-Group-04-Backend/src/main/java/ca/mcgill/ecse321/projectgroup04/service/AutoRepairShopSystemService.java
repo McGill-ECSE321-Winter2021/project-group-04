@@ -203,6 +203,11 @@ public class AutoRepairShopSystemService {
 	public Owner getOwnerByUserId(Long userId) {
 		return ownerRepository.findOwnerById(userId);
 	}
+	
+	@Transactional
+	public List<Owner> getOwner(){
+		return (List<Owner>) ownerRepository.findAll();
+	}
 
 	//////////////////////////////////////////////////////////////////////////////
 
@@ -379,6 +384,11 @@ public class AutoRepairShopSystemService {
 	public List<FieldTechnician> getAllFieldTechnicians() {
 		return (List<FieldTechnician>) fieldTechnicianRepository.findAll();
 	}
+	
+	@Transactional 
+	public FieldTechnician getFieldTechnicianByName(String name) {
+		return fieldTechnicianRepository.findFieldTechnicianByName(name);
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////
 
@@ -501,4 +511,9 @@ public class AutoRepairShopSystemService {
 //	public List<Reminder> getCustomerReminders(Customer customer) {
 //		return reminderRepository.findByCustomer(customer);
 //	}
+	
+	@Transactional
+	public Appointment getAppointment(Long Id) {
+		return appointmentRepository.findByAppointmentId(Id);
+	}
 }
