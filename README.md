@@ -26,7 +26,7 @@ project-group-04 created by GitHub Classroom
 | Artus Julliard  | Use Case Diagrams, Persistence Layer, Build System | 50 |
 | Cesar Lahoud    | Use Case Diagrams, Persistence Layer, Build System | 50 |
 | Yasmina Matta   | Use Case Diagrams, Persistence Layer, Build System | 50 |
-| Abrar Fahad     | Use Case Diagrams, Domain Model, Persistence Layer | 50 |
+| Abrar Fahad     | Use Case Diagrams, Persistence Layer, Build System | 50 |
 
 Click [here] for meeting minutes!
 
