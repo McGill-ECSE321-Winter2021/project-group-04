@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -566,6 +567,17 @@ public class AutoRepairShopSystemService {
 			}
 		}
 		return null;
+	}
+	
+	public boolean isOverlap(TimeSlot timeSlot1,Time startTime,Time endTime,Integer garageSpot) {
+		if(timeSlot1.getGarageSpot().equals(garageSpot)) {
+			LocalTime S1 = timeSlot1.getStartTime().toLocalTime();
+			LocalTime S2 = startTime.toLocalTime();
+			LocalTime E1 = timeSlot1.getEndTime().toLocalTime();
+			LocalTime E2 = endTime.toLocalTime();
+			return S1.isBefore(E2) && S2.isBefore(E1);
+		}
+		return false;
 	}
 
 }
