@@ -272,10 +272,10 @@ public class AutoRepairShopSystemService {
 
 	}
 
-	@Transactional 
-	public AppointmentReminder getAppointmentReminderById(Long id){
-		return appointmentReminderRepository.findAppointmentReminderByReminderId(id)
-;	}
+	@Transactional
+	public AppointmentReminder getAppointmentReminderById(Long id) {
+		return appointmentReminderRepository.findAppointmentReminderByReminderId(id);
+	}
 	// @Transactional
 	// public List<AppointmentReminder> getAppointmentReminderByCustomer(Customer
 	// customer) {
@@ -298,7 +298,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public BookableService createBookableService( String name, int price, int duration) {
+	public BookableService createBookableService(String name, int price, int duration) {
 		BookableService bookableService = new BookableService();
 		bookableService.setDuration(duration);
 		bookableService.setName(name);
@@ -317,6 +317,7 @@ public class AutoRepairShopSystemService {
 	public BookableService getBookableServiceById(Long serviceId) {
 		return bookableServiceRepository.findBookableServiceByServiceId(serviceId);
 	}
+
 	@Transactional
 	public List<BookableService> getAllBookableServices() {
 		return (List<BookableService>) bookableServiceRepository.findAll();
@@ -367,11 +368,12 @@ public class AutoRepairShopSystemService {
 		garageTechnicianRepository.save(garageTechnician);
 		return garageTechnician;
 	}
+
 	@Transactional
 	public List<GarageTechnician> getAllGarageTechnicians() {
 		return (List<GarageTechnician>) garageTechnicianRepository.findAll();
 	}
-	
+
 	@Transactional
 	public GarageTechnician getGarageTechnicianById(Long technicianId) {
 		return garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
@@ -492,6 +494,11 @@ public class AutoRepairShopSystemService {
 		return checkupReminderRepository.findByReminderId(checkupReminderId);
 	}
 
+	@Transactional
+	public CheckupReminder getCheckupReminderByMessage(String message) {
+		return checkupReminderRepository.findByMessage(message);
+	}
+
 	// @Transactional
 	// public List<CheckupReminder> getCheckupReminderByCustomer(Customer customer)
 	// {
@@ -536,32 +543,32 @@ public class AutoRepairShopSystemService {
 	public Appointment getAppointment(Long Id) {
 		return appointmentRepository.findByAppointmentId(Id);
 	}
+
 	@Transactional
-	public List<Appointment> getAppointmentsByDate(Date date){
+	public List<Appointment> getAppointmentsByDate(Date date) {
 		List<Appointment> appointments = new ArrayList<>();
-		for(Appointment appointment : appointmentRepository.findAll()) {
-			if(appointment.getTimeSlot().getStartDate()==date) {
+		for (Appointment appointment : appointmentRepository.findAll()) {
+			if (appointment.getTimeSlot().getStartDate() == date) {
 				appointments.add(appointment);
 			}
 		}
 		return appointments;
 	}
+
 	@Transactional
 	public Customer getCustomerByUserId(String userId) {
 		return customerRepository.findCustomerByUserId(userId);
 	}
-	
-	@Transactional 
+
+	@Transactional
 	public BookableService getBookableServiceByServiceName(String name) {
 		return bookableServiceRepository.findBookableServiceByName(name);
 	}
-	
-
 
 	@Transactional
-	public Profile getProfileByFirstAndLast(String firstName,String lastName) {
-		for(Profile profile:profileRepository.findAll()) {
-			if(profile.getFirstName().equals(firstName) && profile.getLastName().equals(lastName)) {
+	public Profile getProfileByFirstAndLast(String firstName, String lastName) {
+		for (Profile profile : profileRepository.findAll()) {
+			if (profile.getFirstName().equals(firstName) && profile.getLastName().equals(lastName)) {
 				return profile;
 			}
 		}

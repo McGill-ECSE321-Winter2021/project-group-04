@@ -7,6 +7,7 @@ public class BusinessDto {
     private String address;
     private String phoneNumber;
     private String emailAddress;
+    private Long id;
 
     private List<BusinessHourDto> businessHours;
     private List<TimeSlotDto> regular;
@@ -15,13 +16,14 @@ public class BusinessDto {
     }
 
     public BusinessDto(String aName, String aAddress, String aPhoneNumber, String aEmailAddress,
-            List<BusinessHourDto> aBusinessHours, List<TimeSlotDto> regular) {
+            List<BusinessHourDto> aBusinessHours, List<TimeSlotDto> regular, Long aId) {
         this.name = aName;
         this.address = aAddress;
         this.phoneNumber = aPhoneNumber;
         this.emailAddress = aEmailAddress;
         this.businessHours = aBusinessHours;
         this.regular = regular;
+        this.id = aId;
 
     }
 
@@ -73,5 +75,9 @@ public class BusinessDto {
 
     public void setTimeSlot(List<TimeSlotDto> aTimeSlot) {
         regular = aTimeSlot;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

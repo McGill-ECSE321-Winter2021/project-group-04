@@ -7,14 +7,16 @@ public class CheckupReminderDto {
     private Date date;
     private Time time;
     private String message;
+    private Long id;
 
     public CheckupReminderDto() {
     }
 
-    public CheckupReminderDto(Date aDate, Time aTime, String aMessage) {
+    public CheckupReminderDto(Date aDate, Time aTime, String aMessage, Long aId) {
         this.date = aDate;
         this.time = aTime;
         this.message = aMessage;
+        this.id = aId;
 
     }
 
@@ -37,6 +39,10 @@ public class CheckupReminderDto {
      */
     public String getMessage() {
         return message;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 }
