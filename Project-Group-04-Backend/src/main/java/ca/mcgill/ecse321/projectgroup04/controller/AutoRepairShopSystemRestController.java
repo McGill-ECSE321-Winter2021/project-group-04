@@ -675,7 +675,11 @@ public class AutoRepairShopSystemRestController {
 		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
 		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
 		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
-
+		for (Appointment appointment : service.getAppointmentsByDate(date)) {
+			if (service.isOverlap(appointment.getTimeSlot(), startTime, endTime, garageSpot)) {
+				throw new IllegalArgumentException("This attempted booking overlaps with another!");
+			}
+		}
 		TimeSlot timeSlot = service.createTimeSlot(startTime, endTime, date, date, garageSpot);
 		Receipt receipt = service.createReceipt(bookableService.getPrice());
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(garageTechnicianDto.getTechnicianId());
