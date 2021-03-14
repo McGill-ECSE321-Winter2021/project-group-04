@@ -49,7 +49,7 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such AdministrativeAssistant!");
 		}
 		AdministrativeAssistantDto administrativeAssistantDto = new AdministrativeAssistantDto(
-				administrativeAssistant.getUserId(), administrativeAssistant.getPassword());
+				administrativeAssistant.getId(),administrativeAssistant.getUserId(), administrativeAssistant.getPassword());
 		return administrativeAssistantDto;
 	}
 
@@ -65,7 +65,7 @@ public class AutoRepairShopSystemRestController {
 		if (appointmentReminder == null) {
 			throw new IllegalArgumentException("There is no such AppointmentReminder!");
 		}
-		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getDate(),
+		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getReminderId(),appointmentReminder.getDate(),
 				appointmentReminder.getTime(), appointmentReminder.getMessage());
 		return appointmentReminderDto;
 
@@ -103,7 +103,7 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such BookableService!");
 		}
 		BookableServiceDto bookableServiceDto = new BookableServiceDto(bookableService.getDuration(),
-				bookableService.getPrice(), bookableService.getName());
+				bookableService.getPrice(), bookableService.getName(), bookableService.getServiceId());
 		return bookableServiceDto;
 	}
 

@@ -13,8 +13,9 @@ public class AppointmentReminderDto {
 	
 	public AppointmentReminderDto() {}
 	
-	public AppointmentReminderDto (Date date, Time time,String message) {
+	public AppointmentReminderDto (Long reminderId,Date date, Time time,String message) {
 		this.date = date;
+		this.reminderId = reminderId;
 		this.time = time;
 		this.message = message;
 	}
