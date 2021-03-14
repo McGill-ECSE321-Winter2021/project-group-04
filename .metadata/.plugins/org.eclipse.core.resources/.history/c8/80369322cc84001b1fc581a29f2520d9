@@ -8,7 +8,6 @@ public class TimeSlotDto {
 	private Time startTime, endTime;
 	private Date startDate, endDate;
 	private Integer garageSpot;
-	private Long timeSlotId;
 
 	public TimeSlotDto() {
 	}
@@ -39,10 +38,6 @@ public class TimeSlotDto {
 
 	public Integer getGarageSpot() {
 		return garageSpot;
-	}
-
-	public Long getTimeSlotId() {
-		return timeSlotId;
 	}
 
 }

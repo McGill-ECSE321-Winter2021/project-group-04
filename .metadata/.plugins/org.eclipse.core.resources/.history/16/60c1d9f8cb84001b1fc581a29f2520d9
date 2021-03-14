@@ -4,7 +4,6 @@ public class CarDto {
 	private String model;
 	private String color;
 	private String year;
-	private Long carId;
 
 
 	public CarDto() {
@@ -38,10 +37,6 @@ public class CarDto {
 	 */
 	public String getYear() {
 		return year;
-	}
-	
-	public Long getCarId() {
-		return carId;
 	}
 
 }

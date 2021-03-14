@@ -670,8 +670,7 @@ public class AutoRepairShopSystemRestController {
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto,
-			@RequestParam Long timeSlotId)
+			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto)
 			throws IllegalArgumentException {
 		Customer customer = service.getCustomerByUserId(userId);
 		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
@@ -685,7 +684,7 @@ public class AutoRepairShopSystemRestController {
 				throw new IllegalArgumentException("This attempted booking overlaps with another!");
 			}
 		}
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, date, date, garageSpot);
+		TimeSlot timeSlot = service.createTimeSlot(startTime, endTime, date, date, garageSpot);
 		Receipt receipt = service.createReceipt(bookableService.getPrice());
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(garageTechnicianDto.getTechnicianId());
 		Calendar cal = Calendar.getInstance();
@@ -800,12 +799,12 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/timeSlot/{timeSlotId}", "/timeSlot/{timeSlotId}/" })
 	public TimeSlotDto createTimeSlot(@PathVariable("timeSlotId") Long timeSlotId,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date endDate,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime,
+			@RequestParam Date startDate,
+			@RequestParam Date endDate,
+			@RequestParam Time startTime,
+			@RequestParam Time endTime,
 			@RequestParam Integer garageSpot) throws IllegalArgumentException {
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, startDate, endDate, garageSpot);
+		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startDate, endDate, startTime, endTime, garageSpot);
 		TimeSlotDto timeSlotDtos = convertToDto(timeSlot);
 		return timeSlotDtos;
 	}
