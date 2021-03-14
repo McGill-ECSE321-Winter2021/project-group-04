@@ -670,8 +670,7 @@ public class AutoRepairShopSystemRestController {
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto,
-			@RequestParam Long timeSlotId)
+			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto)
 			throws IllegalArgumentException {
 		Customer customer = service.getCustomerByUserId(userId);
 		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
@@ -685,7 +684,7 @@ public class AutoRepairShopSystemRestController {
 				throw new IllegalArgumentException("This attempted booking overlaps with another!");
 			}
 		}
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, date, date, garageSpot);
+		TimeSlot timeSlot = service.createTimeSlot(startTime, endTime, date, date, garageSpot);
 		Receipt receipt = service.createReceipt(bookableService.getPrice());
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(garageTechnicianDto.getTechnicianId());
 		Calendar cal = Calendar.getInstance();

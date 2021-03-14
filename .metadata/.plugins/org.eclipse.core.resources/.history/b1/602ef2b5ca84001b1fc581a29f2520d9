@@ -209,9 +209,8 @@ public class AutoRepairShopSystemService {
 	//////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public Car createCar(Long cardId, String model, String year, String color) {
+	public Car createCar(String model, String year, String color) {
 		Car car = new Car();
-		car.setCarId(cardId);
 		car.setColor(color);
 		car.setModel(model);
 		car.setYear(year);
@@ -222,11 +221,6 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Car getCarByCarId(Long carId) {
 		return carRepository.findByCarId(carId);
-	}
-	
-	@Transactional
-	public List<Car> getAllCars() {
-		return (List<Car>) carRepository.findAll();
 	}
 
 	@Transactional
@@ -252,9 +246,8 @@ public class AutoRepairShopSystemService {
 	}
 	
 	@Transactional
-	public TimeSlot createTimeSlot(Long timeSlotId, Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
+	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
 		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setTimeSlotId(timeSlotId);
 		timeSlot.setStartDate(startDate);
 		timeSlot.setStartTime(startTime);
 		timeSlot.setEndDate(endDate);
@@ -268,12 +261,6 @@ public class AutoRepairShopSystemService {
 	public TimeSlot getTimeSlotByTimeSlotId(Long timeSlotId) {
 		return timeSlotRepository.findTimeSlotByTimeSlotId(timeSlotId);
 	}
-	
-	@Transactional
-	public List<TimeSlot> getAllTimeSlots() {
-		return (List<TimeSlot>) timeSlotRepository.findAll();
-	}
-
 
 	// public List<TimeSlot> getTimeSlotByGarageSpot(Integer garageSpot) {
 	// return timeSlotRepository.findTimeSlotByGarageSpot(garageSpot);

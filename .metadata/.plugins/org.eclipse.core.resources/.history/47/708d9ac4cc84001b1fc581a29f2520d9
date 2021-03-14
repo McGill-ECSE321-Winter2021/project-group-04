@@ -209,9 +209,8 @@ public class AutoRepairShopSystemService {
 	//////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public Car createCar(Long cardId, String model, String year, String color) {
+	public Car createCar(Long cardIsd, String model, String year, String color) {
 		Car car = new Car();
-		car.setCarId(cardId);
 		car.setColor(color);
 		car.setModel(model);
 		car.setYear(year);
@@ -252,9 +251,8 @@ public class AutoRepairShopSystemService {
 	}
 	
 	@Transactional
-	public TimeSlot createTimeSlot(Long timeSlotId, Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
+	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
 		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setTimeSlotId(timeSlotId);
 		timeSlot.setStartDate(startDate);
 		timeSlot.setStartTime(startTime);
 		timeSlot.setEndDate(endDate);

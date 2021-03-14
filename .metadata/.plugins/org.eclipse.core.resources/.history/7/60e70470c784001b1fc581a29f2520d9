@@ -670,8 +670,7 @@ public class AutoRepairShopSystemRestController {
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto,
-			@RequestParam Long timeSlotId)
+			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto)
 			throws IllegalArgumentException {
 		Customer customer = service.getCustomerByUserId(userId);
 		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
@@ -685,7 +684,7 @@ public class AutoRepairShopSystemRestController {
 				throw new IllegalArgumentException("This attempted booking overlaps with another!");
 			}
 		}
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, date, date, garageSpot);
+		TimeSlot timeSlot = service.createTimeSlot(startTime, endTime, date, date, garageSpot);
 		Receipt receipt = service.createReceipt(bookableService.getPrice());
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(garageTechnicianDto.getTechnicianId());
 		Calendar cal = Calendar.getInstance();
@@ -724,90 +723,6 @@ public class AutoRepairShopSystemRestController {
 	public ProfileDto getProfileByFirstAndLast(@PathVariable("first") String firstName,
 			@PathVariable("last") String lastName) throws IllegalArgumentException {
 		return convertToDto(service.getProfileByFirstAndLast(firstName, lastName));
-	}
-	
-	/////////////////////////////////////// CUSTOMER///////////////////////////
-
-	@GetMapping(value = { "/customers", "/customers/" })
-	public List<CustomerDto> getCustomers() {
-		List<CustomerDto> customerDtos = new ArrayList<>();
-		for (Customer customer : service.getAllCustomers()) {
-			customerDtos.add(convertToDto(customer));
-		}
-		return customerDtos;
-	}
-
-	@GetMapping(value = { "/register/customer/{Id}", "/register/customer/{Id}/" })
-	public CustomerDto getCustomerById(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
-		return convertToDto(service.getCustomerById(Id));
-	}
-
-	@PostMapping(value = { "/customer/{userId}", "/customer/{userId}/" })
-	public CustomerDto createCustomer(@PathVariable("userId") String userId,
-			@RequestParam String password,
-			@RequestParam List<Reminder> reminders,
-			@RequestParam Car car,
-			@RequestParam Profile profile) throws IllegalArgumentException {
-		Customer customer = service.createCustomer(userId, password, reminders, car, profile);
-		CustomerDto customerDto = convertToDto(customer);
-		return customerDto;
-	}
-
-	/////////////////////////////////////// CAR///////////////////////////
-
-	@GetMapping(value = { "/cars", "/cars/" })
-	public List<CarDto> getCars() {
-		List<CarDto> carDtos = new ArrayList<>();
-		for (Car car : service.getAllCars()) {
-			carDtos.add(convertToDto(car));
-		}
-		return carDtos;
-	}
-
-	@GetMapping(value = { "/register/car/{Id}", "/register/car/{Id}/" })
-	public CarDto getCarByCarId(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
-		return convertToDto(service.getCarByCarId(Id));
-	}
-
-	@PostMapping(value = { "/car/{carId}", "/car/{carId}/" })
-	public CarDto createCar(@PathVariable("carId") Long carId,
-			@RequestParam String model,
-			@RequestParam String year,
-			@RequestParam String color) throws IllegalArgumentException {
-		Car car1 = service.createCar(carId, model, year, color);
-		CarDto carDto = convertToDto(car1);
-		return carDto;
-	}
-
-	/////////////////////////////////////// TIMESLOT///////////////////////////
-
-	@GetMapping(value = { "/timeSlots", "/timeSlots/" })
-	public List<TimeSlotDto> getTimeSlot() {
-		List<TimeSlotDto> timeSlotDtos = new ArrayList<>();
-		for (TimeSlot timeSlot : service.getAllTimeSlots()) {
-			timeSlotDtos.add(convertToDto(timeSlot));
-		}
-		return timeSlotDtos;
-	}
-
-	@GetMapping(value = { "/register/timeSlot/{Id}", "/register/timeSlot/{Id}/" })
-	public TimeSlotDto getTimeSlotByTimeSlotId(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
-		return convertToDto(service.getTimeSlotByTimeSlotId(Id));
-	}
-
-	@PostMapping(value = { "/timeSlot/{timeSlotId}", "/timeSlot/{timeSlotId}/" })
-	public TimeSlotDto createTimeSlot(@PathVariable("timeSlotId") Long timeSlotId,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date endDate,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime,
-			@RequestParam Integer garageSpot) throws IllegalArgumentException {
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, startDate, endDate, garageSpot);
-		TimeSlotDto timeSlotDtos = convertToDto(timeSlot);
-		return timeSlotDtos;
 	}
 
 }
