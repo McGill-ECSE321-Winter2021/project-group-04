@@ -49,7 +49,8 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such AdministrativeAssistant!");
 		}
 		AdministrativeAssistantDto administrativeAssistantDto = new AdministrativeAssistantDto(
-				administrativeAssistant.getId(),administrativeAssistant.getUserId(), administrativeAssistant.getPassword());
+				administrativeAssistant.getId(), administrativeAssistant.getUserId(),
+				administrativeAssistant.getPassword());
 		return administrativeAssistantDto;
 	}
 
@@ -65,8 +66,8 @@ public class AutoRepairShopSystemRestController {
 		if (appointmentReminder == null) {
 			throw new IllegalArgumentException("There is no such AppointmentReminder!");
 		}
-		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getReminderId(),appointmentReminder.getDate(),
-				appointmentReminder.getTime(), appointmentReminder.getMessage());
+		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getReminderId(),
+				appointmentReminder.getDate(), appointmentReminder.getTime(), appointmentReminder.getMessage());
 		return appointmentReminderDto;
 
 	}
@@ -671,8 +672,7 @@ public class AutoRepairShopSystemRestController {
 			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
 			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto,
-			@RequestParam Long timeSlotId)
-			throws IllegalArgumentException {
+			@RequestParam Long timeSlotId) throws IllegalArgumentException {
 		Customer customer = service.getCustomerByUserId(userId);
 		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
 
@@ -696,7 +696,7 @@ public class AutoRepairShopSystemRestController {
 		AppointmentReminder appReminder = service.createAppointmentReminder(date, startTime,
 				"You have an appointment in 24hours");
 		Appointment appointment = service.createAppointment(customer, bookableService, garageTechnician, timeSlot,
-				appReminder, receipt, null);
+				appReminder, receipt);
 		return convertToDto(appointment);
 	}
 
@@ -725,7 +725,7 @@ public class AutoRepairShopSystemRestController {
 			@PathVariable("last") String lastName) throws IllegalArgumentException {
 		return convertToDto(service.getProfileByFirstAndLast(firstName, lastName));
 	}
-	
+
 	/////////////////////////////////////// CUSTOMER///////////////////////////
 
 	@GetMapping(value = { "/customers", "/customers/" })
@@ -738,17 +738,14 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@GetMapping(value = { "/register/customer/{Id}", "/register/customer/{Id}/" })
-	public CustomerDto getCustomerById(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
+	public CustomerDto getCustomerById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getCustomerById(Id));
 	}
 
 	@PostMapping(value = { "/customer/{userId}", "/customer/{userId}/" })
-	public CustomerDto createCustomer(@PathVariable("userId") String userId,
-			@RequestParam String password,
-			@RequestParam List<Reminder> reminders,
-			@RequestParam Car car,
-			@RequestParam Profile profile) throws IllegalArgumentException {
+	public CustomerDto createCustomer(@PathVariable("userId") String userId, @RequestParam String password,
+			@RequestParam List<Reminder> reminders, @RequestParam Car car, @RequestParam Profile profile)
+			throws IllegalArgumentException {
 		Customer customer = service.createCustomer(userId, password, reminders, car, profile);
 		CustomerDto customerDto = convertToDto(customer);
 		return customerDto;
@@ -766,15 +763,12 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@GetMapping(value = { "/register/car/{Id}", "/register/car/{Id}/" })
-	public CarDto getCarByCarId(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
+	public CarDto getCarByCarId(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getCarByCarId(Id));
 	}
 
 	@PostMapping(value = { "/car/{carId}", "/car/{carId}/" })
-	public CarDto createCar(@PathVariable("carId") Long carId,
-			@RequestParam String model,
-			@RequestParam String year,
+	public CarDto createCar(@PathVariable("carId") Long carId, @RequestParam String model, @RequestParam String year,
 			@RequestParam String color) throws IllegalArgumentException {
 		Car car1 = service.createCar(carId, model, year, color);
 		CarDto carDto = convertToDto(car1);
@@ -793,8 +787,7 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@GetMapping(value = { "/register/timeSlot/{Id}", "/register/timeSlot/{Id}/" })
-	public TimeSlotDto getTimeSlotByTimeSlotId(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
+	public TimeSlotDto getTimeSlotByTimeSlotId(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getTimeSlotByTimeSlotId(Id));
 	}
 
@@ -809,16 +802,15 @@ public class AutoRepairShopSystemRestController {
 		TimeSlotDto timeSlotDtos = convertToDto(timeSlot);
 		return timeSlotDtos;
 	}
-	
-	@PostMapping(value = {"/appointments/{appointmentId}/cancel","/appointments/{appointmentId}/cancel/"})
-	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException{
+
+	@PostMapping(value = { "/appointments/{appointmentId}/cancel", "/appointments/{appointmentId}/cancel/" })
+	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
 		Date today = new Date(0);
 		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
-		Appointment appointment =service.getAppointment(appointmentId);
-		if((appointment.getTimeSlot().getStartDate().getTime()-today.getTime())>MILLIS_PER_DAY) {
+		Appointment appointment = service.getAppointment(appointmentId);
+		if ((appointment.getTimeSlot().getStartDate().getTime() - today.getTime()) > MILLIS_PER_DAY) {
 			service.deleteAppointment(appointment);
 		}
-        
 
 	}
 
