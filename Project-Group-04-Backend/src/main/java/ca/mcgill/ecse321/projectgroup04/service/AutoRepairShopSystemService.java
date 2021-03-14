@@ -630,5 +630,12 @@ public class AutoRepairShopSystemService {
 		}
 		return false;
 	}
+	
+	public void deleteAppointment(Appointment appointment) {
+		appointmentReminderRepository.delete(appointment.getReminder());
+		receiptRepository.delete(appointment.getReceipt());
+		timeSlotRepository.delete(appointment.getTimeSlot());
+		appointmentRepository.delete(appointment);
+	}
 
 }
