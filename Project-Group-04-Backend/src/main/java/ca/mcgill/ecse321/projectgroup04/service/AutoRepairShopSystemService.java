@@ -122,9 +122,8 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Appointment createAppointment(Customer aCustomer, BookableService aBookableService,
 			GarageTechnician aGarageTechnician, TimeSlot aTimeSlot, AppointmentReminder aAppointmentReminder,
-			Receipt aReceipt, AutoRepairShop aAutoRepairShop) {
+			Receipt aReceipt) {
 		Appointment appointment = new Appointment();
-		appointment.setAutoRepairShop(aAutoRepairShop);
 		appointment.setBookableServices(aBookableService);
 		appointment.setCustomer(aCustomer);
 		appointment.setReceipt(aReceipt);
@@ -223,7 +222,7 @@ public class AutoRepairShopSystemService {
 	public Car getCarByCarId(Long carId) {
 		return carRepository.findByCarId(carId);
 	}
-	
+
 	@Transactional
 	public List<Car> getAllCars() {
 		return (List<Car>) carRepository.findAll();
@@ -245,14 +244,15 @@ public class AutoRepairShopSystemService {
 	public Customer getCustomerById(Long id) {
 		return customerRepository.findCustomerById(id);
 	}
-	
+
 	@Transactional
 	public List<Customer> getAllCustomers() {
 		return (List<Customer>) customerRepository.findAll();
 	}
-	
+
 	@Transactional
-	public TimeSlot createTimeSlot(Long timeSlotId, Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
+	public TimeSlot createTimeSlot(Long timeSlotId, Time startTime, Time endTime, Date startDate, Date endDate,
+			Integer garageSpot) {
 		TimeSlot timeSlot = new TimeSlot();
 		timeSlot.setTimeSlotId(timeSlotId);
 		timeSlot.setStartDate(startDate);
@@ -268,12 +268,11 @@ public class AutoRepairShopSystemService {
 	public TimeSlot getTimeSlotByTimeSlotId(Long timeSlotId) {
 		return timeSlotRepository.findTimeSlotByTimeSlotId(timeSlotId);
 	}
-	
+
 	@Transactional
 	public List<TimeSlot> getAllTimeSlots() {
 		return (List<TimeSlot>) timeSlotRepository.findAll();
 	}
-
 
 	// public List<TimeSlot> getTimeSlotByGarageSpot(Integer garageSpot) {
 	// return timeSlotRepository.findTimeSlotByGarageSpot(garageSpot);
@@ -630,7 +629,7 @@ public class AutoRepairShopSystemService {
 		}
 		return false;
 	}
-	
+
 	public void deleteAppointment(Appointment appointment) {
 		appointmentReminderRepository.delete(appointment.getReminder());
 		receiptRepository.delete(appointment.getReceipt());
