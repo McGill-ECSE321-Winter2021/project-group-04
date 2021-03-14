@@ -459,10 +459,36 @@ public class AutoRepairShopSystemService {
 
 	////////////////////////////////////////////////////////////////////
 
+	private DayOfWeek convertStringToDayOfWeek(String day) {
+		if (day == null) {
+			throw new IllegalArgumentException("There is no such day of the week!");
+		}
+
+		DayOfWeek dayOfWeek = null;
+
+		if (day.equals("Monday")) {
+			dayOfWeek = DayOfWeek.Monday;
+		} else if (day.equals("Tuesday")) {
+			dayOfWeek = DayOfWeek.Tuesday;
+		} else if (day.equals("Wednseday")) {
+			dayOfWeek = DayOfWeek.Wednesday;
+		} else if (day.equals("Thursday")) {
+			dayOfWeek = DayOfWeek.Thursday;
+		} else if (day.equals("Friday")) {
+			dayOfWeek = DayOfWeek.Friday;
+		} else if (day.equals("Saturday")) {
+			dayOfWeek = DayOfWeek.Saturday;
+		} else if (day.equals("Sunday")) {
+			dayOfWeek = DayOfWeek.Saturday;
+		}
+
+		return dayOfWeek;
+	}
+
 	@Transactional
-	public BusinessHour createBusinessHours(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime) {
+	public BusinessHour createBusinessHour(String aDayOfWeek, Time aStartTime, Time aEndTime) {
 		BusinessHour businessHour = new BusinessHour();
-		businessHour.setDayOfWeek(aDayOfWeek);
+		businessHour.setDayOfWeek(convertStringToDayOfWeek(aDayOfWeek));
 		businessHour.setEndTime(aEndTime);
 		businessHour.setStartTime(aStartTime);
 		businessHourRepository.save(businessHour);

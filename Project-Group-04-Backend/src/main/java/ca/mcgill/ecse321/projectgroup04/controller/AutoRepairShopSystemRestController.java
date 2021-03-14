@@ -401,10 +401,10 @@ public class AutoRepairShopSystemRestController {
 	public OwnerDto getOwnerById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getOwnerByUserId(Id));
 	}
-	
+
 	@PostMapping(value = { "register/owner/{userId}", "register/owner/{userId}/" })
-	public OwnerDto createOwner(@PathVariable("userId") String userId,
-			@RequestParam String password) throws IllegalArgumentException {
+	public OwnerDto createOwner(@PathVariable("userId") String userId, @RequestParam String password)
+			throws IllegalArgumentException {
 		Owner owner = service.createOwner(userId, password);
 		OwnerDto ownerDto = convertToDto(owner);
 		return ownerDto;
@@ -428,17 +428,17 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(service.getEmergencyServiceByServiceId(Id));
 	}
 
-	@PostMapping(value= {"/emergencyservice/{userId}/{serviceName}", "/emergencyservice/{userId}/{serviceName}/"})
-	public EmergencyServiceDto createEmergencyService(
-	@PathVariable("userId") String userId,
-	@PathVariable("serviceName") String serviceName,
-	@RequestParam (name = "Price of service") int price,
-	@RequestParam (name = "Location") String location,
-	@RequestParam (name = "Field Technician") FieldTechnicianDto fieldTechnicianDto) throws IllegalArgumentException {
+	@PostMapping(value = { "/emergencyservice/{userId}/{serviceName}", "/emergencyservice/{userId}/{serviceName}/" })
+	public EmergencyServiceDto createEmergencyService(@PathVariable("userId") String userId,
+			@PathVariable("serviceName") String serviceName, @RequestParam(name = "Price of service") int price,
+			@RequestParam(name = "Location") String location,
+			@RequestParam(name = "Field Technician") FieldTechnicianDto fieldTechnicianDto)
+			throws IllegalArgumentException {
 		Customer customer = service.getCustomerByUserId(userId);
 		Receipt receipt = service.createReceipt(price);
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId());
-		EmergencyService emergencyService = service.createEmergencyService(serviceName, price, location, fieldTechnician, customer, receipt);
+		EmergencyService emergencyService = service.createEmergencyService(serviceName, price, location,
+				fieldTechnician, customer, receipt);
 		return convertToDto(emergencyService);
 	}
 
@@ -460,13 +460,13 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(service.getFieldTechnicianById(Id));
 	}
 
-	@PostMapping(value= {"/register/fieldtechnician/{name}","/register/fieldtechnician/{name}/"})
+	@PostMapping(value = { "/register/fieldtechnician/{name}", "/register/fieldtechnician/{name}/" })
 	public FieldTechnicianDto createFieldTechnician(@PathVariable("name") String name) throws IllegalArgumentException {
 		FieldTechnician fieldTechnician = service.createFieldTechnician(name);
-	    FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
-	    return fieldTechnicianDto;
+		FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
+		return fieldTechnicianDto;
 	}
-	
+
 	private FieldTechnician convertToDomainObject(FieldTechnicianDto fieldTechnicianDto) {
 		List<FieldTechnician> fieldTechnicians = service.getAllFieldTechnicians();
 		for (FieldTechnician fieldTechnician : fieldTechnicians) {
@@ -528,7 +528,8 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/create/checkupReminder/{message}", "/create/checkupReminder/{message}/" })
 	public CheckupReminderDto createCheckupReminder(@PathVariable("message") String message,
-			@RequestParam(name = "date") Date date, @RequestParam(name = "time") Time time)
+			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "DD/MM/YY") Date date,
+			@RequestParam(name = "time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time time)
 			throws IllegalArgumentException {
 		CheckupReminder checkupReminder = service.createCheckupReminder(date, time, message);
 		CheckupReminderDto checkupReminderDto = convertToDto(checkupReminder);
@@ -553,17 +554,15 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	// TODO check the DayOfWeek problem
-	// @PostMapping(value = { "/add/businessHour/{dayOfWeek}",
-	// "/add/businessHour/{dayOfWeek}/" }) // VERIFY PATH
-	// public BusinessHourDto addBusinessHours(@PathVariable("dayOfWeek") DayOfWeek
-	// dayOfWeek,
-	// @RequestParam Time startTime, @RequestParam Time endTime) throws
-	// IllegalArgumentException {
-	// BusinessHour businessHour = service.createBusinessHour(dayOfWeek, startTime,
-	// endTime);
-	// BusinessHourDto businessHourDto = convertToDto(businessHour);
-	// return businessHourDto;
-	// }
+	@PostMapping(value = { "/add/businessHour/{dayOfWeek}", "/add/businessHour/{dayOfWeek}/" }) // VERIFY PATH
+	public BusinessHourDto createBusinessHour(@PathVariable("dayOfWeek") String dayOfWeek,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime)
+			throws IllegalArgumentException {
+		BusinessHour businessHour = service.createBusinessHour(dayOfWeek, startTime, endTime);
+		BusinessHourDto businessHourDto = convertToDto(businessHour);
+		return businessHourDto;
+	}
 
 	/////////////////////////////////////// ADMINISTRATIVE
 	/////////////////////////////////////// ASSISTANT///////////////////////////
