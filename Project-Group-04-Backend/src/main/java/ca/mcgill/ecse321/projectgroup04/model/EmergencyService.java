@@ -4,6 +4,7 @@
 package ca.mcgill.ecse321.projectgroup04.model;
 
 import javax.persistence.Entity;
+
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 

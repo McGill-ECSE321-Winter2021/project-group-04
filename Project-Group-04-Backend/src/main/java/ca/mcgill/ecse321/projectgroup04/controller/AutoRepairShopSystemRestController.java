@@ -401,11 +401,11 @@ public class AutoRepairShopSystemRestController {
 	public OwnerDto getOwnerById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getOwnerByUserId(Id));
 	}
-
-	@PostMapping(value = { "/register/owner/{name}", "/register/owner/{name}/" }) // VERIFY PATH
-	public OwnerDto registerOwner(@PathVariable("name") String name, @RequestParam String password)
-			throws IllegalArgumentException {
-		Owner owner = service.createOwner(name, password);
+	
+	@PostMapping(value = { "register/owner/{userId}", "register/owner/{userId}/" })
+	public OwnerDto createOwner(@PathVariable("userId") String userId,
+			@RequestParam String password) throws IllegalArgumentException {
+		Owner owner = service.createOwner(userId, password);
 		OwnerDto ownerDto = convertToDto(owner);
 		return ownerDto;
 	}
@@ -428,21 +428,19 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(service.getEmergencyServiceByServiceId(Id));
 	}
 
-	// @PostMapping(value= {"/book/emergencyservice", "/book/emergencyservice/"})
-	// //VERIFY PATH
-	// public EmergencyServiceDto createEmergencyService(@RequestParam String
-	// serviceName,
-	// @RequestParam int price, @RequestParam String location,
-	// @RequestParam (name = "fieldTechnicianName") FieldTechnicianDto
-	// fieldTechnicianDto,
-	// @RequestParam (name = "customerName") CustomerDto customerDto,
-	// @RequestParam (name = "receiptId") ReceiptDto receiptDto) throws
-	// IllegalArgumentException {
-	// FieldTechnician fieldTechnician =
-	// service.getFieldTechnicianByName(fieldTechnicianDto.getName());
-	// Customer customer = service.getCustomerById()
-	//
-	// }
+	@PostMapping(value= {"/emergencyservice/{userId}/{serviceName}", "/emergencyservice/{userId}/{serviceName}/"})
+	public EmergencyServiceDto createEmergencyService(
+	@PathVariable("userId") String userId,
+	@PathVariable("serviceName") String serviceName,
+	@RequestParam (name = "Price of service") int price,
+	@RequestParam (name = "Location") String location,
+	@RequestParam (name = "Field Technician") FieldTechnicianDto fieldTechnicianDto) throws IllegalArgumentException {
+		Customer customer = service.getCustomerByUserId(userId);
+		Receipt receipt = service.createReceipt(price);
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId());
+		EmergencyService emergencyService = service.createEmergencyService(serviceName, price, location, fieldTechnician, customer, receipt);
+		return convertToDto(emergencyService);
+	}
 
 	//////////////////////////////// FIELD TECHNICIAN
 	//////////////////////////////// ///////////////////////////////////
@@ -462,15 +460,22 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(service.getFieldTechnicianById(Id));
 	}
 
-	// @PostMapping(value=
-	// {"/register/fieldtechnician","/register/fieldtechnician/"})
-	// public FieldTechnicianDto createFieldTechnician(@PathVariable("name") String
-	// name) throws IllegalArgumentException {
-	// FieldTechnician fieldTechnician = service.createFieldTechnician(null, name);
-	// //add AutoRepairShop in null
-	// FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
-	// return fieldTechnicianDto;
-	// }
+	@PostMapping(value= {"/register/fieldtechnician/{name}","/register/fieldtechnician/{name}/"})
+	public FieldTechnicianDto createFieldTechnician(@PathVariable("name") String name) throws IllegalArgumentException {
+		FieldTechnician fieldTechnician = service.createFieldTechnician(name);
+	    FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
+	    return fieldTechnicianDto;
+	}
+	
+	private FieldTechnician convertToDomainObject(FieldTechnicianDto fieldTechnicianDto) {
+		List<FieldTechnician> fieldTechnicians = service.getAllFieldTechnicians();
+		for (FieldTechnician fieldTechnician : fieldTechnicians) {
+			if (fieldTechnician.getTechnicianId().equals(fieldTechnicianDto.getTechnicianId())) {
+				return fieldTechnician;
+			}
+		}
+		return null;
+	}
 
 	/////////////////////////////////////////////////////////////////////////////
 
