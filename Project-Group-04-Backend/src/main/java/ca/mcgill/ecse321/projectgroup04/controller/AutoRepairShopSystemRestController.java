@@ -809,5 +809,17 @@ public class AutoRepairShopSystemRestController {
 		TimeSlotDto timeSlotDtos = convertToDto(timeSlot);
 		return timeSlotDtos;
 	}
+	
+	@PostMapping(value = {"/appointments/{appointmentId}/cancel","/appointments/{appointmentId}/cancel/"})
+	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException{
+		Date today = new Date(0);
+		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
+		Appointment appointment =service.getAppointment(appointmentId);
+		if((appointment.getTimeSlot().getStartDate().getTime()-today.getTime())>MILLIS_PER_DAY) {
+			service.deleteAppointment(appointment);
+		}
+        
+
+	}
 
 }
