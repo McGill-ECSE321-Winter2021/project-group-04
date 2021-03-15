@@ -4,7 +4,7 @@ package ca.mcgill.ecse321.projectgroup04.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name ="appointment")
+@Table(name = "appointment")
 public class Appointment {
 
   private Long appointmentId;
@@ -16,7 +16,6 @@ public class Appointment {
   private TimeSlot timeSlot;
   private AppointmentReminder reminder;
   private Receipt receipt;
-  private AutoRepairShop autoRepairShop;
 
   public void setAppointmentId(Long aAppointmentId) {
     this.appointmentId = aAppointmentId;
@@ -52,7 +51,7 @@ public class Appointment {
     return this.timeSlot;
   }
 
-  @OneToOne//(mappedBy = "appointment", cascade = {CascadeType.ALL})
+  @OneToOne // (mappedBy = "appointment", cascade = {CascadeType.ALL})
   public AppointmentReminder getReminder() {
     return this.reminder;
   }
@@ -64,11 +63,6 @@ public class Appointment {
   @OneToOne
   public Receipt getReceipt() {
     return this.receipt;
-  }
-
-  @ManyToOne
-  public AutoRepairShop getAutoRepairShop() {
-    return this.autoRepairShop;
   }
 
   public void setCustomer(Customer aCustomer) {
@@ -85,10 +79,6 @@ public class Appointment {
 
   public void setTimeSlot(TimeSlot aNewTimeSlot) {
     this.timeSlot = aNewTimeSlot;
-  }
-
-  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
-    this.autoRepairShop = aAutoRepairShop;
   }
 
   public String toString() {
@@ -109,7 +99,6 @@ public class Appointment {
         + (getReminder() != null ? Integer.toHexString(System.identityHashCode(getReminder())) : "null")
         + System.getProperties().getProperty("line.separator") + "  " + "receipt = "
         + (getReceipt() != null ? Integer.toHexString(System.identityHashCode(getReceipt())) : "null")
-        + System.getProperties().getProperty("line.separator") + "  " + "autoRepairShop = "
-        + (getAutoRepairShop() != null ? Integer.toHexString(System.identityHashCode(getAutoRepairShop())) : "null");
+        + System.getProperties().getProperty("line.separator");
   }
 }

@@ -49,7 +49,8 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such AdministrativeAssistant!");
 		}
 		AdministrativeAssistantDto administrativeAssistantDto = new AdministrativeAssistantDto(
-				administrativeAssistant.getId(),administrativeAssistant.getUserId(), administrativeAssistant.getPassword());
+				administrativeAssistant.getId(), administrativeAssistant.getUserId(),
+				administrativeAssistant.getPassword());
 		return administrativeAssistantDto;
 	}
 
@@ -65,8 +66,8 @@ public class AutoRepairShopSystemRestController {
 		if (appointmentReminder == null) {
 			throw new IllegalArgumentException("There is no such AppointmentReminder!");
 		}
-		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getReminderId(),appointmentReminder.getDate(),
-				appointmentReminder.getTime(), appointmentReminder.getMessage());
+		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getReminderId(),
+				appointmentReminder.getDate(), appointmentReminder.getTime(), appointmentReminder.getMessage());
 		return appointmentReminderDto;
 
 	}
@@ -604,7 +605,11 @@ public class AutoRepairShopSystemRestController {
 	@GetMapping(value = { "/appointmentReminder/{Id}", "/appointmentReminder/{Id}/" })
 	public AppointmentReminderDto getAppointmentRemindertById(@PathVariable("Id") Long Id)
 			throws IllegalArgumentException {
-		return convertToDto(service.getAppointmentReminderById(Id));
+		AppointmentReminder appointmentReminder =service.getAppointmentReminderById(Id);
+		if(appointmentReminder==null) {
+			throw new IllegalArgumentException("No appointment reminder with such id!");
+		}
+		return convertToDto(appointmentReminder);
 	}
 
 //	@PostMapping(value = { "/appointmentReminder/{message}", "/appointmentReminder/{message}/" })
@@ -630,8 +635,11 @@ public class AutoRepairShopSystemRestController {
 
 	@GetMapping(value = { "/bookableService/{Id}", "/bookableService/{Id}/" })
 	public BookableServiceDto getBookableServiceById(@PathVariable("Id") Long Id) {
-		return convertToDto(service.getBookableServiceById(Id));
-	}
+		BookableService bookableService =service.getBookableServiceById(Id);
+		if(bookableService==null) {
+			throw new IllegalArgumentException("No service with such id!");
+		}
+		return convertToDto(bookableService);	}
 
 	@PostMapping(value = { "/create/bookableService/{name}", "/create/bookableService/{name}/" })
 	public BookableServiceDto createBookableService(@PathVariable("name") String name, @RequestParam int duration,
@@ -640,6 +648,17 @@ public class AutoRepairShopSystemRestController {
 		BookableServiceDto bookableServiceDto = convertToDto(bookableService);
 		return bookableServiceDto;
 	}
+	
+	@GetMapping(value = { "/bookableService/{serviceName}", "/bookableService/{serviceName}/" })
+	public BookableServiceDto getBookableServiceByServiceName(@PathVariable("serviceName") String serviceName) {
+		BookableService bookableService =service.getBookableServiceByServiceName(serviceName);
+		if(bookableService==null) {
+			throw new IllegalArgumentException("No service with such name!");
+		}
+		return convertToDto(bookableService);
+	}
+	
+	
 
 	/////////////////////////////////////// GARAGE
 	/////////////////////////////////////// TECHNICIAN////////////////////////////
@@ -655,7 +674,11 @@ public class AutoRepairShopSystemRestController {
 
 	@GetMapping(value = { "/garageTechnician/{Id}", "/garageTechnician/{Id}/" })
 	public GarageTechnicianDto getGarageTechnicianById(@PathVariable("Id") Long Id) {
-		return convertToDto(service.getGarageTechnicianById(Id));
+		GarageTechnician garageTechnician = service.getGarageTechnicianById(Id);
+		if(garageTechnician==null) {
+			throw new IllegalArgumentException("No garage technician with such id!");
+		}
+		return convertToDto(garageTechnician);
 	}
 
 	@PostMapping(value = { "/garageTechnician/{name}", "/garageTechnician/{name}/" })
@@ -671,9 +694,11 @@ public class AutoRepairShopSystemRestController {
 			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
 			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto,
-			@RequestParam Long timeSlotId)
-			throws IllegalArgumentException {
+			@RequestParam Long timeSlotId) throws IllegalArgumentException {
 		Customer customer = service.getCustomerByUserId(userId);
+		if(customer==null) {
+			throw new IllegalArgumentException("No customer with such userId!");
+		}
 		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
 
 		java.sql.Time myTimeEnd = startTime;
@@ -696,7 +721,7 @@ public class AutoRepairShopSystemRestController {
 		AppointmentReminder appReminder = service.createAppointmentReminder(date, startTime,
 				"You have an appointment in 24hours");
 		Appointment appointment = service.createAppointment(customer, bookableService, garageTechnician, timeSlot,
-				appReminder, receipt, null);
+				appReminder, receipt);
 		return convertToDto(appointment);
 	}
 
@@ -723,9 +748,13 @@ public class AutoRepairShopSystemRestController {
 	@GetMapping(value = { "profiles/{first}/{last}", "profiles/{first}/{last}/" })
 	public ProfileDto getProfileByFirstAndLast(@PathVariable("first") String firstName,
 			@PathVariable("last") String lastName) throws IllegalArgumentException {
-		return convertToDto(service.getProfileByFirstAndLast(firstName, lastName));
+		Profile profile=service.getProfileByFirstAndLast(firstName, lastName);
+		if(profile==null) {
+			throw new IllegalArgumentException("No profile with such first and last name!");
+		}
+		return convertToDto(profile);
 	}
-	
+
 	/////////////////////////////////////// CUSTOMER///////////////////////////
 
 	@GetMapping(value = { "/customers", "/customers/" })
@@ -738,17 +767,18 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@GetMapping(value = { "/register/customer/{Id}", "/register/customer/{Id}/" })
-	public CustomerDto getCustomerById(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
-		return convertToDto(service.getCustomerById(Id));
+	public CustomerDto getCustomerById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		Customer customer = service.getCustomerById(Id);
+		if(customer==null) {
+			throw new IllegalArgumentException("No customer with such id!");
+		}
+		return convertToDto(customer);
 	}
 
 	@PostMapping(value = { "/customer/{userId}", "/customer/{userId}/" })
-	public CustomerDto createCustomer(@PathVariable("userId") String userId,
-			@RequestParam String password,
-			@RequestParam List<Reminder> reminders,
-			@RequestParam Car car,
-			@RequestParam Profile profile) throws IllegalArgumentException {
+	public CustomerDto createCustomer(@PathVariable("userId") String userId, @RequestParam String password,
+			@RequestParam List<Reminder> reminders, @RequestParam Car car, @RequestParam Profile profile)
+			throws IllegalArgumentException {
 		Customer customer = service.createCustomer(userId, password, reminders, car, profile);
 		CustomerDto customerDto = convertToDto(customer);
 		return customerDto;
@@ -765,16 +795,17 @@ public class AutoRepairShopSystemRestController {
 		return carDtos;
 	}
 
-	@GetMapping(value = { "/register/car/{Id}", "/register/car/{Id}/" })
-	public CarDto getCarByCarId(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
-		return convertToDto(service.getCarByCarId(Id));
+	@GetMapping(value = { "/cars/{Id}", "/cars/{Id}/" })
+	public CarDto getCarByCarId(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		Car car =service.getCarByCarId(Id);
+		if(car==null) {
+			throw new IllegalArgumentException("No car with such id!");
+		}
+		return convertToDto(car);
 	}
 
 	@PostMapping(value = { "/car/{carId}", "/car/{carId}/" })
-	public CarDto createCar(@PathVariable("carId") Long carId,
-			@RequestParam String model,
-			@RequestParam String year,
+	public CarDto createCar(@PathVariable("carId") Long carId, @RequestParam String model, @RequestParam String year,
 			@RequestParam String color) throws IllegalArgumentException {
 		Car car1 = service.createCar(carId, model, year, color);
 		CarDto carDto = convertToDto(car1);
@@ -792,10 +823,13 @@ public class AutoRepairShopSystemRestController {
 		return timeSlotDtos;
 	}
 
-	@GetMapping(value = { "/register/timeSlot/{Id}", "/register/timeSlot/{Id}/" })
-	public TimeSlotDto getTimeSlotByTimeSlotId(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
-		return convertToDto(service.getTimeSlotByTimeSlotId(Id));
+	@GetMapping(value = { "/timeSlot/{Id}", "/timeSlot/{Id}/" })
+	public TimeSlotDto getTimeSlotByTimeSlotId(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		TimeSlot timeSlot=service.getTimeSlotByTimeSlotId(Id);
+		if(timeSlot==null) {
+			throw new IllegalArgumentException("No time slot with such id!");
+		}
+		return convertToDto(timeSlot);
 	}
 
 	@PostMapping(value = { "/timeSlot/{timeSlotId}", "/timeSlot/{timeSlotId}/" })
@@ -809,16 +843,15 @@ public class AutoRepairShopSystemRestController {
 		TimeSlotDto timeSlotDtos = convertToDto(timeSlot);
 		return timeSlotDtos;
 	}
-	
-	@PostMapping(value = {"/appointments/{appointmentId}/cancel","/appointments/{appointmentId}/cancel/"})
-	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException{
+
+	@PostMapping(value = { "/appointments/{appointmentId}/cancel", "/appointments/{appointmentId}/cancel/" })
+	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
 		Date today = new Date(0);
 		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
-		Appointment appointment =service.getAppointment(appointmentId);
-		if((appointment.getTimeSlot().getStartDate().getTime()-today.getTime())>MILLIS_PER_DAY) {
+		Appointment appointment = service.getAppointment(appointmentId);
+		if ((appointment.getTimeSlot().getStartDate().getTime() - today.getTime()) > MILLIS_PER_DAY) {
 			service.deleteAppointment(appointment);
 		}
-        
 
 	}
 
