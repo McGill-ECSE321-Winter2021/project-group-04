@@ -214,6 +214,12 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public AdministrativeAssistant createAdministrativeAssistant(String userId, String password) {
+		if(userId == null) {
+			throw new IllegalArgumentException("Username can't be null");
+		}
+		if(password == null) {
+			throw new IllegalArgumentException("Password can't be null");
+		}
 		AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
@@ -327,6 +333,15 @@ public class AutoRepairShopSystemService {
 	// }
 
 	public AppointmentReminder createAppointmentReminder(Date date, Time time, String message) {
+		if(message == null) {
+			throw new IllegalArgumentException("Message can't be null");
+		}
+		if(date.equals(null)) { //TODO: not sure of this
+			throw new IllegalArgumentException("Date can't be null");
+		}
+		if(time.equals(null)) { //TODO: not sure of this
+			throw new IllegalArgumentException("Time can't be null");
+		}
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
 
 		appointmentReminder.setDate(date);
@@ -365,6 +380,21 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService createBookableService(String name, int price, int duration) {
+		if(name == null) {
+			throw new IllegalArgumentException("Name can't be null");
+		}
+		if(price == 0 ) {
+			throw new IllegalArgumentException("Price can't be 0");
+		}
+		if(price < 0) {
+			throw new IllegalArgumentException("Price can't be negative");
+		}
+		if(duration< 0 ) {
+			throw new IllegalArgumentException("Duration can't be negative");
+		}
+		if(duration == 0) {
+			throw new IllegalArgumentException("Duration can't be equal to 0");
+		}
 		BookableService bookableService = new BookableService();
 		bookableService.setDuration(duration);
 		bookableService.setName(name);
@@ -429,6 +459,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public GarageTechnician createGarageTechnician(String name) {
+		if(name == null) {
+			throw new IllegalArgumentException("Name can't be null");
+		}
 		GarageTechnician garageTechnician = new GarageTechnician();
 		garageTechnician.setName(name);
 		garageTechnicianRepository.save(garageTechnician);
