@@ -438,10 +438,15 @@ public class AutoRepairShopSystemService {
 		return business;
 	}
 
-	// @Transactional
-	// public Business getBusinessByName(String name) {
-	// return businessRepository.findBusinessByName(name);
-	// }
+	// ?? do we have to save again if we are changing the fields?
+	public void updateBusinessInformation(String aName, String aAddress, String aPhoneNumber, String aEmailAddress) {
+		Business business = getBusinessByName(aName);
+		business.setAddress(aAddress);
+		business.setPhoneNumber(aPhoneNumber);
+		business.setEmailAddress(aEmailAddress);
+		business.setName(aName);
+		businessRepository.save(business); // ????
+	}
 
 	@Transactional
 	public Business getBusinessById(Long businessId) {
@@ -451,6 +456,11 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public List<Business> getBusiness() {
 		return (List<Business>) businessRepository.findAll();
+	}
+
+	@Transactional
+	public Business getBusinessByName(String name) {
+		return businessRepository.findBusinessByName(name);
 	}
 
 	// @Transactional
