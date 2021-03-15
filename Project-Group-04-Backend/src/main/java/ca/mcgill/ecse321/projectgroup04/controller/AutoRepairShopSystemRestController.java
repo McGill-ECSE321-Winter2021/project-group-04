@@ -582,7 +582,7 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(service.getAdministrativeAssistantById(Id));
 	}
 
-	@PostMapping(value = { "/administrativeAssistant/{userId}", "/administrativeAssistant/{userId}/" })
+	@PostMapping(value = { "/register/administrativeAssistant/{userId}", "/register/administrativeAssistant/{userId}/" })
 	public AdministrativeAssistantDto createAdministrativeAssistant(@PathVariable("userId") String userId,
 			@RequestParam String password) throws IllegalArgumentException {
 		AdministrativeAssistant administrativeAssistant = service.createAdministrativeAssistant(userId, password);
@@ -607,13 +607,13 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(service.getAppointmentReminderById(Id));
 	}
 
-	@PostMapping(value = { "/appointmentReminder/{message}", "/appointmentReminder/{message}/" })
-	public AppointmentReminderDto createAppointmentReminder(@PathVariable("message") String message,
-			@RequestParam Date date, @RequestParam Time time) throws IllegalArgumentException {
-		AppointmentReminder appointmentReminder = service.createAppointmentReminder(date, time, message);
-		AppointmentReminderDto appointmentReminderDto = convertToDto(appointmentReminder);
-		return appointmentReminderDto;
-	}
+//	@PostMapping(value = { "/appointmentReminder/{message}", "/appointmentReminder/{message}/" })
+//	public AppointmentReminderDto createAppointmentReminder(@PathVariable("message") String message,
+//			@RequestParam Date date, @RequestParam Time time) throws IllegalArgumentException {
+//		AppointmentReminder appointmentReminder = service.createAppointmentReminder(date, time, message);
+//		AppointmentReminderDto appointmentReminderDto = convertToDto(appointmentReminder);
+//		return appointmentReminderDto;
+//	}
 
 	/////////////////////////////////////// BOOKABLE
 	/////////////////////////////////////// SERVICE//////////////////////////////
@@ -633,7 +633,7 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(service.getBookableServiceById(Id));
 	}
 
-	@PostMapping(value = { "/bookableService/{name}", "/bookableService/{name}/" })
+	@PostMapping(value = { "/create/bookableService/{name}", "/create/bookableService/{name}/" })
 	public BookableServiceDto createBookableService(@PathVariable("name") String name, @RequestParam int duration,
 			@RequestParam int price) {
 		BookableService bookableService = service.createBookableService(name, price, duration);
