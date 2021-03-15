@@ -67,6 +67,33 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
 			String aZipCode, String aEmailAddress) {
+		if(aAddressLine==null || aAddressLine =="") {
+			throw new IllegalArgumentException("Address Line can't be null or empty");
+		}
+		if(aPhoneNumber==null || aPhoneNumber =="") {
+			throw new IllegalArgumentException("Address Line can't be null or empty");
+		}
+		if(aPhoneNumber.length()<7 || aPhoneNumber.length()>7 ) {
+			throw new IllegalArgumentException("Phone Number must be 7 characters long");
+		}
+		if(aFirstName==null || aFirstName =="") {
+			throw new IllegalArgumentException("First Name can't be null or empty");
+		}
+		if(aLastName==null || aLastName =="") {
+			throw new IllegalArgumentException("Last Name can't be null or empty");
+		}
+		if(aZipCode==null || aZipCode =="") {
+			throw new IllegalArgumentException("Zip Code can't be null or empty");
+		}
+		if(aZipCode.length()<6 || aZipCode.length()>6) {
+			throw new IllegalArgumentException("Zip Code must be 6 characters long");
+		}
+		if(aEmailAddress==null || aEmailAddress =="") {
+			throw new IllegalArgumentException("Email Address can't be null or empty");
+		}
+		if(!aEmailAddress.contains("@")) {
+			throw new IllegalArgumentException("Email Address must contain @ character");
+		}
 		Profile profile = new Profile();
 		profile.setAddressLine(aAddressLine);
 		profile.setEmailAddress(aEmailAddress);
@@ -91,6 +118,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Receipt createReceipt(double aTotalPrice) {
+		if(aTotalPrice==0) {
+			throw new IllegalArgumentException("Total Price can't be 0");
+		}
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(aTotalPrice);
 		return receipt;
@@ -124,6 +154,24 @@ public class AutoRepairShopSystemService {
 			GarageTechnician aGarageTechnician, TimeSlot aTimeSlot, AppointmentReminder aAppointmentReminder,
 			Receipt aReceipt) {
 		Appointment appointment = new Appointment();
+		if(aCustomer==null) {
+			throw new IllegalArgumentException("Customer can't be null");
+		}
+		if(aBookableService==null) {
+			throw new IllegalArgumentException("Bookable Service can't be null");
+		}
+		if(aGarageTechnician==null) {
+			throw new IllegalArgumentException("Garage Technician can't be null");
+		}
+		if(aTimeSlot==null) {
+			throw new IllegalArgumentException("Time Slot can't be null");
+		}
+		if(aAppointmentReminder==null) {
+			throw new IllegalArgumentException("Appointment Reminder can't be null");
+		}
+		if(aReceipt==null) {
+			throw new IllegalArgumentException("Receipt can't be null");
+		}
 		appointment.setBookableServices(aBookableService);
 		appointment.setCustomer(aCustomer);
 		appointment.setReceipt(aReceipt);
