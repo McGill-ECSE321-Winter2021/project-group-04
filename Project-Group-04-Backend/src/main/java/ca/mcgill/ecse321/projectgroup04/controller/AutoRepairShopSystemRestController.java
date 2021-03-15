@@ -854,5 +854,55 @@ public class AutoRepairShopSystemRestController {
 		}
 
 	}
+	
+	@PostMapping(value = {"/appointmentReminders/{reminderId}/delete", "/appointmentReminders/{reminderId}/delete/"})
+	public void deleteAppointmentReminder(@PathVariable("reminderId") Long reminderId) throws IllegalArgumentException {
+	
+	
+		AppointmentReminder appointmentReminder = service.getAppointmentReminderById(reminderId);
+		service.deleteAppointmentReminder(appointmentReminder);
+	}
+	
+	@PostMapping(value = {"appointmentReminders/{reminderId}/edit", "appointmentReminders/{reminderId}/edit/"})
+	public void editAppointmentReminder(@PathVariable("reminderId") Long reminderId,
+			@RequestParam String message) throws IllegalArgumentException{
+		AppointmentReminder appointmentReminder = service.getAppointmentReminderById(reminderId);
+		service.editAppointmentReminder(appointmentReminder, message);
+		
+	}
+	
+	@PostMapping(value = {"/bookableServices/{serviceId}/delete", "/bookableServices/{serviceId}/delete/"})
+	public void deleteBookableService(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
+		BookableService bookableService = service.getBookableServiceById(serviceId);
+		service.deleteBookableService(bookableService);
+	}
+	
+	@PostMapping(value = {"/bookableServices/{serviceId}/edit", "/bookableServices/{serviceId}/edit/"})
+	public void editBookableService(@PathVariable("serviceId") Long serviceId, 
+			@RequestParam String name,
+			@RequestParam int price) throws IllegalArgumentException{
+		BookableService bookableService = service.getBookableServiceById(serviceId);
+		service.editBookableService(bookableService, name, price);
+	}
+	
+	@PostMapping(value = {"/administrativeAssistants/{id}/delete", "/administrativeAssistants/{id}/delete/"} )
+	public void deleteAdministrativeAssistant(@PathVariable("userId") Long id) throws IllegalArgumentException {
+		AdministrativeAssistant administrativeAssistant = service.getAdministrativeAssistantById(id);
+		service.deleteAdministrativeAssistant(administrativeAssistant);
+	}
+	
+	@PostMapping(value = {"/administrativeAssistants/{id}/edit", "/administrativeAssistants/{id}/edit/"})
+	public void editAdministariveAssistant(@PathVariable("id") Long id,
+			@RequestParam String userId,
+			@RequestParam String password) throws IllegalArgumentException{ // TODO:npt sure of password
+		AdministrativeAssistant administrativeAssistant = service.getAdministrativeAssistantById(id);
+		service.editAdministrativeAssistant(administrativeAssistant, userId, password);
+	}
+	
+	@PostMapping(value = {"/garageTechnicians/{technicianId}/delete", "/garageTechnicians/{technicianId}/delete/"})
+	public void deleteGarageTechnician(@PathVariable("technicianId") Long technicianId) throws IllegalArgumentException{
+		GarageTechnician garageTechnician = service.getGarageTechnicianById(technicianId);
+		service.deleteGarageTechnician(garageTechnician);
+	}
 
 }

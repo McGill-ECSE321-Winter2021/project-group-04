@@ -636,5 +636,43 @@ public class AutoRepairShopSystemService {
 		timeSlotRepository.delete(appointment.getTimeSlot());
 		appointmentRepository.delete(appointment);
 	}
-
+	
+	public void deleteAppointmentReminder(AppointmentReminder appointmentReminder) {
+		appointmentReminderRepository.delete(appointmentReminder);
+	}
+	
+	public void deleteBookableService(BookableService bookableService) {
+		bookableServiceRepository.delete(bookableService);
+	}
+	
+	public void deleteAdministrativeAssistant(AdministrativeAssistant administrativeAssistant) {
+		administrativeAssistantRepository.delete(administrativeAssistant);
+	}
+	
+	public void deleteGarageTechnician(GarageTechnician garageTechnician) {
+	List<Appointment> appointments = getAllAppointments();
+	for(Appointment appointment :appointments ) {
+		if(appointment.getTechnician().equals(garageTechnician)) {
+			appointmentRepository.delete(appointment);
+		}
+	}
+	garageTechnicianRepository.delete(garageTechnician);
+	
+	}
+	
+	public void editAppointmentReminder(AppointmentReminder appointmentReminder, String message) {
+		appointmentReminder.setMessage(message);
+		appointmentReminderRepository.save(appointmentReminder);
+	}
+	
+	public void editBookableService(BookableService bookableService, String name, int price) {
+		bookableService.setName(name);
+		bookableService.setPrice(price);
+		bookableServiceRepository.save(bookableService);
+	}
+	
+	public void editAdministrativeAssistant(AdministrativeAssistant administrativeAssistant, String userId, String password) {
+		administrativeAssistant.setUserId(userId);
+		administrativeAssistant.setPassword(password);
+	}
 }
