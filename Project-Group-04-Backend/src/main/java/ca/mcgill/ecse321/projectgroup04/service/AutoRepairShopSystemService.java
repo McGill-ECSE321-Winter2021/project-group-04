@@ -12,6 +12,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AutoRepairShopSystemService {
@@ -107,8 +108,14 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Profile getProfile(Long aProfileId) {
+		Optional<Profile> p = profileRepository.findById(aProfileId);
 		Profile profile = profileRepository.findProfileByProfileId(aProfileId);
-		return profile;
+		if(p.isPresent()) {
+			return profile;
+		}
+		else {
+			throw new IllegalArgumentException("No profile with such ID exist!");
+		}
 	}
 
 	@Transactional
@@ -129,7 +136,13 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Receipt getReceipt(Long aReceiptId) {
 		Receipt receipt = receiptRepository.findReceiptByReceiptId(aReceiptId);
-		return receipt;
+		Optional<Receipt> r=receiptRepository.findById(aReceiptId);
+		if(r.isPresent()) {
+			return receipt;
+		}
+		else {
+			throw new IllegalArgumentException("No receipt with such ID exist!");
+		}
 	}
 
 	@Transactional
@@ -139,6 +152,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public List<Receipt> getCustomerReceipts(Customer customer) {
+		if(customer==null) {
+			throw new IllegalArgumentException("Customer can't be null!");
+		}
 		List<Receipt> customerReceipts = new ArrayList<>();
 		for (Appointment a : appointmentRepository.findByCustomer(customer)) {
 			customerReceipts.add(a.getReceipt());
@@ -184,6 +200,7 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Appointment getAppointmentByReminder(AppointmentReminder reminder) {
+		
 		return appointmentRepository.findByReminder(reminder);
 	}
 
@@ -194,16 +211,28 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public List<Appointment> getAppointmentsByCustomer(Customer customer) {
+		if(customer==null) {
+			throw new IllegalArgumentException("Customer can't be null");
+		}
 		return appointmentRepository.findByCustomer(customer);
 	}
 
 	@Transactional
 	public List<Appointment> getAppointmentsByTechnician(GarageTechnician garageTechnician) {
+		if(garageTechnician==null) {
+			throw new IllegalArgumentException("Garage Technician can't be null");
+		}
 		return appointmentRepository.findByTechnician(garageTechnician);
 	}
 
 	@Transactional
 	public Appointment getAppointmentsByBookableServiceAndCustomer(BookableService service, Customer customer) {
+		if(customer==null) {
+			throw new IllegalArgumentException("Customer can't be null");
+		}
+		if(service==null) {
+			throw new IllegalArgumentException("Service can't be null");
+		}
 		return appointmentRepository.findByBookableServicesAndCustomer(service, customer);
 	}
 
@@ -666,7 +695,13 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Appointment getAppointment(Long Id) {
-		return appointmentRepository.findByAppointmentId(Id);
+		Optional<Appointment> app = appointmentRepository.findById(Id);
+		if(app.isPresent()) {
+			return appointmentRepository.findByAppointmentId(Id);
+		}
+		else {
+			throw new IllegalArgumentException("No appointment with such ID exist!");
+		}
 	}
 
 	@Transactional
@@ -692,6 +727,7 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Profile getProfileByFirstAndLast(String firstName, String lastName) {
+		
 		for (Profile profile : profileRepository.findAll()) {
 			if (profile.getFirstName().equals(firstName) && profile.getLastName().equals(lastName)) {
 				return profile;
@@ -711,7 +747,16 @@ public class AutoRepairShopSystemService {
 		return false;
 	}
 
-	public void deleteAppointment(Appointment appointment) {
+	public void deleteAppointmentById(Long appointmentId) {
+		Optional<Appointment> app = appointmentRepository.findById(appointmentId);
+		Appointment appointment = appointmentRepository.findByAppointmentId(appointmentId);
+
+		if(app.isPresent()) {
+			appointmentRepository.deleteById(appointmentId);
+		}
+		else {
+			throw new IllegalArgumentException("No appointment with such ID exist!");
+		}
 		appointmentReminderRepository.delete(appointment.getReminder());
 		receiptRepository.delete(appointment.getReceipt());
 		timeSlotRepository.delete(appointment.getTimeSlot());

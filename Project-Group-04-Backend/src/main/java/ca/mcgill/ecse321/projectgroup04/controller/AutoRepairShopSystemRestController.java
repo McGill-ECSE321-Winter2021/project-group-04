@@ -850,7 +850,7 @@ public class AutoRepairShopSystemRestController {
 		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
 		Appointment appointment = service.getAppointment(appointmentId);
 		if ((appointment.getTimeSlot().getStartDate().getTime() - today.getTime()) > MILLIS_PER_DAY) {
-			service.deleteAppointment(appointment);
+			service.deleteAppointmentById(appointmentId);
 		}
 
 	}
