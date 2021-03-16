@@ -240,6 +240,8 @@ public class AutoRepairShopSystemRestController {
 		emergencyServiceDto.setPrice(emergencyService.getPrice());
 		emergencyServiceDto.setLocation(emergencyService.getLocation());
 		emergencyServiceDto.setFieldTechnician(convertToDto(emergencyService.getTechnician()));
+		emergencyServiceDto.setCustomer(convertToDto(emergencyService.getCustomer()));
+		emergencyServiceDto.setReceipt(convertToDto(emergencyService.getReceipt()));
 
 		return emergencyServiceDto;
 
@@ -406,9 +408,27 @@ public class AutoRepairShopSystemRestController {
 	@PostMapping(value = { "register/owner/{userId}", "register/owner/{userId}/" })
 	public OwnerDto createOwner(@PathVariable("userId") String userId, @RequestParam String password)
 			throws IllegalArgumentException {
+		if (service.ownerExists()) {
+			throw new IllegalArgumentException("Owner already exists!");  //only 1 owner can exist
+		}
 		Owner owner = service.createOwner(userId, password);
 		OwnerDto ownerDto = convertToDto(owner);
 		return ownerDto;
+	}
+	
+	@PostMapping(value = {"/owner/{id}/delete", "/owner/{id}/delete/"} )
+	public void deleteOwner(@PathVariable("userId") Long id) throws IllegalArgumentException {
+		Owner owner = service.getOwnerByUserId(id);
+		service.deleteOwner(owner);
+	}
+	
+	@PostMapping(value = {"/owner/{id}/edit", "/owner/{id}/edit/"})
+	public void editOwner(
+			@PathVariable("id") Long id,
+			@RequestParam String userId,
+			@RequestParam String password) throws IllegalArgumentException {
+		Owner owner = service.getOwnerByUserId(id);
+		service.editOwner(owner, userId, password);
 	}
 
 	///////////////////////////////// EMERGENCY
@@ -428,25 +448,70 @@ public class AutoRepairShopSystemRestController {
 	public EmergencyServiceDto getEmergencyServiceById(@PathVariable("Id") Long Id) {
 		return convertToDto(service.getEmergencyServiceByServiceId(Id));
 	}
+	
+	@PostMapping(value = { "/create/emergencyService/{name}", "/create/emergencyService/{name}/"})
+	public EmergencyServiceDto createEmergencyService(@PathVariable("name") String name, @RequestParam int duration,
+			@RequestParam int price) {
+		EmergencyService emergencyService = service.createEmergencyService(name, price);
+		EmergencyServiceDto emergencyServiceDto = convertToDto(emergencyService);
+		return emergencyServiceDto;
+	}
+	
 
-	@PostMapping(value = { "/emergencyservice/{userId}/{serviceName}", "/emergencyservice/{userId}/{serviceName}/" })
-	public EmergencyServiceDto createEmergencyService(@PathVariable("userId") String userId,
-			@PathVariable("serviceName") String serviceName, @RequestParam(name = "Price of service") int price,
+	@PostMapping(value = { "/emergencyService/{userId}/{serviceName}", "/emergencyService/{userId}/{serviceName}/" })
+	public EmergencyServiceDto bookEmergencyService(@PathVariable("userId") String userId,
+			@PathVariable("Name of Service") String serviceName,
 			@RequestParam(name = "Location") String location,
 			@RequestParam(name = "Field Technician") FieldTechnicianDto fieldTechnicianDto)
 			throws IllegalArgumentException {
-		Customer customer = service.getCustomerByUserId(userId);
-		Receipt receipt = service.createReceipt(price);
-		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId());
-		EmergencyService emergencyService = service.createEmergencyService(serviceName, price, location,
+		
+		//TODO: Only owner and admin can create an emergencyService
+		
+		//Emergency Service that is fixed and extract price
+		EmergencyService emergencyService = service.getEmergencyServiceByServiceName(serviceName);
+		int priceOfService = emergencyService.getPrice();
+		
+		Customer customer = service.getCustomerByUserId(userId);  // get Customer
+		Receipt receipt = service.createReceipt(priceOfService);  // generate Receipt
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get fieldTechnician
+		
+		if(!fieldTechnician.getIsAvailable()) {    // if field technician is unavailable
+			throw new IllegalArgumentException("Field Technician is currently unavailable");
+		}
+		
+		//A bookable emergency service will be created
+		String nameOfBooking = serviceName + userId;  //service for that user
+		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, priceOfService, location,
 				fieldTechnician, customer, receipt);
-		return convertToDto(emergencyService);
+		return convertToDto(bookableEmergencyService);
 	}
+	
+	// Will not allow updating emergency service as it is spontaneous
+	
+	@PostMapping(value = {"/emergencyServices/{serviceId}/edit", "/emergencyServices/{serviceId}/edit/"})
+	public void editEmergencyService(@PathVariable("serviceId") Long serviceId, 
+			@RequestParam String name,
+			@RequestParam int price) throws IllegalArgumentException{
+		EmergencyService emergencyService = service.getEmergencyServiceByServiceId(serviceId);
+		service.editEmergencyService(emergencyService, name, price);
+	}
+	
+	@PostMapping(value = {"/emergencyServices/{serviceId}/delete", "/emergencyServices/{serviceId}/delete/"})
+	public void deleteEmergencyService(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
+		EmergencyService emergencyService = service.getEmergencyServiceByServiceId(serviceId);
+		service.deleteEmergencyService(emergencyService);
+	}
+	
+	@PostMapping(value = {"/emergencyService/{serviceId}/end", "/emergencyService/{serviceId}/end/" })
+	public void endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
+		EmergencyService emergencyServiceBooking = service.getEmergencyServiceByServiceId(serviceId);
+		service.endEmergencyService(emergencyServiceBooking);
+	}  //only admin/owner can end an emergency service
 
 	//////////////////////////////// FIELD TECHNICIAN
-	//////////////////////////////// ///////////////////////////////////
+	////////////////////////////////////////////////////////////////////
 
-	@GetMapping(value = { "/fieldtechnician", "/fieldtechnician/" })
+	@GetMapping(value = { "/fieldTechnician", "/fieldTechnician/" })
 	public List<FieldTechnicianDto> getFieldTechnicians() {
 		List<FieldTechnicianDto> fieldTechnicianDtos = new ArrayList<>();
 		for (FieldTechnician fieldTechnician : service.getAllFieldTechnicians()) {
@@ -456,16 +521,30 @@ public class AutoRepairShopSystemRestController {
 		return fieldTechnicianDtos;
 	}
 
-	@GetMapping(value = { "/fieldtechnician/{Id}", "/fieldtechnician/{Id}/" })
+	@GetMapping(value = { "/fieldTechnician/{Id}", "/fieldTechnician/{Id}/" })
 	public FieldTechnicianDto getFieldTechnicianById(@PathVariable("Id") Long Id) {
 		return convertToDto(service.getFieldTechnicianById(Id));
 	}
 
-	@PostMapping(value = { "/register/fieldtechnician/{name}", "/register/fieldtechnician/{name}/" })
+	@PostMapping(value = { "/register/fieldTechnician/{name}", "/register/fieldTechnician/{name}/" })
 	public FieldTechnicianDto createFieldTechnician(@PathVariable("name") String name) throws IllegalArgumentException {
 		FieldTechnician fieldTechnician = service.createFieldTechnician(name);
 		FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
 		return fieldTechnicianDto;
+	}
+	
+	@PostMapping(value = {"/fieldTechnician/{id}/delete", "/fieldTechnician/{id}/delete/"} )
+	public void deleteFieldTechnician(@PathVariable("userId") Long id) throws IllegalArgumentException {
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(id);
+		service.deleteFieldTechnician(fieldTechnician);
+	}
+	
+	@PostMapping(value = {"/fieldTechnician/{id}/edit", "/fieldTechnician/{id}/edit/"})
+	public void editFieldTechnician(
+			@PathVariable("id") Long id,
+			@RequestParam String name) throws IllegalArgumentException {
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(id);
+		service.editFieldTechnician(fieldTechnician, name);
 	}
 
 	private FieldTechnician convertToDomainObject(FieldTechnicianDto fieldTechnicianDto) {

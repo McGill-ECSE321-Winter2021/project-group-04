@@ -10,6 +10,7 @@ public interface EmergencyServiceRepository extends CrudRepository <EmergencySer
     EmergencyService findEmergencyServiceByServiceId(Long serviceId);
     List<EmergencyService> findByCustomer(Customer customer);
     EmergencyService findByReceipt(Receipt receipt);
+    EmergencyService findEmergencyServiceByName(String serviceName);
 
 
 }

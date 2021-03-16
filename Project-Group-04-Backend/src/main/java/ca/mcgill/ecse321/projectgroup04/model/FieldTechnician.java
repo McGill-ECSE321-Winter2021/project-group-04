@@ -8,6 +8,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "fieldTechnician")
 public class FieldTechnician extends Technician {
+	
+	private boolean isAvailable;
 
     @Override
     public Long getTechnicianId() {
@@ -27,6 +29,14 @@ public class FieldTechnician extends Technician {
     @Override
     public void setName(String aName) {
         super.setName(aName);
+    }
+    
+    public boolean getIsAvailable() {
+    	return this.isAvailable;
+    }
+    
+    public void setIsAvailable(boolean availability) {
+    	this.isAvailable = availability;
     }
 
 }

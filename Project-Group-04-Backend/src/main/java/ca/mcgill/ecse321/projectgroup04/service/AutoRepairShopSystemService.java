@@ -287,6 +287,29 @@ public class AutoRepairShopSystemService {
 	public List<Owner> getOwner() {
 		return (List<Owner>) ownerRepository.findAll();
 	}
+	
+	@Transactional
+	public void deleteOwner(Owner owner) {
+		ownerRepository.delete(owner);
+	}
+	
+	@Transactional
+	public void editOwner(Owner owner, String userId, String password) {
+		owner.setUserId(userId);
+		owner.setPassword(password);
+		ownerRepository.save(owner);
+	}
+	
+	@Transactional
+	public boolean ownerExists() {    //does owner exist?
+		long ownerCount = ownerRepository.count();
+		if (ownerCount > 0) {
+			return true;              //owner exists
+		}
+		else {
+			return false;             //owner does not exist
+		}
+	}
 
 	//////////////////////////////////////////////////////////////////////////////
 
@@ -451,17 +474,59 @@ public class AutoRepairShopSystemService {
 	///////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public EmergencyService createEmergencyService(String name, int price, String aLocation,
-			FieldTechnician aFieldTechnician, Customer aCustomer, Receipt aReceipt) {
+	public EmergencyService createEmergencyService(String name, int price) {
+		if(name == null) {
+			throw new IllegalArgumentException("Name can't be null");
+		}
+		if(price == 0 ) {
+			throw new IllegalArgumentException("Price can't be 0");
+		}
+		if(price < 0) {
+			throw new IllegalArgumentException("Price can't be negative");
+		}
+		
 		EmergencyService emergencyService = new EmergencyService();
+		
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
-		emergencyService.setLocation(aLocation);
-		emergencyService.setTechnician(aFieldTechnician);
-		emergencyService.setCustomer(aCustomer);
-		emergencyService.setReceipt(aReceipt);
 		emergencyServiceRepository.save(emergencyService);
 		return emergencyService;
+	}
+	
+	public EmergencyService bookEmergencyService(String aServiceName, int price, String aLocation,
+			FieldTechnician aFieldTechnician, Customer aCustomer, Receipt aReceipt) {
+		EmergencyService bookableEmergencyService = new EmergencyService();
+		
+		if(aCustomer == null) {
+			throw new IllegalArgumentException("Customer can't be null");
+		}
+		if(aLocation == null) {
+			throw new IllegalArgumentException("Location can't be null");
+		}
+		if(aFieldTechnician==null) {
+			throw new IllegalArgumentException("Field Technician can't be null");
+		}
+		if(aServiceName == null) {
+			throw new IllegalArgumentException("Service Name can't be null");
+		}
+		
+		if(aReceipt==null) {
+			throw new IllegalArgumentException("Receipt can't be null");
+		}
+		bookableEmergencyService.setName(aServiceName);
+		bookableEmergencyService.setPrice(price);
+		bookableEmergencyService.setLocation(aLocation);
+		bookableEmergencyService.setTechnician(aFieldTechnician);
+		aFieldTechnician.setIsAvailable(false);
+		bookableEmergencyService.setCustomer(aCustomer);
+		bookableEmergencyService.setReceipt(aReceipt);
+		emergencyServiceRepository.save(bookableEmergencyService);
+		return bookableEmergencyService;
+	}
+	
+	@Transactional
+	public EmergencyService getEmergencyServiceByServiceName(String name) {
+		return emergencyServiceRepository.findEmergencyServiceByName(name);
 	}
 
 	@Transactional
@@ -482,6 +547,24 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public EmergencyService getEmergencyServiceByReceipt(Receipt receipt) {
 		return emergencyServiceRepository.findByReceipt(receipt);
+	}
+	
+	@Transactional
+	public void editEmergencyService(EmergencyService emergencyService, String name, int price) {
+		emergencyService.setName(name);
+		emergencyService.setPrice(price);
+		emergencyServiceRepository.save(emergencyService);
+	}
+	
+	@Transactional
+	public void deleteEmergencyService(EmergencyService emergencyService) {
+		emergencyServiceRepository.delete(emergencyService);
+	}
+	
+	@Transactional
+	public void endEmergencyService(EmergencyService emergencyService) {
+		FieldTechnician fieldTechnician = emergencyService.getTechnician();
+		fieldTechnician.setIsAvailable(true);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -512,6 +595,7 @@ public class AutoRepairShopSystemService {
 	public FieldTechnician createFieldTechnician(String name) {
 		FieldTechnician fieldTechnician = new FieldTechnician();
 		fieldTechnician.setName(name);
+		fieldTechnician.setIsAvailable(true);
 
 		fieldTechnicianRepository.save(fieldTechnician);
 		return fieldTechnician;
@@ -530,6 +614,24 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public FieldTechnician getFieldTechnicianByName(String name) {
 		return fieldTechnicianRepository.findFieldTechnicianByName(name);
+	}
+	
+	@Transactional
+	public void deleteFieldTechnician(FieldTechnician fieldTechnician) {
+		List<EmergencyService> emergencyServices = (List<EmergencyService>) emergencyServiceRepository.findAll();
+		for(EmergencyService emergencyService : emergencyServices) {
+			if(emergencyService.getTechnician().equals(fieldTechnician)) {
+				emergencyServiceRepository.delete(emergencyService);
+			}
+		}
+		fieldTechnicianRepository.delete(fieldTechnician);
+		
+	}
+	
+	@Transactional
+	public void editFieldTechnician(FieldTechnician fieldTechnician, String name) {
+		fieldTechnician.setName(name);
+		fieldTechnicianRepository.save(fieldTechnician);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////
