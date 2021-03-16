@@ -111,10 +111,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Profile getProfile(Long aProfileId) {
-		Optional<Profile> p = profileRepository.findById(aProfileId);
-		Profile profile = profileRepository.findProfileByProfileId(aProfileId);
-		if(p.isPresent()) {
-			return profile;
+		Optional<Profile> profile = profileRepository.findById(aProfileId);
+		if(profile.isPresent()) {
+			return profile.get();
 		}
 		else {
 			throw new IllegalArgumentException("No profile with such ID exist!");
@@ -138,10 +137,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Receipt getReceipt(Long aReceiptId) {
-		Receipt receipt = receiptRepository.findReceiptByReceiptId(aReceiptId);
-		Optional<Receipt> r=receiptRepository.findById(aReceiptId);
-		if(r.isPresent()) {
-			return receipt;
+		Optional<Receipt> receipt=receiptRepository.findById(aReceiptId);
+		if(receipt.isPresent()) {
+			return receipt.get();
 		}
 		else {
 			throw new IllegalArgumentException("No receipt with such ID exist!");
@@ -433,6 +431,15 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService createBookableService(String name, int price, int duration) {
+		if(name.length()==0 || name==null) {
+			throw new IllegalArgumentException("Bookable Service name can't be null or empty");
+		}
+		if(price==0) {
+			throw new IllegalArgumentException("Price can't be 0");
+		}
+		if(duration==0) {
+			throw new IllegalArgumentException("Duration can't be 0");
+		}
 		BookableService bookableService = new BookableService();
 		bookableService.setDuration(duration);
 		bookableService.setName(name);
@@ -759,7 +766,7 @@ public class AutoRepairShopSystemService {
 
 	public void deleteAppointmentById(Long appointmentId) {
 		Optional<Appointment> app = appointmentRepository.findById(appointmentId);
-		Appointment appointment = appointmentRepository.findByAppointmentId(appointmentId);
+		 
 
 		if(app.isPresent()) {
 			appointmentRepository.deleteById(appointmentId);
@@ -767,6 +774,7 @@ public class AutoRepairShopSystemService {
 		else {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
 		}
+		Appointment appointment = app.get();
 		LocalTime now= LocalTime.now();
 		LocalDate today= LocalDate.now();
 		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
