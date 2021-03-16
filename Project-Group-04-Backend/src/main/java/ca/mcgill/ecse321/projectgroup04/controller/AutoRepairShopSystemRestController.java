@@ -820,6 +820,17 @@ public class AutoRepairShopSystemRestController {
 		}
 		return convertToDto(profile);
 	}
+	
+	@PostMapping(value= {"profiles/{profileId}/edit","profiles/{profileId}/edit/"})
+	public ProfileDto editProfile(@PathVariable("profileId") Long profileId,
+			@RequestParam(name = "Email Address") String emailAddress,
+			@RequestParam(name = "Phone Number") String phoneNumber,
+			@RequestParam(name = "Address Line") String addressLine,
+			@RequestParam(name = "Zip Code") String zipCode,
+			@RequestParam(name= "First Name") String firstName,
+			@RequestParam(name= "Last Name") String lastName) {
+		return convertToDto(service.editProfile(profileId,firstName,lastName,emailAddress,phoneNumber,addressLine,zipCode));
+	}
 
 	/////////////////////////////////////// CUSTOMER///////////////////////////
 
