@@ -129,6 +129,9 @@ public class AutoRepairShopSystemService {
 		if (aTotalPrice == 0) {
 			throw new IllegalArgumentException("Total Price can't be 0");
 		}
+		if(aTotalPrice<0) {
+			throw new IllegalArgumentException("Total Price can't be negative");
+		}
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(aTotalPrice);
 		return receipt;
@@ -426,6 +429,9 @@ public class AutoRepairShopSystemService {
 		}
 		if (time.equals(null)) { // TODO: not sure of this
 			throw new IllegalArgumentException("Time can't be null");
+		}
+		if(message=="") {
+			throw new IllegalArgumentException("Message can't be empty");
 		}
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
 
@@ -979,7 +985,11 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Customer getCustomerByUserId(String userId) {
-		return customerRepository.findCustomerByUserId(userId);
+		Customer customer = customerRepository.findCustomerByUserId(userId);
+		if(customer==null) {
+			throw new IllegalArgumentException("No customer with such userId!");
+		}
+		return customer;
 	}
 
 	@Transactional
@@ -1076,5 +1086,44 @@ public class AutoRepairShopSystemService {
 			String password) {
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
+	}
+	public Profile editProfile(Long profileId,String firstName,String lastName,
+			String emailAddress,String phoneNumber,
+			String addressLine,String zipCode) {
+		Profile profile= getProfile(profileId);
+		if (addressLine == null || addressLine == "") {
+			throw new IllegalArgumentException("Address Line can't be null or empty");
+		}
+		if (phoneNumber == null || phoneNumber == "") {
+			throw new IllegalArgumentException("Address Line can't be null or empty");
+		}
+		if (phoneNumber.length() < 7 || phoneNumber.length() > 7) {
+			throw new IllegalArgumentException("Phone Number must be 7 characters long");
+		}
+		if (firstName == null || firstName == "") {
+			throw new IllegalArgumentException("First Name can't be null or empty");
+		}
+		if (lastName == null || lastName == "") {
+			throw new IllegalArgumentException("Last Name can't be null or empty");
+		}
+		if (zipCode == null || zipCode == "") {
+			throw new IllegalArgumentException("Zip Code can't be null or empty");
+		}
+		if (zipCode.length() < 6 || zipCode.length() > 6) {
+			throw new IllegalArgumentException("Zip Code must be 6 characters long");
+		}
+		if (emailAddress == null || emailAddress == "") {
+			throw new IllegalArgumentException("Email Address can't be null or empty");
+		}
+		if (!emailAddress.contains("@")) {
+			throw new IllegalArgumentException("Email Address must contain @ character");
+		}
+		profile.setAddressLine(addressLine);
+		profile.setEmailAddress(emailAddress);
+		profile.setFirstName(firstName);
+		profile.setLastName(lastName);
+		profile.setPhoneNumber(phoneNumber);
+		profile.setZipCode(zipCode);
+		return null;
 	}
 }
