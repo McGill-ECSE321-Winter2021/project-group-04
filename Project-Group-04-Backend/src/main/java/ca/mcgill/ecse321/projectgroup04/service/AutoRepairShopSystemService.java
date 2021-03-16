@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
 import ca.mcgill.ecse321.projectgroup04.dao.*;
+import ca.mcgill.ecse321.projectgroup04.dto.GarageTechnicianDto;
 import ca.mcgill.ecse321.projectgroup04.model.*;
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -197,6 +200,43 @@ public class AutoRepairShopSystemService {
 		appointmentRepository.save(appointment);
 		return appointment;
 	}
+	
+	@Transactional
+	public Appointment bookAppointment(String userId,String serviceName,
+			Date date,Integer garageSpot,Time startTime,Long garageTechnicianId) {
+		Customer customer = getCustomerByUserId(userId);
+		if(customer==null) {
+			throw new IllegalArgumentException("No customer with such userId!");
+		}
+		BookableService bookableService = getBookableServiceByServiceName(serviceName);
+		if(bookableService==null) {
+			throw new IllegalArgumentException("No Bookable Service with such name!");
+		}
+
+		java.sql.Time myTimeEnd = startTime;
+		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
+		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
+		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
+		for (Appointment appointment : getAppointmentsByDate(date)) {
+			if (isOverlap(appointment.getTimeSlot(), startTime, endTime, garageSpot)) {
+				throw new IllegalArgumentException("This attempted booking overlaps with another!");
+			}
+		}
+		TimeSlot timeSlot = createTimeSlot(startTime, endTime, date, date, garageSpot);
+		Receipt receipt = createReceipt(bookableService.getPrice());
+		GarageTechnician garageTechnician = getGarageTechnicianById(garageTechnicianId);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date); // convert your date to Calendar object
+		int daysToDecrement = -1;
+		cal.add(Calendar.DATE, daysToDecrement);
+		date = (Date) cal.getTime(); // again get back your date object
+		AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
+				"You have an appointment in 24hours");
+		Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot,
+				appReminder, receipt);
+		return appointment;
+		
+	}
 
 	@Transactional
 	public Appointment getAppointmentByReminder(AppointmentReminder reminder) {
@@ -328,10 +368,9 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public TimeSlot createTimeSlot(Long timeSlotId, Time startTime, Time endTime, Date startDate, Date endDate,
+	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate,
 			Integer garageSpot) {
 		TimeSlot timeSlot = new TimeSlot();
-		timeSlot.setTimeSlotId(timeSlotId);
 		timeSlot.setStartDate(startDate);
 		timeSlot.setStartTime(startTime);
 		timeSlot.setEndDate(endDate);
@@ -689,7 +728,11 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService getBookableServiceByServiceName(String name) {
-		return bookableServiceRepository.findBookableServiceByName(name);
+		BookableService bookableService = bookableServiceRepository.findBookableServiceByName(name);
+		if(bookableService==null) {
+			throw new IllegalArgumentException("No Bookable Service with such name!");
+		}
+		return bookableService;
 	}
 
 	@Transactional
@@ -723,6 +766,16 @@ public class AutoRepairShopSystemService {
 		}
 		else {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
+		}
+		LocalTime now= LocalTime.now();
+		LocalDate today= LocalDate.now();
+		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
+		LocalTime appTime = appointment.getTimeSlot().getStartTime().toLocalTime();
+		if(today.equals(appDate)) {
+			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
+		}
+		if(today.plusDays(1).equals(appDate) && now.isAfter(appTime)) {
+			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
 		}
 		appointmentReminderRepository.delete(appointment.getReminder());
 		receiptRepository.delete(appointment.getReceipt());

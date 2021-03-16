@@ -693,36 +693,9 @@ public class AutoRepairShopSystemRestController {
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto,
-			@RequestParam Long timeSlotId) throws IllegalArgumentException {
-		Customer customer = service.getCustomerByUserId(userId);
-		if(customer==null) {
-			throw new IllegalArgumentException("No customer with such userId!");
-		}
-		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
-
-		java.sql.Time myTimeEnd = startTime;
-		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
-		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
-		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
-		for (Appointment appointment : service.getAppointmentsByDate(date)) {
-			if (service.isOverlap(appointment.getTimeSlot(), startTime, endTime, garageSpot)) {
-				throw new IllegalArgumentException("This attempted booking overlaps with another!");
-			}
-		}
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, date, date, garageSpot);
-		Receipt receipt = service.createReceipt(bookableService.getPrice());
-		GarageTechnician garageTechnician = service.getGarageTechnicianById(garageTechnicianDto.getTechnicianId());
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date); // convert your date to Calendar object
-		int daysToDecrement = -1;
-		cal.add(Calendar.DATE, daysToDecrement);
-		date = (Date) cal.getTime(); // again get back your date object
-		AppointmentReminder appReminder = service.createAppointmentReminder(date, startTime,
-				"You have an appointment in 24hours");
-		Appointment appointment = service.createAppointment(customer, bookableService, garageTechnician, timeSlot,
-				appReminder, receipt);
-		return convertToDto(appointment);
+			@RequestParam(name = "Garage Technician Id") Long garageTechnicianId) throws IllegalArgumentException {
+		
+		return convertToDto(service.bookAppointment(userId, serviceName, date, garageSpot, startTime, garageTechnicianId));
 	}
 
 	private GarageTechnician convertToDomainObject(GarageTechnicianDto garageTechnicianDto) {
@@ -839,20 +812,14 @@ public class AutoRepairShopSystemRestController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime,
 			@RequestParam Integer garageSpot) throws IllegalArgumentException {
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, startDate, endDate, garageSpot);
+		TimeSlot timeSlot = service.createTimeSlot(startTime, endTime, startDate, endDate, garageSpot);
 		TimeSlotDto timeSlotDtos = convertToDto(timeSlot);
 		return timeSlotDtos;
 	}
 
 	@PostMapping(value = { "/appointments/{appointmentId}/cancel", "/appointments/{appointmentId}/cancel/" })
 	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
-		Date today = new Date(0);
-		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
-		Appointment appointment = service.getAppointment(appointmentId);
-		if ((appointment.getTimeSlot().getStartDate().getTime() - today.getTime()) > MILLIS_PER_DAY) {
 			service.deleteAppointmentById(appointmentId);
-		}
-
 	}
 
 }
