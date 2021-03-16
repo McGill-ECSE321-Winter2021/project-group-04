@@ -77,8 +77,8 @@ public class AutoRepairShopSystemService {
 		if (aPhoneNumber == null || aPhoneNumber == "") {
 			throw new IllegalArgumentException("Address Line can't be null or empty");
 		}
-		if (aPhoneNumber.length() < 7 || aPhoneNumber.length() > 7) {
-			throw new IllegalArgumentException("Phone Number must be 7 characters long");
+		if (aPhoneNumber.length() < 10 || aPhoneNumber.length() > 10) {
+			throw new IllegalArgumentException("Phone Number must be 10 characters long");
 		}
 		if (aFirstName == null || aFirstName == "") {
 			throw new IllegalArgumentException("First Name can't be null or empty");
@@ -1097,8 +1097,8 @@ public class AutoRepairShopSystemService {
 		if (phoneNumber == null || phoneNumber == "") {
 			throw new IllegalArgumentException("Address Line can't be null or empty");
 		}
-		if (phoneNumber.length() < 7 || phoneNumber.length() > 7) {
-			throw new IllegalArgumentException("Phone Number must be 7 characters long");
+		if (phoneNumber.length() < 10 || phoneNumber.length() > 10) {
+			throw new IllegalArgumentException("Phone Number must be 10 characters long");
 		}
 		if (firstName == null || firstName == "") {
 			throw new IllegalArgumentException("First Name can't be null or empty");
