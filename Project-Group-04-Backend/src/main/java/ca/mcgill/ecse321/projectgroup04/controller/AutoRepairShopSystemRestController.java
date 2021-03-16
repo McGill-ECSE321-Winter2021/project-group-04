@@ -410,24 +410,22 @@ public class AutoRepairShopSystemRestController {
 	public OwnerDto createOwner(@PathVariable("userId") String userId, @RequestParam String password)
 			throws IllegalArgumentException {
 		if (service.ownerExists()) {
-			throw new IllegalArgumentException("Owner already exists!");  //only 1 owner can exist
+			throw new IllegalArgumentException("Owner already exists!"); // only 1 owner can exist
 		}
 		Owner owner = service.createOwner(userId, password);
 		OwnerDto ownerDto = convertToDto(owner);
 		return ownerDto;
 	}
-	
-	@PostMapping(value = {"/owner/{id}/delete", "/owner/{id}/delete/"} )
+
+	@PostMapping(value = { "/owner/{id}/delete", "/owner/{id}/delete/" })
 	public void deleteOwner(@PathVariable("userId") Long id) throws IllegalArgumentException {
 		Owner owner = service.getOwnerByUserId(id);
 		service.deleteOwner(owner);
 	}
-	
-	@PostMapping(value = {"/owner/{id}/edit", "/owner/{id}/edit/"})
-	public void editOwner(
-			@PathVariable("id") Long id,
-			@RequestParam String userId,
-			@RequestParam String password) throws IllegalArgumentException {
+
+	@PostMapping(value = { "/owner/{id}/edit", "/owner/{id}/edit/" })
+	public void editOwner(@PathVariable("id") Long id, @RequestParam String userId, @RequestParam String password)
+			throws IllegalArgumentException {
 		Owner owner = service.getOwnerByUserId(id);
 		service.editOwner(owner, userId, password);
 	}
@@ -449,65 +447,63 @@ public class AutoRepairShopSystemRestController {
 	public EmergencyServiceDto getEmergencyServiceById(@PathVariable("Id") Long Id) {
 		return convertToDto(service.getEmergencyServiceByServiceId(Id));
 	}
-	
-	@PostMapping(value = { "/create/emergencyService/{name}", "/create/emergencyService/{name}/"})
+
+	@PostMapping(value = { "/create/emergencyService/{name}", "/create/emergencyService/{name}/" })
 	public EmergencyServiceDto createEmergencyService(@PathVariable("name") String name, @RequestParam int duration,
 			@RequestParam int price) {
 		EmergencyService emergencyService = service.createEmergencyService(name, price);
 		EmergencyServiceDto emergencyServiceDto = convertToDto(emergencyService);
 		return emergencyServiceDto;
 	}
-	
 
 	@PostMapping(value = { "/emergencyService/{userId}/{serviceName}", "/emergencyService/{userId}/{serviceName}/" })
 	public EmergencyServiceDto bookEmergencyService(@PathVariable("userId") String userId,
-			@PathVariable("Name of Service") String serviceName,
-			@RequestParam(name = "Location") String location,
+			@PathVariable("Name of Service") String serviceName, @RequestParam(name = "Location") String location,
 			@RequestParam(name = "Field Technician") FieldTechnicianDto fieldTechnicianDto)
 			throws IllegalArgumentException {
-		
-		//TODO: Only owner and admin can create an emergencyService
-		
-		//Emergency Service that is fixed and extract price
+
+		// TODO: Only owner and admin can create an emergencyService
+
+		// Emergency Service that is fixed and extract price
 		EmergencyService emergencyService = service.getEmergencyServiceByServiceName(serviceName);
 		int priceOfService = emergencyService.getPrice();
-		
-		Customer customer = service.getCustomerByUserId(userId);  // get Customer
-		Receipt receipt = service.createReceipt(priceOfService);  // generate Receipt
-		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get fieldTechnician
-		
-		if(!fieldTechnician.getIsAvailable()) {    // if field technician is unavailable
+
+		Customer customer = service.getCustomerByUserId(userId); // get Customer
+		Receipt receipt = service.createReceipt(priceOfService); // generate Receipt
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get
+																												// fieldTechnician
+
+		if (!fieldTechnician.getIsAvailable()) { // if field technician is unavailable
 			throw new IllegalArgumentException("Field Technician is currently unavailable");
 		}
-		
-		//A bookable emergency service will be created
-		String nameOfBooking = serviceName + userId;  //service for that user
-		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, priceOfService, location,
-				fieldTechnician, customer, receipt);
+
+		// A bookable emergency service will be created
+		String nameOfBooking = serviceName + userId; // service for that user
+		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, priceOfService,
+				location, fieldTechnician, customer, receipt);
 		return convertToDto(bookableEmergencyService);
 	}
-	
+
 	// Will not allow updating emergency service as it is spontaneous
-	
-	@PostMapping(value = {"/emergencyServices/{serviceId}/edit", "/emergencyServices/{serviceId}/edit/"})
-	public void editEmergencyService(@PathVariable("serviceId") Long serviceId, 
-			@RequestParam String name,
-			@RequestParam int price) throws IllegalArgumentException{
+
+	@PostMapping(value = { "/emergencyServices/{serviceId}/edit", "/emergencyServices/{serviceId}/edit/" })
+	public void editEmergencyService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
+			@RequestParam int price) throws IllegalArgumentException {
 		EmergencyService emergencyService = service.getEmergencyServiceByServiceId(serviceId);
 		service.editEmergencyService(emergencyService, name, price);
 	}
-	
-	@PostMapping(value = {"/emergencyServices/{serviceId}/delete", "/emergencyServices/{serviceId}/delete/"})
+
+	@PostMapping(value = { "/emergencyServices/{serviceId}/delete", "/emergencyServices/{serviceId}/delete/" })
 	public void deleteEmergencyService(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
 		EmergencyService emergencyService = service.getEmergencyServiceByServiceId(serviceId);
 		service.deleteEmergencyService(emergencyService);
 	}
-	
-	@PostMapping(value = {"/emergencyService/{serviceId}/end", "/emergencyService/{serviceId}/end/" })
+
+	@PostMapping(value = { "/emergencyService/{serviceId}/end", "/emergencyService/{serviceId}/end/" })
 	public void endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
 		EmergencyService emergencyServiceBooking = service.getEmergencyServiceByServiceId(serviceId);
 		service.endEmergencyService(emergencyServiceBooking);
-	}  //only admin/owner can end an emergency service
+	} // only admin/owner can end an emergency service
 
 	//////////////////////////////// FIELD TECHNICIAN
 	////////////////////////////////////////////////////////////////////
@@ -533,17 +529,16 @@ public class AutoRepairShopSystemRestController {
 		FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
 		return fieldTechnicianDto;
 	}
-	
-	@PostMapping(value = {"/fieldTechnician/{id}/delete", "/fieldTechnician/{id}/delete/"} )
+
+	@PostMapping(value = { "/fieldTechnician/{id}/delete", "/fieldTechnician/{id}/delete/" })
 	public void deleteFieldTechnician(@PathVariable("userId") Long id) throws IllegalArgumentException {
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(id);
 		service.deleteFieldTechnician(fieldTechnician);
 	}
-	
-	@PostMapping(value = {"/fieldTechnician/{id}/edit", "/fieldTechnician/{id}/edit/"})
-	public void editFieldTechnician(
-			@PathVariable("id") Long id,
-			@RequestParam String name) throws IllegalArgumentException {
+
+	@PostMapping(value = { "/fieldTechnician/{id}/edit", "/fieldTechnician/{id}/edit/" })
+	public void editFieldTechnician(@PathVariable("id") Long id, @RequestParam String name)
+			throws IllegalArgumentException {
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(id);
 		service.editFieldTechnician(fieldTechnician, name);
 	}
@@ -790,36 +785,10 @@ public class AutoRepairShopSystemRestController {
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam(name = "Garage Technician") GarageTechnicianDto garageTechnicianDto,
-			@RequestParam Long timeSlotId) throws IllegalArgumentException {
-		Customer customer = service.getCustomerByUserId(userId);
-		if (customer == null) {
-			throw new IllegalArgumentException("No customer with such userId!");
-		}
-		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
+			@RequestParam(name = "Garage Technician Id") Long garageTechnicianId) throws IllegalArgumentException {
 
-		java.sql.Time myTimeEnd = startTime;
-		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
-		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
-		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
-		for (Appointment appointment : service.getAppointmentsByDate(date)) {
-			if (service.isOverlap(appointment.getTimeSlot(), startTime, endTime, garageSpot)) {
-				throw new IllegalArgumentException("This attempted booking overlaps with another!");
-			}
-		}
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, date, date, garageSpot);
-		Receipt receipt = service.createReceipt(bookableService.getPrice());
-		GarageTechnician garageTechnician = service.getGarageTechnicianById(garageTechnicianDto.getTechnicianId());
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date); // convert your date to Calendar object
-		int daysToDecrement = -1;
-		cal.add(Calendar.DATE, daysToDecrement);
-		date = (Date) cal.getTime(); // again get back your date object
-		AppointmentReminder appReminder = service.createAppointmentReminder(date, startTime,
-				"You have an appointment in 24hours");
-		Appointment appointment = service.createAppointment(customer, bookableService, garageTechnician, timeSlot,
-				appReminder, receipt);
-		return convertToDto(appointment);
+		return convertToDto(
+				service.bookAppointment(userId, serviceName, date, garageSpot, startTime, garageTechnicianId));
 	}
 
 	private GarageTechnician convertToDomainObject(GarageTechnicianDto garageTechnicianDto) {
@@ -936,20 +905,14 @@ public class AutoRepairShopSystemRestController {
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime,
 			@RequestParam Integer garageSpot) throws IllegalArgumentException {
-		TimeSlot timeSlot = service.createTimeSlot(timeSlotId, startTime, endTime, startDate, endDate, garageSpot);
+		TimeSlot timeSlot = service.createTimeSlot(startTime, endTime, startDate, endDate, garageSpot);
 		TimeSlotDto timeSlotDtos = convertToDto(timeSlot);
 		return timeSlotDtos;
 	}
 
 	@PostMapping(value = { "/appointments/{appointmentId}/cancel", "/appointments/{appointmentId}/cancel/" })
 	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
-		Date today = new Date(0);
-		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
-		Appointment appointment = service.getAppointment(appointmentId);
-		if ((appointment.getTimeSlot().getStartDate().getTime() - today.getTime()) > MILLIS_PER_DAY) {
-			service.deleteAppointmentById(appointmentId);
-		}
-
+		service.deleteAppointmentById(appointmentId);
 	}
 
 	@PostMapping(value = { "/appointmentReminders/{reminderId}/delete", "/appointmentReminders/{reminderId}/delete/" })
