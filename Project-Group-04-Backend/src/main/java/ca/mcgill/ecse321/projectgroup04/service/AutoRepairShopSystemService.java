@@ -67,6 +67,33 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
 			String aZipCode, String aEmailAddress) {
+		if(aAddressLine==null || aAddressLine =="") {
+			throw new IllegalArgumentException("Address Line can't be null or empty");
+		}
+		if(aPhoneNumber==null || aPhoneNumber =="") {
+			throw new IllegalArgumentException("Address Line can't be null or empty");
+		}
+		if(aPhoneNumber.length()<7 || aPhoneNumber.length()>7 ) {
+			throw new IllegalArgumentException("Phone Number must be 7 characters long");
+		}
+		if(aFirstName==null || aFirstName =="") {
+			throw new IllegalArgumentException("First Name can't be null or empty");
+		}
+		if(aLastName==null || aLastName =="") {
+			throw new IllegalArgumentException("Last Name can't be null or empty");
+		}
+		if(aZipCode==null || aZipCode =="") {
+			throw new IllegalArgumentException("Zip Code can't be null or empty");
+		}
+		if(aZipCode.length()<6 || aZipCode.length()>6) {
+			throw new IllegalArgumentException("Zip Code must be 6 characters long");
+		}
+		if(aEmailAddress==null || aEmailAddress =="") {
+			throw new IllegalArgumentException("Email Address can't be null or empty");
+		}
+		if(!aEmailAddress.contains("@")) {
+			throw new IllegalArgumentException("Email Address must contain @ character");
+		}
 		Profile profile = new Profile();
 		profile.setAddressLine(aAddressLine);
 		profile.setEmailAddress(aEmailAddress);
@@ -91,6 +118,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Receipt createReceipt(double aTotalPrice) {
+		if(aTotalPrice==0) {
+			throw new IllegalArgumentException("Total Price can't be 0");
+		}
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(aTotalPrice);
 		return receipt;
@@ -124,6 +154,24 @@ public class AutoRepairShopSystemService {
 			GarageTechnician aGarageTechnician, TimeSlot aTimeSlot, AppointmentReminder aAppointmentReminder,
 			Receipt aReceipt) {
 		Appointment appointment = new Appointment();
+		if(aCustomer==null) {
+			throw new IllegalArgumentException("Customer can't be null");
+		}
+		if(aBookableService==null) {
+			throw new IllegalArgumentException("Bookable Service can't be null");
+		}
+		if(aGarageTechnician==null) {
+			throw new IllegalArgumentException("Garage Technician can't be null");
+		}
+		if(aTimeSlot==null) {
+			throw new IllegalArgumentException("Time Slot can't be null");
+		}
+		if(aAppointmentReminder==null) {
+			throw new IllegalArgumentException("Appointment Reminder can't be null");
+		}
+		if(aReceipt==null) {
+			throw new IllegalArgumentException("Receipt can't be null");
+		}
 		appointment.setBookableServices(aBookableService);
 		appointment.setCustomer(aCustomer);
 		appointment.setReceipt(aReceipt);
@@ -166,6 +214,12 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public AdministrativeAssistant createAdministrativeAssistant(String userId, String password) {
+		if(userId == null) {
+			throw new IllegalArgumentException("Username can't be null");
+		}
+		if(password == null) {
+			throw new IllegalArgumentException("Password can't be null");
+		}
 		AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
@@ -279,6 +333,15 @@ public class AutoRepairShopSystemService {
 	// }
 
 	public AppointmentReminder createAppointmentReminder(Date date, Time time, String message) {
+		if(message == null) {
+			throw new IllegalArgumentException("Message can't be null");
+		}
+		if(date.equals(null)) { //TODO: not sure of this
+			throw new IllegalArgumentException("Date can't be null");
+		}
+		if(time.equals(null)) { //TODO: not sure of this
+			throw new IllegalArgumentException("Time can't be null");
+		}
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
 
 		appointmentReminder.setDate(date);
@@ -317,6 +380,21 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService createBookableService(String name, int price, int duration) {
+		if(name == null) {
+			throw new IllegalArgumentException("Name can't be null");
+		}
+		if(price == 0 ) {
+			throw new IllegalArgumentException("Price can't be 0");
+		}
+		if(price < 0) {
+			throw new IllegalArgumentException("Price can't be negative");
+		}
+		if(duration< 0 ) {
+			throw new IllegalArgumentException("Duration can't be negative");
+		}
+		if(duration == 0) {
+			throw new IllegalArgumentException("Duration can't be equal to 0");
+		}
 		BookableService bookableService = new BookableService();
 		bookableService.setDuration(duration);
 		bookableService.setName(name);
@@ -381,6 +459,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public GarageTechnician createGarageTechnician(String name) {
+		if(name == null) {
+			throw new IllegalArgumentException("Name can't be null");
+		}
 		GarageTechnician garageTechnician = new GarageTechnician();
 		garageTechnician.setName(name);
 		garageTechnicianRepository.save(garageTechnician);
@@ -646,5 +727,43 @@ public class AutoRepairShopSystemService {
 		timeSlotRepository.delete(appointment.getTimeSlot());
 		appointmentRepository.delete(appointment);
 	}
-
+	
+	public void deleteAppointmentReminder(AppointmentReminder appointmentReminder) {
+		appointmentReminderRepository.delete(appointmentReminder);
+	}
+	
+	public void deleteBookableService(BookableService bookableService) {
+		bookableServiceRepository.delete(bookableService);
+	}
+	
+	public void deleteAdministrativeAssistant(AdministrativeAssistant administrativeAssistant) {
+		administrativeAssistantRepository.delete(administrativeAssistant);
+	}
+	
+	public void deleteGarageTechnician(GarageTechnician garageTechnician) {
+	List<Appointment> appointments = getAllAppointments();
+	for(Appointment appointment :appointments ) {
+		if(appointment.getTechnician().equals(garageTechnician)) {
+			appointmentRepository.delete(appointment);
+		}
+	}
+	garageTechnicianRepository.delete(garageTechnician);
+	
+	}
+	
+	public void editAppointmentReminder(AppointmentReminder appointmentReminder, String message) {
+		appointmentReminder.setMessage(message);
+		appointmentReminderRepository.save(appointmentReminder);
+	}
+	
+	public void editBookableService(BookableService bookableService, String name, int price) {
+		bookableService.setName(name);
+		bookableService.setPrice(price);
+		bookableServiceRepository.save(bookableService);
+	}
+	
+	public void editAdministrativeAssistant(AdministrativeAssistant administrativeAssistant, String userId, String password) {
+		administrativeAssistant.setUserId(userId);
+		administrativeAssistant.setPassword(password);
+	}
 }
