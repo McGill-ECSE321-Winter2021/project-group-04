@@ -73,7 +73,7 @@ public class AutoRepairShopSystemService {
 			throw new IllegalArgumentException("Address Line can't be null or empty");
 		}
 		if (aPhoneNumber == null || aPhoneNumber == "") {
-			throw new IllegalArgumentException("Address Line can't be null or empty");
+			throw new IllegalArgumentException("Phone Number can't be null or empty");
 		}
 		if (aPhoneNumber.length() < 10 || aPhoneNumber.length() > 10) {
 			throw new IllegalArgumentException("Phone Number must be 10 characters long");
@@ -109,9 +109,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Profile getProfile(Long aProfileId) {
-		Optional<Profile> profile = profileRepository.findById(aProfileId);
-		if (profile.isPresent()) {
-			return profile.get();
+		Profile profile = profileRepository.findProfileByProfileId(aProfileId);
+		if (profile!=null) {
+			return profile;
 		} else {
 			throw new IllegalArgumentException("No profile with such ID exist!");
 		}
@@ -137,9 +137,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Receipt getReceipt(Long aReceiptId) {
-		Optional<Receipt> receipt = receiptRepository.findById(aReceiptId);
-		if (receipt.isPresent()) {
-			return receipt.get();
+		Receipt receipt = receiptRepository.findReceiptByReceiptId(aReceiptId);
+		if (receipt!=null) {
+			return receipt;
 		} else {
 			throw new IllegalArgumentException("No receipt with such ID exist!");
 		}
@@ -278,24 +278,24 @@ public class AutoRepairShopSystemService {
 	public AdministrativeAssistant getAdministrativeAssistantByUserId(String userId) {
 		return administrativeAssistantRepository.findAdministrativeAssistantByUserId(userId);
 	}
-	
+
 	@Transactional
 	public AdministrativeAssistant createAdministrativeAssistant(String userId, String password) {
-		
+
 		AdministrativeAssistant existingAssistant = getAdministrativeAssistantByUserId(userId);
-		
-		if(existingAssistant != null) {
+
+		if (existingAssistant != null) {
 			throw new IllegalArgumentException("Administrative Assistant already exists");
 		}
-//		if (userId == null ) {
-//			throw new IllegalArgumentException("Username can't be null");
-//		}
-		if ( userId == "") {
+		// if (userId == null ) {
+		// throw new IllegalArgumentException("Username can't be null");
+		// }
+		if (userId == "") {
 			throw new IllegalArgumentException("Username can't be empty");
 		}
-//		if (password == null) {
-//			throw new IllegalArgumentException("Password can't be null");
-//		}
+		// if (password == null) {
+		// throw new IllegalArgumentException("Password can't be null");
+		// }
 		if (password == "") {
 			throw new IllegalArgumentException("Password can't be empty");
 		}
@@ -374,7 +374,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public Car getCarByModelAndYearAndColor(String model,String year,String color) {
+	public Car getCarByModelAndYearAndColor(String model, String year, String color) {
 		return carRepository.findCarByModelAndYearAndColor(model, year, color);
 	}
 
@@ -382,7 +382,7 @@ public class AutoRepairShopSystemService {
 	public List<Car> getAllCars() {
 		return (List<Car>) carRepository.findAll();
 	}
-	
+
 	@Transactional
 	public void deleteCar(Car car) {
 		carRepository.delete(car);
@@ -409,14 +409,14 @@ public class AutoRepairShopSystemService {
 	public List<Customer> getAllCustomers() {
 		return (List<Customer>) customerRepository.findAll();
 	}
-	
+
 	@Transactional
 	public void deleteCustomer(Customer customer) {
 		customerRepository.delete(customer);
 	}
-	
-	public void editCustomer(Customer customer, String Id,
-			String password, List<Reminder> reminders, Car car, Profile profile) {
+
+	public void editCustomer(Customer customer, String Id, String password, List<Reminder> reminders, Car car,
+			Profile profile) {
 		customer.setUserId(Id);
 		customer.setPassword(password);
 		customer.setCar(car);
@@ -445,7 +445,7 @@ public class AutoRepairShopSystemService {
 	public List<TimeSlot> getAllTimeSlots() {
 		return (List<TimeSlot>) timeSlotRepository.findAll();
 	}
-	
+
 	@Transactional
 	public void deleteTimeSlot(TimeSlot timeSlot) {
 		timeSlotRepository.delete(timeSlot);
@@ -506,10 +506,10 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService createBookableService(String name, int price, int duration) {
-		
+
 		BookableService existingService = getBookableServiceByServiceName(name);
-		
-		if(existingService != null) {
+
+		if (existingService != null) {
 			throw new IllegalArgumentException("Bookable Service with this name already exists");
 		}
 
@@ -653,15 +653,15 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public GarageTechnician createGarageTechnician(String name) {
-		
+
 		if (name == "") {
 			throw new IllegalArgumentException("Name can't be empty");
 		}
 		GarageTechnician existingGarageTechnician = getGarageTechnicianByName(name);
-		if(existingGarageTechnician != null) {
+		if (existingGarageTechnician != null) {
 			throw new IllegalArgumentException("Garage Technician with this name already exists");
 		}
-		
+
 		GarageTechnician garageTechnician = new GarageTechnician();
 		garageTechnician.setName(name);
 		garageTechnicianRepository.save(garageTechnician);
@@ -677,7 +677,7 @@ public class AutoRepairShopSystemService {
 	public GarageTechnician getGarageTechnicianById(Long technicianId) {
 		return garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
 	}
-	
+
 	@Transactional
 	public GarageTechnician getGarageTechnicianByName(String name) {
 		return garageTechnicianRepository.findGarageTechnicianByName(name);
@@ -779,10 +779,13 @@ public class AutoRepairShopSystemService {
 	}
 
 	// ?? do we have to save again if we are changing the fields?
-	public void updateBusinessInformation(String aName, String aAddress, String aPhoneNumber, String aEmailAddress,
+	public Business updateBusinessInformation(String aName, String aAddress, String aPhoneNumber, String aEmailAddress,
 			List<BusinessHour> aBusinessHours, List<TimeSlot> regular) {
 
 		Business business = getBusinessByName(aName);
+		if (business == null) {
+			throw new IllegalArgumentException("The business with this name doesn't exist");
+		}
 		boolean addressBool = true;
 		boolean phoneBool = true;
 		boolean emailBool = true;
@@ -825,6 +828,7 @@ public class AutoRepairShopSystemService {
 			business.setRegular(regular);
 		}
 		businessRepository.save(business); // ????
+		return business;
 	}
 
 	@Transactional
@@ -1024,7 +1028,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Appointment getAppointment(Long Id) {
 		Appointment appointment = appointmentRepository.findByAppointmentId(Id);
-		if (appointment!=null) {
+		if (appointment != null) {
 			return appointment;
 		} else {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
@@ -1054,8 +1058,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public BookableService getBookableServiceByServiceName(String name) {
 		return bookableServiceRepository.findBookableServiceByName(name);
-		
-		
+
 	}
 
 	@Transactional
@@ -1066,7 +1069,7 @@ public class AutoRepairShopSystemService {
 				return profile;
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("No Profile with such First Name and Last Name");
 	}
 
 	public boolean isOverlap(TimeSlot timeSlot1, Time startTime, Time endTime, Integer garageSpot) {
@@ -1080,13 +1083,19 @@ public class AutoRepairShopSystemService {
 		return false;
 	}
 
-	public Appointment deleteAppointment(Appointment appointment) {
+
+	public Appointment deleteAppointment(Appointment appointment,LocalTime testTime,LocalDate testDate) {
 		if (appointment==null) {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
 		}
-		
 		LocalTime now = LocalTime.now();
+		if(testTime!=null) {
+			now=testTime;
+		}
 		LocalDate today = LocalDate.now();
+		if(testDate!=null) {
+			today=testDate;
+		}
 		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
 		LocalTime appTime = appointment.getTimeSlot().getStartTime().toLocalTime();
 		if (today.equals(appDate)) {
@@ -1106,7 +1115,7 @@ public class AutoRepairShopSystemService {
 		appointment.setTechnician(null);
 		appointment.setTimeSlot(null);
 		appointment.setAppointmentId(null);
-		appointment=null;
+		appointment = null;
 		return appointment;
 	}
 
@@ -1123,21 +1132,20 @@ public class AutoRepairShopSystemService {
 	}
 
 	public AdministrativeAssistant deleteAdministrativeAssistant(AdministrativeAssistant administrativeAssistant) {
-		 administrativeAssistantRepository.delete(administrativeAssistant);
-		 administrativeAssistant = null;
-		 return administrativeAssistant;
+		administrativeAssistantRepository.delete(administrativeAssistant);
+		administrativeAssistant = null;
+		return administrativeAssistant;
 	}
 
 	public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
-	
-		List<Appointment> appointments = appointmentRepository.findByTechnician(garageTechnician);
-//		for (Appointment appointment : appointments) {
-//			if (appointment.getTechnician().equals(garageTechnician)) {
-//				throw new IllegalArgumentException("This garage technician still has appointments");
-//			}
-//		}
-		if(appointments != null) {
-			throw new IllegalArgumentException("This garage technician still has appointments");
+
+		List<Appointment> appointmentsList = getAllAppointments();
+
+		for (Appointment appointment : appointmentsList) {
+			if (appointment.getTechnician().equals(garageTechnician)) {
+				throw new IllegalArgumentException("This garage technician still has appointments");
+			}
+
 		}
 		garageTechnicianRepository.delete(garageTechnician);
 		garageTechnician = null;
@@ -1146,7 +1154,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	public AppointmentReminder editAppointmentReminder(AppointmentReminder appointmentReminder, String message) {
-		if(message == appointmentReminder.getMessage()) {
+		if (message == appointmentReminder.getMessage()) {
 			throw new IllegalArgumentException("You have to change the message");
 		}
 		appointmentReminder.setMessage(message);
@@ -1154,12 +1162,13 @@ public class AutoRepairShopSystemService {
 		return appointmentReminder;
 	}
 
-	public BookableService editBookableService(BookableService bookableService, String name,int duration, int price) {
-		if(name == bookableService.getName() && duration == bookableService.getDuration() && price == bookableService.getPrice()) {
+	public BookableService editBookableService(BookableService bookableService, String name, int duration, int price) {
+		if (name == bookableService.getName() && duration == bookableService.getDuration()
+				&& price == bookableService.getPrice()) {
 			throw new IllegalArgumentException("You have to edit one of the fields");
 		}
 		BookableService existingBookableService = getBookableServiceByServiceName(name);
-		if(existingBookableService != null) {
+		if (existingBookableService != null) {
 			throw new IllegalArgumentException("A bookable service with this name already exists");
 		}
 		bookableService.setName(name);
@@ -1169,9 +1178,9 @@ public class AutoRepairShopSystemService {
 		return bookableService;
 	}
 
-	public AdministrativeAssistant editAdministrativeAssistant(AdministrativeAssistant administrativeAssistant, String userId,
-			String password) {
-		if(userId == administrativeAssistant.getUserId() && password == administrativeAssistant.getPassword()) {
+	public AdministrativeAssistant editAdministrativeAssistant(AdministrativeAssistant administrativeAssistant,
+			String userId, String password) {
+		if (userId == administrativeAssistant.getUserId() && password == administrativeAssistant.getPassword()) {
 			throw new IllegalArgumentException("You have to change the username or password or both");
 		}
 		administrativeAssistant.setUserId(userId);
@@ -1186,7 +1195,7 @@ public class AutoRepairShopSystemService {
 			throw new IllegalArgumentException("Address Line can't be null or empty");
 		}
 		if (phoneNumber == null || phoneNumber == "") {
-			throw new IllegalArgumentException("Address Line can't be null or empty");
+			throw new IllegalArgumentException("Phone Number can't be null or empty");
 		}
 		if (phoneNumber.length() < 10 || phoneNumber.length() > 10) {
 			throw new IllegalArgumentException("Phone Number must be 10 characters long");
@@ -1215,7 +1224,7 @@ public class AutoRepairShopSystemService {
 		profile.setLastName(lastName);
 		profile.setPhoneNumber(phoneNumber);
 		profile.setZipCode(zipCode);
-		return null;
+		return profile;
 	}
 
 }

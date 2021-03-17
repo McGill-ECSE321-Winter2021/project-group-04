@@ -27,6 +27,7 @@ import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -495,4 +496,444 @@ public class TestBusinessService {
 
     }
 
+    @Test
+    public void TestUpdateBusinessInfo() {
+        String name = "TestName";
+        String address = "4567 laval, Quebec";
+        String phoneNumber = "122 567 335";
+        String emailAddress = "updatedmail@mail.mcgill.ca";
+
+        Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
+        Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
+
+        List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+        List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
+        BusinessHour businessHour = new BusinessHour();
+        businessHour.setDayOfWeek(DayOfWeek.Sunday);
+        businessHour.setStartTime(startTime);
+        businessHour.setEndTime(endTime);
+        businessHours.add(businessHour);
+
+        Date date = Date.valueOf(LocalDate.parse("2020-06-30"));
+        Time aStartTime = Time.valueOf(LocalTime.parse("10:00:00"));
+        Time aEndTime = Time.valueOf(LocalTime.parse("11:00:00"));
+
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(date);
+        timeSlot.setEndDate(date);
+        timeSlot.setStartTime(aStartTime);
+        timeSlot.setEndTime(aEndTime);
+
+        timeSlots.add(timeSlot);
+
+        Business business = null;
+        Business businesstemp = businessRepository.findBusinessByName(name);
+
+        try {
+            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
+                    timeSlots);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+        // businessRepository.save(business);
+        // Business businesst = businessRepository.findBusinessByName(name);
+
+        assertNotNull(business);
+        assertEquals(name, business.getName());
+        assertEquals(phoneNumber, business.getPhoneNumber());
+        assertEquals(emailAddress, business.getEmailAddress());
+        assertEquals(address, business.getAddress());
+
+        assertEquals(businessHour, business.getBusinessHours().get(0));
+        assertEquals(timeSlot, business.getRegular().get(0));
+
+        // assertNotEquals(businesstemp.getName(), business.getName());
+        assertNotEquals(businesstemp.getPhoneNumber(), business.getPhoneNumber());
+        assertNotEquals(businesstemp.getEmailAddress(), business.getEmailAddress());
+        assertNotEquals(businesstemp.getAddress(), business.getAddress());
+
+        assertNotEquals(businesstemp.getBusinessHours().get(0), business.getBusinessHours().get(0));
+        assertNotEquals(businesstemp.getRegular().get(0), business.getRegular().get(0));
+    }
+
+    @Test
+    public void TestUpdateBusinessInfoBusinessDoesntExist() {
+        String name = "NonExistentBusiness";
+        String address = "4567 laval, Quebec";
+        String phoneNumber = "122 567 335";
+        String emailAddress = "updatedmail@mail.mcgill.ca";
+
+        Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
+        Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
+
+        List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+        List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
+        BusinessHour businessHour = new BusinessHour();
+        businessHour.setDayOfWeek(DayOfWeek.Sunday);
+        businessHour.setStartTime(startTime);
+        businessHour.setEndTime(endTime);
+        businessHours.add(businessHour);
+
+        Date date = Date.valueOf(LocalDate.parse("2020-06-30"));
+        Time aStartTime = Time.valueOf(LocalTime.parse("10:00:00"));
+        Time aEndTime = Time.valueOf(LocalTime.parse("11:00:00"));
+
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(date);
+        timeSlot.setEndDate(date);
+        timeSlot.setStartTime(aStartTime);
+        timeSlot.setEndTime(aEndTime);
+
+        timeSlots.add(timeSlot);
+
+        Business business = null;
+
+        String error = "";
+
+        try {
+            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
+                    timeSlots);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        }
+
+        assertNull(business);
+        assertEquals(error, "The business with this name doesn't exist");
+
+    }
+
+    @Test
+    public void TestUpdateBusinessInfoNoAddress() {
+        String name = "TestName";
+        String address = "";
+        String phoneNumber = "123 456 789";
+        String emailAddress = "updatedmail@mail.mcgill.ca";
+
+        Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
+        Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
+
+        List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+        List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
+        BusinessHour businessHour = new BusinessHour();
+        businessHour.setDayOfWeek(DayOfWeek.Sunday);
+        businessHour.setStartTime(startTime);
+        businessHour.setEndTime(endTime);
+        businessHours.add(businessHour);
+
+        Date date = Date.valueOf(LocalDate.parse("2020-06-30"));
+        Time aStartTime = Time.valueOf(LocalTime.parse("10:00:00"));
+        Time aEndTime = Time.valueOf(LocalTime.parse("11:00:00"));
+
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(date);
+        timeSlot.setEndDate(date);
+        timeSlot.setStartTime(aStartTime);
+        timeSlot.setEndTime(aEndTime);
+
+        timeSlots.add(timeSlot);
+
+        Business business = null;
+        Business businesstemp = businessRepository.findBusinessByName(name);
+
+        // String error = "";
+
+        try {
+            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
+                    timeSlots);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+
+        assertNotNull(business);
+        assertEquals(name, business.getName());
+        assertEquals(phoneNumber, business.getPhoneNumber());
+        assertEquals(emailAddress, business.getEmailAddress());
+        assertEquals(businesstemp.getAddress(), business.getAddress());
+
+        assertEquals(businessHour, business.getBusinessHours().get(0));
+        assertEquals(timeSlot, business.getRegular().get(0));
+
+        assertNotEquals(businesstemp.getPhoneNumber(), business.getPhoneNumber());
+        assertNotEquals(businesstemp.getEmailAddress(), business.getEmailAddress());
+        // assertNotEquals(businesstemp.getAddress(), business.getAddress());
+
+        assertNotEquals(businesstemp.getBusinessHours().get(0), business.getBusinessHours().get(0));
+        assertNotEquals(businesstemp.getRegular().get(0), business.getRegular().get(0));
+
+    }
+
+    @Test
+    public void TestUpdateBusinessInfoNoPhoneNumber() {
+        String name = "TestName";
+        String address = "456 laval, Quebec";
+        String phoneNumber = "";
+        String emailAddress = "updatedmail@mail.mcgill.ca";
+
+        Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
+        Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
+
+        List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+        List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
+        BusinessHour businessHour = new BusinessHour();
+        businessHour.setDayOfWeek(DayOfWeek.Sunday);
+        businessHour.setStartTime(startTime);
+        businessHour.setEndTime(endTime);
+        businessHours.add(businessHour);
+
+        Date date = Date.valueOf(LocalDate.parse("2020-06-30"));
+        Time aStartTime = Time.valueOf(LocalTime.parse("10:00:00"));
+        Time aEndTime = Time.valueOf(LocalTime.parse("11:00:00"));
+
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(date);
+        timeSlot.setEndDate(date);
+        timeSlot.setStartTime(aStartTime);
+        timeSlot.setEndTime(aEndTime);
+
+        timeSlots.add(timeSlot);
+
+        Business business = null;
+        Business businesstemp = businessRepository.findBusinessByName(name);
+
+        // String error = "";
+
+        try {
+            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
+                    timeSlots);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+
+        assertNotNull(business);
+        assertEquals(name, business.getName());
+        assertEquals(businesstemp.getPhoneNumber(), business.getPhoneNumber());
+        assertEquals(emailAddress, business.getEmailAddress());
+        assertEquals(address, business.getAddress());
+
+        assertEquals(businessHour, business.getBusinessHours().get(0));
+        assertEquals(timeSlot, business.getRegular().get(0));
+
+        // assertNotEquals(businesstemp.getPhoneNumber(), business.getPhoneNumber());
+        assertNotEquals(businesstemp.getEmailAddress(), business.getEmailAddress());
+        assertNotEquals(businesstemp.getAddress(), business.getAddress());
+
+        assertNotEquals(businesstemp.getBusinessHours().get(0), business.getBusinessHours().get(0));
+        assertNotEquals(businesstemp.getRegular().get(0), business.getRegular().get(0));
+
+    }
+
+    @Test
+    public void TestUpdateBusinessInfoNoEmail() {
+        String name = "TestName";
+        String address = "456 laval, Quebec";
+        String phoneNumber = "123 456 789";
+        String emailAddress = "";
+
+        Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
+        Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
+
+        List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+        List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
+        BusinessHour businessHour = new BusinessHour();
+        businessHour.setDayOfWeek(DayOfWeek.Sunday);
+        businessHour.setStartTime(startTime);
+        businessHour.setEndTime(endTime);
+        businessHours.add(businessHour);
+
+        Date date = Date.valueOf(LocalDate.parse("2020-06-30"));
+        Time aStartTime = Time.valueOf(LocalTime.parse("10:00:00"));
+        Time aEndTime = Time.valueOf(LocalTime.parse("11:00:00"));
+
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(date);
+        timeSlot.setEndDate(date);
+        timeSlot.setStartTime(aStartTime);
+        timeSlot.setEndTime(aEndTime);
+
+        timeSlots.add(timeSlot);
+
+        Business business = null;
+        Business businesstemp = businessRepository.findBusinessByName(name);
+
+        // String error = "";
+
+        try {
+            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
+                    timeSlots);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+
+        assertNotNull(business);
+        assertEquals(name, business.getName());
+        assertEquals(phoneNumber, business.getPhoneNumber());
+        assertEquals(businesstemp.getEmailAddress(), business.getEmailAddress());
+        assertEquals(address, business.getAddress());
+
+        assertEquals(businessHour, business.getBusinessHours().get(0));
+        assertEquals(timeSlot, business.getRegular().get(0));
+
+        assertNotEquals(businesstemp.getPhoneNumber(), business.getPhoneNumber());
+        // assertNotEquals(businesstemp.getEmailAddress(), business.getEmailAddress());
+        assertNotEquals(businesstemp.getAddress(), business.getAddress());
+
+        assertNotEquals(businesstemp.getBusinessHours().get(0), business.getBusinessHours().get(0));
+        assertNotEquals(businesstemp.getRegular().get(0), business.getRegular().get(0));
+
+    }
+
+    @Test
+    public void TestUpdateBusinessInfoWrongEmail() {
+        String name = "TestName";
+        String address = "456 laval, Quebec";
+        String phoneNumber = "123 456 789";
+        String emailAddress = "testmailmail.mcgill.ca";
+
+        Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
+        Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
+
+        List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+        List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
+        BusinessHour businessHour = new BusinessHour();
+        businessHour.setDayOfWeek(DayOfWeek.Sunday);
+        businessHour.setStartTime(startTime);
+        businessHour.setEndTime(endTime);
+        businessHours.add(businessHour);
+
+        Date date = Date.valueOf(LocalDate.parse("2020-06-30"));
+        Time aStartTime = Time.valueOf(LocalTime.parse("10:00:00"));
+        Time aEndTime = Time.valueOf(LocalTime.parse("11:00:00"));
+
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(date);
+        timeSlot.setEndDate(date);
+        timeSlot.setStartTime(aStartTime);
+        timeSlot.setEndTime(aEndTime);
+
+        timeSlots.add(timeSlot);
+
+        Business business = null;
+
+        String error = "";
+
+        try {
+            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
+                    timeSlots);
+        } catch (IllegalArgumentException e) {
+            error = e.getMessage();
+        }
+
+        assertNull(business);
+        assertEquals(error, "Email Address must contain @ character");
+
+    }
+
+    @Test
+    public void TestUpdateBusinessInfoNoBusinessHours() {
+        String name = "TestName";
+        String address = "456 laval, Quebec";
+        String phoneNumber = "123 456 789";
+        String emailAddress = "updatedmail@mail.mcgill.ca";
+
+        List<BusinessHour> businessHours = null;
+        List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
+
+        Date date = Date.valueOf(LocalDate.parse("2020-06-30"));
+        Time aStartTime = Time.valueOf(LocalTime.parse("10:00:00"));
+        Time aEndTime = Time.valueOf(LocalTime.parse("11:00:00"));
+
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(date);
+        timeSlot.setEndDate(date);
+        timeSlot.setStartTime(aStartTime);
+        timeSlot.setEndTime(aEndTime);
+
+        timeSlots.add(timeSlot);
+
+        Business business = null;
+        Business businesstemp = businessRepository.findBusinessByName(name);
+
+        // String error = "";
+
+        try {
+            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
+                    timeSlots);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+
+        assertNotNull(business);
+        assertEquals(name, business.getName());
+        assertEquals(phoneNumber, business.getPhoneNumber());
+        assertEquals(emailAddress, business.getEmailAddress());
+        assertEquals(address, business.getAddress());
+
+        assertEquals(businesstemp.getBusinessHours().get(0), business.getBusinessHours().get(0));
+        assertEquals(timeSlot, business.getRegular().get(0));
+
+        assertNotEquals(businesstemp.getPhoneNumber(), business.getPhoneNumber());
+        assertNotEquals(businesstemp.getEmailAddress(), business.getEmailAddress());
+        assertNotEquals(businesstemp.getAddress(), business.getAddress());
+
+        // assertNotEquals(businesstemp.getBusinessHours().get(0),
+        // business.getBusinessHours().get(0));
+        assertNotEquals(businesstemp.getRegular().get(0), business.getRegular().get(0));
+
+    }
+
+    @Test
+    public void TestUpdateBusinessInfoNoTimeSlots() {
+        String name = "TestName";
+        String address = "456 laval, Quebec";
+        String phoneNumber = "123 456 789";
+        String emailAddress = "updatedmail@mail.mcgill.ca";
+
+        Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
+        Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
+
+        List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+        List<TimeSlot> timeSlots = null;
+
+        BusinessHour businessHour = new BusinessHour();
+        businessHour.setDayOfWeek(DayOfWeek.Sunday);
+        businessHour.setStartTime(startTime);
+        businessHour.setEndTime(endTime);
+        businessHours.add(businessHour);
+
+        Business business = null;
+        Business businesstemp = businessRepository.findBusinessByName(name);
+
+        // String error = "";
+
+        try {
+            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
+                    timeSlots);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+
+        assertNotNull(business);
+        assertEquals(name, business.getName());
+        assertEquals(phoneNumber, business.getPhoneNumber());
+        assertEquals(emailAddress, business.getEmailAddress());
+        assertEquals(address, business.getAddress());
+
+        assertEquals(businessHour, business.getBusinessHours().get(0));
+        assertEquals(businesstemp.getRegular().get(0), business.getRegular().get(0));
+
+        assertNotEquals(businesstemp.getPhoneNumber(), business.getPhoneNumber());
+        assertNotEquals(businesstemp.getEmailAddress(), business.getEmailAddress());
+        assertNotEquals(businesstemp.getAddress(), business.getAddress());
+
+        assertNotEquals(businesstemp.getBusinessHours().get(0), business.getBusinessHours().get(0));
+        // assertNotEquals(businesstemp.getRegular().get(0),
+        // business.getRegular().get(0));
+
+    }
 }
