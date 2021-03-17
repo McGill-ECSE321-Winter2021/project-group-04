@@ -693,11 +693,14 @@ public class AutoRepairShopSystemService {
 		if (aAddress == null || aAddress == "") {
 			throw new IllegalArgumentException("Address cannot be empty");
 		}
+
 		if (aPhoneNumber == null || aPhoneNumber == "") {
 			throw new IllegalArgumentException("Phone number cannot be empty");
 		}
 		if (aEmailAddress == null || aEmailAddress == "") {
 			throw new IllegalArgumentException("Email address cannot be empty");
+		} else if (!aEmailAddress.contains("@")) {
+			throw new IllegalArgumentException("Email Address must contain @ character");
 		}
 		if (aBusinessHours == null) {
 			throw new IllegalArgumentException("Business Hours cannot be null");
@@ -737,6 +740,7 @@ public class AutoRepairShopSystemService {
 		if (aEmailAddress == null || aEmailAddress == "") {
 			emailBool = false;
 		}
+
 		if (aBusinessHours == null) {
 			businessHourBool = false;
 		}
@@ -751,6 +755,9 @@ public class AutoRepairShopSystemService {
 			business.setPhoneNumber(aPhoneNumber);
 		}
 		if (emailBool) {
+			if (!aEmailAddress.contains("@")) {
+				throw new IllegalArgumentException("Email Address must contain @ character");
+			}
 			business.setEmailAddress(aEmailAddress);
 		}
 		if (businessHourBool) {
