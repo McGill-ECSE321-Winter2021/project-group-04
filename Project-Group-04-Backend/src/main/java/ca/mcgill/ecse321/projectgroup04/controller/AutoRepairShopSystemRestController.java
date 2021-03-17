@@ -928,7 +928,8 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/appointments/{appointmentId}/cancel", "/appointments/{appointmentId}/cancel/" })
 	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
-		service.deleteAppointmentById(appointmentId);
+		Appointment appointment = service.getAppointment(appointmentId);
+		service.deleteAppointment(appointment);
 	}
 
 	@PostMapping(value = { "/appointmentReminders/{reminderId}/delete", "/appointmentReminders/{reminderId}/delete/" })

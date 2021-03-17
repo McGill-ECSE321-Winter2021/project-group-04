@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -90,6 +91,10 @@ public class TestAppointmentService {
 	private static final String OLD_APPOINTMENT_START_TIME = "13:00:00";
 	private static final String OLD_APPOINTMENT_END_TIME = "13:30:00";
 	
+	private static final String OLD_APPOINTMENT_REMINDER_DATE = "2021-03-17";
+	private static final String OLD_APPOINTMENT_REMINDER_TIME = "13:00:00";
+	private static final String OLD_APPOINTMENT_REMINDER_MESSAGE = "You have an appointment in 24 hours";
+	
 	private static final Long GARAGE_TECHNICIAN_ID = 4587l;
 	private static final String GARAGE_TECHNICIAN_NAME="Harry Potter";
 	
@@ -169,7 +174,7 @@ public class TestAppointmentService {
 			return null;
 		});
 		
-		lenient().when(appointmentRepository.findById(anyLong())).thenAnswer((InvocationOnMock invocation)->{
+		lenient().when(appointmentRepository.findByAppointmentId(anyLong())).thenAnswer((InvocationOnMock invocation)->{
 			if(invocation.getArgument(0).equals(APPOINTMENT_TO_DELETE_ID)) {
 				
 				Appointment appointment = new Appointment();
@@ -186,6 +191,8 @@ public class TestAppointmentService {
 				
 				GarageTechnician garageTechnician = new GarageTechnician();
 				garageTechnician.setName(GARAGE_TECHNICIAN_NAME);
+				garageTechnician.setTechnicianId(GARAGE_TECHNICIAN_ID);
+				
 				
 				Receipt receipt = new Receipt();
 				receipt.setTotalPrice(SERVICE_PRICE);
@@ -195,6 +202,20 @@ public class TestAppointmentService {
 				timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
 				timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
 				timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
+				timeSlot.setGarageSpot(OLD_APPOINTMENT_GARAGE_SPOT);
+				
+				AppointmentReminder appointmentReminder = new AppointmentReminder();
+				appointmentReminder.setMessage(OLD_APPOINTMENT_REMINDER_MESSAGE);
+				appointmentReminder.setDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_REMINDER_DATE)));
+				appointmentReminder.setTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_REMINDER_TIME)));
+				
+				appointment.setCustomer(customer);
+				appointment.setBookableServices(bookableService);
+				appointment.setReceipt(receipt);
+				appointment.setReminder(appointmentReminder);
+				appointment.setTechnician(garageTechnician);
+				appointment.setTimeSlot(timeSlot);
+				
 
 				return appointment;
 			}
@@ -481,6 +502,222 @@ public class TestAppointmentService {
 		
 		assertNull(appointment);
 		assertEquals(error,"Receipt can't be null");
+	}
+	
+	@Test
+	public void TestGetAppointment() {
+		Appointment appointment = null;
+		try {
+			appointment=service.getAppointment(3423l);
+		} catch(IllegalArgumentException e){
+			fail();
+		}
+		assertNotNull(appointment);
+		assertNotNull(appointment.getBookableServices());
+		assertNotNull(appointment.getCustomer());
+		assertNotNull(appointment.getReceipt());
+		assertNotNull(appointment.getTechnician());
+		assertNotNull(appointment.getTimeSlot());
+		assertNotNull(appointment.getReminder());
+		assertEquals(CUSTOMER_USERID,appointment.getCustomer().getUserId());
+		assertEquals(GARAGE_TECHNICIAN_ID,appointment.getTechnician().getTechnicianId());
+		assertEquals(GARAGE_TECHNICIAN_NAME,appointment.getTechnician().getName());
+		assertEquals(SERVICE_NAME,appointment.getBookableServices().getName());
+		assertEquals(SERVICE_DURATION,appointment.getBookableServices().getDuration());
+		assertEquals(SERVICE_PRICE,appointment.getBookableServices().getPrice());
+		assertEquals(CUSTOMER_PASSWORD,appointment.getCustomer().getPassword());
+		assertEquals(OLD_APPOINTMENT_REMINDER_MESSAGE,appointment.getReminder().getMessage());
+		assertEquals(OLD_APPOINTMENT_REMINDER_DATE,appointment.getReminder().getDate().toString());
+		assertEquals(OLD_APPOINTMENT_REMINDER_TIME,appointment.getReminder().getTime().toString());
+		assertEquals(SERVICE_PRICE,appointment.getReceipt().getTotalPrice());
+		assertEquals(OLD_APPOINTMENT_START_TIME,appointment.getTimeSlot().getStartTime().toString());
+		assertEquals(OLD_APPOINTMENT_END_TIME,appointment.getTimeSlot().getEndTime().toString());
+		assertEquals(OLD_APPOINTMENT_DATE,appointment.getTimeSlot().getStartDate().toString());
+		assertEquals(OLD_APPOINTMENT_DATE,appointment.getTimeSlot().getEndDate().toString());
+		assertEquals(OLD_APPOINTMENT_GARAGE_SPOT,appointment.getTimeSlot().getGarageSpot());
+	}
+	
+	@Test
+	public void TestGetAppointmentInvalidId() {
+		Appointment appointment =null;
+		String error=null;
+		try {
+			appointment=service.getAppointment(343l);
+		} catch(IllegalArgumentException e){
+			error=e.getMessage();
+		}
+		
+		assertNull(appointment);
+		assertEquals(error,"No appointment with such ID exist!");
+	}
+	
+	@Test
+	public void TestDeleteAppointment() {
+		Appointment appointment = new Appointment();
+		appointment.setAppointmentId(APPOINTMENT_TO_DELETE_ID);
+		
+		Customer customer= new Customer();
+		customer.setPassword(CUSTOMER_PASSWORD);
+		customer.setUserId(CUSTOMER_USERID);
+		
+		BookableService bookableService = new BookableService();
+		bookableService.setDuration(SERVICE_DURATION);
+		bookableService.setName(SERVICE_NAME);
+		bookableService.setPrice(SERVICE_PRICE);
+		
+		GarageTechnician garageTechnician = new GarageTechnician();
+		garageTechnician.setName(GARAGE_TECHNICIAN_NAME);
+		garageTechnician.setTechnicianId(GARAGE_TECHNICIAN_ID);
+		
+		
+		Receipt receipt = new Receipt();
+		receipt.setTotalPrice(SERVICE_PRICE);
+		
+//		SystemTime.setSysTime(Time.valueOf("16:45:00"));
+//		SystemTime.setSysDate(Date.valueOf("2021-03-17"));
+		
+		TimeSlot timeSlot = new TimeSlot();
+		timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE).plusDays(1)));
+		timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE).plusDays(1)));
+		timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
+		timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
+		timeSlot.setGarageSpot(OLD_APPOINTMENT_GARAGE_SPOT);
+		
+		AppointmentReminder appointmentReminder = new AppointmentReminder();
+		appointmentReminder.setMessage(OLD_APPOINTMENT_REMINDER_MESSAGE);
+		appointmentReminder.setDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_REMINDER_DATE)));
+		appointmentReminder.setTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_REMINDER_TIME)));
+		
+		appointment.setCustomer(customer);
+		appointment.setBookableServices(bookableService);
+		appointment.setReceipt(receipt);
+		appointment.setReminder(appointmentReminder);
+		appointment.setTechnician(garageTechnician);
+		appointment.setTimeSlot(timeSlot);
+		
+		try {
+			appointment=service.deleteAppointment(appointment);
+		}catch(IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+			fail();
+		}
+		
+		assertNull(appointment);
+
+	}
+	
+	@Test
+	public void TestDeleteAppointmentSameDay() {
+		Appointment appointment = new Appointment();
+		appointment.setAppointmentId(APPOINTMENT_TO_DELETE_ID);
+		
+		Customer customer= new Customer();
+		customer.setPassword(CUSTOMER_PASSWORD);
+		customer.setUserId(CUSTOMER_USERID);
+		
+		BookableService bookableService = new BookableService();
+		bookableService.setDuration(SERVICE_DURATION);
+		bookableService.setName(SERVICE_NAME);
+		bookableService.setPrice(SERVICE_PRICE);
+		
+		GarageTechnician garageTechnician = new GarageTechnician();
+		garageTechnician.setName(GARAGE_TECHNICIAN_NAME);
+		garageTechnician.setTechnicianId(GARAGE_TECHNICIAN_ID);
+		
+		
+		Receipt receipt = new Receipt();
+		receipt.setTotalPrice(SERVICE_PRICE);
+		
+//		SystemTime.setSysTime(Time.valueOf("16:45:00"));
+//		SystemTime.setSysDate(Date.valueOf("2021-03-17"));
+		
+		TimeSlot timeSlot = new TimeSlot();
+		timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE).minusDays(1)));
+		timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE).minusDays(1)));
+		timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
+		timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
+		timeSlot.setGarageSpot(OLD_APPOINTMENT_GARAGE_SPOT);
+		
+		AppointmentReminder appointmentReminder = new AppointmentReminder();
+		appointmentReminder.setMessage(OLD_APPOINTMENT_REMINDER_MESSAGE);
+		appointmentReminder.setDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_REMINDER_DATE)));
+		appointmentReminder.setTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_REMINDER_TIME)));
+		
+		appointment.setCustomer(customer);
+		appointment.setBookableServices(bookableService);
+		appointment.setReceipt(receipt);
+		appointment.setReminder(appointmentReminder);
+		appointment.setTechnician(garageTechnician);
+		appointment.setTimeSlot(timeSlot);
+		
+		String error =null;
+		
+		try {
+			appointment=service.deleteAppointment(appointment);
+		}catch(IllegalArgumentException e) {
+			error=e.getMessage();
+		}
+		
+		assertNotNull(appointment);
+		assertEquals(error,"Cannot cancel appointment on same day!");
+
+	}
+	
+	@Test
+	public void TestDeleteAppointmentLessThan24() {
+		Appointment appointment = new Appointment();
+		appointment.setAppointmentId(APPOINTMENT_TO_DELETE_ID);
+		
+		Customer customer= new Customer();
+		customer.setPassword(CUSTOMER_PASSWORD);
+		customer.setUserId(CUSTOMER_USERID);
+		
+		BookableService bookableService = new BookableService();
+		bookableService.setDuration(SERVICE_DURATION);
+		bookableService.setName(SERVICE_NAME);
+		bookableService.setPrice(SERVICE_PRICE);
+		
+		GarageTechnician garageTechnician = new GarageTechnician();
+		garageTechnician.setName(GARAGE_TECHNICIAN_NAME);
+		garageTechnician.setTechnicianId(GARAGE_TECHNICIAN_ID);
+		
+		
+		Receipt receipt = new Receipt();
+		receipt.setTotalPrice(SERVICE_PRICE);
+		
+//		SystemTime.setSysTime(Time.valueOf("16:45:00"));
+//		SystemTime.setSysDate(Date.valueOf("2021-03-17"));
+		
+		TimeSlot timeSlot = new TimeSlot();
+		timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
+		timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
+		timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
+		timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
+		timeSlot.setGarageSpot(OLD_APPOINTMENT_GARAGE_SPOT);
+		
+		AppointmentReminder appointmentReminder = new AppointmentReminder();
+		appointmentReminder.setMessage(OLD_APPOINTMENT_REMINDER_MESSAGE);
+		appointmentReminder.setDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_REMINDER_DATE)));
+		appointmentReminder.setTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_REMINDER_TIME)));
+		
+		appointment.setCustomer(customer);
+		appointment.setBookableServices(bookableService);
+		appointment.setReceipt(receipt);
+		appointment.setReminder(appointmentReminder);
+		appointment.setTechnician(garageTechnician);
+		appointment.setTimeSlot(timeSlot);
+		
+		String error =null;
+		
+		try {
+			appointment=service.deleteAppointment(appointment);
+		}catch(IllegalArgumentException e) {
+			error=e.getMessage();
+		}
+		
+		assertNotNull(appointment);
+		assertEquals(error,"Cannot cancel appointment less than 24hours!");
+
 	}
 
 }
