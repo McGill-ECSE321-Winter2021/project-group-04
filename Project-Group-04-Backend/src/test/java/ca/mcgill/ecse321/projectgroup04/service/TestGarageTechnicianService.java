@@ -97,7 +97,7 @@ public class TestGarageTechnicianService {
 		 	String name = "TestName";	      
 
 	        String error = null;
-
+ 
 	      
 	        GarageTechnician garageTechnician = null;
 	        try {
@@ -110,6 +110,23 @@ public class TestGarageTechnicianService {
 	        assertEquals(error, "Garage Technician with this name already exists");
 
 	    }
+	 
+	 @Test 
+	 public void TestDeleteGarageTechnician() {
+		 String name = "TestNameDelete";
+	     GarageTechnician garageTechnician = new GarageTechnician();
+	     garageTechnician.setName(name);
+	       
+	     try {
+	    	 garageTechnician = service.deleteGarageTechnician(garageTechnician);
+	        } catch (IllegalArgumentException e) {
+	          fail();
+	        }
+
+	        assertNull(garageTechnician);
+	     
+	 }
+	
 	 
 	 
 }

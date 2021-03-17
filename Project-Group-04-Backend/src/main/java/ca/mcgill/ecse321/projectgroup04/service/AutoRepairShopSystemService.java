@@ -459,10 +459,10 @@ public class AutoRepairShopSystemService {
 		if (message == "") {
 			throw new IllegalArgumentException("Message can't be empty");
 		}
-		if (date.equals(null)) { // TODO: not sure of this
+		if (date == null) { // TODO: not sure of this
 			throw new IllegalArgumentException("Date can't be null");
 		}
-		if (time.equals(null)) { // TODO: not sure of this
+		if (time == null) { // TODO: not sure of this
 			throw new IllegalArgumentException("Time can't be null");
 		}
 		if (message == "") {
@@ -1110,44 +1110,69 @@ public class AutoRepairShopSystemService {
 		return appointment;
 	}
 
-	public void deleteAppointmentReminder(AppointmentReminder appointmentReminder) {
+	public AppointmentReminder deleteAppointmentReminder(AppointmentReminder appointmentReminder) {
 		appointmentReminderRepository.delete(appointmentReminder);
+		appointmentReminder = null;
+		return appointmentReminder;
 	}
 
-	public void deleteBookableService(BookableService bookableService) {
+	public BookableService deleteBookableService(BookableService bookableService) {
 		bookableServiceRepository.delete(bookableService);
+		bookableService = null;
+		return bookableService;
 	}
 
-	public void deleteAdministrativeAssistant(AdministrativeAssistant administrativeAssistant) {
-		administrativeAssistantRepository.delete(administrativeAssistant);
+	public AdministrativeAssistant deleteAdministrativeAssistant(AdministrativeAssistant administrativeAssistant) {
+		 administrativeAssistantRepository.delete(administrativeAssistant);
+		 administrativeAssistant = null;
+		 return administrativeAssistant;
 	}
 
-	public void deleteGarageTechnician(GarageTechnician garageTechnician) {
+	public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
 		List<Appointment> appointments = getAllAppointments();
 		for (Appointment appointment : appointments) {
 			if (appointment.getTechnician().equals(garageTechnician)) {
-				appointmentRepository.delete(appointment);
+				throw new IllegalArgumentException("This garage technician still has appointments");
 			}
 		}
 		garageTechnicianRepository.delete(garageTechnician);
+		garageTechnician = null;
+		return garageTechnician;
 
 	}
 
-	public void editAppointmentReminder(AppointmentReminder appointmentReminder, String message) {
+	public AppointmentReminder editAppointmentReminder(AppointmentReminder appointmentReminder, String message) {
+		if(message == appointmentReminder.getMessage()) {
+			throw new IllegalArgumentException("You have to change the message");
+		}
 		appointmentReminder.setMessage(message);
 		appointmentReminderRepository.save(appointmentReminder);
+		return appointmentReminder;
 	}
 
-	public void editBookableService(BookableService bookableService, String name, int price) {
+	public BookableService editBookableService(BookableService bookableService, String name,int duration, int price) {
+		if(name == bookableService.getName() && duration == bookableService.getDuration() && price == bookableService.getPrice()) {
+			throw new IllegalArgumentException("You have to edit one of the fields");
+		}
+		BookableService existingBookableService = getBookableServiceByServiceName(name);
+		if(existingBookableService != null) {
+			throw new IllegalArgumentException("A bookable service with this name already exists");
+		}
 		bookableService.setName(name);
+		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		bookableServiceRepository.save(bookableService);
+		return bookableService;
 	}
 
-	public void editAdministrativeAssistant(AdministrativeAssistant administrativeAssistant, String userId,
+	public AdministrativeAssistant editAdministrativeAssistant(AdministrativeAssistant administrativeAssistant, String userId,
 			String password) {
+		if(userId == administrativeAssistant.getUserId() && password == administrativeAssistant.getPassword()) {
+			throw new IllegalArgumentException("You have to change the username or password or both");
+		}
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
+		return administrativeAssistant;
 	}
 
 	public Profile editProfile(Long profileId, String firstName, String lastName, String emailAddress,
