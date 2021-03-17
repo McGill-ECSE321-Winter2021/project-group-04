@@ -224,11 +224,7 @@ public class AutoRepairShopSystemService {
 		TimeSlot timeSlot = createTimeSlot(startTime, endTime, date, date, garageSpot);
 		Receipt receipt = createReceipt(bookableService.getPrice());
 		GarageTechnician garageTechnician = getGarageTechnicianById(garageTechnicianId);
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date); // convert your date to Calendar object
-		int daysToDecrement = -1;
-		cal.add(Calendar.DATE, daysToDecrement);
-		date = (Date) cal.getTime(); // again get back your date object
+		date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
 		AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
 				"You have an appointment in 24hours");
 		Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
@@ -976,7 +972,7 @@ public class AutoRepairShopSystemService {
 	public List<Appointment> getAppointmentsByDate(Date date) {
 		List<Appointment> appointments = new ArrayList<>();
 		for (Appointment appointment : appointmentRepository.findAll()) {
-			if (appointment.getTimeSlot().getStartDate() == date) {
+			if (appointment.getTimeSlot().getStartDate().equals(date)) {
 				appointments.add(appointment);
 			}
 		}
@@ -1023,21 +1019,19 @@ public class AutoRepairShopSystemService {
 		return false;
 	}
 
-	public void deleteAppointmentById(Long appointmentId) {
+	public boolean deleteAppointmentById(Long appointmentId) {
 		Optional<Appointment> app = appointmentRepository.findById(appointmentId);
 
-		if (app.isPresent()) {
-			appointmentRepository.deleteById(appointmentId);
-		} else {
+		if (!app.isPresent()) {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
-		}
+		} 
 		Appointment appointment = app.get();
 		LocalTime now = LocalTime.now();
 		LocalDate today = LocalDate.now();
 		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
 		LocalTime appTime = appointment.getTimeSlot().getStartTime().toLocalTime();
 		if (today.equals(appDate)) {
-			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
+			throw new IllegalArgumentException("Cannot cancel appointment on same day!");
 		}
 		if (today.plusDays(1).equals(appDate) && now.isAfter(appTime)) {
 			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
@@ -1046,6 +1040,7 @@ public class AutoRepairShopSystemService {
 		receiptRepository.delete(appointment.getReceipt());
 		timeSlotRepository.delete(appointment.getTimeSlot());
 		appointmentRepository.delete(appointment);
+		return true;
 	}
 
 	public void deleteAppointmentReminder(AppointmentReminder appointmentReminder) {
