@@ -1220,6 +1220,7 @@ public class AutoRepairShopSystemService {
 		profile.setLastName(lastName);
 		profile.setPhoneNumber(phoneNumber);
 		profile.setZipCode(zipCode);
+		profileRepository.save(profile);
 		return profile;
 	}
 
