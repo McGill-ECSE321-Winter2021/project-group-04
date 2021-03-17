@@ -2,9 +2,7 @@ package ca.mcgill.ecse321.projectgroup04.controller;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.mcgill.ecse321.projectgroup04.dao.BusinessHourRepository;
 import ca.mcgill.ecse321.projectgroup04.dto.*;
 import ca.mcgill.ecse321.projectgroup04.dto.BusinessHourDto.DayOfWeek;
 import ca.mcgill.ecse321.projectgroup04.model.*;
@@ -39,8 +36,8 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such Profile!");
 		}
 		ProfileDto profileDto = new ProfileDto(profile.getAddressLine(), profile.getPhoneNumber(),
-				profile.getFirstName(), profile.getLastName(), profile.getZipCode(), profile.getEmailAddress(),
-				profile.getProfileId());
+				profile.getFirstName(), profile.getLastName(), profile.getZipCode(), profile.getEmailAddress());
+		profileDto.setProfileId(profile.getProfileId());
 		return profileDto;
 
 	}
@@ -50,8 +47,8 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such AdministrativeAssistant!");
 		}
 		AdministrativeAssistantDto administrativeAssistantDto = new AdministrativeAssistantDto(
-				administrativeAssistant.getId(), administrativeAssistant.getUserId(),
-				administrativeAssistant.getPassword());
+				administrativeAssistant.getUserId(), administrativeAssistant.getPassword());
+		administrativeAssistantDto.setId(administrativeAssistant.getId());
 		return administrativeAssistantDto;
 	}
 
@@ -60,6 +57,7 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such Owner!");
 		}
 		OwnerDto ownerDto = new OwnerDto(owner.getUserId(), owner.getPassword());
+		ownerDto.setId(owner.getId());
 		return ownerDto;
 	}
 
@@ -67,8 +65,9 @@ public class AutoRepairShopSystemRestController {
 		if (appointmentReminder == null) {
 			throw new IllegalArgumentException("There is no such AppointmentReminder!");
 		}
-		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getReminderId(),
-				appointmentReminder.getDate(), appointmentReminder.getTime(), appointmentReminder.getMessage());
+		AppointmentReminderDto appointmentReminderDto = new AppointmentReminderDto(appointmentReminder.getDate(),
+				appointmentReminder.getTime(), appointmentReminder.getMessage());
+		appointmentReminderDto.setId(appointmentReminder.getReminderId());
 		return appointmentReminderDto;
 
 	}
@@ -77,7 +76,8 @@ public class AutoRepairShopSystemRestController {
 		if (receipt == null) {
 			throw new IllegalArgumentException("There is no such Receipt!");
 		}
-		ReceiptDto receiptDto = new ReceiptDto(receipt.getTotalPrice(), receipt.getReceiptId());
+		ReceiptDto receiptDto = new ReceiptDto(receipt.getTotalPrice());
+		receiptDto.setId(receipt.getReceiptId());
 		return receiptDto;
 	}
 
@@ -87,6 +87,7 @@ public class AutoRepairShopSystemRestController {
 		}
 		TimeSlotDto timeSlotDto = new TimeSlotDto(timeSlot.getStartTime(), timeSlot.getEndTime(),
 				timeSlot.getStartDate(), timeSlot.getEndDate(), timeSlot.getGarageSpot());
+		timeSlotDto.setId(timeSlot.getTimeSlotId());
 		return timeSlotDto;
 	}
 
@@ -94,8 +95,8 @@ public class AutoRepairShopSystemRestController {
 		if (garageTechnician == null) {
 			throw new IllegalArgumentException("There is no such GarageTechnician!");
 		}
-		GarageTechnicianDto garageTechnicianDto = new GarageTechnicianDto(garageTechnician.getName(),
-				garageTechnician.getTechnicianId());
+		GarageTechnicianDto garageTechnicianDto = new GarageTechnicianDto(garageTechnician.getName());
+		garageTechnicianDto.setTechnicianId(garageTechnician.getTechnicianId());
 		return garageTechnicianDto;
 
 	}
@@ -105,7 +106,8 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such BookableService!");
 		}
 		BookableServiceDto bookableServiceDto = new BookableServiceDto(bookableService.getDuration(),
-				bookableService.getPrice(), bookableService.getName(), bookableService.getServiceId());
+				bookableService.getPrice(), bookableService.getName());
+		bookableServiceDto.setId(bookableService.getServiceId());
 		return bookableServiceDto;
 	}
 
@@ -149,6 +151,7 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such Reminder!");
 		}
 		ReminderDto reminderDto = new ReminderDto(reminder.getMessage(), reminder.getDate(), reminder.getTime());
+		reminderDto.setReminderId(reminder.getReminderId());
 		return reminderDto;
 	}
 
@@ -192,6 +195,7 @@ public class AutoRepairShopSystemRestController {
 		appointmentDto.setBookableService(convertToDto(appointment.getBookableServices()));
 		appointmentDto.setReminder(convertToDto(appointment.getReminder()));
 		appointmentDto.setTimeSlot(convertToDto(appointment.getTimeSlot()));
+		appointmentDto.setId(appointment.getAppointmentId());
 		return appointmentDto;
 	}
 
@@ -204,11 +208,10 @@ public class AutoRepairShopSystemRestController {
 		if (customer == null) {
 			throw new IllegalArgumentException("There is no such Customer!");
 		}
-		CustomerDto customerDto = new CustomerDto(customer.getUserId(), customer.getUserId());
+		CustomerDto customerDto = new CustomerDto(customer.getUserId(), customer.getPassword());
 		customerDto.setProfile(convertToDto(customer.getCustomerProfile()));
 		customerDto.setCar(convertToDto(customer.getCar()));
-		// customerDto.setReminders(createRemindersDtosForCustomer(c));
-
+		customerDto.setId(customer.getId());
 		return customerDto;
 	}
 
@@ -223,6 +226,7 @@ public class AutoRepairShopSystemRestController {
 		}
 
 		FieldTechnicianDto fieldTechnicianDto = new FieldTechnicianDto(fieldTechnician.getName());
+		fieldTechnicianDto.setId(fieldTechnician.getTechnicianId());
 		return fieldTechnicianDto;
 
 	}
@@ -244,6 +248,7 @@ public class AutoRepairShopSystemRestController {
 		emergencyServiceDto.setFieldTechnician(convertToDto(emergencyService.getTechnician()));
 		emergencyServiceDto.setCustomer(convertToDto(emergencyService.getCustomer()));
 		emergencyServiceDto.setReceipt(convertToDto(emergencyService.getReceipt()));
+		emergencyServiceDto.setId(emergencyService.getServiceId());
 
 		return emergencyServiceDto;
 
@@ -280,7 +285,8 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such BusinessHour!");
 		}
 		BusinessHourDto businessHourDto = new BusinessHourDto(convertToDto(businessHour.getDayOfWeek().toString()),
-				businessHour.getStartTime(), businessHour.getEndTime(), businessHour.getHourId());
+				businessHour.getStartTime(), businessHour.getEndTime());
+		businessHourDto.setId(businessHour.getHourId());
 
 		return businessHourDto;
 	}
@@ -327,7 +333,8 @@ public class AutoRepairShopSystemRestController {
 
 		BusinessDto businessDto = new BusinessDto(business.getName(), business.getAddress(), business.getPhoneNumber(),
 				business.getEmailAddress(), createBusinessHoursDtosForBusiness(business),
-				createTimeSlotsDtosForBusiness(business), business.getId());
+				createTimeSlotsDtosForBusiness(business));
+		businessDto.setId(business.getId());
 		return businessDto;
 	}
 
@@ -343,8 +350,8 @@ public class AutoRepairShopSystemRestController {
 		}
 
 		CheckupReminderDto checkupReminderDto = new CheckupReminderDto(checkupReminder.getDate(),
-				checkupReminder.getTime(), checkupReminder.getMessage(), checkupReminder.getReminderId());
-
+				checkupReminder.getTime(), checkupReminder.getMessage());
+		checkupReminderDto.setId(checkupReminder.getReminderId());
 		return checkupReminderDto;
 	}
 
@@ -357,7 +364,7 @@ public class AutoRepairShopSystemRestController {
 		return profileDtos;
 	}
 
-	@GetMapping(value = { "/profiles/{Id}", "/profiles/{Id}/" })
+	@GetMapping(value = { "/profile/{Id}", "/profile/{Id}/" })
 	public ProfileDto getProfileById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getProfile(Id));
 	}
@@ -371,7 +378,7 @@ public class AutoRepairShopSystemRestController {
 		return appointmentDtos;
 	}
 
-	@GetMapping(value = { "/appointments/{Id}", "/appointments/{Id}/" })
+	@GetMapping(value = { "/appointment/{Id}", "/appointment/{Id}/" })
 	public AppointmentDto getAppointmentById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getAppointment(Id));
 	}
@@ -385,7 +392,7 @@ public class AutoRepairShopSystemRestController {
 		return receiptDtos;
 	}
 
-	@GetMapping(value = { "/receipts/{Id}", "/receipts/{Id}/" })
+	@GetMapping(value = { "/receipt/{Id}", "/receipt/{Id}/" })
 	public ReceiptDto getReceiptById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getReceipt(Id));
 	}
@@ -418,23 +425,23 @@ public class AutoRepairShopSystemRestController {
 		return ownerDto;
 	}
 
-	@PostMapping(value = { "/owner/{id}/delete", "/owner/{id}/delete/" })
-	public void deleteOwner(@PathVariable("userId") Long id) throws IllegalArgumentException {
-		Owner owner = service.getOwnerByUserId(id);
+	@PostMapping(value = { "/delete/owner/{Id}", "/delete/owner/{Id}/" })
+	public void deleteOwner(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		Owner owner = service.getOwnerByUserId(Id);
 		service.deleteOwner(owner);
 	}
 
-	@PostMapping(value = { "/owner/{id}/edit", "/owner/{id}/edit/" })
-	public void editOwner(@PathVariable("id") Long id, @RequestParam String userId, @RequestParam String password)
+	@PostMapping(value = { "/edit/owner/{Id}", "/edit/owner/{Id}/" })
+	public void editOwner(@PathVariable("Id") Long Id, @RequestParam String userId, @RequestParam String password)
 			throws IllegalArgumentException {
-		Owner owner = service.getOwnerByUserId(id);
+		Owner owner = service.getOwnerByUserId(Id);
 		service.editOwner(owner, userId, password);
 	}
 
 	///////////////////////////////// EMERGENCY
 	///////////////////////////////// SERVICE//////////////////////////////////////
 
-	@GetMapping(value = { "/emergencyservice", "/emergencyservice/" })
+	@GetMapping(value = { "/emergencyservices", "/emergencyservices/" })
 	public List<EmergencyServiceDto> getAllEmergencyServices() {
 		List<EmergencyServiceDto> emergencyServiceDtos = new ArrayList<>();
 		for (EmergencyService emergencyService : service.getAllEmergencyServices()) {
@@ -444,22 +451,22 @@ public class AutoRepairShopSystemRestController {
 		return emergencyServiceDtos;
 	}
 
-	@GetMapping(value = { "/emergencyservice/{Id}", "/emergencyservice/{Id}/" })
+	@GetMapping(value = { "/emergencyService/{Id}", "/emergencyService/{Id}/" })
 	public EmergencyServiceDto getEmergencyServiceById(@PathVariable("Id") Long Id) {
 		return convertToDto(service.getEmergencyServiceByServiceId(Id));
 	}
 
-	@PostMapping(value = { "/create/emergencyService/{name}", "/create/emergencyService/{name}/" })
-	public EmergencyServiceDto createEmergencyService(@PathVariable("name") String name, @RequestParam int duration,
-			@RequestParam int price) {
-		EmergencyService emergencyService = service.createEmergencyService(name, price);
+	@PostMapping(value = { "/create/emergencyService/{serviceName}", "/create/emergencyService/{serviceName}/" })
+	public EmergencyServiceDto createEmergencyService(@PathVariable("serviceName") String serviceName,
+			@RequestParam int duration, @RequestParam int price) {
+		EmergencyService emergencyService = service.createEmergencyService(serviceName, price);
 		EmergencyServiceDto emergencyServiceDto = convertToDto(emergencyService);
 		return emergencyServiceDto;
 	}
 
 	@PostMapping(value = { "/emergencyService/{userId}/{serviceName}", "/emergencyService/{userId}/{serviceName}/" })
 	public EmergencyServiceDto bookEmergencyService(@PathVariable("userId") String userId,
-			@PathVariable("Name of Service") String serviceName, @RequestParam(name = "Location") String location,
+			@PathVariable("serviceName") String serviceName, @RequestParam(name = "Location") String location,
 			@RequestParam(name = "Field Technician") FieldTechnicianDto fieldTechnicianDto)
 			throws IllegalArgumentException {
 
@@ -487,20 +494,20 @@ public class AutoRepairShopSystemRestController {
 
 	// Will not allow updating emergency service as it is spontaneous
 
-	@PostMapping(value = { "/emergencyServices/{serviceId}/edit", "/emergencyServices/{serviceId}/edit/" })
+	@PostMapping(value = { "/edit/emergencyService/{serviceId}", "/edit/emergencyService/{serviceId}/" })
 	public void editEmergencyService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
 			@RequestParam int price) throws IllegalArgumentException {
 		EmergencyService emergencyService = service.getEmergencyServiceByServiceId(serviceId);
 		service.editEmergencyService(emergencyService, name, price);
 	}
 
-	@PostMapping(value = { "/emergencyServices/{serviceId}/delete", "/emergencyServices/{serviceId}/delete/" })
+	@PostMapping(value = { "/delete/emergencyService/{serviceId}", "/delete/emergencyServices/{serviceId}/" })
 	public void deleteEmergencyService(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
 		EmergencyService emergencyService = service.getEmergencyServiceByServiceId(serviceId);
 		service.deleteEmergencyService(emergencyService);
 	}
 
-	@PostMapping(value = { "/emergencyService/{serviceId}/end", "/emergencyService/{serviceId}/end/" })
+	@PostMapping(value = { "/end/emergencyService/{serviceId}", "/end/emergencyService/{serviceId}/" })
 	public void endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
 		EmergencyService emergencyServiceBooking = service.getEmergencyServiceByServiceId(serviceId);
 		service.endEmergencyService(emergencyServiceBooking);
@@ -531,14 +538,14 @@ public class AutoRepairShopSystemRestController {
 		return fieldTechnicianDto;
 	}
 
-	@PostMapping(value = { "/fieldTechnician/{id}/delete", "/fieldTechnician/{id}/delete/" })
-	public void deleteFieldTechnician(@PathVariable("userId") Long id) throws IllegalArgumentException {
+	@PostMapping(value = { "/delete/fieldTechnician/{Id}", "/delete/fieldTechnician/{Id}/" })
+	public void deleteFieldTechnician(@PathVariable("Id") Long id) throws IllegalArgumentException {
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(id);
 		service.deleteFieldTechnician(fieldTechnician);
 	}
 
-	@PostMapping(value = { "/fieldTechnician/{id}/edit", "/fieldTechnician/{id}/edit/" })
-	public void editFieldTechnician(@PathVariable("id") Long id, @RequestParam String name)
+	@PostMapping(value = { "/edit/fieldTechnician/{Id}", "/edit/fieldTechnician/{Id}/" })
+	public void editFieldTechnician(@PathVariable("Id") Long id, @RequestParam String name)
 			throws IllegalArgumentException {
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(id);
 		service.editFieldTechnician(fieldTechnician, name);
@@ -576,16 +583,20 @@ public class AutoRepairShopSystemRestController {
 			@RequestParam String phoneNumber, @RequestParam String emailAddress,
 			@RequestParam List<BusinessHour> businessHours, @RequestParam List<TimeSlot> timeSlots)
 			throws IllegalArgumentException {
+
 		Business business = service.createBusiness(name, address, phoneNumber, emailAddress, businessHours, timeSlots);
 		BusinessDto businessDto = convertToDto(business);
 		return businessDto;
 	}
 
-	@PostMapping(value = { "/update/businessInformation/{name}", "/update/businessInformation/{name}/" })
-	public void updateBusinessInfo(@PathVariable("name") String name, @RequestParam String address,
-			@RequestParam String phoneNumber, @RequestParam String emailAddress,
+	@PostMapping(value = { "/edit/businessInformation/{Id}", "/edit/businessInformation/{Id}/" })
+	public BusinessDto updateBusinessInfo(@PathVariable("Id") Long Id, @RequestParam String name,
+			@RequestParam String address, @RequestParam String phoneNumber, @RequestParam String emailAddress,
 			@RequestParam List<BusinessHour> businessHours, @RequestParam List<TimeSlot> timeSlots) {
-		service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours, timeSlots);
+		Business business = service.updateBusinessInformation(Id, name, address, phoneNumber, emailAddress,
+				businessHours, timeSlots);
+		BusinessDto businessDto = convertToDto(business);
+		return businessDto;
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -665,7 +676,7 @@ public class AutoRepairShopSystemRestController {
 		return administrativeAssistantDtos;
 	}
 
-	@GetMapping(value = { "/register/administrativeAsisstant/{Id}", "/register/administrativeAsisstant/{Id}/" })
+	@GetMapping(value = { "/administrativeAsisstant/{Id}", "/administrativeAsisstant/{Id}/" })
 	public AdministrativeAssistantDto getAdministrativeAssistantById(@PathVariable("Id") Long Id)
 			throws IllegalArgumentException {
 		return convertToDto(service.getAdministrativeAssistantById(Id));
@@ -736,9 +747,9 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(bookableService);
 	}
 
-	@PostMapping(value = { "/create/bookableService/{name}", "/create/bookableService/{name}/" })
-	public BookableServiceDto createBookableService(@PathVariable("name") String name, @RequestParam int duration,
-			@RequestParam int price) {
+	@PostMapping(value = { "/create/bookableService/{serviceName}", "/create/bookableService/{serviceName}/" })
+	public BookableServiceDto createBookableService(@PathVariable("serviceName") String name,
+			@RequestParam int duration, @RequestParam int price) {
 		BookableService bookableService = service.createBookableService(name, price, duration);
 		BookableServiceDto bookableServiceDto = convertToDto(bookableService);
 		return bookableServiceDto;
@@ -774,7 +785,7 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(garageTechnician);
 	}
 
-	@PostMapping(value = { "/garageTechnician/{name}", "/garageTechnician/{name}/" })
+	@PostMapping(value = { "/register/garageTechnician/{name}", "/register/garageTechnician/{name}/" })
 	public GarageTechnicianDto createGarageTechnician(@PathVariable("name") String name)
 			throws IllegalArgumentException {
 		GarageTechnician garageTechnician = service.createGarageTechnician(name);
@@ -782,7 +793,7 @@ public class AutoRepairShopSystemRestController {
 		return garageTechnicianDto;
 	}
 
-	@PostMapping(value = { "/appointments/{userId}/{serviceName}", "/appointments/{userId}/{serviceName}/" })
+	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
@@ -802,7 +813,7 @@ public class AutoRepairShopSystemRestController {
 		return null;
 	}
 
-	@PostMapping(value = { "profiles/{first}/{last}", "profiles/{first}/{last}/" })
+	@PostMapping(value = { "/create/profile/{first}/{last}", "/create/profile/{first}/{last}/" })
 	public ProfileDto createProfile(@PathVariable("first") String firstName, @PathVariable("last") String lastName,
 			@RequestParam(name = "Email Address") String emailAddress,
 			@RequestParam(name = "Phone Number") String phoneNumber,
@@ -812,7 +823,7 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(profile);
 	}
 
-	@GetMapping(value = { "profiles/{first}/{last}", "profiles/{first}/{last}/" })
+	@GetMapping(value = { "/profile/{first}/{last}", "/profile/{first}/{last}/" })
 	public ProfileDto getProfileByFirstAndLast(@PathVariable("first") String firstName,
 			@PathVariable("last") String lastName) throws IllegalArgumentException {
 		Profile profile = service.getProfileByFirstAndLast(firstName, lastName);
@@ -822,7 +833,7 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(profile);
 	}
 
-	@PostMapping(value = { "profiles/{profileId}/edit", "profiles/{profileId}/edit/" })
+	@PostMapping(value = { "/edit/profile/{profileId}", "/edit/profile/{profileId}/" })
 	public ProfileDto editProfile(@PathVariable("profileId") Long profileId,
 			@RequestParam(name = "Email Address") String emailAddress,
 			@RequestParam(name = "Phone Number") String phoneNumber,
@@ -852,8 +863,8 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(customer);
 	}
 
-	@PostMapping(value = { "/customer/{userId}", "/customer/{userId}/" })
-	public CustomerDto createCustomer(@PathVariable("userId") String userId, @RequestParam String password,
+	@PostMapping(value = { "/register/customer/{userId}", "/register/customer/{userId}/" })
+	public CustomerDto registerCustomer(@PathVariable("userId") String userId, @RequestParam String password,
 			@RequestParam List<Reminder> reminders, @RequestParam Car car, @RequestParam Profile profile)
 			throws IllegalArgumentException {
 		Customer customer = service.createCustomer(userId, password, reminders, car, profile);
@@ -872,9 +883,9 @@ public class AutoRepairShopSystemRestController {
 		return carDtos;
 	}
 
-	@GetMapping(value = { "/cars/{Model, Year, color}", "/cars/{Model, Year, color}/" })
-	public CarDto getCarByModelAndYearAndColor(@PathVariable String model, @PathVariable String year,
-			@PathVariable String color) throws IllegalArgumentException {
+	@GetMapping(value = { "/car/{Model, Year, Color}", "/car/{Model, Year, Color}/" })
+	public CarDto getCarByModelAndYearAndColor(@PathVariable("Model") String model, @PathVariable("Year") String year,
+			@PathVariable("Color") String color) throws IllegalArgumentException {
 		Car car = service.getCarByModelAndYearAndColor(model, year, color);
 		if (model == null || year == null || color == null) {
 			throw new IllegalArgumentException("No car with such model, year or color!");
@@ -882,7 +893,7 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(car);
 	}
 
-	@PostMapping(value = { "/car", "/car/{carId}/" })
+	@PostMapping(value = { "/add/car", "/add/car/" })
 	public CarDto createCar(@RequestParam String model, @RequestParam String year, @RequestParam String color)
 			throws IllegalArgumentException {
 		Car car1 = service.createCar(model, year, color);
@@ -903,7 +914,7 @@ public class AutoRepairShopSystemRestController {
 
 	@GetMapping(value = { "/timeSlot/{startDate, startTime}", "/timeSlot/{startDate, startTime}/" })
 	public TimeSlotDto getTimeSlotByStartDateAndStartTime(
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") Date startDate,
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime)
 			throws IllegalArgumentException {
 		TimeSlot timeSlot = service.getTimeSlotByStartDateAndStartTime(startDate, startTime);
@@ -913,10 +924,10 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(timeSlot);
 	}
 
-	@PostMapping(value = { "/timeSlot/{timeSlotId}", "/timeSlot/{timeSlotId}/" })
+	@PostMapping(value = { "/add/timeSlot/{timeSlotId}", "/add/timeSlot/{timeSlotId}/" })
 	public TimeSlotDto createTimeSlot(@RequestParam("timeSlotId") Long timeSlotId,
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date endDate,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") Date startDate,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") Date endDate,
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime,
 			@RequestParam Integer garageSpot) throws IllegalArgumentException {
@@ -925,20 +936,20 @@ public class AutoRepairShopSystemRestController {
 		return timeSlotDtos;
 	}
 
-	@PostMapping(value = { "/appointments/{appointmentId}/cancel", "/appointments/{appointmentId}/cancel/" })
+	@PostMapping(value = { "/cancel/appointment/{appointmentId}", "/cancel/appointment/{appointmentId}/" })
 	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
 		Appointment appointment = service.getAppointment(appointmentId);
-		service.deleteAppointment(appointment,null,null);
+		service.deleteAppointment(appointment, null, null);
 	}
 
-	@PostMapping(value = { "/appointmentReminders/{reminderId}/delete", "/appointmentReminders/{reminderId}/delete/" })
+	@PostMapping(value = { "/delete/appointmentReminder/{reminderId}", "/delete/appointmentReminder/{reminderId}/" })
 	public void deleteAppointmentReminder(@PathVariable("reminderId") Long reminderId) throws IllegalArgumentException {
 
 		AppointmentReminder appointmentReminder = service.getAppointmentReminderById(reminderId);
 		service.deleteAppointmentReminder(appointmentReminder);
 	}
 
-	@PostMapping(value = { "appointmentReminders/{reminderId}/edit", "appointmentReminders/{reminderId}/edit/" })
+	@PostMapping(value = { "/edit/appointmentReminder/{reminderId}", "/edit/appointmentReminder/{reminderId}/" })
 	public void editAppointmentReminder(@PathVariable("reminderId") Long reminderId, @RequestParam String message)
 			throws IllegalArgumentException {
 		AppointmentReminder appointmentReminder = service.getAppointmentReminderById(reminderId);
@@ -946,29 +957,29 @@ public class AutoRepairShopSystemRestController {
 
 	}
 
-	@PostMapping(value = { "/bookableServices/{serviceId}/delete", "/bookableServices/{serviceId}/delete/" })
+	@PostMapping(value = { "/delete/bookableService/{serviceId}", "/delete/bookableService/{serviceId}/" })
 	public void deleteBookableService(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
 		BookableService bookableService = service.getBookableServiceById(serviceId);
 		service.deleteBookableService(bookableService);
 	}
 
-	@PostMapping(value = { "/bookableServices/{serviceId}/edit", "/bookableServices/{serviceId}/edit/" })
+	@PostMapping(value = { "/edit/bookableServices/{serviceId}", "/edit/bookableServices/{serviceId}/" })
 	public void editBookableService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
 			@RequestParam int duration, @RequestParam int price) throws IllegalArgumentException {
 		BookableService bookableService = service.getBookableServiceById(serviceId);
 		service.editBookableService(bookableService, name, duration, price);
 	}
 
-	@PostMapping(value = { "/administrativeAssistants/{id}/delete", "/administrativeAssistants/{id}/delete/" })
-	public void deleteAdministrativeAssistant(@PathVariable("userId") Long id) throws IllegalArgumentException {
-		AdministrativeAssistant administrativeAssistant = service.getAdministrativeAssistantById(id);
+	@PostMapping(value = { "/delete/administrativeAssistant/{Id}", "/delete/administrativeAssistant/{Id}/" })
+	public void deleteAdministrativeAssistant(@PathVariable("Id") Long Id) throws IllegalArgumentException {
+		AdministrativeAssistant administrativeAssistant = service.getAdministrativeAssistantById(Id);
 		service.deleteAdministrativeAssistant(administrativeAssistant);
 	}
 
-	@PostMapping(value = { "/administrativeAssistants/{id}/edit", "/administrativeAssistants/{id}/edit/" })
-	public void editAdministariveAssistant(@PathVariable("id") Long id, @RequestParam String userId,
+	@PostMapping(value = { "/edit/administrativeAssistant/{Id}", "/edit/administrativeAssistants/{Id}/" })
+	public void editAdministariveAssistant(@PathVariable("Id") Long Id, @RequestParam String userId,
 			@RequestParam String password) throws IllegalArgumentException { // TODO:npt sure of password
-		AdministrativeAssistant administrativeAssistant = service.getAdministrativeAssistantById(id);
+		AdministrativeAssistant administrativeAssistant = service.getAdministrativeAssistantById(Id);
 		service.editAdministrativeAssistant(administrativeAssistant, userId, password);
 	}
 
@@ -979,7 +990,7 @@ public class AutoRepairShopSystemRestController {
 		service.deleteGarageTechnician(garageTechnician);
 	}
 
-	@PostMapping(value = { "/customer/{Id}/delete", "/customer/{Id}/delete/" })
+	@PostMapping(value = { "/delete/customer/{Id}", "/delete/customer/{Id}/" })
 	public void deleteCustomer(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		Customer customer = service.getCustomerById(Id);
 		service.deleteCustomer(customer);

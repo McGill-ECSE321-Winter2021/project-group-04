@@ -5,6 +5,7 @@ import java.sql.Time;
 
 public class ReminderDto {
 	private Long reminderId;
+
 	public Long getReminderId() {
 		return reminderId;
 	}
@@ -41,14 +42,10 @@ public class ReminderDto {
 	private Date date;
 	private Time time;
 
-	
-	public ReminderDto(String aMessage,Date aDate,Time aTime) {
-		message=aMessage;
-		date=aDate;
-		time=aTime;
+	public ReminderDto(String aMessage, Date aDate, Time aTime) {
+		message = aMessage;
+		date = aDate;
+		time = aTime;
 	}
-	
-
-
 
 }

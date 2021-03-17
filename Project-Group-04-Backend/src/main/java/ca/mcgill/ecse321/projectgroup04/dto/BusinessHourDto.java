@@ -10,17 +10,16 @@ public class BusinessHourDto {
     private DayOfWeek dayOfWeek;
     private Time startTime;
     private Time endTime;
-    private Long Hourid;
+    private Long hourId;
 
     public BusinessHourDto() {
     }
 
-    public BusinessHourDto(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime, Long aId) {
+    public BusinessHourDto(DayOfWeek aDayOfWeek, Time aStartTime, Time aEndTime) {
 
         this.dayOfWeek = aDayOfWeek;
         this.startTime = aStartTime;
         this.endTime = aEndTime;
-        this.Hourid = aId;
 
     }
 
@@ -46,7 +45,11 @@ public class BusinessHourDto {
     }
 
     public Long getId() {
-        return Hourid;
+        return hourId;
+    }
+
+    public void setId(Long id) {
+        this.hourId = id;
     }
 
     public void setDayOfWeek(DayOfWeek dow) {

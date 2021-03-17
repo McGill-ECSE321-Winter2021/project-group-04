@@ -4,17 +4,16 @@ public class BookableServiceDto {
 	private int duration;
 	private int price;
 	private String name;
-	private Long id;
+	private Long bookableServiceId;
 
 	public BookableServiceDto() {
 
 	}
 
-	public BookableServiceDto(int duration, int price, String name, Long id) {
+	public BookableServiceDto(int duration, int price, String name) {
 		this.duration = duration;
 		this.price = price;
 		this.name = name;
-		this.id = id;
 	}
 
 	public int getDuration() {
@@ -28,7 +27,13 @@ public class BookableServiceDto {
 	public String getName() {
 		return name;
 	}
+
 	public Long getId() {
-		return this.id;
+		return this.bookableServiceId;
 	}
+
+	public void setId(Long id) {
+		this.bookableServiceId = id;
+	}
+
 }
