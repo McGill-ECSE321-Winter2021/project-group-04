@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
 import ca.mcgill.ecse321.projectgroup04.dao.*;
-import ca.mcgill.ecse321.projectgroup04.dto.GarageTechnicianDto;
 import ca.mcgill.ecse321.projectgroup04.model.*;
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
 
