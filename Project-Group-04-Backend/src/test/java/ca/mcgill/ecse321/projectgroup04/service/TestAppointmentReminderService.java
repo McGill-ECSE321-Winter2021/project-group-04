@@ -90,51 +90,50 @@ public class TestAppointmentReminderService {
 
 	}
 	
-//	 @Test
-//	    public void TestCreateAdministrativeAssistantNoDate() {
-//			Date date = null;
-//	        Time time = Time.valueOf(LocalTime.parse("10:00:00"));
-//	        String message= "TestMessage";
-//	       
-//
-//	        String error = null;
-//
-//	       
-//
-//	        AppointmentReminder appointmentReminder = null;
-//	        try {
-//	        	appointmentReminder = service.createAppointmentReminder(date, time, message);
-//	        } catch (IllegalArgumentException e) {
-//	            error = e.getMessage();
-//	        }
-//
-//	        assertNull(appointmentReminder);
-//	        assertEquals(error, "Date can't be null");
-//
-//	    }
-//
-//	 @Test
-//	    public void TestCreateAdministrativeAssistantNoTime() {
-//			Date date = Date.valueOf(LocalDate.parse("2021-03-20"));
-//	        Time time = null;
-//	        String message= "TestMessage";
-//	       
-//
-//	        String error = null;
-//
-//	       
-//
-//	        AppointmentReminder appointmentReminder = null;
-//	        try {
-//	        	appointmentReminder = service.createAppointmentReminder(date, time, message);
-//	        } catch (IllegalArgumentException e) {
-//	            error = e.getMessage();
-//	        }
-//
-//	        assertNull(appointmentReminder);
-//	        assertEquals(error, "Time can't be null");
-//
-//	    }
+	 @Test
+	    public void TestCreateAppointmentReminderNoDate() {
+			Date date =null;
+			
+	        Time time = Time.valueOf(LocalTime.parse("10:00:00"));
+	        String message= "TestMessage";
+	       
+
+	        String error = null;
+
+	        AppointmentReminder appointmentReminder = null;
+	        try {
+	        	appointmentReminder = service.createAppointmentReminder(date, time, message);
+	        } catch (IllegalArgumentException e) {
+	            error = e.getMessage();	
+	        }
+
+	        assertNull(appointmentReminder);
+	        assertEquals(error, "Date can't be null");
+
+	    }
+
+	 @Test
+	    public void TestCreateAppointmentNoTime() {
+			Date date = Date.valueOf(LocalDate.parse("2021-03-20"));
+	        Time time = null;
+	        String message= "TestMessage";
+	       
+
+	        String error = null;
+
+	       
+
+	        AppointmentReminder appointmentReminder = null;
+	        try {
+	        	appointmentReminder = service.createAppointmentReminder(date, time, message);
+	        } catch (IllegalArgumentException e) {
+	            error = e.getMessage();
+	        }
+
+	        assertNull(appointmentReminder);
+	        assertEquals(error, "Time can't be null");
+
+	    }
 	 @Test
 	    public void TestCreateAdministrativeAssistantNoMessage() {
 			Date date = Date.valueOf(LocalDate.parse("2021-03-20"));
@@ -158,7 +157,75 @@ public class TestAppointmentReminderService {
 
 	    }
 	 
-//	
+	 @Test 
+	 public void TestDeleteAppointmentReminder() {
+		 Date date = Date.valueOf(LocalDate.parse("2021-03-20"));
+	     Time time = Time.valueOf(LocalTime.parse("10:00:00"));
+	     String message= "TestMessage";
+	     
+	     AppointmentReminder appointmentReminder = new AppointmentReminder();
+	     appointmentReminder.setDate(date);
+	     appointmentReminder.setTime(time);
+	     appointmentReminder.setMessage(message);
+	     try {
+	        	appointmentReminder = service.deleteAppointmentReminder(appointmentReminder);
+	      } catch (IllegalArgumentException e) {
+	          fail();
+	        }
+
+	        assertNull(appointmentReminder);
+	     
+	 }
+	 
+	 @Test 
+	 public void TestEditMessageAppointmentReminder() {
+		 Date date = Date.valueOf(LocalDate.parse("2021-03-20"));
+	     Time time = Time.valueOf(LocalTime.parse("10:00:00"));
+	     String message= "TestMessage";
+	     String newMessage ="Hello";
+	     
+	     AppointmentReminder appointmentReminder = new AppointmentReminder();
+	     appointmentReminder.setDate(date);
+	     appointmentReminder.setTime(time);
+	     appointmentReminder.setMessage(message);
+	     try {
+	        	appointmentReminder = service.editAppointmentReminder(appointmentReminder, newMessage);
+	      } catch (IllegalArgumentException e) {
+	          fail();
+	        }
+
+	        assertNotNull(appointmentReminder);
+	        assertEquals(date, appointmentReminder.getDate());
+	        assertEquals(time, appointmentReminder.getTime());
+	        assertEquals(newMessage, appointmentReminder.getMessage());
+	     
+	 }
+	 
+	 @Test 
+	 public void TestEditSameMessageAppointmentReminder() {
+		 Date date = Date.valueOf(LocalDate.parse("2021-03-20"));
+	     Time time = Time.valueOf(LocalTime.parse("10:00:00"));
+	     String message= "TestMessage";
+	     String newMessage ="TestMessage";
+	     String error = null;
+	     
+	     AppointmentReminder appointmentReminder = new AppointmentReminder();
+	     appointmentReminder.setDate(date);
+	     appointmentReminder.setTime(time);
+	     appointmentReminder.setMessage(message);
+	     try {
+	        	appointmentReminder = service.editAppointmentReminder(appointmentReminder, newMessage);
+	      } catch (IllegalArgumentException e) {
+	         error = e.getMessage();
+	        }
+
+	        assertNotNull(appointmentReminder);
+	        assertEquals(date, appointmentReminder.getDate());
+	        assertEquals(time, appointmentReminder.getTime());
+	        assertEquals(message, appointmentReminder.getMessage());
+	        assertEquals(error, "You have to change the message");
+	     
+	 }
 	 
 		
 }

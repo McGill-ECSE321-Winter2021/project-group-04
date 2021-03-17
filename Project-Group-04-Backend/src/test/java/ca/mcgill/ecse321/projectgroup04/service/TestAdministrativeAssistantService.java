@@ -144,7 +144,104 @@ public class TestAdministrativeAssistantService {
 
 	    }
 	 
-	
+	 @Test
+	 public void TestDeleteAdministrativeAssistant() {
+		 String userId= "Hello";
+		 String password= "World";
+		 AdministrativeAssistant administrativeAssistant =new AdministrativeAssistant();
+		 administrativeAssistant.setUserId(userId);
+		 administrativeAssistant.setPassword(password);
+		 
+		 try {
+			 administrativeAssistant= service.deleteAdministrativeAssistant(administrativeAssistant);
+		 }catch (IllegalArgumentException e) {
+	            fail();
+	        }
+		 assertNull(administrativeAssistant);
+		 
+		 
+	 }
+	 
+	 @Test 
+	 public void TestEditUserIdAdministrativeAssistant() {
+		 String userId = "first";
+		 String password = "password";
+		 String newUserId = "second";
+		 AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
+		 administrativeAssistant.setUserId(userId);
+		 administrativeAssistant.setPassword(password);
+		 
+		 try {
+			 administrativeAssistant = service.editAdministrativeAssistant(administrativeAssistant, newUserId, password);
+		 }catch (IllegalArgumentException e) {
+	            fail();
+	        }
+		 assertNotNull(administrativeAssistant);
+		 assertEquals(newUserId, administrativeAssistant.getUserId());
+		 assertEquals(password, administrativeAssistant.getPassword());
+		
+	 }
+	 @Test 
+	 public void TestEditPasswordAdministrativeAssistant() {
+		 String userId = "userId";
+		 String password = "first";
+		 String newPassword = "second";
+		 AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
+		 administrativeAssistant.setUserId(userId);
+		 administrativeAssistant.setPassword(password);
+		 
+		 try {
+			 administrativeAssistant = service.editAdministrativeAssistant(administrativeAssistant, userId, newPassword);
+		 }catch (IllegalArgumentException e) {
+	            fail();
+	        }
+		 assertNotNull(administrativeAssistant);
+		 assertEquals(userId, administrativeAssistant.getUserId());
+		 assertEquals(newPassword, administrativeAssistant.getPassword());
+		
+	 }
+	 @Test 
+	 public void TestEditUserIdAndPasswordAdministrativeAssistant() {
+		 String userId = "userId";
+		 String newUserId = "secondUserId";
+		 String password = "first";
+		 String newPassword = "second";
+		 AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
+		 administrativeAssistant.setUserId(userId);
+		 administrativeAssistant.setPassword(password);
+		 
+		 try {
+			 administrativeAssistant = service.editAdministrativeAssistant(administrativeAssistant, newUserId, newPassword);
+		 }catch (IllegalArgumentException e) {
+	            fail();
+	        }
+		 assertNotNull(administrativeAssistant);
+		 assertEquals(newUserId, administrativeAssistant.getUserId());
+		 assertEquals(newPassword, administrativeAssistant.getPassword());
+		
+	 }
+	 @Test 
+	 public void TestEditWithSameParametersAdministrativeAssistant() {
+		 String userId = "userId";
+		 String newUserId = "userId";
+		 String password = "first";
+		 String newPassword = "first";
+		 String error = null;
+		 AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
+		 administrativeAssistant.setUserId(userId);
+		 administrativeAssistant.setPassword(password);
+		 
+		 try {
+			 administrativeAssistant = service.editAdministrativeAssistant(administrativeAssistant, newUserId, newPassword);
+		 }catch (IllegalArgumentException e) {
+	            error = e.getMessage();
+	        }
+		 assertNotNull(administrativeAssistant);
+		 assertEquals(userId, administrativeAssistant.getUserId());
+		 assertEquals(password, administrativeAssistant.getPassword());
+		 assertEquals(error, "You have to change the username or password or both");
+		
+	 }
 	 
 		
 }
