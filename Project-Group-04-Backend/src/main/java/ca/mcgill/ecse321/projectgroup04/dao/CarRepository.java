@@ -7,4 +7,6 @@ import ca.mcgill.ecse321.projectgroup04.model.Car;
 
 public interface CarRepository extends CrudRepository<Car, Long>{
     Car findByCarId(Long carId);
+
+	Car findCarByModelAndYearAndColor(String model, String year, String color);
 }

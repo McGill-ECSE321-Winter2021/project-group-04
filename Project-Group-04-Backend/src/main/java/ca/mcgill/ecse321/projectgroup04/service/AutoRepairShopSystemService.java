@@ -358,13 +358,18 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public Car getCarByCarId(Long carId) {
-		return carRepository.findByCarId(carId);
+	public Car getCarByModelAndYearAndColor(String model,String year,String color) {
+		return carRepository.findCarByModelAndYearAndColor(model, year, color);
 	}
 
 	@Transactional
 	public List<Car> getAllCars() {
 		return (List<Car>) carRepository.findAll();
+	}
+	
+	@Transactional
+	public void deleteCar(Car car) {
+		carRepository.delete(car);
 	}
 
 	@Transactional
@@ -388,6 +393,20 @@ public class AutoRepairShopSystemService {
 	public List<Customer> getAllCustomers() {
 		return (List<Customer>) customerRepository.findAll();
 	}
+	
+	@Transactional
+	public void deleteCustomer(Customer customer) {
+		customerRepository.delete(customer);
+	}
+	
+	public void editCustomer(Customer customer, String Id,
+			String password, List<Reminder> reminders, Car car, Profile profile) {
+		customer.setUserId(Id);
+		customer.setPassword(password);
+		customer.setCar(car);
+		customer.setCustomerProfile(profile);
+		customer.setReminders(reminders);
+	}
 
 	@Transactional
 	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
@@ -402,13 +421,18 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public TimeSlot getTimeSlotByTimeSlotId(Long timeSlotId) {
-		return timeSlotRepository.findTimeSlotByTimeSlotId(timeSlotId);
+	public TimeSlot getTimeSlotByStartDateAndStartTime(Date startDate, Time startTime) {
+		return timeSlotRepository.findTimeSlotByStartDateAndStartTime(startDate, startTime);
 	}
 
 	@Transactional
 	public List<TimeSlot> getAllTimeSlots() {
 		return (List<TimeSlot>) timeSlotRepository.findAll();
+	}
+	
+	@Transactional
+	public void deleteTimeSlot(TimeSlot timeSlot) {
+		timeSlotRepository.delete(timeSlot);
 	}
 
 	// public List<TimeSlot> getTimeSlotByGarageSpot(Integer garageSpot) {
@@ -1120,4 +1144,5 @@ public class AutoRepairShopSystemService {
 		profile.setZipCode(zipCode);
 		return null;
 	}
+
 }

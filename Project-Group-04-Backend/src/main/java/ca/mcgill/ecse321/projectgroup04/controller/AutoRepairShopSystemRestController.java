@@ -872,18 +872,22 @@ public class AutoRepairShopSystemRestController {
 		return carDtos;
 	}
 
-	@GetMapping(value = { "/cars/{Id}", "/cars/{Id}/" })
-	public CarDto getCarByCarId(@PathVariable("Id") Long Id) throws IllegalArgumentException {
-		Car car = service.getCarByCarId(Id);
-		if (car == null) {
-			throw new IllegalArgumentException("No car with such id!");
+	@GetMapping(value = { "/cars/{Model, Year, color}", "/cars/{Model, Year, color}/" })
+	public CarDto getCarByModelAndYearAndColor(@PathVariable String model, 
+			@PathVariable String year,
+			@PathVariable String color) throws IllegalArgumentException {
+		Car car = service.getCarByModelAndYearAndColor(model, year, color);
+		if (model == null || year == null || color == null) {
+			throw new IllegalArgumentException("No car with such model, year or color!");
 		}
 		return convertToDto(car);
 	}
 
 	@PostMapping(value = { "/car/{carId}", "/car/{carId}/" })
-	public CarDto createCar(@PathVariable("carId") Long carId, @RequestParam String model, @RequestParam String year,
-			@RequestParam String color) throws IllegalArgumentException {
+	public CarDto createCar(@RequestParam("carId") Long carId, 
+			@PathVariable String model, 
+			@PathVariable String year,
+			@PathVariable String color) throws IllegalArgumentException {
 		Car car1 = service.createCar(carId, model, year, color);
 		CarDto carDto = convertToDto(car1);
 		return carDto;
@@ -900,20 +904,21 @@ public class AutoRepairShopSystemRestController {
 		return timeSlotDtos;
 	}
 
-	@GetMapping(value = { "/timeSlot/{Id}", "/timeSlot/{Id}/" })
-	public TimeSlotDto getTimeSlotByTimeSlotId(@PathVariable("Id") Long Id) throws IllegalArgumentException {
-		TimeSlot timeSlot = service.getTimeSlotByTimeSlotId(Id);
-		if (timeSlot == null) {
-			throw new IllegalArgumentException("No time slot with such id!");
+	@GetMapping(value = { "/timeSlot/{startDate, startTime}", "/timeSlot/{startDate, startTime}/" })
+	public TimeSlotDto getTimeSlotByStartDateAndStartTime(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,		
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime) throws IllegalArgumentException {
+		TimeSlot timeSlot = service.getTimeSlotByStartDateAndStartTime(startDate, startTime);
+		if (startDate == null || startTime == null) {
+			throw new IllegalArgumentException("No time slot with such start date or start time!");
 		}
 		return convertToDto(timeSlot);
 	}
 
 	@PostMapping(value = { "/timeSlot/{timeSlotId}", "/timeSlot/{timeSlotId}/" })
-	public TimeSlotDto createTimeSlot(@PathVariable("timeSlotId") Long timeSlotId,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,
+	public TimeSlotDto createTimeSlot(@RequestParam("timeSlotId") Long timeSlotId,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date endDate,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime,
 			@RequestParam Integer garageSpot) throws IllegalArgumentException {
 		TimeSlot timeSlot = service.createTimeSlot(startTime, endTime, startDate, endDate, garageSpot);
@@ -972,6 +977,13 @@ public class AutoRepairShopSystemRestController {
 			throws IllegalArgumentException {
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(technicianId);
 		service.deleteGarageTechnician(garageTechnician);
+	}
+
+	@PostMapping(value = { "/customer/{Id}/delete", "/customer/{Id}/delete/" })
+	public void deleteCustomer(@PathVariable("Id") Long Id)
+			throws IllegalArgumentException {
+		Customer customer = service.getCustomerById(Id);
+		service.deleteCustomer(customer);
 	}
 
 }
