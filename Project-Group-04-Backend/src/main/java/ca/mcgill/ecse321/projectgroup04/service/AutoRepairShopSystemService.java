@@ -73,7 +73,7 @@ public class AutoRepairShopSystemService {
 			throw new IllegalArgumentException("Address Line can't be null or empty");
 		}
 		if (aPhoneNumber == null || aPhoneNumber == "") {
-			throw new IllegalArgumentException("Address Line can't be null or empty");
+			throw new IllegalArgumentException("Phone Number can't be null or empty");
 		}
 		if (aPhoneNumber.length() < 10 || aPhoneNumber.length() > 10) {
 			throw new IllegalArgumentException("Phone Number must be 10 characters long");
@@ -109,9 +109,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Profile getProfile(Long aProfileId) {
-		Optional<Profile> profile = profileRepository.findById(aProfileId);
-		if (profile.isPresent()) {
-			return profile.get();
+		Profile profile = profileRepository.findProfileByProfileId(aProfileId);
+		if (profile!=null) {
+			return profile;
 		} else {
 			throw new IllegalArgumentException("No profile with such ID exist!");
 		}
@@ -137,9 +137,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Receipt getReceipt(Long aReceiptId) {
-		Optional<Receipt> receipt = receiptRepository.findById(aReceiptId);
-		if (receipt.isPresent()) {
-			return receipt.get();
+		Receipt receipt = receiptRepository.findReceiptByReceiptId(aReceiptId);
+		if (receipt!=null) {
+			return receipt;
 		} else {
 			throw new IllegalArgumentException("No receipt with such ID exist!");
 		}
@@ -1069,7 +1069,7 @@ public class AutoRepairShopSystemService {
 				return profile;
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("No Profile with such First Name and Last Name");
 	}
 
 	public boolean isOverlap(TimeSlot timeSlot1, Time startTime, Time endTime, Integer garageSpot) {
@@ -1083,13 +1083,19 @@ public class AutoRepairShopSystemService {
 		return false;
 	}
 
-	public Appointment deleteAppointment(Appointment appointment) {
-		if (appointment == null) {
+
+	public Appointment deleteAppointment(Appointment appointment,LocalTime testTime,LocalDate testDate) {
+		if (appointment==null) {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
 		}
-
 		LocalTime now = LocalTime.now();
+		if(testTime!=null) {
+			now=testTime;
+		}
 		LocalDate today = LocalDate.now();
+		if(testDate!=null) {
+			today=testDate;
+		}
 		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
 		LocalTime appTime = appointment.getTimeSlot().getStartTime().toLocalTime();
 		if (today.equals(appDate)) {
@@ -1187,7 +1193,7 @@ public class AutoRepairShopSystemService {
 			throw new IllegalArgumentException("Address Line can't be null or empty");
 		}
 		if (phoneNumber == null || phoneNumber == "") {
-			throw new IllegalArgumentException("Address Line can't be null or empty");
+			throw new IllegalArgumentException("Phone Number can't be null or empty");
 		}
 		if (phoneNumber.length() < 10 || phoneNumber.length() > 10) {
 			throw new IllegalArgumentException("Phone Number must be 10 characters long");
@@ -1216,7 +1222,7 @@ public class AutoRepairShopSystemService {
 		profile.setLastName(lastName);
 		profile.setPhoneNumber(phoneNumber);
 		profile.setZipCode(zipCode);
-		return null;
+		return profile;
 	}
 
 }
