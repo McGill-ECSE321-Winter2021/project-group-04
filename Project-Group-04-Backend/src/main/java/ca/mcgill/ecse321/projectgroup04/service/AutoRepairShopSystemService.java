@@ -76,8 +76,8 @@ public class AutoRepairShopSystemService {
 		if (aPhoneNumber == null || aPhoneNumber == "") {
 			throw new IllegalArgumentException("Address Line can't be null or empty");
 		}
-		if (aPhoneNumber.length() < 7 || aPhoneNumber.length() > 7) {
-			throw new IllegalArgumentException("Phone Number must be 7 characters long");
+		if (aPhoneNumber.length() < 10 || aPhoneNumber.length() > 10) {
+			throw new IllegalArgumentException("Phone Number must be 10 characters long");
 		}
 		if (aFirstName == null || aFirstName == "") {
 			throw new IllegalArgumentException("First Name can't be null or empty");
@@ -127,6 +127,9 @@ public class AutoRepairShopSystemService {
 	public Receipt createReceipt(double aTotalPrice) {
 		if (aTotalPrice == 0) {
 			throw new IllegalArgumentException("Total Price can't be 0");
+		}
+		if(aTotalPrice<0) {
+			throw new IllegalArgumentException("Total Price can't be negative");
 		}
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(aTotalPrice);
@@ -220,11 +223,7 @@ public class AutoRepairShopSystemService {
 		TimeSlot timeSlot = createTimeSlot(startTime, endTime, date, date, garageSpot);
 		Receipt receipt = createReceipt(bookableService.getPrice());
 		GarageTechnician garageTechnician = getGarageTechnicianById(garageTechnicianId);
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date); // convert your date to Calendar object
-		int daysToDecrement = -1;
-		cal.add(Calendar.DATE, daysToDecrement);
-		date = (Date) cal.getTime(); // again get back your date object
+		date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
 		AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
 				"You have an appointment in 24hours");
 		Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
@@ -425,6 +424,9 @@ public class AutoRepairShopSystemService {
 		}
 		if (time.equals(null)) { // TODO: not sure of this
 			throw new IllegalArgumentException("Time can't be null");
+		}
+		if(message=="") {
+			throw new IllegalArgumentException("Message can't be empty");
 		}
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
 
@@ -969,7 +971,7 @@ public class AutoRepairShopSystemService {
 	public List<Appointment> getAppointmentsByDate(Date date) {
 		List<Appointment> appointments = new ArrayList<>();
 		for (Appointment appointment : appointmentRepository.findAll()) {
-			if (appointment.getTimeSlot().getStartDate() == date) {
+			if (appointment.getTimeSlot().getStartDate().equals(date)) {
 				appointments.add(appointment);
 			}
 		}
@@ -978,7 +980,11 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Customer getCustomerByUserId(String userId) {
-		return customerRepository.findCustomerByUserId(userId);
+		Customer customer = customerRepository.findCustomerByUserId(userId);
+		if(customer==null) {
+			throw new IllegalArgumentException("No customer with such userId!");
+		}
+		return customer;
 	}
 
 	@Transactional
@@ -1012,21 +1018,19 @@ public class AutoRepairShopSystemService {
 		return false;
 	}
 
-	public void deleteAppointmentById(Long appointmentId) {
+	public boolean deleteAppointmentById(Long appointmentId) {
 		Optional<Appointment> app = appointmentRepository.findById(appointmentId);
 
-		if (app.isPresent()) {
-			appointmentRepository.deleteById(appointmentId);
-		} else {
+		if (!app.isPresent()) {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
-		}
+		} 
 		Appointment appointment = app.get();
 		LocalTime now = LocalTime.now();
 		LocalDate today = LocalDate.now();
 		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
 		LocalTime appTime = appointment.getTimeSlot().getStartTime().toLocalTime();
 		if (today.equals(appDate)) {
-			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
+			throw new IllegalArgumentException("Cannot cancel appointment on same day!");
 		}
 		if (today.plusDays(1).equals(appDate) && now.isAfter(appTime)) {
 			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
@@ -1035,6 +1039,7 @@ public class AutoRepairShopSystemService {
 		receiptRepository.delete(appointment.getReceipt());
 		timeSlotRepository.delete(appointment.getTimeSlot());
 		appointmentRepository.delete(appointment);
+		return true;
 	}
 
 	public void deleteAppointmentReminder(AppointmentReminder appointmentReminder) {
@@ -1075,5 +1080,44 @@ public class AutoRepairShopSystemService {
 			String password) {
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
+	}
+	public Profile editProfile(Long profileId,String firstName,String lastName,
+			String emailAddress,String phoneNumber,
+			String addressLine,String zipCode) {
+		Profile profile= getProfile(profileId);
+		if (addressLine == null || addressLine == "") {
+			throw new IllegalArgumentException("Address Line can't be null or empty");
+		}
+		if (phoneNumber == null || phoneNumber == "") {
+			throw new IllegalArgumentException("Address Line can't be null or empty");
+		}
+		if (phoneNumber.length() < 10 || phoneNumber.length() > 10) {
+			throw new IllegalArgumentException("Phone Number must be 10 characters long");
+		}
+		if (firstName == null || firstName == "") {
+			throw new IllegalArgumentException("First Name can't be null or empty");
+		}
+		if (lastName == null || lastName == "") {
+			throw new IllegalArgumentException("Last Name can't be null or empty");
+		}
+		if (zipCode == null || zipCode == "") {
+			throw new IllegalArgumentException("Zip Code can't be null or empty");
+		}
+		if (zipCode.length() < 6 || zipCode.length() > 6) {
+			throw new IllegalArgumentException("Zip Code must be 6 characters long");
+		}
+		if (emailAddress == null || emailAddress == "") {
+			throw new IllegalArgumentException("Email Address can't be null or empty");
+		}
+		if (!emailAddress.contains("@")) {
+			throw new IllegalArgumentException("Email Address must contain @ character");
+		}
+		profile.setAddressLine(addressLine);
+		profile.setEmailAddress(emailAddress);
+		profile.setFirstName(firstName);
+		profile.setLastName(lastName);
+		profile.setPhoneNumber(phoneNumber);
+		profile.setZipCode(zipCode);
+		return null;
 	}
 }
