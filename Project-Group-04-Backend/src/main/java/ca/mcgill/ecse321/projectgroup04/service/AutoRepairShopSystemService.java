@@ -128,7 +128,7 @@ public class AutoRepairShopSystemService {
 		if (aTotalPrice == 0) {
 			throw new IllegalArgumentException("Total Price can't be 0");
 		}
-		if(aTotalPrice<0) {
+		if (aTotalPrice < 0) {
 			throw new IllegalArgumentException("Total Price can't be negative");
 		}
 		Receipt receipt = new Receipt();
@@ -425,7 +425,7 @@ public class AutoRepairShopSystemService {
 		if (time.equals(null)) { // TODO: not sure of this
 			throw new IllegalArgumentException("Time can't be null");
 		}
-		if(message=="") {
+		if (message == "") {
 			throw new IllegalArgumentException("Message can't be empty");
 		}
 		AppointmentReminder appointmentReminder = new AppointmentReminder();
@@ -981,7 +981,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Customer getCustomerByUserId(String userId) {
 		Customer customer = customerRepository.findCustomerByUserId(userId);
-		if(customer==null) {
+		if (customer == null) {
 			throw new IllegalArgumentException("No customer with such userId!");
 		}
 		return customer;
@@ -1023,7 +1023,7 @@ public class AutoRepairShopSystemService {
 
 		if (!app.isPresent()) {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
-		} 
+		}
 		Appointment appointment = app.get();
 		LocalTime now = LocalTime.now();
 		LocalDate today = LocalDate.now();
@@ -1081,10 +1081,10 @@ public class AutoRepairShopSystemService {
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
 	}
-	public Profile editProfile(Long profileId,String firstName,String lastName,
-			String emailAddress,String phoneNumber,
-			String addressLine,String zipCode) {
-		Profile profile= getProfile(profileId);
+
+	public Profile editProfile(Long profileId, String firstName, String lastName, String emailAddress,
+			String phoneNumber, String addressLine, String zipCode) {
+		Profile profile = getProfile(profileId);
 		if (addressLine == null || addressLine == "") {
 			throw new IllegalArgumentException("Address Line can't be null or empty");
 		}
