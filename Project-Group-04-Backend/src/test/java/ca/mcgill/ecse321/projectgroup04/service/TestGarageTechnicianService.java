@@ -17,9 +17,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.projectgroup04.dao.AdministrativeAssistantRepository;
+import ca.mcgill.ecse321.projectgroup04.dao.AppointmentRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.BookableServiceRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.GarageTechnicianRepository;
 import ca.mcgill.ecse321.projectgroup04.model.AdministrativeAssistant;
+import ca.mcgill.ecse321.projectgroup04.model.Appointment;
 import ca.mcgill.ecse321.projectgroup04.model.BookableService;
 import ca.mcgill.ecse321.projectgroup04.model.GarageTechnician;
 
@@ -28,6 +30,8 @@ public class TestGarageTechnicianService {
 
 	@Mock
 	private GarageTechnicianRepository garageTechnicianRepository;
+	@Mock
+	private AppointmentRepository appointmentRepository;
 	
 	@InjectMocks
 	private AutoRepairShopSystemService service;
@@ -59,7 +63,7 @@ public class TestGarageTechnicianService {
 	@Test
     public void TestCreateGarageTechnician() {
 	
-		String name = "TestName";
+		String name = "TestNameOk";
    
         GarageTechnician garageTechnician = null;
         try {
@@ -116,6 +120,10 @@ public class TestGarageTechnicianService {
 		 String name = "TestNameDelete";
 	     GarageTechnician garageTechnician = new GarageTechnician();
 	     garageTechnician.setName(name);
+	     Appointment appointment = new Appointment();
+	     appointment.setAppointmentId(56789l);
+	     appointmentRepository.save(appointment);
+	    
 	       
 	     try {
 	    	 garageTechnician = service.deleteGarageTechnician(garageTechnician);

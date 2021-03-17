@@ -1129,11 +1129,15 @@ public class AutoRepairShopSystemService {
 	}
 
 	public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
-		List<Appointment> appointments = getAllAppointments();
-		for (Appointment appointment : appointments) {
-			if (appointment.getTechnician().equals(garageTechnician)) {
-				throw new IllegalArgumentException("This garage technician still has appointments");
-			}
+	
+		List<Appointment> appointments = appointmentRepository.findByTechnician(garageTechnician);
+//		for (Appointment appointment : appointments) {
+//			if (appointment.getTechnician().equals(garageTechnician)) {
+//				throw new IllegalArgumentException("This garage technician still has appointments");
+//			}
+//		}
+		if(appointments != null) {
+			throw new IllegalArgumentException("This garage technician still has appointments");
 		}
 		garageTechnicianRepository.delete(garageTechnician);
 		garageTechnician = null;
