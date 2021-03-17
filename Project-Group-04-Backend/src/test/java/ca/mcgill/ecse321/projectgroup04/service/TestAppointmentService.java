@@ -573,8 +573,8 @@ public class TestAppointmentService {
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(SERVICE_PRICE);
 		
-//		SystemTime.setSysTime(Time.valueOf("16:45:00"));
-//		SystemTime.setSysDate(Date.valueOf("2021-03-17"));
+		LocalDate testDate = LocalDate.parse("2021-03-17");
+		LocalTime testTime = LocalTime.parse("16:45:00");
 		
 		TimeSlot timeSlot = new TimeSlot();
 		timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE).plusDays(1)));
@@ -596,7 +596,7 @@ public class TestAppointmentService {
 		appointment.setTimeSlot(timeSlot);
 		
 		try {
-			appointment=service.deleteAppointment(appointment);
+			appointment=service.deleteAppointment(appointment,testTime,testDate);
 		}catch(IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 			fail();
@@ -628,8 +628,9 @@ public class TestAppointmentService {
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(SERVICE_PRICE);
 		
-//		SystemTime.setSysTime(Time.valueOf("16:45:00"));
-//		SystemTime.setSysDate(Date.valueOf("2021-03-17"));
+
+		LocalDate testDate = LocalDate.parse("2021-03-17");
+		LocalTime testTime = LocalTime.parse("16:45:00");
 		
 		TimeSlot timeSlot = new TimeSlot();
 		timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE).minusDays(1)));
@@ -653,7 +654,7 @@ public class TestAppointmentService {
 		String error =null;
 		
 		try {
-			appointment=service.deleteAppointment(appointment);
+			appointment=service.deleteAppointment(appointment,testTime,testDate);
 		}catch(IllegalArgumentException e) {
 			error=e.getMessage();
 		}
@@ -685,8 +686,8 @@ public class TestAppointmentService {
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(SERVICE_PRICE);
 		
-//		SystemTime.setSysTime(Time.valueOf("16:45:00"));
-//		SystemTime.setSysDate(Date.valueOf("2021-03-17"));
+		LocalDate testDate = LocalDate.parse("2021-03-17");
+		LocalTime testTime = LocalTime.parse("16:45:00");
 		
 		TimeSlot timeSlot = new TimeSlot();
 		timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
@@ -710,7 +711,7 @@ public class TestAppointmentService {
 		String error =null;
 		
 		try {
-			appointment=service.deleteAppointment(appointment);
+			appointment=service.deleteAppointment(appointment,testTime,testDate);
 		}catch(IllegalArgumentException e) {
 			error=e.getMessage();
 		}
