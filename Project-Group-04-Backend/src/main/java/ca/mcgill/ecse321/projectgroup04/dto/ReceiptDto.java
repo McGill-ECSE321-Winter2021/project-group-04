@@ -8,9 +8,8 @@ public class ReceiptDto {
 
 	}
 
-	public ReceiptDto(double totalPrice,Long aReceiptId) {
+	public ReceiptDto(double totalPrice) {
 		this.totalPrice = totalPrice;
-		receiptId=aReceiptId;
 	}
 
 	public double getTotalPrice() {
@@ -20,9 +19,13 @@ public class ReceiptDto {
 	public void setTotalPrice(double aTotalPrice) {
 		totalPrice = aTotalPrice;
 	}
-	
+
 	public Long getReceiptId() {
 		return receiptId;
+	}
+
+	public void setId(Long id) {
+		this.receiptId = id;
 	}
 
 }

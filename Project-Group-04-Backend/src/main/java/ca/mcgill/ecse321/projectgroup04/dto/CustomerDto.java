@@ -7,6 +7,7 @@ public class CustomerDto {
 	private String password;
 	private CarDto car;
 	private ProfileDto profile;
+	private Long customerId;
 
 	private List<ReminderDto> reminders;
 
@@ -49,6 +50,14 @@ public class CustomerDto {
 
 	public void setReminders(List<ReminderDto> aReminders) {
 		reminders = aReminders;
+	}
+
+	public Long getId() {
+		return customerId;
+	}
+
+	public void setId(Long id) {
+		this.customerId = id;
 	}
 
 }
