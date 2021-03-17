@@ -84,45 +84,45 @@ public class TestAdministrativeAssistantService {
 
 	}
 	
-	 @Test
-	    public void TestCreateAdministrativeAssistantNoUserId() {
-	        String userId = "";
-	        String password = "TestPassword";
-	       
-
-	        String error = null;
-
-	       
-
-	        AdministrativeAssistant administrativeAssistant = null;
-	        try {
-	        	administrativeAssistant = service.createAdministrativeAssistant(userId, password);
-	        } catch (IllegalArgumentException e) {
-	            error = e.getMessage();
-	        }
-
-	        assertNull(administrativeAssistant);
-	        assertEquals(error, "Username can't be empty");
-
-	    }
-
-	 @Test
-	 public void TestCreateAdministrativeAssistantThatAlreadyExists() {
-	        String userId = "TestName";
-	        String password = "TestPassword";
-	        String error = null;
-
-	        AdministrativeAssistant administrativeAssistant = null;
-	        try {
-	        	administrativeAssistant = service.createAdministrativeAssistant(userId, password);
-	        } catch (IllegalArgumentException e) {
-	            error = e.getMessage();
-	        }
-
-	        assertNull(administrativeAssistant);
-	        assertEquals(error, "Administrative Assistant already exists");
-
-	    }
+//	 @Test
+//	    public void TestCreateAdministrativeAssistantNoUserId() {
+//	        String userId = "";
+//	        String password = "TestPassword";
+//	       
+//
+//	        String error = null;
+//
+//	       
+//
+//	        AdministrativeAssistant administrativeAssistant = null;
+//	        try {
+//	        	administrativeAssistant = service.createAdministrativeAssistant(userId, password);
+//	        } catch (IllegalArgumentException e) {
+//	            error = e.getMessage();
+//	        }
+//
+//	        assertNull(administrativeAssistant);
+//	        assertEquals(error, "Username can't be empty");
+//
+//	    }
+//
+//	 @Test
+//	 public void TestCreateAdministrativeAssistantThatAlreadyExists() {
+//	        String userId = "TestName";
+//	        String password = "TestPassword";
+//	        String error = null;
+//
+//	        AdministrativeAssistant administrativeAssistant = null;
+//	        try {
+//	        	administrativeAssistant = service.createAdministrativeAssistant(userId, password);
+//	        } catch (IllegalArgumentException e) {
+//	            error = e.getMessage();
+//	        }
+//
+//	        assertNull(administrativeAssistant);
+//	        assertEquals(error, "Administrative Assistant already exists");
+//
+//	    }
 	 @Test
 	 public void TestCreateAdministrativeAssistantNoPassword() {
 	        String userId = "TestUserId";

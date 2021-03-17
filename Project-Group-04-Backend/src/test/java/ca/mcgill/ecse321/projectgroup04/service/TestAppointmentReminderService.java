@@ -91,21 +91,20 @@ public class TestAppointmentReminderService {
 	}
 	
 //	 @Test
-//	    public void TestCreateAdministrativeAssistantNoDate() {
-//			Date date = null;
+//	    public void TestCreateAppointmentReminderNoDate() {
+//			Date date = Date.valueOf(LocalDate.parse("0000-00-00"));;
+//			date.
 //	        Time time = Time.valueOf(LocalTime.parse("10:00:00"));
 //	        String message= "TestMessage";
 //	       
 //
 //	        String error = null;
 //
-//	       
-//
 //	        AppointmentReminder appointmentReminder = null;
 //	        try {
 //	        	appointmentReminder = service.createAppointmentReminder(date, time, message);
 //	        } catch (IllegalArgumentException e) {
-//	            error = e.getMessage();
+//	            error = e.getMessage();	
 //	        }
 //
 //	        assertNull(appointmentReminder);
@@ -114,7 +113,7 @@ public class TestAppointmentReminderService {
 //	    }
 //
 //	 @Test
-//	    public void TestCreateAdministrativeAssistantNoTime() {
+//	    public void TestCreateAppointmentNoTime() {
 //			Date date = Date.valueOf(LocalDate.parse("2021-03-20"));
 //	        Time time = null;
 //	        String message= "TestMessage";

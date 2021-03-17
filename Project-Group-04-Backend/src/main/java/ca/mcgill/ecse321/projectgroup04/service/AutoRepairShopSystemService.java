@@ -506,6 +506,12 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService createBookableService(String name, int price, int duration) {
+		
+		BookableService existingService = getBookableServiceByServiceName(name);
+		
+		if(existingService != null) {
+			throw new IllegalArgumentException("Bookable Service with this name already exists");
+		}
 
 		if (price == 0) {
 			throw new IllegalArgumentException("Price can't be 0");
@@ -519,8 +525,8 @@ public class AutoRepairShopSystemService {
 		if (duration == 0) {
 			throw new IllegalArgumentException("Duration can't be equal to 0");
 		}
-		if (name.length() == 0 || name == null) {
-			throw new IllegalArgumentException("Bookable Service name can't be null or empty");
+		if (name == "") {
+			throw new IllegalArgumentException("Name can't be empty");
 		}
 
 		BookableService bookableService = new BookableService();
@@ -647,9 +653,15 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public GarageTechnician createGarageTechnician(String name) {
-		if (name == null) {
-			throw new IllegalArgumentException("Name can't be null");
+		
+		if (name == "") {
+			throw new IllegalArgumentException("Name can't be empty");
 		}
+		GarageTechnician existingGarageTechnician = getGarageTechnicianByName(name);
+		if(existingGarageTechnician != null) {
+			throw new IllegalArgumentException("Garage Technician with this name already exists");
+		}
+		
 		GarageTechnician garageTechnician = new GarageTechnician();
 		garageTechnician.setName(name);
 		garageTechnicianRepository.save(garageTechnician);
@@ -664,6 +676,11 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public GarageTechnician getGarageTechnicianById(Long technicianId) {
 		return garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
+	}
+	
+	@Transactional
+	public GarageTechnician getGarageTechnicianByName(String name) {
+		return garageTechnicianRepository.findGarageTechnicianByName(name);
 	}
 	/////////////////////////////////////////////////////////////////////////////////
 
@@ -1036,11 +1053,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService getBookableServiceByServiceName(String name) {
-		BookableService bookableService = bookableServiceRepository.findBookableServiceByName(name);
-		if (bookableService == null) {
-			throw new IllegalArgumentException("No Bookable Service with such name!");
-		}
-		return bookableService;
+		return bookableServiceRepository.findBookableServiceByName(name);
+		
+		
 	}
 
 	@Transactional
