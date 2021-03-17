@@ -1023,9 +1023,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Appointment getAppointment(Long Id) {
-		Optional<Appointment> app = appointmentRepository.findById(Id);
-		if (app.isPresent()) {
-			return appointmentRepository.findByAppointmentId(Id);
+		Appointment appointment = appointmentRepository.findByAppointmentId(Id);
+		if (appointment!=null) {
+			return appointment;
 		} else {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
 		}
@@ -1080,13 +1080,11 @@ public class AutoRepairShopSystemService {
 		return false;
 	}
 
-	public boolean deleteAppointmentById(Long appointmentId) {
-		Optional<Appointment> app = appointmentRepository.findById(appointmentId);
-
-		if (!app.isPresent()) {
+	public Appointment deleteAppointment(Appointment appointment) {
+		if (appointment==null) {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
 		}
-		Appointment appointment = app.get();
+		
 		LocalTime now = LocalTime.now();
 		LocalDate today = LocalDate.now();
 		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
@@ -1101,7 +1099,15 @@ public class AutoRepairShopSystemService {
 		receiptRepository.delete(appointment.getReceipt());
 		timeSlotRepository.delete(appointment.getTimeSlot());
 		appointmentRepository.delete(appointment);
-		return true;
+		appointment.setBookableServices(null);
+		appointment.setCustomer(null);
+		appointment.setReceipt(null);
+		appointment.setReminder(null);
+		appointment.setTechnician(null);
+		appointment.setTimeSlot(null);
+		appointment.setAppointmentId(null);
+		appointment=null;
+		return appointment;
 	}
 
 	public void deleteAppointmentReminder(AppointmentReminder appointmentReminder) {
