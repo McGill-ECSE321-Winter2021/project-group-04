@@ -955,9 +955,9 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/bookableServices/{serviceId}/edit", "/bookableServices/{serviceId}/edit/" })
 	public void editBookableService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
-			@RequestParam int price) throws IllegalArgumentException {
+			@RequestParam int duration, @RequestParam int price) throws IllegalArgumentException {
 		BookableService bookableService = service.getBookableServiceById(serviceId);
-		service.editBookableService(bookableService, name, price);
+		service.editBookableService(bookableService, name,duration, price);
 	}
 
 	@PostMapping(value = { "/administrativeAssistants/{id}/delete", "/administrativeAssistants/{id}/delete/" })
