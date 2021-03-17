@@ -275,12 +275,29 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
+	public AdministrativeAssistant getAdministrativeAssistantByUserId(String userId) {
+		return administrativeAssistantRepository.findAdministrativeAssistantByUserId(userId);
+	}
+	
+	@Transactional
 	public AdministrativeAssistant createAdministrativeAssistant(String userId, String password) {
-		if (userId == null) {
-			throw new IllegalArgumentException("Username can't be null");
+		
+		AdministrativeAssistant existingAssistant = getAdministrativeAssistantByUserId(userId);
+		
+		if(existingAssistant != null) {
+			throw new IllegalArgumentException("Administrative Assistant already exists");
 		}
-		if (password == null) {
-			throw new IllegalArgumentException("Password can't be null");
+//		if (userId == null ) {
+//			throw new IllegalArgumentException("Username can't be null");
+//		}
+		if ( userId == "") {
+			throw new IllegalArgumentException("Username can't be empty");
+		}
+//		if (password == null) {
+//			throw new IllegalArgumentException("Password can't be null");
+//		}
+		if (password == "") {
+			throw new IllegalArgumentException("Password can't be empty");
 		}
 		AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
 		administrativeAssistant.setUserId(userId);
@@ -439,8 +456,8 @@ public class AutoRepairShopSystemService {
 	// }
 
 	public AppointmentReminder createAppointmentReminder(Date date, Time time, String message) {
-		if (message == null) {
-			throw new IllegalArgumentException("Message can't be null");
+		if (message == "") {
+			throw new IllegalArgumentException("Message can't be empty");
 		}
 		if (date.equals(null)) { // TODO: not sure of this
 			throw new IllegalArgumentException("Date can't be null");
