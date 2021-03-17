@@ -506,10 +506,10 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService createBookableService(String name, int price, int duration) {
-		
+
 		BookableService existingService = getBookableServiceByServiceName(name);
-		
-		if(existingService != null) {
+
+		if (existingService != null) {
 			throw new IllegalArgumentException("Bookable Service with this name already exists");
 		}
 
@@ -653,15 +653,15 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public GarageTechnician createGarageTechnician(String name) {
-		
+
 		if (name == "") {
 			throw new IllegalArgumentException("Name can't be empty");
 		}
 		GarageTechnician existingGarageTechnician = getGarageTechnicianByName(name);
-		if(existingGarageTechnician != null) {
+		if (existingGarageTechnician != null) {
 			throw new IllegalArgumentException("Garage Technician with this name already exists");
 		}
-		
+
 		GarageTechnician garageTechnician = new GarageTechnician();
 		garageTechnician.setName(name);
 		garageTechnicianRepository.save(garageTechnician);
@@ -677,7 +677,7 @@ public class AutoRepairShopSystemService {
 	public GarageTechnician getGarageTechnicianById(Long technicianId) {
 		return garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
 	}
-	
+
 	@Transactional
 	public GarageTechnician getGarageTechnicianByName(String name) {
 		return garageTechnicianRepository.findGarageTechnicianByName(name);
@@ -1058,8 +1058,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public BookableService getBookableServiceByServiceName(String name) {
 		return bookableServiceRepository.findBookableServiceByName(name);
-		
-		
+
 	}
 
 	@Transactional
@@ -1127,13 +1126,14 @@ public class AutoRepairShopSystemService {
 	}
 
 	public AdministrativeAssistant deleteAdministrativeAssistant(AdministrativeAssistant administrativeAssistant) {
-		 administrativeAssistantRepository.delete(administrativeAssistant);
-		 administrativeAssistant = null;
-		 return administrativeAssistant;
+		administrativeAssistantRepository.delete(administrativeAssistant);
+		administrativeAssistant = null;
+		return administrativeAssistant;
 	}
 
 	public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
 		List<Appointment> appointments = getAllAppointments();
+
 		for (Appointment appointment : appointments) {
 			if (appointment.getTechnician().equals(garageTechnician)) {
 				throw new IllegalArgumentException("This garage technician still has appointments");
@@ -1146,7 +1146,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	public AppointmentReminder editAppointmentReminder(AppointmentReminder appointmentReminder, String message) {
-		if(message == appointmentReminder.getMessage()) {
+		if (message == appointmentReminder.getMessage()) {
 			throw new IllegalArgumentException("You have to change the message");
 		}
 		appointmentReminder.setMessage(message);
@@ -1154,12 +1154,13 @@ public class AutoRepairShopSystemService {
 		return appointmentReminder;
 	}
 
-	public BookableService editBookableService(BookableService bookableService, String name,int duration, int price) {
-		if(name == bookableService.getName() && duration == bookableService.getDuration() && price == bookableService.getPrice()) {
+	public BookableService editBookableService(BookableService bookableService, String name, int duration, int price) {
+		if (name == bookableService.getName() && duration == bookableService.getDuration()
+				&& price == bookableService.getPrice()) {
 			throw new IllegalArgumentException("You have to edit one of the fields");
 		}
 		BookableService existingBookableService = getBookableServiceByServiceName(name);
-		if(existingBookableService != null) {
+		if (existingBookableService != null) {
 			throw new IllegalArgumentException("A bookable service with this name already exists");
 		}
 		bookableService.setName(name);
@@ -1169,9 +1170,9 @@ public class AutoRepairShopSystemService {
 		return bookableService;
 	}
 
-	public AdministrativeAssistant editAdministrativeAssistant(AdministrativeAssistant administrativeAssistant, String userId,
-			String password) {
-		if(userId == administrativeAssistant.getUserId() && password == administrativeAssistant.getPassword()) {
+	public AdministrativeAssistant editAdministrativeAssistant(AdministrativeAssistant administrativeAssistant,
+			String userId, String password) {
+		if (userId == administrativeAssistant.getUserId() && password == administrativeAssistant.getPassword()) {
 			throw new IllegalArgumentException("You have to change the username or password or both");
 		}
 		administrativeAssistant.setUserId(userId);
