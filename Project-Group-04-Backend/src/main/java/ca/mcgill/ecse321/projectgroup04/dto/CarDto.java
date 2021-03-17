@@ -6,7 +6,6 @@ public class CarDto {
 	private String year;
 	private Long carId;
 
-
 	public CarDto() {
 
 	}
@@ -16,8 +15,6 @@ public class CarDto {
 		color = aColor;
 		year = aYear;
 	}
-
-
 
 	/**
 	 * @return String return the model
@@ -39,9 +36,13 @@ public class CarDto {
 	public String getYear() {
 		return year;
 	}
-	
+
 	public Long getCarId() {
 		return carId;
+	}
+
+	public void setCarId(Long carId) {
+		this.carId = carId;
 	}
 
 }

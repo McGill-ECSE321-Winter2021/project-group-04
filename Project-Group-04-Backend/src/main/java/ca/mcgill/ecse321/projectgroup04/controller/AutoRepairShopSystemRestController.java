@@ -119,6 +119,7 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such Car!");
 		}
 		CarDto carDto = new CarDto(car.getModel(), car.getColor(), car.getYear());
+		carDto.setCarId(car.getCarId());
 		return carDto;
 	}
 
@@ -611,7 +612,7 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/create/checkupReminder/{message}", "/create/checkupReminder/{message}/" })
 	public CheckupReminderDto createCheckupReminder(@PathVariable("message") String message,
-			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "DD/MM/YY") Date date,
+			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "yyyy-mm-dd") Date date,
 			@RequestParam(name = "time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time time)
 			throws IllegalArgumentException {
 		CheckupReminder checkupReminder = service.createCheckupReminder(date, time, message);
@@ -820,16 +821,15 @@ public class AutoRepairShopSystemRestController {
 		}
 		return convertToDto(profile);
 	}
-	
-	@PostMapping(value= {"profiles/{profileId}/edit","profiles/{profileId}/edit/"})
+
+	@PostMapping(value = { "profiles/{profileId}/edit", "profiles/{profileId}/edit/" })
 	public ProfileDto editProfile(@PathVariable("profileId") Long profileId,
 			@RequestParam(name = "Email Address") String emailAddress,
 			@RequestParam(name = "Phone Number") String phoneNumber,
-			@RequestParam(name = "Address Line") String addressLine,
-			@RequestParam(name = "Zip Code") String zipCode,
-			@RequestParam(name= "First Name") String firstName,
-			@RequestParam(name= "Last Name") String lastName) {
-		return convertToDto(service.editProfile(profileId,firstName,lastName,emailAddress,phoneNumber,addressLine,zipCode));
+			@RequestParam(name = "Address Line") String addressLine, @RequestParam(name = "Zip Code") String zipCode,
+			@RequestParam(name = "First Name") String firstName, @RequestParam(name = "Last Name") String lastName) {
+		return convertToDto(
+				service.editProfile(profileId, firstName, lastName, emailAddress, phoneNumber, addressLine, zipCode));
 	}
 
 	/////////////////////////////////////// CUSTOMER///////////////////////////
@@ -873,8 +873,7 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@GetMapping(value = { "/cars/{Model, Year, color}", "/cars/{Model, Year, color}/" })
-	public CarDto getCarByModelAndYearAndColor(@PathVariable String model, 
-			@PathVariable String year,
+	public CarDto getCarByModelAndYearAndColor(@PathVariable String model, @PathVariable String year,
 			@PathVariable String color) throws IllegalArgumentException {
 		Car car = service.getCarByModelAndYearAndColor(model, year, color);
 		if (model == null || year == null || color == null) {
@@ -883,12 +882,10 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(car);
 	}
 
-	@PostMapping(value = { "/car/{carId}", "/car/{carId}/" })
-	public CarDto createCar(@RequestParam("carId") Long carId, 
-			@PathVariable String model, 
-			@PathVariable String year,
-			@PathVariable String color) throws IllegalArgumentException {
-		Car car1 = service.createCar(carId, model, year, color);
+	@PostMapping(value = { "/car", "/car/{carId}/" })
+	public CarDto createCar(@RequestParam String model, @RequestParam String year, @RequestParam String color)
+			throws IllegalArgumentException {
+		Car car1 = service.createCar(model, year, color);
 		CarDto carDto = convertToDto(car1);
 		return carDto;
 	}
@@ -905,8 +902,10 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@GetMapping(value = { "/timeSlot/{startDate, startTime}", "/timeSlot/{startDate, startTime}/" })
-	public TimeSlotDto getTimeSlotByStartDateAndStartTime(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,		
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime) throws IllegalArgumentException {
+	public TimeSlotDto getTimeSlotByStartDateAndStartTime(
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "YYYY/MM/DD") Date startDate,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime)
+			throws IllegalArgumentException {
 		TimeSlot timeSlot = service.getTimeSlotByStartDateAndStartTime(startDate, startTime);
 		if (startDate == null || startTime == null) {
 			throw new IllegalArgumentException("No time slot with such start date or start time!");
@@ -957,7 +956,7 @@ public class AutoRepairShopSystemRestController {
 	public void editBookableService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
 			@RequestParam int duration, @RequestParam int price) throws IllegalArgumentException {
 		BookableService bookableService = service.getBookableServiceById(serviceId);
-		service.editBookableService(bookableService, name,duration, price);
+		service.editBookableService(bookableService, name, duration, price);
 	}
 
 	@PostMapping(value = { "/administrativeAssistants/{id}/delete", "/administrativeAssistants/{id}/delete/" })
@@ -981,8 +980,7 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/customer/{Id}/delete", "/customer/{Id}/delete/" })
-	public void deleteCustomer(@PathVariable("Id") Long Id)
-			throws IllegalArgumentException {
+	public void deleteCustomer(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		Customer customer = service.getCustomerById(Id);
 		service.deleteCustomer(customer);
 	}

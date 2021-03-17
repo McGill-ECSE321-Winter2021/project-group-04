@@ -363,9 +363,8 @@ public class AutoRepairShopSystemService {
 	//////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
-	public Car createCar(Long cardId, String model, String year, String color) {
+	public Car createCar(String model, String year, String color) {
 		Car car = new Car();
-		car.setCarId(cardId);
 		car.setColor(color);
 		car.setModel(model);
 		car.setYear(year);
