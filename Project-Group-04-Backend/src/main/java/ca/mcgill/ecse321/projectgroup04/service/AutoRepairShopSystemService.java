@@ -278,24 +278,24 @@ public class AutoRepairShopSystemService {
 	public AdministrativeAssistant getAdministrativeAssistantByUserId(String userId) {
 		return administrativeAssistantRepository.findAdministrativeAssistantByUserId(userId);
 	}
-	
+
 	@Transactional
 	public AdministrativeAssistant createAdministrativeAssistant(String userId, String password) {
-		
+
 		AdministrativeAssistant existingAssistant = getAdministrativeAssistantByUserId(userId);
-		
-		if(existingAssistant != null) {
+
+		if (existingAssistant != null) {
 			throw new IllegalArgumentException("Administrative Assistant already exists");
 		}
-//		if (userId == null ) {
-//			throw new IllegalArgumentException("Username can't be null");
-//		}
-		if ( userId == "") {
+		// if (userId == null ) {
+		// throw new IllegalArgumentException("Username can't be null");
+		// }
+		if (userId == "") {
 			throw new IllegalArgumentException("Username can't be empty");
 		}
-//		if (password == null) {
-//			throw new IllegalArgumentException("Password can't be null");
-//		}
+		// if (password == null) {
+		// throw new IllegalArgumentException("Password can't be null");
+		// }
 		if (password == "") {
 			throw new IllegalArgumentException("Password can't be empty");
 		}
@@ -374,7 +374,7 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public Car getCarByModelAndYearAndColor(String model,String year,String color) {
+	public Car getCarByModelAndYearAndColor(String model, String year, String color) {
 		return carRepository.findCarByModelAndYearAndColor(model, year, color);
 	}
 
@@ -382,7 +382,7 @@ public class AutoRepairShopSystemService {
 	public List<Car> getAllCars() {
 		return (List<Car>) carRepository.findAll();
 	}
-	
+
 	@Transactional
 	public void deleteCar(Car car) {
 		carRepository.delete(car);
@@ -409,14 +409,14 @@ public class AutoRepairShopSystemService {
 	public List<Customer> getAllCustomers() {
 		return (List<Customer>) customerRepository.findAll();
 	}
-	
+
 	@Transactional
 	public void deleteCustomer(Customer customer) {
 		customerRepository.delete(customer);
 	}
-	
-	public void editCustomer(Customer customer, String Id,
-			String password, List<Reminder> reminders, Car car, Profile profile) {
+
+	public void editCustomer(Customer customer, String Id, String password, List<Reminder> reminders, Car car,
+			Profile profile) {
 		customer.setUserId(Id);
 		customer.setPassword(password);
 		customer.setCar(car);
@@ -445,7 +445,7 @@ public class AutoRepairShopSystemService {
 	public List<TimeSlot> getAllTimeSlots() {
 		return (List<TimeSlot>) timeSlotRepository.findAll();
 	}
-	
+
 	@Transactional
 	public void deleteTimeSlot(TimeSlot timeSlot) {
 		timeSlotRepository.delete(timeSlot);
@@ -762,10 +762,13 @@ public class AutoRepairShopSystemService {
 	}
 
 	// ?? do we have to save again if we are changing the fields?
-	public void updateBusinessInformation(String aName, String aAddress, String aPhoneNumber, String aEmailAddress,
+	public Business updateBusinessInformation(String aName, String aAddress, String aPhoneNumber, String aEmailAddress,
 			List<BusinessHour> aBusinessHours, List<TimeSlot> regular) {
 
 		Business business = getBusinessByName(aName);
+		if (business == null) {
+			throw new IllegalArgumentException("The business with this name doesn't exist");
+		}
 		boolean addressBool = true;
 		boolean phoneBool = true;
 		boolean emailBool = true;
@@ -808,6 +811,7 @@ public class AutoRepairShopSystemService {
 			business.setRegular(regular);
 		}
 		businessRepository.save(business); // ????
+		return business;
 	}
 
 	@Transactional
@@ -1007,7 +1011,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Appointment getAppointment(Long Id) {
 		Appointment appointment = appointmentRepository.findByAppointmentId(Id);
-		if (appointment!=null) {
+		if (appointment != null) {
 			return appointment;
 		} else {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
@@ -1066,10 +1070,10 @@ public class AutoRepairShopSystemService {
 	}
 
 	public Appointment deleteAppointment(Appointment appointment) {
-		if (appointment==null) {
+		if (appointment == null) {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
 		}
-		
+
 		LocalTime now = LocalTime.now();
 		LocalDate today = LocalDate.now();
 		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
@@ -1091,7 +1095,7 @@ public class AutoRepairShopSystemService {
 		appointment.setTechnician(null);
 		appointment.setTimeSlot(null);
 		appointment.setAppointmentId(null);
-		appointment=null;
+		appointment = null;
 		return appointment;
 	}
 
