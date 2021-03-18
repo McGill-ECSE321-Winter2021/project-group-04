@@ -45,4 +45,8 @@ public class TimeSlotDto {
 		return timeSlotId;
 	}
 
+	public void setId(Long id) {
+		this.timeSlotId = id;
+	}
+
 }

@@ -7,6 +7,7 @@ public class EmergencyServiceDto {
 	private FieldTechnicianDto fieldTechnician;
 	private CustomerDto customer;
 	private ReceiptDto receipt;
+	private Long emergencyId;
 
 	public EmergencyServiceDto() {
 
@@ -65,6 +66,14 @@ public class EmergencyServiceDto {
 
 	public ReceiptDto getReceipt() {
 		return receipt;
+	}
+
+	public void setId(Long id) {
+		this.emergencyId = id;
+	}
+
+	public Long getId() {
+		return emergencyId;
 	}
 
 }

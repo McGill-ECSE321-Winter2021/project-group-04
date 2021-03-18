@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AutoRepairShopSystemService {
@@ -110,7 +109,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Profile getProfile(Long aProfileId) {
 		Profile profile = profileRepository.findProfileByProfileId(aProfileId);
-		if (profile!=null) {
+		if (profile != null) {
 			return profile;
 		} else {
 			throw new IllegalArgumentException("No profile with such ID exist!");
@@ -138,7 +137,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Receipt getReceipt(Long aReceiptId) {
 		Receipt receipt = receiptRepository.findReceiptByReceiptId(aReceiptId);
-		if (receipt!=null) {
+		if (receipt != null) {
 			return receipt;
 		} else {
 			throw new IllegalArgumentException("No receipt with such ID exist!");
@@ -810,10 +809,10 @@ public class AutoRepairShopSystemService {
 	}
 
 	// ?? do we have to save again if we are changing the fields?
-	public Business updateBusinessInformation(String aName, String aAddress, String aPhoneNumber, String aEmailAddress,
-			List<BusinessHour> aBusinessHours, List<TimeSlot> regular) {
+	public Business updateBusinessInformation(Long Id, String aName, String aAddress, String aPhoneNumber,
+			String aEmailAddress, List<BusinessHour> aBusinessHours, List<TimeSlot> regular) {
 
-		Business business = getBusinessByName(aName);
+		Business business = getBusinessById(Id);
 		if (business == null) {
 			throw new IllegalArgumentException("The business with this name doesn't exist");
 		}
@@ -1114,18 +1113,17 @@ public class AutoRepairShopSystemService {
 		return false;
 	}
 
-
-	public Appointment deleteAppointment(Appointment appointment,LocalTime testTime,LocalDate testDate) {
-		if (appointment==null) {
+	public Appointment deleteAppointment(Appointment appointment, LocalTime testTime, LocalDate testDate) {
+		if (appointment == null) {
 			throw new IllegalArgumentException("No appointment with such ID exist!");
 		}
 		LocalTime now = LocalTime.now();
-		if(testTime!=null) {
-			now=testTime;
+		if (testTime != null) {
+			now = testTime;
 		}
 		LocalDate today = LocalDate.now();
-		if(testDate!=null) {
-			today=testDate;
+		if (testDate != null) {
+			today = testDate;
 		}
 		LocalDate appDate = appointment.getTimeSlot().getStartDate().toLocalDate();
 		LocalTime appTime = appointment.getTimeSlot().getStartTime().toLocalTime();
@@ -1253,6 +1251,7 @@ public class AutoRepairShopSystemService {
 		profile.setLastName(lastName);
 		profile.setPhoneNumber(phoneNumber);
 		profile.setZipCode(zipCode);
+		profileRepository.save(profile);
 		return profile;
 	}
 

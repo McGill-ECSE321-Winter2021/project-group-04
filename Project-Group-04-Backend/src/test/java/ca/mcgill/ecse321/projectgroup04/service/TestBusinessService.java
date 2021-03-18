@@ -503,6 +503,8 @@ public class TestBusinessService {
         String phoneNumber = "122 567 335";
         String emailAddress = "updatedmail@mail.mcgill.ca";
 
+        Long businessId = 12345l;
+
         Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
         Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
 
@@ -531,8 +533,8 @@ public class TestBusinessService {
         Business businesstemp = businessRepository.findBusinessByName(name);
 
         try {
-            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
-                    timeSlots);
+            business = service.updateBusinessInformation(businessId, name, address, phoneNumber, emailAddress,
+                    businessHours, timeSlots);
         } catch (IllegalArgumentException e) {
             fail();
         }
@@ -564,6 +566,8 @@ public class TestBusinessService {
         String phoneNumber = "122 567 335";
         String emailAddress = "updatedmail@mail.mcgill.ca";
 
+        Long businessId = 12345l;
+
         Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
         Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
 
@@ -593,8 +597,8 @@ public class TestBusinessService {
         String error = "";
 
         try {
-            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
-                    timeSlots);
+            business = service.updateBusinessInformation(businessId, name, address, phoneNumber, emailAddress,
+                    businessHours, timeSlots);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -610,6 +614,8 @@ public class TestBusinessService {
         String address = "";
         String phoneNumber = "123 456 789";
         String emailAddress = "updatedmail@mail.mcgill.ca";
+
+        Long businessId = 12345l;
 
         Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
         Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
@@ -641,8 +647,8 @@ public class TestBusinessService {
         // String error = "";
 
         try {
-            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
-                    timeSlots);
+            business = service.updateBusinessInformation(businessId, name, address, phoneNumber, emailAddress,
+                    businessHours, timeSlots);
         } catch (IllegalArgumentException e) {
             fail();
         }
@@ -672,6 +678,8 @@ public class TestBusinessService {
         String phoneNumber = "";
         String emailAddress = "updatedmail@mail.mcgill.ca";
 
+        Long businessId = 12345l;
+
         Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
         Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
 
@@ -702,8 +710,8 @@ public class TestBusinessService {
         // String error = "";
 
         try {
-            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
-                    timeSlots);
+            business = service.updateBusinessInformation(businessId, name, address, phoneNumber, emailAddress,
+                    businessHours, timeSlots);
         } catch (IllegalArgumentException e) {
             fail();
         }
@@ -733,6 +741,8 @@ public class TestBusinessService {
         String phoneNumber = "123 456 789";
         String emailAddress = "";
 
+        Long businessId = 12345l;
+
         Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
         Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
 
@@ -763,8 +773,8 @@ public class TestBusinessService {
         // String error = "";
 
         try {
-            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
-                    timeSlots);
+            business = service.updateBusinessInformation(businessId, name, address, phoneNumber, emailAddress,
+                    businessHours, timeSlots);
         } catch (IllegalArgumentException e) {
             fail();
         }
@@ -793,6 +803,8 @@ public class TestBusinessService {
         String address = "456 laval, Quebec";
         String phoneNumber = "123 456 789";
         String emailAddress = "testmailmail.mcgill.ca";
+
+        Long businessId = 12345l;
 
         Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
         Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
@@ -823,8 +835,8 @@ public class TestBusinessService {
         String error = "";
 
         try {
-            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
-                    timeSlots);
+            business = service.updateBusinessInformation(businessId, name, address, phoneNumber, emailAddress,
+                    businessHours, timeSlots);
         } catch (IllegalArgumentException e) {
             error = e.getMessage();
         }
@@ -840,6 +852,8 @@ public class TestBusinessService {
         String address = "456 laval, Quebec";
         String phoneNumber = "123 456 789";
         String emailAddress = "updatedmail@mail.mcgill.ca";
+
+        Long businessId = 12345l;
 
         List<BusinessHour> businessHours = null;
         List<TimeSlot> timeSlots = new ArrayList<TimeSlot>();
@@ -862,8 +876,8 @@ public class TestBusinessService {
         // String error = "";
 
         try {
-            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
-                    timeSlots);
+            business = service.updateBusinessInformation(businessId, name, address, phoneNumber, emailAddress,
+                    businessHours, timeSlots);
         } catch (IllegalArgumentException e) {
             fail();
         }
@@ -894,6 +908,8 @@ public class TestBusinessService {
         String phoneNumber = "123 456 789";
         String emailAddress = "updatedmail@mail.mcgill.ca";
 
+        Long businessId = 12345l;
+
         Time startTime = Time.valueOf(LocalTime.parse("09:00:00"));
         Time endTime = Time.valueOf(LocalTime.parse("22:00:00"));
 
@@ -912,8 +928,8 @@ public class TestBusinessService {
         // String error = "";
 
         try {
-            business = service.updateBusinessInformation(name, address, phoneNumber, emailAddress, businessHours,
-                    timeSlots);
+            business = service.updateBusinessInformation(businessId, name, address, phoneNumber, emailAddress,
+                    businessHours, timeSlots);
         } catch (IllegalArgumentException e) {
             fail();
         }
