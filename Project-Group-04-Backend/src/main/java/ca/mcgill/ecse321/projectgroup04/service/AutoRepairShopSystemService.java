@@ -419,6 +419,28 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Customer createCustomer(String userId, String password, List<Reminder> reminder, Car car, Profile profile) {
+		
+		if(userId == null || userId == "") {
+			throw new IllegalArgumentException("userId can't be empty");
+		}
+		if(password == null || password == "") {
+			throw new IllegalArgumentException("password can't be empty");
+		}
+		if(reminder == null) {
+			throw new IllegalArgumentException("reminders can't be empty");
+		}
+		if(car == null) {
+			throw new IllegalArgumentException("Car can't be empty");
+		}
+		if(profile == null) {
+			throw new IllegalArgumentException("Profile can't be empty");
+		}
+		
+		Customer test = customerRepository.findCustomerByUserId(userId);
+		
+		if(test!=null) {
+			throw new IllegalArgumentException("This customer already exists");
+		}
 		Customer customer = new Customer();
 		customer.setPassword(password);
 		customer.setUserId(userId);
@@ -444,18 +466,58 @@ public class AutoRepairShopSystemService {
 		customerRepository.delete(customer);
 	}
 
-	public void editCustomer(Customer customer, String Id, String password, List<Reminder> reminders, Car car,
+	public Customer editCustomer(Customer customer, String Id, String password, List<Reminder> reminders, Car car,
 			Profile profile) {
+		
+		if(customer == null) {
+			throw new IllegalArgumentException("This customer does not exist");
+		}
+//		if(Id == null || Id == "") {
+//			throw new IllegalArgumentException("userId can't be empty");
+//		}
+//		if(password == null || password == "") {
+//			throw new IllegalArgumentException("password can't be empty");
+//		}
+//		if(reminders == null) {
+//			throw new IllegalArgumentException("reminders can't be empty");
+//		}
+//		if(car == null) {
+//			throw new IllegalArgumentException("Car can't be empty");
+//		}
+//		if(profile == null) {
+//			throw new IllegalArgumentException("Profile can't be empty");
+//		}
 		customer.setUserId(Id);
 		customer.setPassword(password);
 		customer.setCar(car);
 		customer.setCustomerProfile(profile);
 		customer.setReminders(reminders);
 		customerRepository.save(customer);
+		return customer;
 	}
 
 	@Transactional
 	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
+		
+		if(startDate == null || endDate == null) {
+			throw new IllegalArgumentException("Date cannot be null");
+		}
+		if(startTime == null) {
+			throw new IllegalArgumentException("startTime cannot be null");
+		}
+		if(endTime == null) {
+			throw new IllegalArgumentException("endTime cannot be null");
+		}
+		if(garageSpot == null) {
+			throw new IllegalArgumentException("garageSpot cannot be null");
+		}
+		TimeSlot test = timeSlotRepository.findTimeSlotByStartDateAndStartTime(startDate, startTime);
+		if(test!=null) {
+			throw new IllegalArgumentException("This TimeSlot already exists");
+		}
+		if(startTime.after(endTime)) {
+			throw new IllegalArgumentException("StartTime cannot be after endTime");
+		}
 		TimeSlot timeSlot = new TimeSlot();
 		timeSlot.setStartDate(startDate);
 		timeSlot.setStartTime(startTime);

@@ -603,7 +603,7 @@ public class AutoRepairShopSystemRestController {
 
 	////////////////////////////////////////////////////////////////////////
 
-	@GetMapping(value = { "/checkupReminder", "/checkupReminder/" })
+	@GetMapping(value = { "/checkupReminders", "/checkupReminders/" })
 	public List<CheckupReminderDto> getAllCheckupReminders() {
 		List<CheckupReminderDto> checkupReminderDtos = new ArrayList<>();
 		for (CheckupReminder checkupReminder : service.getAllCheckupReminder()) {
@@ -617,11 +617,13 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(service.getCheckupReminderById(Id));
 	}
 
-	@GetMapping(value = { "/checkupReminder/{message}", "/checkupReminder/{message}/" })
-	public CheckupReminderDto getCheckupReminderByMessage(@PathVariable("message") String message)
-			throws IllegalArgumentException {
-		return convertToDto(service.getCheckupReminderByMessage(message));
-	}
+	// @GetMapping(value = { "/checkupReminder/{message}",
+	// "/checkupReminder/{message}/" })
+	// public CheckupReminderDto
+	// getCheckupReminderByMessage(@PathVariable("message") String message)
+	// throws IllegalArgumentException {
+	// return convertToDto(service.getCheckupReminderByMessage(message));
+	// }
 
 	@PostMapping(value = { "/create/checkupReminder/{message}", "/create/checkupReminder/{message}/" })
 	public CheckupReminderDto createCheckupReminder(@PathVariable("message") String message,
@@ -662,6 +664,22 @@ public class AutoRepairShopSystemRestController {
 		return businessHourDto;
 	}
 
+	@PostMapping(value = { "/edit/businessHour/{Id}", "/edit/businessHour/{Id}/" })
+	public BusinessHourDto editBusinessHour(@PathVariable("Id") Long Id, @RequestParam String dayOfWeek,
+			@RequestParam String startTime, @RequestParam String endTime) {
+		BusinessHour businessHour = service.updateBusinessHour(Id, dayOfWeek, Time.valueOf(LocalTime.parse(startTime)),
+				Time.valueOf(LocalTime.parse(endTime)));
+		BusinessHourDto businessHourDto = convertToDto(businessHour);
+		return businessHourDto;
+
+	}
+
+	@PostMapping(value = { "/delete/businessHour/{Id}", "/delete/businessHour/{Id}/" })
+	public void deleteBusinessHourById(@PathVariable("Id") Long Id) {
+		BusinessHour businessHour = service.getBusinessHourById(Id);
+		service.deleteBusinessHour(businessHour);
+	}
+
 	// @PostMapping(value = { "/delete/businessHour/{Id}",
 	// "/delete/businessHour/{dayOfWeek}/" })
 	// public void deleteBusinessHourByDayOfWeek(@PathVariable("dayOfWeek") String
@@ -676,12 +694,6 @@ public class AutoRepairShopSystemRestController {
 	// BusinessHour businessHour =
 	// service.getBusinessHourByDayOfWeek(service.convertStringToDayOfWeek(dayOfWeek));
 	// }
-
-	@PostMapping(value = { "/delete/businessHour/{Id}", "/delete/businessHour/{Id}/" })
-	public void deleteBusinessHourById(@PathVariable("Id") Long Id) {
-		BusinessHour businessHour = service.getBusinessHourById(Id);
-		service.deleteBusinessHour(businessHour);
-	}
 
 	/////////////////////////////////////// ADMINISTRATIVE
 	/////////////////////////////////////// ASSISTANT///////////////////////////
