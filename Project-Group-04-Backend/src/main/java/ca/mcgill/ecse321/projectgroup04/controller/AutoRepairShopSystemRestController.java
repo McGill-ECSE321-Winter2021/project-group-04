@@ -916,7 +916,7 @@ public class AutoRepairShopSystemRestController {
 	private CarDto convertListToDto(List<Car> car) {
 		CarDto cardto = null;
 		for (Car car1 : car) {
-			cardto =convertToDto(car1);
+			cardto = convertToDto(car1);
 		}
 		return cardto;
 	}

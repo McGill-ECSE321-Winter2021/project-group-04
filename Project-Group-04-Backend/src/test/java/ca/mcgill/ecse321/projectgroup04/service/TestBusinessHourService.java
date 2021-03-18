@@ -2,9 +2,7 @@ package ca.mcgill.ecse321.projectgroup04.service;
 
 import static org.mockito.Mockito.lenient;
 
-import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +17,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.projectgroup04.dao.BusinessHourRepository;
-import ca.mcgill.ecse321.projectgroup04.dao.BusinessRepository;
-import ca.mcgill.ecse321.projectgroup04.dao.TimeSlotRepository;
-import ca.mcgill.ecse321.projectgroup04.model.Business;
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour;
-import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -35,7 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 
 @ExtendWith(MockitoExtension.class)
 public class TestBusinessHourService {
