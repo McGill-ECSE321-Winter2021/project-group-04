@@ -227,7 +227,7 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such Field Technician!");
 		}
 
-		FieldTechnicianDto fieldTechnicianDto = new FieldTechnicianDto(fieldTechnician.getName());
+		FieldTechnicianDto fieldTechnicianDto = new FieldTechnicianDto(fieldTechnician.getName(), fieldTechnician.getIsAvailable());
 		fieldTechnicianDto.setId(fieldTechnician.getTechnicianId());
 		return fieldTechnicianDto;
 
@@ -477,20 +477,12 @@ public class AutoRepairShopSystemRestController {
 		// Emergency Service that is fixed and extract price
 		EmergencyService emergencyService = service.getEmergencyServiceByServiceName(serviceName);
 		int priceOfService = emergencyService.getPrice();
-
-		Customer customer = service.getCustomerByUserId(userId); // get Customer
-		Receipt receipt = service.createReceipt(priceOfService); // generate Receipt
-		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get
-																												// fieldTechnician
-
-		if (!fieldTechnician.getIsAvailable()) { // if field technician is unavailable
-			throw new IllegalArgumentException("Field Technician is currently unavailable");
-		}
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get ft	
 
 		// A bookable emergency service will be created
-		String nameOfBooking = serviceName + userId; // service for that user
+		String nameOfBooking = serviceName + " for " + userId; // service for that user
 		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, priceOfService,
-				location, fieldTechnician, customer, receipt);
+				location, userId, fieldTechnician);
 		return convertToDto(bookableEmergencyService);
 	}
 
@@ -543,6 +535,9 @@ public class AutoRepairShopSystemRestController {
 	@PostMapping(value = { "/delete/fieldTechnician/{Id}", "/delete/fieldTechnician/{Id}/" })
 	public void deleteFieldTechnician(@PathVariable("Id") Long id) throws IllegalArgumentException {
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(id);
+		if (!fieldTechnician.getIsAvailable()) {
+			throw new IllegalArgumentException("The field technician is assigned to an emergency service!");
+		}
 		service.deleteFieldTechnician(fieldTechnician);
 	}
 
