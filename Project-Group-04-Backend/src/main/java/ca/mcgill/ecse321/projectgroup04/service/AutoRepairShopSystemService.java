@@ -449,7 +449,21 @@ public class AutoRepairShopSystemService {
 		car = null;
 		return car;
 	}
+	
+	@Transactional
+	public Car getCarByCarId(Long carId) {
+		Car car = carRepository.findByCarId(carId);
+		return car;
+	}
 
+	@Transactional
+	public List<Reminder> getReminderByReminderId(Long reminderId) {
+		Reminder reminder = reminderRepository.findReminderByReminderId(reminderId);
+		List<Reminder> reminders = new ArrayList<Reminder>();
+		reminders.add(reminder);
+		return reminders;
+	}
+	
 	@Transactional
 	public Customer createCustomer(String userId, String password, List<Reminder> reminder, Car car, Profile profile) {
 
