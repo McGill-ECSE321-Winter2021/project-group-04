@@ -52,6 +52,7 @@ public class TestTimeSlotService {
                 .thenAnswer((InvocationOnMock invocation) -> {
                     if (invocation.getArgument(0).equals(timeSlotId)) {
 
+
                         TimeSlot timeSlot = new TimeSlot();
                         timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
                         timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));

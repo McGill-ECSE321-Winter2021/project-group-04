@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
-import static org.mockito.Mockito.lenient; 
+import static org.mockito.Mockito.lenient;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -539,5 +539,5 @@ public class TestEmergencyServiceService {
 		assertTrue(booking.getTechnician().getIsAvailable());	
 		
 	}	
-
+	
 }
