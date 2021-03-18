@@ -363,6 +363,23 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Car createCar(String model, String year, String color) {
+		
+//		List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
+//		
+//		if (existingCars != null) {
+//			throw new IllegalArgumentException("This car already exists");
+//		}
+		if(model == null || model == "" ) {
+			throw new IllegalArgumentException("Model can't be empty");
+		}
+		
+		if(color == null || color == "") {
+			throw new IllegalArgumentException("Color can't be empty");
+		}
+		
+		if(year == null || year == "") {
+			throw new IllegalArgumentException("Year can't be empty");
+		}
 		Car car = new Car();
 		car.setColor(color);
 		car.setModel(model);
@@ -370,9 +387,21 @@ public class AutoRepairShopSystemService {
 		carRepository.save(car);
 		return car;
 	}
+	
+//	@Transactional
+//	public List<Car> createCars(Long carId, String model, String year, String color) {
+//		
+//		List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
+//		
+//		if (existingCars != null) {
+//			throw new IllegalArgumentException("This car already exists");
+//		}
+//		
+//		return cars
+//	}
 
 	@Transactional
-	public Car getCarByModelAndYearAndColor(String model, String year, String color) {
+	public List<Car> getCarByModelAndYearAndColor(String model, String year, String color) {
 		return carRepository.findCarByModelAndYearAndColor(model, year, color);
 	}
 
@@ -382,8 +411,10 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void deleteCar(Car car) {
+	public Car deleteCar(Car car) {
 		carRepository.delete(car);
+		car = null;
+		return car;
 	}
 
 	@Transactional
@@ -420,6 +451,7 @@ public class AutoRepairShopSystemService {
 		customer.setCar(car);
 		customer.setCustomerProfile(profile);
 		customer.setReminders(reminders);
+		customerRepository.save(customer);
 	}
 
 	@Transactional
@@ -781,8 +813,9 @@ public class AutoRepairShopSystemService {
 			String aEmailAddress, List<BusinessHour> aBusinessHours, List<TimeSlot> regular) {
 
 		Business business = getBusinessById(Id);
+
 		if (business == null) {
-			throw new IllegalArgumentException("The business with this name doesn't exist");
+			throw new IllegalArgumentException("The business with this Id doesn't exist");
 		}
 		boolean addressBool = true;
 		boolean phoneBool = true;
@@ -896,8 +929,16 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public BusinessHour createBusinessHour(String aDayOfWeek, Time aStartTime, Time aEndTime) {
 
-		if (aDayOfWeek == null || aDayOfWeek.equals("")) {
-			throw new IllegalArgumentException("Day of the week cannot be null");
+		for (BusinessHour businessHour : getAllBusinessHours()) {
+			if (businessHour.getDayOfWeek().equals(convertStringToDayOfWeek(aDayOfWeek))) {
+				if (businessHour.getStartTime().equals(aStartTime)) {
+					if (businessHour.getEndTime().equals(aEndTime)) {
+						throw new IllegalArgumentException("These business hours already exist!");
+					}
+					throw new IllegalArgumentException(
+							"Business hours with this start time already exist, update end time instead");
+				}
+			}
 		}
 
 		if (aStartTime == null) {
@@ -905,11 +946,19 @@ public class AutoRepairShopSystemService {
 		}
 
 		if (aEndTime == null) {
-			throw new IllegalArgumentException("Start time cannot be null");
+			throw new IllegalArgumentException("End time cannot be null");
 		}
 
-		if (aStartTime.equals(aEndTime) || aStartTime.compareTo(aEndTime) > 0) {
-			throw new IllegalArgumentException("Business hour start time cannot be later or equal to end time");
+		if (aStartTime.after(aEndTime)) {
+			throw new IllegalArgumentException("Start time has to be before end Time");
+		}
+
+		if (aDayOfWeek == null || aDayOfWeek.equals("")) {
+			throw new IllegalArgumentException("Day of the week cannot be null");
+		}
+
+		if (aStartTime.equals(aEndTime)) {
+			throw new IllegalArgumentException("Business hour start time cannot equal to end time");
 		}
 
 		BusinessHour businessHour = new BusinessHour();
@@ -920,21 +969,55 @@ public class AutoRepairShopSystemService {
 		return businessHour;
 	}
 
-	// public void updateBusinessHour(Long id, String dayOfWeek, Time startTime,
-	// Time endTime) {
-	// BusinessHour tempBusinessHour = getBusinessHourById(id);
+	public BusinessHour updateBusinessHour(Long id, String dayOfWeek, Time startTime, Time endTime) {
 
-	// if(tempBusinessHour!=null)
+		BusinessHour tempBusinessHour = getBusinessHourById(id);
 
-	// boolean dayOfWeekBool = true;
+		for (BusinessHour businessHour : getAllBusinessHours()) {
+			if (businessHour.getDayOfWeek().equals(convertStringToDayOfWeek(dayOfWeek))) {
+				if (businessHour.getStartTime().equals(startTime)) {
+					if (businessHour.getEndTime().equals(endTime)) {
+						throw new IllegalArgumentException("These business hours already exist!");
+					}
+				}
+			}
+		}
 
-	// // if(dayOfWeek.equal(""));
+		Boolean dayBool = true;
+		Boolean startTimeBool = true;
+		Boolean endTimeBool = true;
 
-	//
+		if (startTime == null) {
+			startTimeBool = false;
+		}
 
-	public void deleteBusinessHour(BusinessHour businessHour) {
-		// BusinessHour businessHour = getBusinessHourById(businessHourId);
+		if (endTime == null) {
+			endTimeBool = false;
+		}
+
+		if (startTimeBool && endTimeBool) {
+			if (startTime.after(endTime)) {
+				throw new IllegalArgumentException("Start time has to be before end Time");
+			}
+		}
+
+		if (dayOfWeek == null || dayOfWeek.equals("")) {
+			dayBool = false;
+		}
+
+		if (dayBool)
+			tempBusinessHour.setDayOfWeek(convertStringToDayOfWeek(dayOfWeek));
+		if (startTimeBool)
+			tempBusinessHour.setStartTime(startTime);
+		if (endTimeBool)
+			tempBusinessHour.setEndTime(endTime);
+		businessHourRepository.save(tempBusinessHour);
+		return tempBusinessHour;
+	}
+
+	public Boolean deleteBusinessHour(BusinessHour businessHour) {
 		businessHourRepository.delete(businessHour);
+		return true;
 	}
 
 	@Transactional
@@ -947,10 +1030,10 @@ public class AutoRepairShopSystemService {
 		return (List<BusinessHour>) businessHourRepository.findAll();
 	}
 
-	@Transactional
-	public BusinessHour getBusinessHourByDayOfWeek(DayOfWeek dayOfWeek) {
-		return businessHourRepository.findBusinessHourByDayOfWeek(dayOfWeek);
-	}
+	// @Transactional
+	// public BusinessHour getBusinessHourByDayOfWeek(DayOfWeek dayOfWeek) {
+	// return businessHourRepository.findBusinessHourByDayOfWeek(dayOfWeek);
+	// }
 
 	@Transactional
 	public CheckupReminder createCheckupReminder(Date aDate, Time aTime, String aMessage) {
@@ -969,6 +1052,34 @@ public class AutoRepairShopSystemService {
 		checkupReminder.setDate(aDate);
 		checkupReminder.setMessage(aMessage);
 		checkupReminder.setTime(aTime);
+		checkupReminderRepository.save(checkupReminder);
+		return checkupReminder;
+	}
+
+	@Transactional
+	public CheckupReminder editCheckupReminder(Long id, Date aDate, Time aTime, String aMessage) {
+		CheckupReminder checkupReminder = checkupReminderRepository.findByReminderId(id);
+
+		Boolean dateBool = true;
+		Boolean timeBool = true;
+		Boolean messageBool = true;
+
+		if (aDate == null) {
+			dateBool = false;
+		}
+		if (aTime == null) {
+			timeBool = false;
+		}
+		if (aMessage == null || aMessage.equals("")) {
+			messageBool = false;
+		}
+
+		if (dateBool)
+			checkupReminder.setDate(aDate);
+		if (messageBool)
+			checkupReminder.setMessage(aMessage);
+		if (timeBool)
+			checkupReminder.setTime(aTime);
 		checkupReminderRepository.save(checkupReminder);
 		return checkupReminder;
 	}
@@ -1182,6 +1293,7 @@ public class AutoRepairShopSystemService {
 		}
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
+		administrativeAssistantRepository.save(administrativeAssistant);
 		return administrativeAssistant;
 	}
 
