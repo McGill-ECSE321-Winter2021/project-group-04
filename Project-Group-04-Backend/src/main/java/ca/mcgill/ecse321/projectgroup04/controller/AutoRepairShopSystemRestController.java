@@ -789,14 +789,14 @@ public class AutoRepairShopSystemRestController {
 		return bookableServiceDto;
 	}
 
-	@GetMapping(value = { "/bookableService/{serviceName}", "/bookableService/{serviceName}/" })
-	public BookableServiceDto getBookableServiceByServiceName(@PathVariable("serviceName") String serviceName) {
-		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
-		if (bookableService == null) {
-			throw new IllegalArgumentException("No service with such name!");
-		}
-		return convertToDto(bookableService);
-	}
+//	@GetMapping(value = { "/bookableService/{serviceName}", "/bookableService/{serviceName}/" })
+//	public BookableServiceDto getBookableServiceByServiceName(@PathVariable("serviceName") String serviceName) {
+//		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
+//		if (bookableService == null) {
+//			throw new IllegalArgumentException("No service with such name!");
+//		}
+//		return convertToDto(bookableService);
+//	}
 
 	/////////////////////////////////////// GARAGE
 	/////////////////////////////////////// TECHNICIAN////////////////////////////
