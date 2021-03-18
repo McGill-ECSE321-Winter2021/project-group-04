@@ -562,10 +562,10 @@ public class AutoRepairShopSystemService {
 		if(garageSpot == null) {
 			throw new IllegalArgumentException("garageSpot cannot be null");
 		}
-		TimeSlot test = timeSlotRepository.findTimeSlotByStartDateAndStartTime(startDate, startTime);
-		if(test!=null) {
-			throw new IllegalArgumentException("This TimeSlot already exists");
-		}
+//		TimeSlot test = timeSlotRepository.findTimeSlotByGarageSpotAndStartTimeAndStartDate(garageSpot, startTime , startDate);
+//		if(test.getStartDate() == startDate && test.getStartTime() == startTime && test.getGarageSpot() == garageSpot) {
+//			throw new IllegalArgumentException("This TimeSlot already exists");
+//		}
 		if(startTime.after(endTime)) {
 			throw new IllegalArgumentException("StartTime cannot be after endTime");
 		}
@@ -1398,12 +1398,14 @@ public class AutoRepairShopSystemService {
 	}
 
 	public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
-		List<Appointment> appointments = getAllAppointments();
 
-		for (Appointment appointment : appointments) {
+		List<Appointment> appointmentsList = getAllAppointments();
+
+		for (Appointment appointment : appointmentsList) {
 			if (appointment.getTechnician().equals(garageTechnician)) {
 				throw new IllegalArgumentException("This garage technician still has appointments");
 			}
+
 		}
 		garageTechnicianRepository.delete(garageTechnician);
 		garageTechnician = null;

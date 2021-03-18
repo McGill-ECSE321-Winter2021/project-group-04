@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.projectgroup04.service;
 import static org.mockito.Mockito.lenient; 
 
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +58,6 @@ public class TestEmergencyServiceService {
 	
 	private static final String SERVICE_NAME2 = "EmergencyService2";
 	private static final int SERVICE_PRICE2 = 75;
-	private static final String SERVICE_LOCATION2 = "Toronto";
 	
 	private static final Long FIELD_TECHNICIAN_ID1 = (long) 55999;
 	private static final String FIELD_TECHNICIAN_NAME1 = "Borat";
@@ -356,7 +354,6 @@ public class TestEmergencyServiceService {
 		 String serviceName = "EmergencyService1";
 		 
 		 String userId = "UserTestId";
-		 Customer customer = service.getCustomerByUserId(userId);
 		 
 		 String bookingName = serviceName + " for " + userId;
 		 

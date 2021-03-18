@@ -896,7 +896,6 @@ public class TestCustomerService {
                 Customer customer = service.createCustomer(userId, password, reminders, car, profile);
                 Customer test = customerRepository.findCustomerByUserId("Henry");
                 
-                String error = "";
                 
                 try {
                 	customer = service.editCustomer(customer, userId, password, reminders, car, profile1);
@@ -972,9 +971,7 @@ public class TestCustomerService {
                 
                 Customer customer = service.createCustomer(userId, password, reminders, car, profile);
                 Customer test = customerRepository.findCustomerByUserId("Henry");
-                
-                String error = "";
-                
+                                
                 try {
                 	customer = service.editCustomer(customer, userId, password, reminders1, car, profile);
                 }catch (IllegalArgumentException e){
