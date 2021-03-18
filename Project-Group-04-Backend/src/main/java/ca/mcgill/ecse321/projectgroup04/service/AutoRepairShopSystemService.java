@@ -213,8 +213,8 @@ public class AutoRepairShopSystemService {
 		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
 		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
 		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
-		for(BusinessHour businessHour:getAllBusinessHours()) {
-			if(businessHour.getStartTime().after(startTime) || businessHour.getEndTime().before(endTime)) {
+		for (BusinessHour businessHour : getAllBusinessHours()) {
+			if (businessHour.getStartTime().after(startTime) || businessHour.getEndTime().before(endTime)) {
 				throw new IllegalArgumentException("This time doesn't fall within business hours!");
 			}
 		}
@@ -229,7 +229,7 @@ public class AutoRepairShopSystemService {
 		date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
 		AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
 				"You have an appointment in 24hours");
-		addAppointmentReminderToCustomer(customer,appReminder);
+		addAppointmentReminderToCustomer(customer, appReminder);
 		Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
 				receipt);
 		return appointment;
@@ -326,9 +326,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Owner createOwner(String userId, String password) {
-		
+
 		Owner existingOwner = getOwnerByUserId(userId);
-		
+
 		if (existingOwner != null) {
 			throw new IllegalArgumentException("Owner already exists");
 		}
@@ -338,7 +338,7 @@ public class AutoRepairShopSystemService {
 		if (password == "") {
 			throw new IllegalArgumentException("Password can't be empty");
 		}
-		
+
 		Owner owner = new Owner();
 		owner.setUserId(userId);
 		owner.setPassword(password);
@@ -365,15 +365,15 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Owner editOwner(Owner owner, String userId, String password) {
-		
+
 		if (userId == owner.getUserId() && password == owner.getPassword()) {
 			throw new IllegalArgumentException("You have to change the username or password or both");
 		}
-		
+
 		owner.setUserId(userId);
 		owner.setPassword(password);
 		ownerRepository.save(owner);
-		
+
 		return owner;
 	}
 
@@ -386,7 +386,7 @@ public class AutoRepairShopSystemService {
 			return false; // owner does not exist
 		}
 	}
-	
+
 	@Transactional
 	public Owner getOwnerByUserId(String userId) {
 		return ownerRepository.findOwnerByUserId(userId);
@@ -396,21 +396,21 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Car createCar(String model, String year, String color) {
-		
-//		List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
-//		
-//		if (existingCars != null) {
-//			throw new IllegalArgumentException("This car already exists");
-//		}
-		if(model == null || model == "" ) {
+
+		// List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
+		//
+		// if (existingCars != null) {
+		// throw new IllegalArgumentException("This car already exists");
+		// }
+		if (model == null || model == "") {
 			throw new IllegalArgumentException("Model can't be empty");
 		}
-		
-		if(color == null || color == "") {
+
+		if (color == null || color == "") {
 			throw new IllegalArgumentException("Color can't be empty");
 		}
-		
-		if(year == null || year == "") {
+
+		if (year == null || year == "") {
 			throw new IllegalArgumentException("Year can't be empty");
 		}
 		Car car = new Car();
@@ -420,18 +420,19 @@ public class AutoRepairShopSystemService {
 		carRepository.save(car);
 		return car;
 	}
-	
-//	@Transactional
-//	public List<Car> createCars(Long carId, String model, String year, String color) {
-//		
-//		List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
-//		
-//		if (existingCars != null) {
-//			throw new IllegalArgumentException("This car already exists");
-//		}
-//		
-//		return cars
-//	}
+
+	// @Transactional
+	// public List<Car> createCars(Long carId, String model, String year, String
+	// color) {
+	//
+	// List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
+	//
+	// if (existingCars != null) {
+	// throw new IllegalArgumentException("This car already exists");
+	// }
+	//
+	// return cars
+	// }
 
 	@Transactional
 	public List<Car> getCarByModelAndYearAndColor(String model, String year, String color) {
@@ -452,26 +453,26 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Customer createCustomer(String userId, String password, List<Reminder> reminder, Car car, Profile profile) {
-		
-		if(userId == null || userId == "") {
+
+		if (userId == null || userId == "") {
 			throw new IllegalArgumentException("userId can't be empty");
 		}
-		if(password == null || password == "") {
+		if (password == null || password == "") {
 			throw new IllegalArgumentException("password can't be empty");
 		}
-		if(reminder == null) {
+		if (reminder == null) {
 			throw new IllegalArgumentException("reminders can't be empty");
 		}
-		if(car == null) {
+		if (car == null) {
 			throw new IllegalArgumentException("Car can't be empty");
 		}
-		if(profile == null) {
+		if (profile == null) {
 			throw new IllegalArgumentException("Profile can't be empty");
 		}
-		
+
 		Customer test = customerRepository.findCustomerByUserId(userId);
-		
-		if(test!=null) {
+
+		if (test != null) {
 			throw new IllegalArgumentException("This customer already exists");
 		}
 		Customer customer = new Customer();
@@ -501,25 +502,25 @@ public class AutoRepairShopSystemService {
 
 	public Customer editCustomer(Customer customer, String Id, String password, List<Reminder> reminders, Car car,
 			Profile profile) {
-		
-		if(customer == null) {
+
+		if (customer == null) {
 			throw new IllegalArgumentException("This customer does not exist");
 		}
-//		if(Id == null || Id == "") {
-//			throw new IllegalArgumentException("userId can't be empty");
-//		}
-//		if(password == null || password == "") {
-//			throw new IllegalArgumentException("password can't be empty");
-//		}
-//		if(reminders == null) {
-//			throw new IllegalArgumentException("reminders can't be empty");
-//		}
-//		if(car == null) {
-//			throw new IllegalArgumentException("Car can't be empty");
-//		}
-//		if(profile == null) {
-//			throw new IllegalArgumentException("Profile can't be empty");
-//		}
+		// if(Id == null || Id == "") {
+		// throw new IllegalArgumentException("userId can't be empty");
+		// }
+		// if(password == null || password == "") {
+		// throw new IllegalArgumentException("password can't be empty");
+		// }
+		// if(reminders == null) {
+		// throw new IllegalArgumentException("reminders can't be empty");
+		// }
+		// if(car == null) {
+		// throw new IllegalArgumentException("Car can't be empty");
+		// }
+		// if(profile == null) {
+		// throw new IllegalArgumentException("Profile can't be empty");
+		// }
 		customer.setUserId(Id);
 		customer.setPassword(password);
 		customer.setCar(car);
@@ -528,45 +529,48 @@ public class AutoRepairShopSystemService {
 		customerRepository.save(customer);
 		return customer;
 	}
-	
+
 	@Transactional
-	public void addAppointmentReminderToCustomer(Customer customer,AppointmentReminder appointmentReminder){
-		if(customer==null) {
+	public void addAppointmentReminderToCustomer(Customer customer, AppointmentReminder appointmentReminder) {
+		if (customer == null) {
 			throw new IllegalArgumentException("Customer can't be null!");
 		}
-		if(appointmentReminder==null) {
+		if (appointmentReminder == null) {
 			throw new IllegalArgumentException("Appointment Reminder can't be null!");
 		}
 		List<Reminder> newReminders = new ArrayList<>();
-		if(customer.getReminders()!=null) {
-			for(Reminder a : customer.getReminders()) {
+		if (customer.getReminders() != null) {
+			for (Reminder a : customer.getReminders()) {
 				newReminders.add(a);
 			}
-		}		
+		}
 		newReminders.add(appointmentReminder);
-		customer.setReminders(newReminders);		
+		customer.setReminders(newReminders);
 	}
 
 	@Transactional
 	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
-		
-		if(startDate == null || endDate == null) {
+
+		if (startDate == null || endDate == null) {
 			throw new IllegalArgumentException("Date cannot be null");
 		}
-		if(startTime == null) {
+		if (startTime == null) {
 			throw new IllegalArgumentException("startTime cannot be null");
 		}
-		if(endTime == null) {
+		if (endTime == null) {
 			throw new IllegalArgumentException("endTime cannot be null");
 		}
-		if(garageSpot == null) {
+		if (garageSpot == null) {
 			throw new IllegalArgumentException("garageSpot cannot be null");
 		}
-//		TimeSlot test = timeSlotRepository.findTimeSlotByGarageSpotAndStartTimeAndStartDate(garageSpot, startTime , startDate);
-//		if(test.getStartDate() == startDate && test.getStartTime() == startTime && test.getGarageSpot() == garageSpot) {
-//			throw new IllegalArgumentException("This TimeSlot already exists");
-//		}
-		if(startTime.after(endTime)) {
+		// TimeSlot test =
+		// timeSlotRepository.findTimeSlotByGarageSpotAndStartTimeAndStartDate(garageSpot,
+		// startTime , startDate);
+		// if(test.getStartDate() == startDate && test.getStartTime() == startTime &&
+		// test.getGarageSpot() == garageSpot) {
+		// throw new IllegalArgumentException("This TimeSlot already exists");
+		// }
+		if (startTime.after(endTime)) {
 			throw new IllegalArgumentException("StartTime cannot be after endTime");
 		}
 		TimeSlot timeSlot = new TimeSlot();
@@ -700,13 +704,13 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public EmergencyService createEmergencyService(String name, int price) {
-		
+
 		EmergencyService existingService = getEmergencyServiceByServiceName(name);
 
 		if (existingService != null) {
 			throw new IllegalArgumentException("Emergency Service with this name already exists");
 		}
-	
+
 		if (name == "") {
 			throw new IllegalArgumentException("Name can't be null");
 		}
@@ -727,10 +731,10 @@ public class AutoRepairShopSystemService {
 
 	public EmergencyService bookEmergencyService(String bookingName, String serviceName, String aLocation,
 			String userId, FieldTechnician aFieldTechnician) {
+
 		EmergencyService bookableEmergencyService = new EmergencyService();
 		EmergencyService emergencyService = getEmergencyServiceByServiceName(serviceName);
 
-		
 		if (aLocation == null) {
 			throw new IllegalArgumentException("Location can't be null");
 		}
@@ -740,7 +744,7 @@ public class AutoRepairShopSystemService {
 		if (bookingName == null) {
 			throw new IllegalArgumentException("Service Name can't be null");
 		}
-		
+
 		if (aFieldTechnician.getIsAvailable() == false) { // if field technician is unavailable
 			throw new IllegalArgumentException("Field Technician is currently unavailable");
 		}
@@ -751,15 +755,17 @@ public class AutoRepairShopSystemService {
 		
 		
 		int price = emergencyService.getPrice();
+
 		Receipt aReceipt = createReceipt(price);
 		Customer customer = getCustomerByUserId(userId);
-		
+
 		if (customer == null) {
 			throw new IllegalArgumentException("Customer can't be null");
 		}
 		
 		
 		bookableEmergencyService.setName(bookingName);
+
 		bookableEmergencyService.setPrice(price);
 		bookableEmergencyService.setLocation(aLocation);
 		bookableEmergencyService.setTechnician(aFieldTechnician);
@@ -806,7 +812,7 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public EmergencyService editEmergencyService(EmergencyService emergencyService, String name, int price) {
-		
+
 		if (name == emergencyService.getName() && price == emergencyService.getPrice()) {
 			throw new IllegalArgumentException("You have to edit one of the fields");
 		}
@@ -814,11 +820,11 @@ public class AutoRepairShopSystemService {
 		if (existingEmergencyService != null) {
 			throw new IllegalArgumentException("An emergency service with this name already exists");
 		}
-		
+
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
 		emergencyServiceRepository.save(emergencyService);
-		
+
 		return emergencyService;
 	}
 
@@ -873,7 +879,7 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public FieldTechnician createFieldTechnician(String name) {
-		
+
 		if (name == "") {
 			throw new IllegalArgumentException("Name can't be empty");
 		}
@@ -881,7 +887,7 @@ public class AutoRepairShopSystemService {
 		if (existingFieldTechnician != null) {
 			throw new IllegalArgumentException("Field Technician with this name already exists");
 		}
-		
+
 		FieldTechnician fieldTechnician = new FieldTechnician();
 		fieldTechnician.setName(name);
 		fieldTechnician.setIsAvailable(true);
@@ -908,7 +914,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public FieldTechnician deleteFieldTechnician(FieldTechnician fieldTechnician) {
 		List<EmergencyService> emergencyServices = (List<EmergencyService>) emergencyServiceRepository.findAll();
-		
+
 		for (EmergencyService emergencyService : emergencyServices) {
 			if (emergencyService.getTechnician().equals(fieldTechnician)) {
 				throw new IllegalArgumentException("The field technician is assigned to an emergency service!");
@@ -933,6 +939,10 @@ public class AutoRepairShopSystemService {
 			List<BusinessHour> aBusinessHours, List<TimeSlot> regular) {
 
 		boolean businessExist = false;
+		List<Business> businessList = getBusiness();
+		if (businessList.size() == 1) {
+			throw new IllegalArgumentException("Only one business can exist");
+		}
 
 		Business tempBusiness = getBusinessByName(aName);
 
@@ -1044,6 +1054,11 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Business getBusinessByName(String name) {
 		return businessRepository.findBusinessByName(name);
+	}
+
+	public Boolean deleteBusiness(Business business) {
+		businessRepository.delete(business);
+		return true;
 	}
 
 	// @Transactional
