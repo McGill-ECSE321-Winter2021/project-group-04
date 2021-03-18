@@ -1200,6 +1200,10 @@ public class AutoRepairShopSystemService {
 	}
 
 	public Boolean deleteBusinessHour(BusinessHour businessHour) {
+		List<Business> businesses = (List<Business>) businessRepository.findAll();
+		Business business = businesses.get(0);
+		List<BusinessHour> businessHours = business.getBusinessHours();
+		businessHours.remove(businessHour);
 		businessHourRepository.delete(businessHour);
 		return true;
 	}
