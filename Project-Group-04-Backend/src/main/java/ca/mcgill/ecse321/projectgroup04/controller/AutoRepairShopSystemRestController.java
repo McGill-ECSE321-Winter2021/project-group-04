@@ -907,7 +907,7 @@ public class AutoRepairShopSystemRestController {
 		return carDtos;
 	}
 
-	@GetMapping(value = { "/cars/{Model, Year, color}", "/cars/{Model, Year, color}/" })
+	@GetMapping(value = { "/create/cars/{Model, Year, color}", "/create/cars/{Model, Year, color}/" })
 	public CarDto getCarByModelAndYearAndColor(@PathVariable String model, @PathVariable String year,
 			@PathVariable String color) throws IllegalArgumentException {
 		List<Car> car = service.getCarByModelAndYearAndColor(model, year, color);
