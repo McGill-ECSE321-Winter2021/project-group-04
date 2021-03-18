@@ -781,8 +781,9 @@ public class AutoRepairShopSystemService {
 			String aEmailAddress, List<BusinessHour> aBusinessHours, List<TimeSlot> regular) {
 
 		Business business = getBusinessById(Id);
+
 		if (business == null) {
-			throw new IllegalArgumentException("The business with this name doesn't exist");
+			throw new IllegalArgumentException("The business with this Id doesn't exist");
 		}
 		boolean addressBool = true;
 		boolean phoneBool = true;
