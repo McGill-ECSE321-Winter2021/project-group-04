@@ -320,6 +320,19 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Owner createOwner(String userId, String password) {
+		
+		Owner existingOwner = getOwnerByUserId(userId);
+		
+		if (existingOwner != null) {
+			throw new IllegalArgumentException("Owner already exists");
+		}
+		if (userId == "") {
+			throw new IllegalArgumentException("Username can't be empty");
+		}
+		if (password == "") {
+			throw new IllegalArgumentException("Password can't be empty");
+		}
+		
 		Owner owner = new Owner();
 		owner.setUserId(userId);
 		owner.setPassword(password);
@@ -338,15 +351,24 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void deleteOwner(Owner owner) {
+	public Owner deleteOwner(Owner owner) {
 		ownerRepository.delete(owner);
+		owner = null;
+		return owner;
 	}
 
 	@Transactional
-	public void editOwner(Owner owner, String userId, String password) {
+	public Owner editOwner(Owner owner, String userId, String password) {
+		
+		if (userId == owner.getUserId() && password == owner.getPassword()) {
+			throw new IllegalArgumentException("You have to change the username or password or both");
+		}
+		
 		owner.setUserId(userId);
 		owner.setPassword(password);
 		ownerRepository.save(owner);
+		
+		return owner;
 	}
 
 	@Transactional
@@ -357,6 +379,11 @@ public class AutoRepairShopSystemService {
 		} else {
 			return false; // owner does not exist
 		}
+	}
+	
+	@Transactional
+	public Owner getOwnerByUserId(String userId) {
+		return ownerRepository.findOwnerByUserId(userId);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////
@@ -649,7 +676,14 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public EmergencyService createEmergencyService(String name, int price) {
-		if (name == null) {
+		
+		EmergencyService existingService = getEmergencyServiceByServiceName(name);
+
+		if (existingService != null) {
+			throw new IllegalArgumentException("Emergency Service with this name already exists");
+		}
+	
+		if (name == "") {
 			throw new IllegalArgumentException("Name can't be null");
 		}
 		if (price == 0) {
@@ -668,12 +702,10 @@ public class AutoRepairShopSystemService {
 	}
 
 	public EmergencyService bookEmergencyService(String aServiceName, int price, String aLocation,
-			FieldTechnician aFieldTechnician, Customer aCustomer, Receipt aReceipt) {
+			String userId, FieldTechnician aFieldTechnician) {
 		EmergencyService bookableEmergencyService = new EmergencyService();
 
-		if (aCustomer == null) {
-			throw new IllegalArgumentException("Customer can't be null");
-		}
+		
 		if (aLocation == null) {
 			throw new IllegalArgumentException("Location can't be null");
 		}
@@ -683,16 +715,25 @@ public class AutoRepairShopSystemService {
 		if (aServiceName == null) {
 			throw new IllegalArgumentException("Service Name can't be null");
 		}
-
-		if (aReceipt == null) {
-			throw new IllegalArgumentException("Receipt can't be null");
+		
+		if (aFieldTechnician.getIsAvailable() == false) { // if field technician is unavailable
+			throw new IllegalArgumentException("Field Technician is currently unavailable");
 		}
+		
+		Receipt aReceipt = createReceipt(price);
+		Customer customer = getCustomerByUserId(userId);
+		
+		if (customer == null) {
+			throw new IllegalArgumentException("Customer can't be null");
+		}
+		
+		
 		bookableEmergencyService.setName(aServiceName);
 		bookableEmergencyService.setPrice(price);
 		bookableEmergencyService.setLocation(aLocation);
 		bookableEmergencyService.setTechnician(aFieldTechnician);
 		aFieldTechnician.setIsAvailable(false);
-		bookableEmergencyService.setCustomer(aCustomer);
+		bookableEmergencyService.setCustomer(customer);
 		bookableEmergencyService.setReceipt(aReceipt);
 		emergencyServiceRepository.save(bookableEmergencyService);
 		return bookableEmergencyService;
@@ -724,15 +765,28 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void editEmergencyService(EmergencyService emergencyService, String name, int price) {
+	public EmergencyService editEmergencyService(EmergencyService emergencyService, String name, int price) {
+		
+		if (name == emergencyService.getName() && price == emergencyService.getPrice()) {
+			throw new IllegalArgumentException("You have to edit one of the fields");
+		}
+		EmergencyService existingEmergencyService = getEmergencyServiceByServiceName(name);
+		if (existingEmergencyService != null) {
+			throw new IllegalArgumentException("An emergency service with this name already exists");
+		}
+		
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
 		emergencyServiceRepository.save(emergencyService);
+		
+		return emergencyService;
 	}
 
 	@Transactional
-	public void deleteEmergencyService(EmergencyService emergencyService) {
+	public EmergencyService deleteEmergencyService(EmergencyService emergencyService) {
 		emergencyServiceRepository.delete(emergencyService);
+		emergencyService = null;
+		return emergencyService;
 	}
 
 	@Transactional
@@ -778,6 +832,15 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public FieldTechnician createFieldTechnician(String name) {
+		
+		if (name == "") {
+			throw new IllegalArgumentException("Name can't be empty");
+		}
+		FieldTechnician existingFieldTechnician = getFieldTechnicianByName(name);
+		if (existingFieldTechnician != null) {
+			throw new IllegalArgumentException("Field Technician with this name already exists");
+		}
+		
 		FieldTechnician fieldTechnician = new FieldTechnician();
 		fieldTechnician.setName(name);
 		fieldTechnician.setIsAvailable(true);
@@ -802,14 +865,17 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void deleteFieldTechnician(FieldTechnician fieldTechnician) {
+	public FieldTechnician deleteFieldTechnician(FieldTechnician fieldTechnician) {
 		List<EmergencyService> emergencyServices = (List<EmergencyService>) emergencyServiceRepository.findAll();
+		
 		for (EmergencyService emergencyService : emergencyServices) {
 			if (emergencyService.getTechnician().equals(fieldTechnician)) {
-				emergencyServiceRepository.delete(emergencyService);
+				throw new IllegalArgumentException("The field technician is assigned to an emergency service!");
 			}
 		}
 		fieldTechnicianRepository.delete(fieldTechnician);
+		fieldTechnician = null;
+		return fieldTechnician;
 
 	}
 

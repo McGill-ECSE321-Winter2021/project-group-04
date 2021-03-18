@@ -5,4 +5,5 @@ import ca.mcgill.ecse321.projectgroup04.model.*;
 
 public interface OwnerRepository extends CrudRepository<Owner, Long> {
     Owner findOwnerById(Long userId);
+    Owner findOwnerByUserId(String userId);
 }
