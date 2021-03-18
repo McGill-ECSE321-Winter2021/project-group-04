@@ -797,14 +797,18 @@ public class AutoRepairShopSystemRestController {
 		return bookableServiceDto;
 	}
 
-//	@GetMapping(value = { "/bookableService/{serviceName}", "/bookableService/{serviceName}/" })
-//	public BookableServiceDto getBookableServiceByServiceName(@PathVariable("serviceName") String serviceName) {
-//		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
-//		if (bookableService == null) {
-//			throw new IllegalArgumentException("No service with such name!");
-//		}
-//		return convertToDto(bookableService);
-//	}
+	// @GetMapping(value = { "/bookableService/{serviceName}",
+	// "/bookableService/{serviceName}/" })
+	// public BookableServiceDto
+	// getBookableServiceByServiceName(@PathVariable("serviceName") String
+	// serviceName) {
+	// BookableService bookableService =
+	// service.getBookableServiceByServiceName(serviceName);
+	// if (bookableService == null) {
+	// throw new IllegalArgumentException("No service with such name!");
+	// }
+	// return convertToDto(bookableService);
+	// }
 
 	/////////////////////////////////////// GARAGE
 	/////////////////////////////////////// TECHNICIAN////////////////////////////
@@ -928,7 +932,7 @@ public class AutoRepairShopSystemRestController {
 		return carDtos;
 	}
 
-	@GetMapping(value = { "/create/cars/{Model, Year, color}", "/create/cars/{Model, Year, color}/" })
+	@GetMapping(value = { "/cars/{Model, Year, color}", "/cars/{Model, Year, color}/" })
 	public CarDto getCarByModelAndYearAndColor(@PathVariable String model, @PathVariable String year,
 			@PathVariable String color) throws IllegalArgumentException {
 		List<Car> car = service.getCarByModelAndYearAndColor(model, year, color);
