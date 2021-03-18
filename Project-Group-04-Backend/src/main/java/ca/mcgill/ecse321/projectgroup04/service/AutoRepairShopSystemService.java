@@ -131,6 +131,7 @@ public class AutoRepairShopSystemService {
 		}
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(aTotalPrice);
+		receiptRepository.save(receipt);
 		return receipt;
 	}
 
@@ -327,9 +328,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Owner createOwner(String userId, String password) {
 
-		Owner existingOwner = getOwnerByUserId(userId);
-
-		if (existingOwner != null) {
+		if (ownerExists()) {
 			throw new IllegalArgumentException("Owner already exists");
 		}
 		if (userId == "") {
