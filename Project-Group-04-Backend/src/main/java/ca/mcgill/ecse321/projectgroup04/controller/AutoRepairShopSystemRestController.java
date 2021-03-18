@@ -875,11 +875,19 @@ public class AutoRepairShopSystemRestController {
 	@GetMapping(value = { "/cars/{Model, Year, color}", "/cars/{Model, Year, color}/" })
 	public CarDto getCarByModelAndYearAndColor(@PathVariable String model, @PathVariable String year,
 			@PathVariable String color) throws IllegalArgumentException {
-		Car car = service.getCarByModelAndYearAndColor(model, year, color);
+		List<Car> car = service.getCarByModelAndYearAndColor(model, year, color);
 		if (model == null || year == null || color == null) {
 			throw new IllegalArgumentException("No car with such model, year or color!");
 		}
-		return convertToDto(car);
+		return convertListToDto(car);
+	}
+
+	private CarDto convertListToDto(List<Car> car) {
+		CarDto cardto = null;
+		for (Car car1 : car) {
+			cardto =convertToDto(car1);
+		}
+		return cardto;
 	}
 
 	@PostMapping(value = { "/car", "/car/{carId}/" })

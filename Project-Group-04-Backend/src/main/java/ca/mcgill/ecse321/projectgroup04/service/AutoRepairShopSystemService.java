@@ -364,6 +364,23 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Car createCar(String model, String year, String color) {
+		
+//		List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
+//		
+//		if (existingCars != null) {
+//			throw new IllegalArgumentException("This car already exists");
+//		}
+		if(model == null || model == "" ) {
+			throw new IllegalArgumentException("Model can't be empty");
+		}
+		
+		if(color == null || color == "") {
+			throw new IllegalArgumentException("Color can't be empty");
+		}
+		
+		if(year == null || year == "") {
+			throw new IllegalArgumentException("Year can't be empty");
+		}
 		Car car = new Car();
 		car.setColor(color);
 		car.setModel(model);
@@ -371,9 +388,21 @@ public class AutoRepairShopSystemService {
 		carRepository.save(car);
 		return car;
 	}
+	
+//	@Transactional
+//	public List<Car> createCars(Long carId, String model, String year, String color) {
+//		
+//		List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
+//		
+//		if (existingCars != null) {
+//			throw new IllegalArgumentException("This car already exists");
+//		}
+//		
+//		return cars
+//	}
 
 	@Transactional
-	public Car getCarByModelAndYearAndColor(String model, String year, String color) {
+	public List<Car> getCarByModelAndYearAndColor(String model, String year, String color) {
 		return carRepository.findCarByModelAndYearAndColor(model, year, color);
 	}
 
@@ -383,8 +412,10 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void deleteCar(Car car) {
+	public Car deleteCar(Car car) {
 		carRepository.delete(car);
+		car = null;
+		return car;
 	}
 
 	@Transactional
@@ -421,6 +452,7 @@ public class AutoRepairShopSystemService {
 		customer.setCar(car);
 		customer.setCustomerProfile(profile);
 		customer.setReminders(reminders);
+		customerRepository.save(customer);
 	}
 
 	@Transactional
