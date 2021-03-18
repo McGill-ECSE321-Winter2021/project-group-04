@@ -1,8 +1,6 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
-
-import static org.mockito.Mockito.lenient; 
-
+import static org.mockito.Mockito.lenient;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -70,7 +68,7 @@ public class TestAppointmentService {
 
 	@Mock
 	private AppointmentReminderRepository appointmentReminderRepository;
-	
+
 	@Mock
 	private BusinessHourRepository businessHourRepository;
 
@@ -84,10 +82,6 @@ public class TestAppointmentService {
 	private static final int SERVICE_PRICE = 50;
 	private static final int SERVICE_DURATION = 30;
 
-	private static final String SERVICE_NAME2 = "ServiceName2";
-	private static final int SERVICE_PRICE2 = 75;
-	private static final int SERVICE_DURATION2 = 45;
-
 	private static final String OLD_APPOINTMENT_DATE = "2021-03-18";
 	private static final Integer OLD_APPOINTMENT_GARAGE_SPOT = 1;
 	private static final String OLD_APPOINTMENT_START_TIME = "13:00:00";
@@ -99,7 +93,7 @@ public class TestAppointmentService {
 
 	private static final Long GARAGE_TECHNICIAN_ID = 4587l;
 	private static final String GARAGE_TECHNICIAN_NAME = "Harry Potter";
-	
+
 	private static final Long BUSINESSHOUR_ID = 123l;
 	private static final DayOfWeek BUSINESSHOUR_DAY = DayOfWeek.Monday;
 	private static final String BUSINESSHOUR_STARTTIME = "09:00:00";
@@ -112,7 +106,7 @@ public class TestAppointmentService {
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
-        lenient().when(businessHourRepository.save(any(BusinessHour.class))).thenAnswer(returnParameterAsAnswer);
+		lenient().when(businessHourRepository.save(any(BusinessHour.class))).thenAnswer(returnParameterAsAnswer);
 		lenient().when(appointmentRepository.save(any(Appointment.class))).thenAnswer(returnParameterAsAnswer);
 		lenient().when(timeSlotRepository.save(any(TimeSlot.class))).thenAnswer(returnParameterAsAnswer);
 		lenient().when(customerRepository.save(any(Customer.class))).thenAnswer(returnParameterAsAnswer);
@@ -145,14 +139,7 @@ public class TestAppointmentService {
 
 						return bookableService;
 					}
-					if (invocation.getArgument(0).equals(SERVICE_NAME2)) {
-						BookableService bookableService = new BookableService();
-						bookableService.setDuration(SERVICE_DURATION2);
-						bookableService.setName(SERVICE_NAME2);
-						bookableService.setPrice(SERVICE_PRICE2);
 
-						return bookableService;
-					}
 					return null;
 				});
 		lenient().when(appointmentRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
@@ -231,18 +218,18 @@ public class TestAppointmentService {
 				});
 		lenient().when(businessHourRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
 
-            List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+			List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
 
-            BusinessHour businessHour = new BusinessHour();
-            businessHour.setDayOfWeek(BUSINESSHOUR_DAY);
-            businessHour.setStartTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_STARTTIME)));
-            businessHour.setEndTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_ENDTIME)));
-            businessHour.setHourId(BUSINESSHOUR_ID);
+			BusinessHour businessHour = new BusinessHour();
+			businessHour.setDayOfWeek(BUSINESSHOUR_DAY);
+			businessHour.setStartTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_STARTTIME)));
+			businessHour.setEndTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_ENDTIME)));
+			businessHour.setHourId(BUSINESSHOUR_ID);
 
-            businessHours.add(businessHour);
+			businessHours.add(businessHour);
 
-            return businessHours;
-        });
+			return businessHours;
+		});
 
 	}
 
@@ -271,7 +258,7 @@ public class TestAppointmentService {
 		assertNotNull(appointment.getReminder());
 		assertEquals(appointment.getReceipt().getTotalPrice(), appointment.getBookableServices().getPrice());
 	}
-	
+
 	@Test
 	public void TestBookAppointmentNotWithinBusinessHours1() {
 		String serviceName = "ServiceName1";
@@ -292,7 +279,7 @@ public class TestAppointmentService {
 		assertNull(appointment);
 		assertEquals(error, "This time doesn't fall within business hours!");
 	}
-	
+
 	@Test
 	public void TestBookAppointmentNotWithinBusinessHours2() {
 		String serviceName = "ServiceName1";

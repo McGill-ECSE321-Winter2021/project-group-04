@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,9 +71,67 @@ public class TestOwnerService {
 		assertEquals(userId, owner.getUserId());
 		assertEquals(password, owner.getPassword());
 
+
 	}
 
 	@Test
+	public void TestCreateOwnertNoUserId() {
+		String userId = "";
+		String password = "ownerTestPassword";
+
+		String error = null;
+		Owner owner = null;
+		try {
+			owner = service.createOwner(userId, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(owner);
+		assertEquals(error, "Username can't be empty");
+
+	}
+
+	@Test
+	public void TestOwnerThatAlreadyExists() {
+		String userId = "ownerTestName";
+		String password = "ownerTestPassword";
+		String error = null;
+
+		Owner owner = null;
+		try {
+			owner = service.createOwner(userId, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(owner);
+		assertEquals(error, "Owner already exists");
+
+	}
+
+	@Test
+	public void TestOwnerNoPassword() {
+		String userId = "ownerTestUserId";
+		String password = "";
+
+		String error = null;
+
+		Owner owner = null;
+		try {
+			owner = service.createOwner(userId, password);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertNull(owner);
+		assertEquals(error, "Password can't be empty");
+
+
+	}
+
+	@Test
+
 	public void TestCreateOwnertNoUserId() {
 		String userId = "";
 		String password = "ownerTestPassword";

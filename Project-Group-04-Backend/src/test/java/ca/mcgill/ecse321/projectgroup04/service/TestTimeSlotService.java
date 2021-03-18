@@ -16,7 +16,6 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-
 import ca.mcgill.ecse321.projectgroup04.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 
@@ -52,6 +51,7 @@ public class TestTimeSlotService {
         lenient().when(timeSlotRepository.findTimeSlotByTimeSlotId(anyLong()))
                 .thenAnswer((InvocationOnMock invocation) -> {
                     if (invocation.getArgument(0).equals(timeSlotId)) {
+
 
                         TimeSlot timeSlot = new TimeSlot();
                         timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
