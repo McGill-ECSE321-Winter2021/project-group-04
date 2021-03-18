@@ -127,20 +127,20 @@ public class AutoRepairShopSystemRestController {
 		return carDto;
 	}
 
-//	/**
-//	 * 
-//	 * @param c to get the reminders as Reminder, convert them to REminderDto
-//	 * @return List of ReminderDto
-//	 */
-//
-//	private List<ReminderDto> createRemindersDtosForCustomer(Customer customer) {
-//		List<Reminder> allReminders = customer.getReminders();
-//		List<ReminderDto> reminders = new ArrayList<>();
-//		for (Reminder r : allReminders) {
-//			reminders.add(convertToDto(r));
-//		}
-//		return reminders;
-//	}
+	// /**
+	// *
+	// * @param c to get the reminders as Reminder, convert them to REminderDto
+	// * @return List of ReminderDto
+	// */
+	//
+	// private List<ReminderDto> createRemindersDtosForCustomer(Customer customer) {
+	// List<Reminder> allReminders = customer.getReminders();
+	// List<ReminderDto> reminders = new ArrayList<>();
+	// for (Reminder r : allReminders) {
+	// reminders.add(convertToDto(r));
+	// }
+	// return reminders;
+	// }
 
 	/**
 	 * 
@@ -148,14 +148,15 @@ public class AutoRepairShopSystemRestController {
 	 * @return Converted to ReminderDto
 	 */
 
-//	private ReminderDto convertToDto(Reminder reminder) {
-//		if (reminder == null) {
-//			throw new IllegalArgumentException("There is no such Reminder!");
-//		}
-//		ReminderDto reminderDto = new ReminderDto(reminder.getMessage(), reminder.getDate(), reminder.getTime());
-//		reminderDto.setReminderId(reminder.getReminderId());
-//		return reminderDto;
-//	}
+	// private ReminderDto convertToDto(Reminder reminder) {
+	// if (reminder == null) {
+	// throw new IllegalArgumentException("There is no such Reminder!");
+	// }
+	// ReminderDto reminderDto = new ReminderDto(reminder.getMessage(),
+	// reminder.getDate(), reminder.getTime());
+	// reminderDto.setReminderId(reminder.getReminderId());
+	// return reminderDto;
+	// }
 
 	/**
 	 * 
@@ -164,21 +165,23 @@ public class AutoRepairShopSystemRestController {
 	 * @return
 	 */
 
-//	private List<AppointmentDto> createAppointmentsDtosForCustomer(Customer customer, CustomerDto cDto) {
-//		List<Appointment> allAppointments = service.getAppointmentsByCustomer(customer);
-//		List<AppointmentDto> appointments = new ArrayList<>();
-//		for (Appointment a : allAppointments) {
-//			AppointmentDto appointmentDto = new AppointmentDto();
-//			appointmentDto.setCustomer(cDto);
-//			appointmentDto.setGarageTechnician(convertToDto(a.getTechnician()));
-//			appointmentDto.setReceipt(convertToDto(a.getReceipt()));
-//			appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
-//			appointmentDto.setReminder(convertToDto(a.getReminder()));
-//			appointmentDto.setTimeSlot(convertToDto(a.getTimeSlot()));
-//			appointments.add(appointmentDto);
-//		}
-//		return appointments;
-//	}
+	// private List<AppointmentDto> createAppointmentsDtosForCustomer(Customer
+	// customer, CustomerDto cDto) {
+	// List<Appointment> allAppointments =
+	// service.getAppointmentsByCustomer(customer);
+	// List<AppointmentDto> appointments = new ArrayList<>();
+	// for (Appointment a : allAppointments) {
+	// AppointmentDto appointmentDto = new AppointmentDto();
+	// appointmentDto.setCustomer(cDto);
+	// appointmentDto.setGarageTechnician(convertToDto(a.getTechnician()));
+	// appointmentDto.setReceipt(convertToDto(a.getReceipt()));
+	// appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
+	// appointmentDto.setReminder(convertToDto(a.getReminder()));
+	// appointmentDto.setTimeSlot(convertToDto(a.getTimeSlot()));
+	// appointments.add(appointmentDto);
+	// }
+	// return appointments;
+	// }
 
 	/**
 	 * 
@@ -227,7 +230,8 @@ public class AutoRepairShopSystemRestController {
 			throw new IllegalArgumentException("There is no such Field Technician!");
 		}
 
-		FieldTechnicianDto fieldTechnicianDto = new FieldTechnicianDto(fieldTechnician.getName(), fieldTechnician.getIsAvailable());
+		FieldTechnicianDto fieldTechnicianDto = new FieldTechnicianDto(fieldTechnician.getName(),
+				fieldTechnician.getIsAvailable());
 		fieldTechnicianDto.setId(fieldTechnician.getTechnicianId());
 		return fieldTechnicianDto;
 
@@ -247,9 +251,20 @@ public class AutoRepairShopSystemRestController {
 		emergencyServiceDto.setName(emergencyService.getName());
 		emergencyServiceDto.setPrice(emergencyService.getPrice());
 		emergencyServiceDto.setLocation(emergencyService.getLocation());
-		emergencyServiceDto.setFieldTechnician(convertToDto(emergencyService.getTechnician()));
-		emergencyServiceDto.setCustomer(convertToDto(emergencyService.getCustomer()));
-		emergencyServiceDto.setReceipt(convertToDto(emergencyService.getReceipt()));
+		
+		if (emergencyService.getTechnician() != null) {
+			emergencyServiceDto.setFieldTechnician(convertToDto(emergencyService.getTechnician()));
+		}
+		
+		if (emergencyService.getCustomer() != null) {
+			emergencyServiceDto.setCustomer(convertToDto(emergencyService.getCustomer()));
+		}
+		
+		if (emergencyService.getReceipt() != null) {
+			emergencyServiceDto.setReceipt(convertToDto(emergencyService.getReceipt()));
+		}
+		
+		
 		emergencyServiceDto.setId(emergencyService.getServiceId());
 
 		return emergencyServiceDto;
@@ -419,9 +434,6 @@ public class AutoRepairShopSystemRestController {
 	@PostMapping(value = { "register/owner/{userId}", "register/owner/{userId}/" })
 	public OwnerDto createOwner(@PathVariable("userId") String userId, @RequestParam String password)
 			throws IllegalArgumentException {
-		if (service.ownerExists()) {
-			throw new IllegalArgumentException("Owner already exists!"); // only 1 owner can exist
-		}
 		Owner owner = service.createOwner(userId, password);
 		OwnerDto ownerDto = convertToDto(owner);
 		return ownerDto;
@@ -443,7 +455,7 @@ public class AutoRepairShopSystemRestController {
 	///////////////////////////////// EMERGENCY
 	///////////////////////////////// SERVICE//////////////////////////////////////
 
-	@GetMapping(value = { "/emergencyservices", "/emergencyservices/" })
+	@GetMapping(value = { "/emergencyServices", "/emergencyServices/" })
 	public List<EmergencyServiceDto> getAllEmergencyServices() {
 		List<EmergencyServiceDto> emergencyServiceDtos = new ArrayList<>();
 		for (EmergencyService emergencyService : service.getAllEmergencyServices()) {
@@ -459,30 +471,27 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/create/emergencyService/{serviceName}", "/create/emergencyService/{serviceName}/" })
-	public EmergencyServiceDto createEmergencyService(@PathVariable("serviceName") String serviceName,
-			@RequestParam int duration, @RequestParam int price) {
+	public EmergencyServiceDto createEmergencyService(@PathVariable("serviceName") String serviceName, @RequestParam int price) {
 		EmergencyService emergencyService = service.createEmergencyService(serviceName, price);
 		EmergencyServiceDto emergencyServiceDto = convertToDto(emergencyService);
 		return emergencyServiceDto;
 	}
 
-	@PostMapping(value = { "/emergencyService/{userId}/{serviceName}", "/emergencyService/{userId}/{serviceName}/" })
+	@PostMapping(value = { "book/emergencyService/{userId}/{serviceName}", "book/emergencyService/{userId}/{serviceName}/" })
 	public EmergencyServiceDto bookEmergencyService(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName, @RequestParam(name = "Location") String location,
-			@RequestParam(name = "Field Technician") FieldTechnicianDto fieldTechnicianDto)
+			@RequestParam(name = "fieldTechnicianId") Long fieldTechnicianId)
 			throws IllegalArgumentException {
 
 		// TODO: Only owner and admin can create an emergencyService
+		
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianId); // get
 
-		// Emergency Service that is fixed and extract price
-		EmergencyService emergencyService = service.getEmergencyServiceByServiceName(serviceName);
-		int priceOfService = emergencyService.getPrice();
-		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get ft	
-
+																												// ft
 		// A bookable emergency service will be created
 		String nameOfBooking = serviceName + " for " + userId; // service for that user
-		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, priceOfService,
-				location, userId, fieldTechnician);
+		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, serviceName, location,
+				userId, fieldTechnician);
 		return convertToDto(bookableEmergencyService);
 	}
 
@@ -548,15 +557,18 @@ public class AutoRepairShopSystemRestController {
 		service.editFieldTechnician(fieldTechnician, name);
 	}
 
-//	private FieldTechnician convertToDomainObject(FieldTechnicianDto fieldTechnicianDto) {
-//		List<FieldTechnician> fieldTechnicians = service.getAllFieldTechnicians();
-//		for (FieldTechnician fieldTechnician : fieldTechnicians) {
-//			if (fieldTechnician.getTechnicianId().equals(fieldTechnicianDto.getTechnicianId())) {
-//				return fieldTechnician;
-//			}
-//		}
-//		return null;
-//	}
+	// private FieldTechnician convertToDomainObject(FieldTechnicianDto
+	// fieldTechnicianDto) {
+	// List<FieldTechnician> fieldTechnicians = service.getAllFieldTechnicians();
+	// for (FieldTechnician fieldTechnician : fieldTechnicians) {
+	// if
+	// (fieldTechnician.getTechnicianId().equals(fieldTechnicianDto.getTechnicianId()))
+	// {
+	// return fieldTechnician;
+	// }
+	// }
+	// return null;
+	// }
 
 	/////////////////////////////////////////////////////////////////////////////
 
@@ -577,23 +589,26 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/register/business/{name}", "/register/business/{name}/" }) // VERIFY PATH
 	public BusinessDto registerBusiness(@PathVariable("name") String name, @RequestParam String address,
-			@RequestParam String phoneNumber, @RequestParam String emailAddress,
-			@RequestParam List<BusinessHour> businessHours, @RequestParam List<TimeSlot> timeSlots)
-			throws IllegalArgumentException {
-
-		Business business = service.createBusiness(name, address, phoneNumber, emailAddress, businessHours, timeSlots);
+			@RequestParam String phoneNumber, @RequestParam String emailAddress) throws IllegalArgumentException {
+		List<BusinessHour> businessHour = service.getAllBusinessHours();
+		List<TimeSlot> timeSlots = service.getAllTimeSlots();
+		Business business = service.createBusiness(name, address, phoneNumber, emailAddress, businessHour, timeSlots);
 		BusinessDto businessDto = convertToDto(business);
 		return businessDto;
 	}
 
 	@PostMapping(value = { "/edit/businessInformation/{Id}", "/edit/businessInformation/{Id}/" })
 	public BusinessDto updateBusinessInfo(@PathVariable("Id") Long Id, @RequestParam String name,
-			@RequestParam String address, @RequestParam String phoneNumber, @RequestParam String emailAddress,
-			@RequestParam List<BusinessHour> businessHours, @RequestParam List<TimeSlot> timeSlots) {
-		Business business = service.updateBusinessInformation(Id, name, address, phoneNumber, emailAddress,
-				businessHours, timeSlots);
+			@RequestParam String address, @RequestParam String phoneNumber, @RequestParam String emailAddress) {
+		Business business = service.updateBusinessInformation(Id, name, address, phoneNumber, emailAddress, null, null);
 		BusinessDto businessDto = convertToDto(business);
 		return businessDto;
+	}
+
+	@PostMapping(value = { "/delete/business/{Id}", "/delete/business/{Id}/" })
+	public void deleteBusiness(@PathVariable("Id") Long Id) {
+		Business business = service.getBusinessById(Id);
+		service.deleteBusiness(business);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -629,6 +644,17 @@ public class AutoRepairShopSystemRestController {
 				Time.valueOf(LocalTime.parse(time)), message);
 		CheckupReminderDto checkupReminderDto = convertToDto(checkupReminder);
 		return checkupReminderDto;
+	}
+
+	@PostMapping(value = { "/edit/checkupReminder/{reminderId}", "/edit/checkupReminder/{reminderId}/" })
+	public void editCheckupReminder(@PathVariable("reminderId") Long reminderId,
+			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "yyyy-MM-dd") String date,
+			@RequestParam(name = "time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String time,
+			@RequestParam String message) throws IllegalArgumentException {
+		// CheckupReminder checkupReminder = service.getCheckupReminderById(reminderId);
+		service.editCheckupReminder(reminderId, Date.valueOf(LocalDate.parse(date)),
+				Time.valueOf(LocalTime.parse(time)), message);
+
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -670,9 +696,10 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/delete/businessHour/{Id}", "/delete/businessHour/{Id}/" })
-	public void deleteBusinessHourById(@PathVariable("Id") Long Id) {
+	public void deleteBusinessHourById(@PathVariable("Id") Long Id, @RequestParam Long businessId) {
 		BusinessHour businessHour = service.getBusinessHourById(Id);
-		service.deleteBusinessHour(businessHour);
+		Business business = service.getBusinessById(businessId);
+		service.deleteBusinessHour(businessHour, business);
 	}
 
 	// @PostMapping(value = { "/delete/businessHour/{Id}",
@@ -779,14 +806,18 @@ public class AutoRepairShopSystemRestController {
 		return bookableServiceDto;
 	}
 
-	@GetMapping(value = { "/bookableService/{serviceName}", "/bookableService/{serviceName}/" })
-	public BookableServiceDto getBookableServiceByServiceName(@PathVariable("serviceName") String serviceName) {
-		BookableService bookableService = service.getBookableServiceByServiceName(serviceName);
-		if (bookableService == null) {
-			throw new IllegalArgumentException("No service with such name!");
-		}
-		return convertToDto(bookableService);
-	}
+	// @GetMapping(value = { "/bookableService/{serviceName}",
+	// "/bookableService/{serviceName}/" })
+	// public BookableServiceDto
+	// getBookableServiceByServiceName(@PathVariable("serviceName") String
+	// serviceName) {
+	// BookableService bookableService =
+	// service.getBookableServiceByServiceName(serviceName);
+	// if (bookableService == null) {
+	// throw new IllegalArgumentException("No service with such name!");
+	// }
+	// return convertToDto(bookableService);
+	// }
 
 	/////////////////////////////////////// GARAGE
 	/////////////////////////////////////// TECHNICIAN////////////////////////////
@@ -819,23 +850,28 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
-			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
+			@PathVariable("serviceName") String serviceName,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
+			@RequestParam Integer garageSpot,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String startTime,
 			@RequestParam(name = "Garage Technician Id") Long garageTechnicianId) throws IllegalArgumentException {
 
 		return convertToDto(
-				service.bookAppointment(userId, serviceName, date, garageSpot, startTime, garageTechnicianId));
+				service.bookAppointment(userId, serviceName, Date.valueOf(LocalDate.parse(date)), garageSpot, Time.valueOf(LocalTime.parse(startTime)), garageTechnicianId));
 	}
 
-//	private GarageTechnician convertToDomainObject(GarageTechnicianDto garageTechnicianDto) {
-//		List<GarageTechnician> garageTechnicians = service.getAllGarageTechnicians();
-//		for (GarageTechnician garageTechnician : garageTechnicians) {
-//			if (garageTechnician.getTechnicianId().equals(garageTechnicianDto.getTechnicianId())) {
-//				return garageTechnician;
-//			}
-//		}
-//		return null;
-//	}
+	// private GarageTechnician convertToDomainObject(GarageTechnicianDto
+	// garageTechnicianDto) {
+	// List<GarageTechnician> garageTechnicians = service.getAllGarageTechnicians();
+	// for (GarageTechnician garageTechnician : garageTechnicians) {
+	// if
+	// (garageTechnician.getTechnicianId().equals(garageTechnicianDto.getTechnicianId()))
+	// {
+	// return garageTechnician;
+	// }
+	// }
+	// return null;
+	// }
 
 	@PostMapping(value = { "/create/profile/{first}/{last}", "/create/profile/{first}/{last}/" })
 	public ProfileDto createProfile(@PathVariable("first") String firstName, @PathVariable("last") String lastName,
@@ -923,8 +959,10 @@ public class AutoRepairShopSystemRestController {
 		return carDtos;
 	}
 
+
 	@GetMapping(value = { "/cars/{model}/{year}/{color}", "/cars/{model}/{year}/{color}/" })
 	public List<CarDto> getCarByModelAndYearAndColor(@PathVariable String model, @PathVariable String year,
+
 			@PathVariable String color) throws IllegalArgumentException {
 		List<Car> car = service.getCarByModelAndYearAndColor(model, year, color);
 
@@ -1027,7 +1065,7 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/edit/administrativeAssistant/{Id}", "/edit/administrativeAssistants/{Id}/" })
 	public void editAdministariveAssistant(@PathVariable("Id") Long Id, @RequestParam String userId,
-			@RequestParam String password) throws IllegalArgumentException { // TODO:npt sure of password
+			@RequestParam String password) throws IllegalArgumentException {
 		AdministrativeAssistant administrativeAssistant = service.getAdministrativeAssistantById(Id);
 		service.editAdministrativeAssistant(administrativeAssistant, userId, password);
 	}

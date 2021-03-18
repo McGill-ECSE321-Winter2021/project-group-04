@@ -27,6 +27,9 @@ import org.mockito.stubbing.Answer;
 import ca.mcgill.ecse321.projectgroup04.dao.AppointmentRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.GarageTechnicianRepository;
 import ca.mcgill.ecse321.projectgroup04.model.Appointment;
+
+
+
 import ca.mcgill.ecse321.projectgroup04.model.GarageTechnician;
 import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 
@@ -38,6 +41,7 @@ public class TestGarageTechnicianService {
 
 	@Mock
 	private AppointmentRepository appointmentRepository;
+	
 
 	@InjectMocks
 	private AutoRepairShopSystemService service;
@@ -91,57 +95,61 @@ public class TestGarageTechnicianService {
 	}
 
 	@Test
-	public void TestCreateGarageTechnician() {
 
-		String name = "Testname";
+    public void TestCreateGarageTechnician() {
+	
+		String name = "TestNameOk";
+   
+        GarageTechnician garageTechnician = null;
+        try {
+        	garageTechnician = service.createGarageTechnician(name);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
 
-		GarageTechnician garageTechnician = null;
-		try {
-			garageTechnician = service.createGarageTechnician(name);
-		} catch (IllegalArgumentException e) {
-			fail();
-		}
-
-		assertNotNull(garageTechnician);
-		assertEquals(name, garageTechnician.getName());
-
+        assertNotNull(garageTechnician);
+        assertEquals(name, garageTechnician.getName());
+        
 	}
+	
+	 @Test
+	 public void TestCreateGarageTechnicianNoName() {
+		 	String name = "";	      
 
-	@Test
-	public void TestCreateGarageTechnicianNoName() {
-		String name = "";
+	        String error = null;
 
-		String error = null;
+	      
+	        GarageTechnician garageTechnician = null;
+	        try {
+	        	garageTechnician = service.createGarageTechnician(name);
+	        } catch (IllegalArgumentException e) {
+	            error = e.getMessage();
+	        }
 
-		GarageTechnician garageTechnician = null;
-		try {
-			garageTechnician = service.createGarageTechnician(name);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
+	        assertNull(garageTechnician);
+	        assertEquals(error, "Name can't be empty");
 
-		assertNull(garageTechnician);
-		assertEquals(error, "Name can't be empty");
+	    }
+	 
+	 @Test
+	 public void TestCreateGarageTechnicianAlreadyExists() {
+		 	String name = "TestName";	      
 
-	}
+	        String error = null;
+ 
+	      
+	        GarageTechnician garageTechnician = null;
+	        try {
+	        	garageTechnician = service.createGarageTechnician(name);
+	        } catch (IllegalArgumentException e) {
+	            error = e.getMessage();
+	        }
 
-	@Test
-	public void TestCreateGarageTechnicianAlreadyExists() {
-		String name = "TestName";
+	        assertNull(garageTechnician);
+	        assertEquals(error, "Garage Technician with this name already exists");
 
-		String error = null;
+	    }
 
-		GarageTechnician garageTechnician = null;
-		try {
-			garageTechnician = service.createGarageTechnician(name);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(garageTechnician);
-		assertEquals(error, "Garage Technician with this name already exists");
-
-	}
 
 	@Test
 	public void TestDeleteGarageTechnician() {

@@ -2,7 +2,9 @@ package ca.mcgill.ecse321.projectgroup04.service;
 
 import static org.mockito.Mockito.lenient;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.projectgroup04.dao.BusinessHourRepository;
+import ca.mcgill.ecse321.projectgroup04.dao.BusinessRepository;
+import ca.mcgill.ecse321.projectgroup04.model.Business;
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour;
+import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,6 +40,9 @@ public class TestBusinessHourService {
     @Mock
     private BusinessHourRepository businessHourRepository;
 
+    @Mock
+    private BusinessRepository businessRepository;
+
     @InjectMocks
     private AutoRepairShopSystemService service;
 
@@ -48,11 +56,29 @@ public class TestBusinessHourService {
     private static final String BUSINESSHOUR_STARTTIME_2 = "08:00:00";
     private static final String BUSINESSHOUR_ENDTIME_2 = "19:00:00";
 
+    private static final String BUSINESS_NAME = "TestName";
+    private static final String BUSINESS_PHONENUMBER = "438123456";
+    private static final String BUSINESS_ADDRESS = "1234 MTL, Quebec";
+    private static final String BUSINESS_MAIL = "testmail@mail.mcgill.ca";
+    private static final Long BUSINESS_ID = 45678l;
+
+    private static final String OLD_APPOINTMENT_DATE = "2021-03-18";
+    private static final String OLD_APPOINTMENT_START_TIME = "13:00:00";
+    private static final String OLD_APPOINTMENT_END_TIME = "13:30:00";
+
+    private static final DayOfWeek BUSINESSHOUR_DAYOFWEEK = DayOfWeek.Monday;
+    // private static final String BUSINESSHOUR_STARTTIME2 = "08:00:00";
+    // private static final String BUSINESSHOUR_ENDTIME = "23:00:00";
+
+    private static final List<BusinessHour> BUSINESS_BUSINESSHOUR = new ArrayList<BusinessHour>();
+    private static final List<TimeSlot> BUSINESS_TIMESLOTS = new ArrayList<TimeSlot>();
+
     @BeforeEach
     public void setMockOutput() {
         Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
             return invocation.getArgument(0);
         };
+        lenient().when(businessRepository.save(any(Business.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(businessHourRepository.save(any(BusinessHour.class))).thenAnswer(returnParameterAsAnswer);
         lenient().when(businessHourRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
 
@@ -64,6 +90,13 @@ public class TestBusinessHourService {
             businessHour.setEndTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_ENDTIME)));
             businessHour.setHourId(BUSINESSHOUR_ID);
 
+            BusinessHour businessHour2 = new BusinessHour();
+            businessHour2.setDayOfWeek(BUSINESSHOUR_DAY_2);
+            businessHour2.setStartTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_STARTTIME_2)));
+            businessHour2.setEndTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_ENDTIME_2)));
+            businessHour2.setHourId(BUSINESSHOUR_ID_2);
+
+            businessHours.add(businessHour2);
             businessHours.add(businessHour);
 
             return businessHours;
@@ -80,11 +113,7 @@ public class TestBusinessHourService {
 
                         return businessHour;
                     }
-                    return null;
-                });
-        lenient().when(businessHourRepository.findBusinessHourByHourId(anyLong()))
-                .thenAnswer((InvocationOnMock invocation) -> {
-                    if (invocation.getArgument(0).equals(BUSINESSHOUR_ID)) {
+                    if (invocation.getArgument(0).equals(BUSINESSHOUR_ID_2)) {
 
                         BusinessHour businessHour = new BusinessHour();
                         businessHour.setDayOfWeek(BUSINESSHOUR_DAY_2);
@@ -96,6 +125,42 @@ public class TestBusinessHourService {
                     }
                     return null;
                 });
+        lenient().when(businessRepository.findBusinessById(anyLong())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(BUSINESS_ID)) {
+
+                Business business = new Business();
+                business.setName(BUSINESS_NAME);
+                business.setAddress(BUSINESS_ADDRESS);
+                business.setEmailAddress(BUSINESS_MAIL);
+                business.setPhoneNumber(BUSINESS_PHONENUMBER);
+                business.setId(BUSINESS_ID);
+
+                BusinessHour businessHour = new BusinessHour();
+                businessHour.setDayOfWeek(BUSINESSHOUR_DAYOFWEEK);
+                businessHour.setStartTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_STARTTIME)));
+                businessHour.setEndTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_ENDTIME)));
+
+                BUSINESS_BUSINESSHOUR.add(businessHour);
+                business.setBusinessHours(BUSINESS_BUSINESSHOUR);
+
+                TimeSlot timeSlot = new TimeSlot();
+                timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
+                timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
+                timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
+                timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
+
+                BUSINESS_TIMESLOTS.add(timeSlot);
+                business.setRegular(BUSINESS_TIMESLOTS);
+
+                return business;
+            }
+            return null;
+        });
+        // lenient().when(businessHourRepository.findBusinessHourByHourId(anyLong()))
+        // .thenAnswer((InvocationOnMock invocation) -> {
+
+        // return null;
+        // });
 
     }
 
@@ -363,7 +428,7 @@ public class TestBusinessHourService {
         }
 
         assertNotNull(businessHour);
-        assertEquals(BUSINESSHOUR_DAY_2, businessHour.getDayOfWeek());
+        assertEquals(BUSINESSHOUR_DAY, businessHour.getDayOfWeek());
         assertEquals(startTime, businessHour.getStartTime());
         assertEquals(endTime, businessHour.getEndTime());
     }
@@ -386,7 +451,7 @@ public class TestBusinessHourService {
 
         assertNotNull(businessHour);
         assertEquals(dayOfWeek, businessHour.getDayOfWeek().toString());
-        assertEquals(BUSINESSHOUR_STARTTIME_2, businessHour.getStartTime().toString());
+        assertEquals(BUSINESSHOUR_STARTTIME, businessHour.getStartTime().toString());
         assertEquals(endTime, businessHour.getEndTime());
     }
 
@@ -409,17 +474,37 @@ public class TestBusinessHourService {
         assertNotNull(businessHour);
         assertEquals(dayOfWeek, businessHour.getDayOfWeek().toString());
         assertEquals(startTime, businessHour.getStartTime());
-        assertEquals(BUSINESSHOUR_ENDTIME_2, businessHour.getEndTime().toString());
+        assertEquals(BUSINESSHOUR_ENDTIME, businessHour.getEndTime().toString());
     }
 
     @Test
     public void deleteBusinessHour() {
         boolean bool = false;
+        Business business = service.getBusinessById(BUSINESS_ID);
         BusinessHour businessHour = service.getBusinessHourById(BUSINESSHOUR_ID);
         try {
-            bool = service.deleteBusinessHour(businessHour);
+            bool = service.deleteBusinessHour(businessHour, business);
         } catch (IllegalArgumentException e) {
             fail();
+        }
+
+        assertTrue(bool);
+    }
+
+    @Test
+    public void getBusinessHour() {
+        boolean bool = false;
+        // Business business = service.getBusinessById(BUSINESS_ID);
+
+        List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+        try {
+            businessHours = service.getAllBusinessHours();
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+
+        if (businessHours.size() > 0) {
+            bool = true;
         }
 
         assertTrue(bool);
