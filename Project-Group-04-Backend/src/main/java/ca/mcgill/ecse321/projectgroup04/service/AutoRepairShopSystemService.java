@@ -131,6 +131,7 @@ public class AutoRepairShopSystemService {
 		}
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(aTotalPrice);
+		receiptRepository.save(receipt);
 		return receipt;
 	}
 
@@ -327,9 +328,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Owner createOwner(String userId, String password) {
 
-		Owner existingOwner = getOwnerByUserId(userId);
-
-		if (existingOwner != null) {
+		if (ownerExists()) {
 			throw new IllegalArgumentException("Owner already exists");
 		}
 		if (userId == "") {
@@ -1406,10 +1405,11 @@ public class AutoRepairShopSystemService {
 		if (today.plusDays(1).equals(appDate) && now.isAfter(appTime)) {
 			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
 		}
+		appointmentRepository.delete(appointment);
+		appointment.getCustomer().getReminders().remove(appointment.getReminder());
 		appointmentReminderRepository.delete(appointment.getReminder());
 		receiptRepository.delete(appointment.getReceipt());
 		timeSlotRepository.delete(appointment.getTimeSlot());
-		appointmentRepository.delete(appointment);
 		appointment.setBookableServices(null);
 		appointment.setCustomer(null);
 		appointment.setReceipt(null);
