@@ -653,17 +653,33 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/add/businessHour/{dayOfWeek}", "/add/businessHour/{dayOfWeek}/" }) // VERIFY PATH
 	public BusinessHourDto createBusinessHour(@PathVariable("dayOfWeek") String dayOfWeek,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime)
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String startTime,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String endTime)
 			throws IllegalArgumentException {
-		BusinessHour businessHour = service.createBusinessHour(dayOfWeek, startTime, endTime);
+		BusinessHour businessHour = service.createBusinessHour(dayOfWeek, Time.valueOf(LocalTime.parse(startTime)),
+				Time.valueOf(LocalTime.parse(endTime)));
 		BusinessHourDto businessHourDto = convertToDto(businessHour);
 		return businessHourDto;
 	}
 
-	@PostMapping(value = { "/delete/businessHour/{dayOfWeek}", "/delete/businessHour/{dayOfWeek}/" })
-	public void deleteBusinessHour(@PathVariable("dayOfWeek") String dayOfWeek) {
-		BusinessHour businessHour = service.getBusinessHourByDayOfWeek(service.convertStringToDayOfWeek(dayOfWeek));
+	// @PostMapping(value = { "/delete/businessHour/{Id}",
+	// "/delete/businessHour/{dayOfWeek}/" })
+	// public void deleteBusinessHourByDayOfWeek(@PathVariable("dayOfWeek") String
+	// dayOfWeek) {
+	// for (BusinessHour businessHour : service.getAllBusinessHours()) {
+	// if
+	// (businessHour.getDayOfWeek().equals(service.convertStringToDayOfWeek(dayOfWeek)))
+	// {
+	// service.deleteBusinessHour(businessHour);
+	// }
+	// }
+	// BusinessHour businessHour =
+	// service.getBusinessHourByDayOfWeek(service.convertStringToDayOfWeek(dayOfWeek));
+	// }
+
+	@PostMapping(value = { "/delete/businessHour/{Id}", "/delete/businessHour/{Id}/" })
+	public void deleteBusinessHourById(@PathVariable("Id") Long Id) {
+		BusinessHour businessHour = service.getBusinessHourById(Id);
 		service.deleteBusinessHour(businessHour);
 	}
 
@@ -715,14 +731,16 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(appointmentReminder);
 	}
 
-	 @PostMapping(value = { "/create/appointmentReminder/{message}", "/create/appointmentReminder/{message}/" })
-	 public AppointmentReminderDto createAppointmentReminder(@PathVariable("message") String message,
-	 @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") Date date,
-	  @RequestParam ("time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") Time time) throws IllegalArgumentException {
-	 AppointmentReminder appointmentReminder = service.createAppointmentReminder(date, time, message);
-	 AppointmentReminderDto appointmentReminderDto = convertToDto(appointmentReminder);
-	 return appointmentReminderDto;
-	 }
+	@PostMapping(value = { "/create/appointmentReminder/{message}", "/create/appointmentReminder/{message}/" })
+	public AppointmentReminderDto createAppointmentReminder(@PathVariable("message") String message,
+			@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String date,
+			@RequestParam("time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String time)
+			throws IllegalArgumentException {
+		AppointmentReminder appointmentReminder = service.createAppointmentReminder(Date.valueOf(LocalDate.parse(date)),
+				Time.valueOf(LocalTime.parse(time)), message);
+		AppointmentReminderDto appointmentReminderDto = convertToDto(appointmentReminder);
+		return appointmentReminderDto;
+	}
 
 	/////////////////////////////////////// BOOKABLE
 	/////////////////////////////////////// SERVICE//////////////////////////////
@@ -896,7 +914,7 @@ public class AutoRepairShopSystemRestController {
 	private CarDto convertListToDto(List<Car> car) {
 		CarDto cardto = null;
 		for (Car car1 : car) {
-			cardto =convertToDto(car1);
+			cardto = convertToDto(car1);
 		}
 		return cardto;
 	}
@@ -992,6 +1010,7 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/delete/garageTechnician/{technicianId}", "/delete/garageTechnician/{technicianId}/" })
+
 	public void deleteGarageTechnician(@PathVariable("technicianId") Long technicianId)
 			throws IllegalArgumentException {
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(technicianId);
