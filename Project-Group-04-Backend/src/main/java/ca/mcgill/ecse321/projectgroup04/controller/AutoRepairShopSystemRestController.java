@@ -840,12 +840,14 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
-			@PathVariable("serviceName") String serviceName, @RequestParam Date date, @RequestParam Integer garageSpot,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
+			@PathVariable("serviceName") String serviceName,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy/MM/dd") String date,
+			@RequestParam Integer garageSpot,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String startTime,
 			@RequestParam(name = "Garage Technician Id") Long garageTechnicianId) throws IllegalArgumentException {
 
 		return convertToDto(
-				service.bookAppointment(userId, serviceName, date, garageSpot, startTime, garageTechnicianId));
+				service.bookAppointment(userId, serviceName, Date.valueOf(LocalDate.parse(date)), garageSpot, Time.valueOf(LocalTime.parse(startTime)), garageTechnicianId));
 	}
 
 	// private GarageTechnician convertToDomainObject(GarageTechnicianDto

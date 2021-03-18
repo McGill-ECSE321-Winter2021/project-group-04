@@ -1396,6 +1396,7 @@ public class AutoRepairShopSystemService {
 		if (today.plusDays(1).equals(appDate) && now.isAfter(appTime)) {
 			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
 		}
+		appointment.getCustomer().getReminders().remove(appointment.getReminder());
 		appointmentReminderRepository.delete(appointment.getReminder());
 		receiptRepository.delete(appointment.getReceipt());
 		timeSlotRepository.delete(appointment.getTimeSlot());
