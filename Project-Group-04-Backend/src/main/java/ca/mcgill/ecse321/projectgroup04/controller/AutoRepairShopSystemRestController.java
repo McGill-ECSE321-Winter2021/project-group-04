@@ -477,14 +477,14 @@ public class AutoRepairShopSystemRestController {
 			throws IllegalArgumentException {
 
 		// TODO: Only owner and admin can create an emergencyService
-		
+
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get
 																												// ft
 
 		// A bookable emergency service will be created
 		String nameOfBooking = serviceName + " for " + userId; // service for that user
-		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, serviceName,
-				location, userId, fieldTechnician);
+		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, serviceName, location,
+				userId, fieldTechnician);
 		return convertToDto(bookableEmergencyService);
 	}
 
@@ -636,6 +636,17 @@ public class AutoRepairShopSystemRestController {
 				Time.valueOf(LocalTime.parse(time)), message);
 		CheckupReminderDto checkupReminderDto = convertToDto(checkupReminder);
 		return checkupReminderDto;
+	}
+
+	@PostMapping(value = { "/edit/checkupReminder/{reminderId}", "/edit/checkupReminder/{reminderId}/" })
+	public void editCheckupReminder(@PathVariable("reminderId") Long reminderId,
+			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "yyyy-MM-dd") String date,
+			@RequestParam(name = "time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String time,
+			@RequestParam String message) throws IllegalArgumentException {
+		// CheckupReminder checkupReminder = service.getCheckupReminderById(reminderId);
+		service.editCheckupReminder(reminderId, Date.valueOf(LocalDate.parse(date)),
+				Time.valueOf(LocalTime.parse(time)), message);
+
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
