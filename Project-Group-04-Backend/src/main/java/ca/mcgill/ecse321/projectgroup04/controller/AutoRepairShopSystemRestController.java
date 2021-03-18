@@ -889,9 +889,25 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/register/customer/{userId}", "/register/customer/{userId}/" })
 	public CustomerDto registerCustomer(@PathVariable("userId") String userId, @RequestParam String password,
-			@RequestParam List<Reminder> reminders, @RequestParam Car car, @RequestParam Profile profile)
+			@RequestParam Long reminders, @RequestParam Long car, @RequestParam Long profile)
 			throws IllegalArgumentException {
-		Customer customer = service.createCustomer(userId, password, reminders, car, profile);
+		Car car1 = service.getCarByCarId(car);
+		Profile profile1 = service.getProfile(profile);
+		List<Reminder> reminder= service.getReminderByReminderId(reminders);
+		Customer customer = service.createCustomer(userId, password, reminder, car1, profile1);
+		CustomerDto customerDto = convertToDto(customer);
+		return customerDto;
+	}
+	
+	@PostMapping(value = { "/edit/customer/{userId}", "/edit/customer/{userId}/" })
+	public CustomerDto editCustomer(@PathVariable("userId") String userId, @RequestParam String password,
+			@RequestParam Long reminders, @RequestParam Long car, @RequestParam Long profile)
+			throws IllegalArgumentException {
+		Car car1 = service.getCarByCarId(car);
+		Profile profile1 = service.getProfile(profile);
+		List<Reminder> reminder= service.getReminderByReminderId(reminders);
+		Customer customer = service.getCustomerByUserId(userId);
+		customer = service.editCustomer(customer, userId, password, reminder, car1, profile1);
 		CustomerDto customerDto = convertToDto(customer);
 		return customerDto;
 	}
@@ -907,8 +923,8 @@ public class AutoRepairShopSystemRestController {
 		return carDtos;
 	}
 
-	@GetMapping(value = { "/create/cars/{Model, Year, color}", "/create/cars/{Model, Year, color}/" })
-	public CarDto getCarByModelAndYearAndColor(@PathVariable String model, @PathVariable String year,
+	@GetMapping(value = { "/cars/{model}/{year}/{color}", "/cars/{model}/{year}/{color}/" })
+	public List<CarDto> getCarByModelAndYearAndColor(@PathVariable String model, @PathVariable String year,
 			@PathVariable String color) throws IllegalArgumentException {
 		List<Car> car = service.getCarByModelAndYearAndColor(model, year, color);
 
@@ -918,10 +934,10 @@ public class AutoRepairShopSystemRestController {
 		return convertListToDto(car);
 	}
 
-	private CarDto convertListToDto(List<Car> car) {
-		CarDto cardto = null;
+	private List<CarDto> convertListToDto(List<Car> car) {
+		List<CarDto> cardto = new ArrayList<CarDto>();
 		for (Car car1 : car) {
-			cardto = convertToDto(car1);
+			cardto.add(convertToDto(car1));
 		}
 		return cardto;
 	}
