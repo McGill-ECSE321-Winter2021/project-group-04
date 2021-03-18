@@ -679,7 +679,7 @@ public class AutoRepairShopSystemRestController {
 		return administrativeAssistantDtos;
 	}
 
-	@GetMapping(value = { "/administrativeAsisstant/{Id}", "/administrativeAsisstant/{Id}/" })
+	@GetMapping(value = { "/administrativeAssistant/{Id}", "/administrativeAssistant/{Id}/" })
 	public AdministrativeAssistantDto getAdministrativeAssistantById(@PathVariable("Id") Long Id)
 			throws IllegalArgumentException {
 		return convertToDto(service.getAdministrativeAssistantById(Id));
@@ -715,18 +715,14 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(appointmentReminder);
 	}
 
-	// @PostMapping(value = { "/appointmentReminder/{message}",
-	// "/appointmentReminder/{message}/" })
-	// public AppointmentReminderDto
-	// createAppointmentReminder(@PathVariable("message") String message,
-	// @RequestParam Date date, @RequestParam Time time) throws
-	// IllegalArgumentException {
-	// AppointmentReminder appointmentReminder =
-	// service.createAppointmentReminder(date, time, message);
-	// AppointmentReminderDto appointmentReminderDto =
-	// convertToDto(appointmentReminder);
-	// return appointmentReminderDto;
-	// }
+	 @PostMapping(value = { "/create/appointmentReminder/{message}", "/create/appointmentReminder/{message}/" })
+	 public AppointmentReminderDto createAppointmentReminder(@PathVariable("message") String message,
+	 @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") Date date,
+	  @RequestParam ("time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") Time time) throws IllegalArgumentException {
+	 AppointmentReminder appointmentReminder = service.createAppointmentReminder(date, time, message);
+	 AppointmentReminderDto appointmentReminderDto = convertToDto(appointmentReminder);
+	 return appointmentReminderDto;
+	 }
 
 	/////////////////////////////////////// BOOKABLE
 	/////////////////////////////////////// SERVICE//////////////////////////////
@@ -975,7 +971,7 @@ public class AutoRepairShopSystemRestController {
 		service.deleteBookableService(bookableService);
 	}
 
-	@PostMapping(value = { "/edit/bookableServices/{serviceId}", "/edit/bookableServices/{serviceId}/" })
+	@PostMapping(value = { "/edit/bookableService/{serviceId}", "/edit/bookableService/{serviceId}/" })
 	public void editBookableService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
 			@RequestParam int duration, @RequestParam int price) throws IllegalArgumentException {
 		BookableService bookableService = service.getBookableServiceById(serviceId);
@@ -995,7 +991,7 @@ public class AutoRepairShopSystemRestController {
 		service.editAdministrativeAssistant(administrativeAssistant, userId, password);
 	}
 
-	@PostMapping(value = { "/garageTechnicians/{technicianId}/delete", "/garageTechnicians/{technicianId}/delete/" })
+	@PostMapping(value = { "/delete/garageTechnician/{technicianId}", "/delete/garageTechnician/{technicianId}/" })
 	public void deleteGarageTechnician(@PathVariable("technicianId") Long technicianId)
 			throws IllegalArgumentException {
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(technicianId);
