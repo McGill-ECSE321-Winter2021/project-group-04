@@ -600,6 +600,12 @@ public class AutoRepairShopSystemRestController {
 		return businessDto;
 	}
 
+	// @PostMapping(value = { "/delete/business/{Id}", "/delete/business/{Id}/" })
+	// public void deleteBusiness(@PathVariable("Id") Long Id) {
+	// Business business = service.getBusinessById(Id);
+	// service.deleteBusiness(business);
+	// }
+
 	////////////////////////////////////////////////////////////////////////
 
 	@GetMapping(value = { "/checkupReminders", "/checkupReminders/" })
