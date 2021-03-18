@@ -477,16 +477,13 @@ public class AutoRepairShopSystemRestController {
 			throws IllegalArgumentException {
 
 		// TODO: Only owner and admin can create an emergencyService
-
-		// Emergency Service that is fixed and extract price
-		EmergencyService emergencyService = service.getEmergencyServiceByServiceName(serviceName);
-		int priceOfService = emergencyService.getPrice();
+		
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get
 																												// ft
 
 		// A bookable emergency service will be created
 		String nameOfBooking = serviceName + " for " + userId; // service for that user
-		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, priceOfService,
+		EmergencyService bookableEmergencyService = service.bookEmergencyService(nameOfBooking, serviceName,
 				location, userId, fieldTechnician);
 		return convertToDto(bookableEmergencyService);
 	}
