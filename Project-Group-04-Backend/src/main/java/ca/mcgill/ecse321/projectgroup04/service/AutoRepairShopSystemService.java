@@ -595,6 +595,10 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public TimeSlot deleteTimeSlot(TimeSlot timeSlot) {
+		List<Business> businesses = (List<Business>) businessRepository.findAll();
+		Business business = businesses.get(0);
+		List<TimeSlot> TimeSlots = business.getRegular();
+		TimeSlots.remove(timeSlot);
 		timeSlotRepository.delete(timeSlot);
 		timeSlot = null;
 		return timeSlot;
