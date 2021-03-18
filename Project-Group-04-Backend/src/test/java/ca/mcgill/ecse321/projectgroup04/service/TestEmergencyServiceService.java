@@ -2,13 +2,6 @@ package ca.mcgill.ecse321.projectgroup04.service;
 
 import static org.mockito.Mockito.lenient; 
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +16,6 @@ import ca.mcgill.ecse321.projectgroup04.dao.CustomerRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.EmergencyServiceRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.FieldTechnicianRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.ReceiptRepository;
-import ca.mcgill.ecse321.projectgroup04.model.BookableService;
 import ca.mcgill.ecse321.projectgroup04.model.Customer;
 import ca.mcgill.ecse321.projectgroup04.model.EmergencyService;
 import ca.mcgill.ecse321.projectgroup04.model.FieldTechnician;
@@ -66,7 +58,6 @@ public class TestEmergencyServiceService {
 	
 	private static final String SERVICE_NAME2 = "EmergencyService2";
 	private static final int SERVICE_PRICE2 = 75;
-	private static final String SERVICE_LOCATION2 = "Toronto";
 	
 	private static final Long FIELD_TECHNICIAN_ID1 = (long) 55999;
 	private static final String FIELD_TECHNICIAN_NAME1 = "Borat";
@@ -363,7 +354,6 @@ public class TestEmergencyServiceService {
 		 String serviceName = "EmergencyService1";
 		 
 		 String userId = "UserTestId";
-		 Customer customer = service.getCustomerByUserId(userId);
 		 
 		 String bookingName = serviceName + " for " + userId;
 		 

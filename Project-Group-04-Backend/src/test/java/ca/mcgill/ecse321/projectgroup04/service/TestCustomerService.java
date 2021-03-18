@@ -18,18 +18,11 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import ca.mcgill.ecse321.projectgroup04.dao.BusinessHourRepository;
-import ca.mcgill.ecse321.projectgroup04.dao.BusinessRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.CarRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.CustomerRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.ProfileRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.ReminderRepository;
-import ca.mcgill.ecse321.projectgroup04.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.projectgroup04.model.AppointmentReminder;
-import ca.mcgill.ecse321.projectgroup04.model.Business;
-import ca.mcgill.ecse321.projectgroup04.model.BusinessHour;
-import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
-import ca.mcgill.ecse321.projectgroup04.model.BusinessHour.DayOfWeek;
 import ca.mcgill.ecse321.projectgroup04.model.Car;
 import ca.mcgill.ecse321.projectgroup04.model.Customer;
 import ca.mcgill.ecse321.projectgroup04.model.Profile;
@@ -903,7 +896,6 @@ public class TestCustomerService {
                 Customer customer = service.createCustomer(userId, password, reminders, car, profile);
                 Customer test = customerRepository.findCustomerByUserId("Henry");
                 
-                String error = "";
                 
                 try {
                 	customer = service.editCustomer(customer, userId, password, reminders, car, profile1);
@@ -979,9 +971,7 @@ public class TestCustomerService {
                 
                 Customer customer = service.createCustomer(userId, password, reminders, car, profile);
                 Customer test = customerRepository.findCustomerByUserId("Henry");
-                
-                String error = "";
-                
+                                
                 try {
                 	customer = service.editCustomer(customer, userId, password, reminders1, car, profile);
                 }catch (IllegalArgumentException e){
