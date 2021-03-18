@@ -1,11 +1,6 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,10 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.anyLong;
 
 import ca.mcgill.ecse321.projectgroup04.dao.OwnerRepository;
-import ca.mcgill.ecse321.projectgroup04.service.AutoRepairShopSystemService;
 import ca.mcgill.ecse321.projectgroup04.model.Owner;
 
 @ExtendWith(MockitoExtension.class)

@@ -2,13 +2,7 @@ package ca.mcgill.ecse321.projectgroup04.service;
 
 import static org.mockito.Mockito.lenient; 
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +17,6 @@ import ca.mcgill.ecse321.projectgroup04.dao.CustomerRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.EmergencyServiceRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.FieldTechnicianRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.ReceiptRepository;
-import ca.mcgill.ecse321.projectgroup04.model.BookableService;
 import ca.mcgill.ecse321.projectgroup04.model.Customer;
 import ca.mcgill.ecse321.projectgroup04.model.EmergencyService;
 import ca.mcgill.ecse321.projectgroup04.model.FieldTechnician;

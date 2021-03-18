@@ -213,6 +213,11 @@ public class AutoRepairShopSystemService {
 		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
 		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
 		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
+		for(BusinessHour businessHour:getAllBusinessHours()) {
+			if(businessHour.getStartTime().after(startTime) || businessHour.getEndTime().before(endTime)) {
+				throw new IllegalArgumentException("This time doesn't fall within business hours!");
+			}
+		}
 		for (Appointment appointment : getAppointmentsByDate(date)) {
 			if (isOverlap(appointment.getTimeSlot(), startTime, endTime, garageSpot)) {
 				throw new IllegalArgumentException("This attempted booking overlaps with another!");
@@ -224,6 +229,7 @@ public class AutoRepairShopSystemService {
 		date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
 		AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
 				"You have an appointment in 24hours");
+		addAppointmentReminderToCustomer(customer,appReminder);
 		Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
 				receipt);
 		return appointment;
@@ -521,6 +527,24 @@ public class AutoRepairShopSystemService {
 		customer.setReminders(reminders);
 		customerRepository.save(customer);
 		return customer;
+	}
+	
+	@Transactional
+	public void addAppointmentReminderToCustomer(Customer customer,AppointmentReminder appointmentReminder){
+		if(customer==null) {
+			throw new IllegalArgumentException("Customer can't be null!");
+		}
+		if(appointmentReminder==null) {
+			throw new IllegalArgumentException("Appointment Reminder can't be null!");
+		}
+		List<Reminder> newReminders = new ArrayList<>();
+		if(customer.getReminders()!=null) {
+			for(Reminder a : customer.getReminders()) {
+				newReminders.add(a);
+			}
+		}		
+		newReminders.add(appointmentReminder);
+		customer.setReminders(newReminders);		
 	}
 
 	@Transactional
