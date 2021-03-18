@@ -9,8 +9,9 @@ public class FieldTechnicianDto {
 
 	}
 
-	public FieldTechnicianDto(String aName) {
-		name = aName;
+	public FieldTechnicianDto(String aName, boolean bool) {
+		this.name = aName;
+		this.isAvailable = bool;
 	}
 
 	public String getName() {
@@ -23,6 +24,10 @@ public class FieldTechnicianDto {
 
 	public boolean getIsAvailable() {
 		return isAvailable;
+	}
+	
+	public void setIsAvailable(boolean bool) {
+		this.isAvailable = bool;
 	}
 
 	public void setId(Long id) {

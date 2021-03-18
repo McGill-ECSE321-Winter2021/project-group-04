@@ -213,6 +213,11 @@ public class AutoRepairShopSystemService {
 		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
 		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
 		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
+		for(BusinessHour businessHour:getAllBusinessHours()) {
+			if(businessHour.getStartTime().after(startTime) || businessHour.getEndTime().before(endTime)) {
+				throw new IllegalArgumentException("This time doesn't fall within business hours!");
+			}
+		}
 		for (Appointment appointment : getAppointmentsByDate(date)) {
 			if (isOverlap(appointment.getTimeSlot(), startTime, endTime, garageSpot)) {
 				throw new IllegalArgumentException("This attempted booking overlaps with another!");
@@ -224,6 +229,7 @@ public class AutoRepairShopSystemService {
 		date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
 		AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
 				"You have an appointment in 24hours");
+		addAppointmentReminderToCustomer(customer,appReminder);
 		Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
 				receipt);
 		return appointment;
@@ -320,6 +326,19 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public Owner createOwner(String userId, String password) {
+		
+		Owner existingOwner = getOwnerByUserId(userId);
+		
+		if (existingOwner != null) {
+			throw new IllegalArgumentException("Owner already exists");
+		}
+		if (userId == "") {
+			throw new IllegalArgumentException("Username can't be empty");
+		}
+		if (password == "") {
+			throw new IllegalArgumentException("Password can't be empty");
+		}
+		
 		Owner owner = new Owner();
 		owner.setUserId(userId);
 		owner.setPassword(password);
@@ -338,15 +357,24 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void deleteOwner(Owner owner) {
+	public Owner deleteOwner(Owner owner) {
 		ownerRepository.delete(owner);
+		owner = null;
+		return owner;
 	}
 
 	@Transactional
-	public void editOwner(Owner owner, String userId, String password) {
+	public Owner editOwner(Owner owner, String userId, String password) {
+		
+		if (userId == owner.getUserId() && password == owner.getPassword()) {
+			throw new IllegalArgumentException("You have to change the username or password or both");
+		}
+		
 		owner.setUserId(userId);
 		owner.setPassword(password);
 		ownerRepository.save(owner);
+		
+		return owner;
 	}
 
 	@Transactional
@@ -358,11 +386,33 @@ public class AutoRepairShopSystemService {
 			return false; // owner does not exist
 		}
 	}
+	
+	@Transactional
+	public Owner getOwnerByUserId(String userId) {
+		return ownerRepository.findOwnerByUserId(userId);
+	}
 
 	//////////////////////////////////////////////////////////////////////////////
 
 	@Transactional
 	public Car createCar(String model, String year, String color) {
+		
+//		List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
+//		
+//		if (existingCars != null) {
+//			throw new IllegalArgumentException("This car already exists");
+//		}
+		if(model == null || model == "" ) {
+			throw new IllegalArgumentException("Model can't be empty");
+		}
+		
+		if(color == null || color == "") {
+			throw new IllegalArgumentException("Color can't be empty");
+		}
+		
+		if(year == null || year == "") {
+			throw new IllegalArgumentException("Year can't be empty");
+		}
 		Car car = new Car();
 		car.setColor(color);
 		car.setModel(model);
@@ -370,9 +420,21 @@ public class AutoRepairShopSystemService {
 		carRepository.save(car);
 		return car;
 	}
+	
+//	@Transactional
+//	public List<Car> createCars(Long carId, String model, String year, String color) {
+//		
+//		List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
+//		
+//		if (existingCars != null) {
+//			throw new IllegalArgumentException("This car already exists");
+//		}
+//		
+//		return cars
+//	}
 
 	@Transactional
-	public Car getCarByModelAndYearAndColor(String model, String year, String color) {
+	public List<Car> getCarByModelAndYearAndColor(String model, String year, String color) {
 		return carRepository.findCarByModelAndYearAndColor(model, year, color);
 	}
 
@@ -382,12 +444,36 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void deleteCar(Car car) {
+	public Car deleteCar(Car car) {
 		carRepository.delete(car);
+		car = null;
+		return car;
 	}
 
 	@Transactional
 	public Customer createCustomer(String userId, String password, List<Reminder> reminder, Car car, Profile profile) {
+		
+		if(userId == null || userId == "") {
+			throw new IllegalArgumentException("userId can't be empty");
+		}
+		if(password == null || password == "") {
+			throw new IllegalArgumentException("password can't be empty");
+		}
+		if(reminder == null) {
+			throw new IllegalArgumentException("reminders can't be empty");
+		}
+		if(car == null) {
+			throw new IllegalArgumentException("Car can't be empty");
+		}
+		if(profile == null) {
+			throw new IllegalArgumentException("Profile can't be empty");
+		}
+		
+		Customer test = customerRepository.findCustomerByUserId(userId);
+		
+		if(test!=null) {
+			throw new IllegalArgumentException("This customer already exists");
+		}
 		Customer customer = new Customer();
 		customer.setPassword(password);
 		customer.setUserId(userId);
@@ -413,17 +499,76 @@ public class AutoRepairShopSystemService {
 		customerRepository.delete(customer);
 	}
 
-	public void editCustomer(Customer customer, String Id, String password, List<Reminder> reminders, Car car,
+	public Customer editCustomer(Customer customer, String Id, String password, List<Reminder> reminders, Car car,
 			Profile profile) {
+		
+		if(customer == null) {
+			throw new IllegalArgumentException("This customer does not exist");
+		}
+//		if(Id == null || Id == "") {
+//			throw new IllegalArgumentException("userId can't be empty");
+//		}
+//		if(password == null || password == "") {
+//			throw new IllegalArgumentException("password can't be empty");
+//		}
+//		if(reminders == null) {
+//			throw new IllegalArgumentException("reminders can't be empty");
+//		}
+//		if(car == null) {
+//			throw new IllegalArgumentException("Car can't be empty");
+//		}
+//		if(profile == null) {
+//			throw new IllegalArgumentException("Profile can't be empty");
+//		}
 		customer.setUserId(Id);
 		customer.setPassword(password);
 		customer.setCar(car);
 		customer.setCustomerProfile(profile);
 		customer.setReminders(reminders);
+		customerRepository.save(customer);
+		return customer;
+	}
+	
+	@Transactional
+	public void addAppointmentReminderToCustomer(Customer customer,AppointmentReminder appointmentReminder){
+		if(customer==null) {
+			throw new IllegalArgumentException("Customer can't be null!");
+		}
+		if(appointmentReminder==null) {
+			throw new IllegalArgumentException("Appointment Reminder can't be null!");
+		}
+		List<Reminder> newReminders = new ArrayList<>();
+		if(customer.getReminders()!=null) {
+			for(Reminder a : customer.getReminders()) {
+				newReminders.add(a);
+			}
+		}		
+		newReminders.add(appointmentReminder);
+		customer.setReminders(newReminders);		
 	}
 
 	@Transactional
 	public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
+		
+		if(startDate == null || endDate == null) {
+			throw new IllegalArgumentException("Date cannot be null");
+		}
+		if(startTime == null) {
+			throw new IllegalArgumentException("startTime cannot be null");
+		}
+		if(endTime == null) {
+			throw new IllegalArgumentException("endTime cannot be null");
+		}
+		if(garageSpot == null) {
+			throw new IllegalArgumentException("garageSpot cannot be null");
+		}
+//		TimeSlot test = timeSlotRepository.findTimeSlotByGarageSpotAndStartTimeAndStartDate(garageSpot, startTime , startDate);
+//		if(test.getStartDate() == startDate && test.getStartTime() == startTime && test.getGarageSpot() == garageSpot) {
+//			throw new IllegalArgumentException("This TimeSlot already exists");
+//		}
+		if(startTime.after(endTime)) {
+			throw new IllegalArgumentException("StartTime cannot be after endTime");
+		}
 		TimeSlot timeSlot = new TimeSlot();
 		timeSlot.setStartDate(startDate);
 		timeSlot.setStartTime(startTime);
@@ -555,7 +700,14 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public EmergencyService createEmergencyService(String name, int price) {
-		if (name == null) {
+		
+		EmergencyService existingService = getEmergencyServiceByServiceName(name);
+
+		if (existingService != null) {
+			throw new IllegalArgumentException("Emergency Service with this name already exists");
+		}
+	
+		if (name == "") {
 			throw new IllegalArgumentException("Name can't be null");
 		}
 		if (price == 0) {
@@ -574,12 +726,10 @@ public class AutoRepairShopSystemService {
 	}
 
 	public EmergencyService bookEmergencyService(String aServiceName, int price, String aLocation,
-			FieldTechnician aFieldTechnician, Customer aCustomer, Receipt aReceipt) {
+			String userId, FieldTechnician aFieldTechnician) {
 		EmergencyService bookableEmergencyService = new EmergencyService();
 
-		if (aCustomer == null) {
-			throw new IllegalArgumentException("Customer can't be null");
-		}
+		
 		if (aLocation == null) {
 			throw new IllegalArgumentException("Location can't be null");
 		}
@@ -589,16 +739,25 @@ public class AutoRepairShopSystemService {
 		if (aServiceName == null) {
 			throw new IllegalArgumentException("Service Name can't be null");
 		}
-
-		if (aReceipt == null) {
-			throw new IllegalArgumentException("Receipt can't be null");
+		
+		if (aFieldTechnician.getIsAvailable() == false) { // if field technician is unavailable
+			throw new IllegalArgumentException("Field Technician is currently unavailable");
 		}
+		
+		Receipt aReceipt = createReceipt(price);
+		Customer customer = getCustomerByUserId(userId);
+		
+		if (customer == null) {
+			throw new IllegalArgumentException("Customer can't be null");
+		}
+		
+		
 		bookableEmergencyService.setName(aServiceName);
 		bookableEmergencyService.setPrice(price);
 		bookableEmergencyService.setLocation(aLocation);
 		bookableEmergencyService.setTechnician(aFieldTechnician);
 		aFieldTechnician.setIsAvailable(false);
-		bookableEmergencyService.setCustomer(aCustomer);
+		bookableEmergencyService.setCustomer(customer);
 		bookableEmergencyService.setReceipt(aReceipt);
 		emergencyServiceRepository.save(bookableEmergencyService);
 		return bookableEmergencyService;
@@ -630,15 +789,28 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void editEmergencyService(EmergencyService emergencyService, String name, int price) {
+	public EmergencyService editEmergencyService(EmergencyService emergencyService, String name, int price) {
+		
+		if (name == emergencyService.getName() && price == emergencyService.getPrice()) {
+			throw new IllegalArgumentException("You have to edit one of the fields");
+		}
+		EmergencyService existingEmergencyService = getEmergencyServiceByServiceName(name);
+		if (existingEmergencyService != null) {
+			throw new IllegalArgumentException("An emergency service with this name already exists");
+		}
+		
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
 		emergencyServiceRepository.save(emergencyService);
+		
+		return emergencyService;
 	}
 
 	@Transactional
-	public void deleteEmergencyService(EmergencyService emergencyService) {
+	public EmergencyService deleteEmergencyService(EmergencyService emergencyService) {
 		emergencyServiceRepository.delete(emergencyService);
+		emergencyService = null;
+		return emergencyService;
 	}
 
 	@Transactional
@@ -684,6 +856,15 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public FieldTechnician createFieldTechnician(String name) {
+		
+		if (name == "") {
+			throw new IllegalArgumentException("Name can't be empty");
+		}
+		FieldTechnician existingFieldTechnician = getFieldTechnicianByName(name);
+		if (existingFieldTechnician != null) {
+			throw new IllegalArgumentException("Field Technician with this name already exists");
+		}
+		
 		FieldTechnician fieldTechnician = new FieldTechnician();
 		fieldTechnician.setName(name);
 		fieldTechnician.setIsAvailable(true);
@@ -708,14 +889,17 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void deleteFieldTechnician(FieldTechnician fieldTechnician) {
+	public FieldTechnician deleteFieldTechnician(FieldTechnician fieldTechnician) {
 		List<EmergencyService> emergencyServices = (List<EmergencyService>) emergencyServiceRepository.findAll();
+		
 		for (EmergencyService emergencyService : emergencyServices) {
 			if (emergencyService.getTechnician().equals(fieldTechnician)) {
-				emergencyServiceRepository.delete(emergencyService);
+				throw new IllegalArgumentException("The field technician is assigned to an emergency service!");
 			}
 		}
 		fieldTechnicianRepository.delete(fieldTechnician);
+		fieldTechnician = null;
+		return fieldTechnician;
 
 	}
 
@@ -1214,12 +1398,14 @@ public class AutoRepairShopSystemService {
 	}
 
 	public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
-		List<Appointment> appointments = getAllAppointments();
 
-		for (Appointment appointment : appointments) {
+		List<Appointment> appointmentsList = getAllAppointments();
+
+		for (Appointment appointment : appointmentsList) {
 			if (appointment.getTechnician().equals(garageTechnician)) {
 				throw new IllegalArgumentException("This garage technician still has appointments");
 			}
+
 		}
 		garageTechnicianRepository.delete(garageTechnician);
 		garageTechnician = null;
@@ -1259,6 +1445,7 @@ public class AutoRepairShopSystemService {
 		}
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
+		administrativeAssistantRepository.save(administrativeAssistant);
 		return administrativeAssistant;
 	}
 

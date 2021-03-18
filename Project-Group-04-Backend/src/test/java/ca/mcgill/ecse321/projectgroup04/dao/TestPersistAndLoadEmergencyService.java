@@ -33,7 +33,6 @@ public class TestPersistAndLoadEmergencyService {
         String name = "Towing";
         int price = 10;
         EmergencyService emergencyService = new EmergencyService();
-        // Long id = es.getServiceID();
         emergencyService.setLocation(location);
         emergencyService.setName(name);
         emergencyService.setPrice(price);
