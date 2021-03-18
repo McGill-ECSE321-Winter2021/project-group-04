@@ -24,17 +24,10 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import ca.mcgill.ecse321.projectgroup04.dao.AdministrativeAssistantRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.AppointmentRepository;
-import ca.mcgill.ecse321.projectgroup04.dao.BookableServiceRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.GarageTechnicianRepository;
-import ca.mcgill.ecse321.projectgroup04.model.AdministrativeAssistant;
 import ca.mcgill.ecse321.projectgroup04.model.Appointment;
-import ca.mcgill.ecse321.projectgroup04.model.AppointmentReminder;
-import ca.mcgill.ecse321.projectgroup04.model.BookableService;
-import ca.mcgill.ecse321.projectgroup04.model.Customer;
 import ca.mcgill.ecse321.projectgroup04.model.GarageTechnician;
-import ca.mcgill.ecse321.projectgroup04.model.Receipt;
 import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 
 @ExtendWith(MockitoExtension.class)
