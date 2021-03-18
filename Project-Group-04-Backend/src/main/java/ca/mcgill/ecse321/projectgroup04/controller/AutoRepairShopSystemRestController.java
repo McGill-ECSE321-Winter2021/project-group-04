@@ -127,20 +127,20 @@ public class AutoRepairShopSystemRestController {
 		return carDto;
 	}
 
-	/**
-	 * 
-	 * @param c to get the reminders as Reminder, convert them to REminderDto
-	 * @return List of ReminderDto
-	 */
-
-	private List<ReminderDto> createRemindersDtosForCustomer(Customer customer) {
-		List<Reminder> allReminders = customer.getReminders();
-		List<ReminderDto> reminders = new ArrayList<>();
-		for (Reminder r : allReminders) {
-			reminders.add(convertToDto(r));
-		}
-		return reminders;
-	}
+//	/**
+//	 * 
+//	 * @param c to get the reminders as Reminder, convert them to REminderDto
+//	 * @return List of ReminderDto
+//	 */
+//
+//	private List<ReminderDto> createRemindersDtosForCustomer(Customer customer) {
+//		List<Reminder> allReminders = customer.getReminders();
+//		List<ReminderDto> reminders = new ArrayList<>();
+//		for (Reminder r : allReminders) {
+//			reminders.add(convertToDto(r));
+//		}
+//		return reminders;
+//	}
 
 	/**
 	 * 
@@ -148,14 +148,14 @@ public class AutoRepairShopSystemRestController {
 	 * @return Converted to ReminderDto
 	 */
 
-	private ReminderDto convertToDto(Reminder reminder) {
-		if (reminder == null) {
-			throw new IllegalArgumentException("There is no such Reminder!");
-		}
-		ReminderDto reminderDto = new ReminderDto(reminder.getMessage(), reminder.getDate(), reminder.getTime());
-		reminderDto.setReminderId(reminder.getReminderId());
-		return reminderDto;
-	}
+//	private ReminderDto convertToDto(Reminder reminder) {
+//		if (reminder == null) {
+//			throw new IllegalArgumentException("There is no such Reminder!");
+//		}
+//		ReminderDto reminderDto = new ReminderDto(reminder.getMessage(), reminder.getDate(), reminder.getTime());
+//		reminderDto.setReminderId(reminder.getReminderId());
+//		return reminderDto;
+//	}
 
 	/**
 	 * 
@@ -164,21 +164,21 @@ public class AutoRepairShopSystemRestController {
 	 * @return
 	 */
 
-	private List<AppointmentDto> createAppointmentsDtosForCustomer(Customer customer, CustomerDto cDto) {
-		List<Appointment> allAppointments = service.getAppointmentsByCustomer(customer);
-		List<AppointmentDto> appointments = new ArrayList<>();
-		for (Appointment a : allAppointments) {
-			AppointmentDto appointmentDto = new AppointmentDto();
-			appointmentDto.setCustomer(cDto);
-			appointmentDto.setGarageTechnician(convertToDto(a.getTechnician()));
-			appointmentDto.setReceipt(convertToDto(a.getReceipt()));
-			appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
-			appointmentDto.setReminder(convertToDto(a.getReminder()));
-			appointmentDto.setTimeSlot(convertToDto(a.getTimeSlot()));
-			appointments.add(appointmentDto);
-		}
-		return appointments;
-	}
+//	private List<AppointmentDto> createAppointmentsDtosForCustomer(Customer customer, CustomerDto cDto) {
+//		List<Appointment> allAppointments = service.getAppointmentsByCustomer(customer);
+//		List<AppointmentDto> appointments = new ArrayList<>();
+//		for (Appointment a : allAppointments) {
+//			AppointmentDto appointmentDto = new AppointmentDto();
+//			appointmentDto.setCustomer(cDto);
+//			appointmentDto.setGarageTechnician(convertToDto(a.getTechnician()));
+//			appointmentDto.setReceipt(convertToDto(a.getReceipt()));
+//			appointmentDto.setBookableService(convertToDto(a.getBookableServices()));
+//			appointmentDto.setReminder(convertToDto(a.getReminder()));
+//			appointmentDto.setTimeSlot(convertToDto(a.getTimeSlot()));
+//			appointments.add(appointmentDto);
+//		}
+//		return appointments;
+//	}
 
 	/**
 	 * 
@@ -548,15 +548,15 @@ public class AutoRepairShopSystemRestController {
 		service.editFieldTechnician(fieldTechnician, name);
 	}
 
-	private FieldTechnician convertToDomainObject(FieldTechnicianDto fieldTechnicianDto) {
-		List<FieldTechnician> fieldTechnicians = service.getAllFieldTechnicians();
-		for (FieldTechnician fieldTechnician : fieldTechnicians) {
-			if (fieldTechnician.getTechnicianId().equals(fieldTechnicianDto.getTechnicianId())) {
-				return fieldTechnician;
-			}
-		}
-		return null;
-	}
+//	private FieldTechnician convertToDomainObject(FieldTechnicianDto fieldTechnicianDto) {
+//		List<FieldTechnician> fieldTechnicians = service.getAllFieldTechnicians();
+//		for (FieldTechnician fieldTechnician : fieldTechnicians) {
+//			if (fieldTechnician.getTechnicianId().equals(fieldTechnicianDto.getTechnicianId())) {
+//				return fieldTechnician;
+//			}
+//		}
+//		return null;
+//	}
 
 	/////////////////////////////////////////////////////////////////////////////
 
@@ -827,15 +827,15 @@ public class AutoRepairShopSystemRestController {
 				service.bookAppointment(userId, serviceName, date, garageSpot, startTime, garageTechnicianId));
 	}
 
-	private GarageTechnician convertToDomainObject(GarageTechnicianDto garageTechnicianDto) {
-		List<GarageTechnician> garageTechnicians = service.getAllGarageTechnicians();
-		for (GarageTechnician garageTechnician : garageTechnicians) {
-			if (garageTechnician.getTechnicianId().equals(garageTechnicianDto.getTechnicianId())) {
-				return garageTechnician;
-			}
-		}
-		return null;
-	}
+//	private GarageTechnician convertToDomainObject(GarageTechnicianDto garageTechnicianDto) {
+//		List<GarageTechnician> garageTechnicians = service.getAllGarageTechnicians();
+//		for (GarageTechnician garageTechnician : garageTechnicians) {
+//			if (garageTechnician.getTechnicianId().equals(garageTechnicianDto.getTechnicianId())) {
+//				return garageTechnician;
+//			}
+//		}
+//		return null;
+//	}
 
 	@PostMapping(value = { "/create/profile/{first}/{last}", "/create/profile/{first}/{last}/" })
 	public ProfileDto createProfile(@PathVariable("first") String firstName, @PathVariable("last") String lastName,

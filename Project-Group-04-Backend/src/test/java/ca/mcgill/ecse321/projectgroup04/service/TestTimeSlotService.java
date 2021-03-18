@@ -6,8 +6,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,14 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
 import ca.mcgill.ecse321.projectgroup04.service.AutoRepairShopSystemService;
-import ca.mcgill.ecse321.projectgroup04.dao.AdministrativeAssistantRepository;
-import ca.mcgill.ecse321.projectgroup04.dao.AppointmentReminderRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.TimeSlotRepository;
-import ca.mcgill.ecse321.projectgroup04.model.AdministrativeAssistant;
-import ca.mcgill.ecse321.projectgroup04.model.AppointmentReminder;
-import ca.mcgill.ecse321.projectgroup04.model.Business;
-import ca.mcgill.ecse321.projectgroup04.model.BusinessHour;
-import ca.mcgill.ecse321.projectgroup04.model.Service;
 import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.anyLong;
 
 @ExtendWith(MockitoExtension.class)
@@ -187,9 +177,9 @@ public class TestTimeSlotService {
     
 //    @Test
 //    public void TestCreateTimeSlotThatAlreadyExists() {
-//        Date date = Date.valueOf(LocalDate.parse("2020-03-20"));
-//        Time aStartTime = Time.valueOf(LocalTime.parse("08:00:00"));
-//        Time aEndTime = Time.valueOf(LocalTime.parse("09:00:00"));
+//        Date date = Date.valueOf(LocalDate.parse("2020-03-18"));
+//        Time aStartTime = Time.valueOf(LocalTime.parse("13:00:00"));
+//        Time aEndTime = Time.valueOf(LocalTime.parse("13:30:00"));
 //        Integer garageSpot = 123;
 //        
 //        TimeSlot timeSlot = null;
