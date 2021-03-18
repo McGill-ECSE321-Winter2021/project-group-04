@@ -708,7 +708,7 @@ public class AutoRepairShopSystemRestController {
 		return administrativeAssistantDtos;
 	}
 
-	@GetMapping(value = { "/administrativeAsisstant/{Id}", "/administrativeAsisstant/{Id}/" })
+	@GetMapping(value = { "/administrativeAssistant/{Id}", "/administrativeAssistant/{Id}/" })
 	public AdministrativeAssistantDto getAdministrativeAssistantById(@PathVariable("Id") Long Id)
 			throws IllegalArgumentException {
 		return convertToDto(service.getAdministrativeAssistantById(Id));
@@ -1002,7 +1002,7 @@ public class AutoRepairShopSystemRestController {
 		service.deleteBookableService(bookableService);
 	}
 
-	@PostMapping(value = { "/edit/bookableServices/{serviceId}", "/edit/bookableServices/{serviceId}/" })
+	@PostMapping(value = { "/edit/bookableService/{serviceId}", "/edit/bookableService/{serviceId}/" })
 	public void editBookableService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
 			@RequestParam int duration, @RequestParam int price) throws IllegalArgumentException {
 		BookableService bookableService = service.getBookableServiceById(serviceId);
@@ -1022,7 +1022,8 @@ public class AutoRepairShopSystemRestController {
 		service.editAdministrativeAssistant(administrativeAssistant, userId, password);
 	}
 
-	@PostMapping(value = { "/delete/garageTechnicians/{technicianId}", "/delete/garageTechnicians/{technicianId}/" })
+	@PostMapping(value = { "/delete/garageTechnician/{technicianId}", "/delete/garageTechnician/{technicianId}/" })
+
 	public void deleteGarageTechnician(@PathVariable("technicianId") Long technicianId)
 			throws IllegalArgumentException {
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(technicianId);

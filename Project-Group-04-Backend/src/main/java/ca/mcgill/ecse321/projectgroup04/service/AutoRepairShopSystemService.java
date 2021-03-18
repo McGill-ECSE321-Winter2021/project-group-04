@@ -1291,6 +1291,7 @@ public class AutoRepairShopSystemService {
 		}
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
+		administrativeAssistantRepository.save(administrativeAssistant);
 		return administrativeAssistant;
 	}
 
