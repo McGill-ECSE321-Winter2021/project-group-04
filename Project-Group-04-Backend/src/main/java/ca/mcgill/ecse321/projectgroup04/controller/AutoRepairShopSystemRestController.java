@@ -476,8 +476,6 @@ public class AutoRepairShopSystemRestController {
 			@RequestParam(name = "Field Technician") FieldTechnicianDto fieldTechnicianDto)
 			throws IllegalArgumentException {
 
-		// TODO: Only owner and admin can create an emergencyService
-
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianDto.getTechnicianId()); // get
 																												// ft
 
@@ -583,8 +581,9 @@ public class AutoRepairShopSystemRestController {
 	@PostMapping(value = { "/register/business/{name}", "/register/business/{name}/" }) // VERIFY PATH
 	public BusinessDto registerBusiness(@PathVariable("name") String name, @RequestParam String address,
 			@RequestParam String phoneNumber, @RequestParam String emailAddress) throws IllegalArgumentException {
-
-		Business business = service.createBusiness(name, address, phoneNumber, emailAddress, null, null);
+		List<BusinessHour> businessHour = service.getAllBusinessHours();
+		List<TimeSlot> timeSlots = service.getAllTimeSlots();
+		Business business = service.createBusiness(name, address, phoneNumber, emailAddress, businessHour, timeSlots);
 		BusinessDto businessDto = convertToDto(business);
 		return businessDto;
 	}
@@ -597,11 +596,11 @@ public class AutoRepairShopSystemRestController {
 		return businessDto;
 	}
 
-	// @PostMapping(value = { "/delete/business/{Id}", "/delete/business/{Id}/" })
-	// public void deleteBusiness(@PathVariable("Id") Long Id) {
-	// Business business = service.getBusinessById(Id);
-	// service.deleteBusiness(business);
-	// }
+	@PostMapping(value = { "/delete/business/{Id}", "/delete/business/{Id}/" })
+	public void deleteBusiness(@PathVariable("Id") Long Id) {
+		Business business = service.getBusinessById(Id);
+		service.deleteBusiness(business);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 
@@ -1036,7 +1035,7 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/edit/administrativeAssistant/{Id}", "/edit/administrativeAssistants/{Id}/" })
 	public void editAdministariveAssistant(@PathVariable("Id") Long Id, @RequestParam String userId,
-			@RequestParam String password) throws IllegalArgumentException { // TODO:npt sure of password
+			@RequestParam String password) throws IllegalArgumentException {
 		AdministrativeAssistant administrativeAssistant = service.getAdministrativeAssistantById(Id);
 		service.editAdministrativeAssistant(administrativeAssistant, userId, password);
 	}

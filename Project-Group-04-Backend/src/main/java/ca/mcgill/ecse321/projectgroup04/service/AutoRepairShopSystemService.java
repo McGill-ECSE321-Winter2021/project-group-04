@@ -578,7 +578,7 @@ public class AutoRepairShopSystemService {
 		timeSlot.setStartTime(startTime);
 		timeSlot.setEndDate(endDate);
 		timeSlot.setEndTime(endTime);
-		timeSlot.setGarageSpot(garageSpot); // TODO: change this one
+		timeSlot.setGarageSpot(garageSpot);
 		timeSlotRepository.save(timeSlot);
 		return timeSlot;
 	}
@@ -608,10 +608,10 @@ public class AutoRepairShopSystemService {
 		if (message == "") {
 			throw new IllegalArgumentException("Message can't be empty");
 		}
-		if (date == null) { // TODO: not sure of this
+		if (date == null) {
 			throw new IllegalArgumentException("Date can't be null");
 		}
-		if (time == null) { // TODO: not sure of this
+		if (time == null) {
 			throw new IllegalArgumentException("Time can't be null");
 		}
 		if (message == "") {

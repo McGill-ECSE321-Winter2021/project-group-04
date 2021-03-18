@@ -80,25 +80,4 @@ public class Appointment {
   public void setTimeSlot(TimeSlot aNewTimeSlot) {
     this.timeSlot = aNewTimeSlot;
   }
-
-  public String toString() {
-    return super.toString() + "[" + "]" + System.getProperties().getProperty("line.separator") + "  " + "appointmentId"
-        + "="
-        + (getAppointmentId() != null
-            ? !getAppointmentId().equals(this) ? getAppointmentId().toString().replaceAll("  ", "    ") : "this"
-            : "null")
-        + System.getProperties().getProperty("line.separator") + "  " + "customer = "
-        + (getCustomer() != null ? Integer.toHexString(System.identityHashCode(getCustomer())) : "null")
-        + System.getProperties().getProperty("line.separator") + "  " + "services = "
-        + (getBookableServices() != null ? Integer.toHexString(System.identityHashCode(getBookableServices())) : "null")
-        + System.getProperties().getProperty("line.separator") + "  " + "technician = "
-        + (getTechnician() != null ? Integer.toHexString(System.identityHashCode(getTechnician())) : "null")
-        + System.getProperties().getProperty("line.separator") + "  " + "timeSlot = "
-        + (getTimeSlot() != null ? Integer.toHexString(System.identityHashCode(getTimeSlot())) : "null")
-        + System.getProperties().getProperty("line.separator") + "  " + "reminder = "
-        + (getReminder() != null ? Integer.toHexString(System.identityHashCode(getReminder())) : "null")
-        + System.getProperties().getProperty("line.separator") + "  " + "receipt = "
-        + (getReceipt() != null ? Integer.toHexString(System.identityHashCode(getReceipt())) : "null")
-        + System.getProperties().getProperty("line.separator");
-  }
 }
