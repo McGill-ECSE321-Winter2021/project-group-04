@@ -687,9 +687,10 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/delete/businessHour/{Id}", "/delete/businessHour/{Id}/" })
-	public void deleteBusinessHourById(@PathVariable("Id") Long Id) {
+	public void deleteBusinessHourById(@PathVariable("Id") Long Id, @RequestParam Long businessId) {
 		BusinessHour businessHour = service.getBusinessHourById(Id);
-		service.deleteBusinessHour(businessHour);
+		Business business = service.getBusinessById(businessId);
+		service.deleteBusinessHour(businessHour, business);
 	}
 
 	// @PostMapping(value = { "/delete/businessHour/{Id}",

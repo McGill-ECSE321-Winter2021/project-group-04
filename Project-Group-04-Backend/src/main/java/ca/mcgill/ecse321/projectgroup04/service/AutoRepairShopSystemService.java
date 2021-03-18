@@ -1203,11 +1203,13 @@ public class AutoRepairShopSystemService {
 		return tempBusinessHour;
 	}
 
-	public Boolean deleteBusinessHour(BusinessHour businessHour) {
-		List<Business> businesses = (List<Business>) businessRepository.findAll();
-		Business business = businesses.get(0);
+	public Boolean deleteBusinessHour(BusinessHour businessHour, Business business) {
+		// List<Business> businesses = getBusiness();
+		// Business business = getBusinessById(businessId);
 		List<BusinessHour> businessHours = business.getBusinessHours();
 		businessHours.remove(businessHour);
+		business.setBusinessHours(businessHours);
+		businessRepository.save(business);
 		businessHourRepository.delete(businessHour);
 		return true;
 	}
