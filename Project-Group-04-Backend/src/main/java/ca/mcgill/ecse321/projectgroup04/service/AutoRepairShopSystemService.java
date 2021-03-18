@@ -750,12 +750,11 @@ public class AutoRepairShopSystemService {
 		if (aFieldTechnician.getIsAvailable() == false) { // if field technician is unavailable
 			throw new IllegalArgumentException("Field Technician is currently unavailable");
 		}
-		
+
 		if (emergencyService == null) {
 			throw new IllegalArgumentException("No Emergency Service with such name!");
 		}
-		
-		
+
 		int price = emergencyService.getPrice();
 
 		Receipt aReceipt = createReceipt(price);
@@ -764,15 +763,14 @@ public class AutoRepairShopSystemService {
 		if (customer == null) {
 			throw new IllegalArgumentException("Customer can't be null");
 		}
-		
-		
+
 		bookableEmergencyService.setName(bookingName);
 
 		bookableEmergencyService.setPrice(price);
 		bookableEmergencyService.setLocation(aLocation);
 		bookableEmergencyService.setTechnician(aFieldTechnician);
 		aFieldTechnician.setIsAvailable(false);
-		//System.out.println(aFieldTechnician.getIsAvailable());
+		// System.out.println(aFieldTechnician.getIsAvailable());
 		bookableEmergencyService.setCustomer(customer);
 		bookableEmergencyService.setReceipt(aReceipt);
 		emergencyServiceRepository.save(bookableEmergencyService);
@@ -787,11 +785,11 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public EmergencyService getEmergencyServiceByServiceId(Long serviceId) {
 		EmergencyService emergencyService = emergencyServiceRepository.findEmergencyServiceByServiceId(serviceId);
-		
+
 		if (emergencyService == null) {
 			throw new IllegalArgumentException("No Emergency Service with such ID exist!");
 		}
-		
+
 		else {
 			return emergencyService;
 		}
