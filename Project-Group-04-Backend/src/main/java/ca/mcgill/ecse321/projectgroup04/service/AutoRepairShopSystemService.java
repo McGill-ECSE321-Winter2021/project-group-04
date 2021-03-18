@@ -577,7 +577,7 @@ public class AutoRepairShopSystemService {
 		timeSlot.setStartTime(startTime);
 		timeSlot.setEndDate(endDate);
 		timeSlot.setEndTime(endTime);
-		timeSlot.setGarageSpot(garageSpot); // TODO: change this one
+		timeSlot.setGarageSpot(garageSpot);
 		timeSlotRepository.save(timeSlot);
 		return timeSlot;
 	}
@@ -593,8 +593,14 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public void deleteTimeSlot(TimeSlot timeSlot) {
+	public TimeSlot deleteTimeSlot(TimeSlot timeSlot) {
+		List<Business> businesses = (List<Business>) businessRepository.findAll();
+		Business business = businesses.get(0);
+		List<TimeSlot> TimeSlots = business.getRegular();
+		TimeSlots.remove(timeSlot);
 		timeSlotRepository.delete(timeSlot);
+		timeSlot = null;
+		return timeSlot;
 	}
 
 	// public List<TimeSlot> getTimeSlotByGarageSpot(Integer garageSpot) {
@@ -605,10 +611,10 @@ public class AutoRepairShopSystemService {
 		if (message == "") {
 			throw new IllegalArgumentException("Message can't be empty");
 		}
-		if (date == null) { // TODO: not sure of this
+		if (date == null) {
 			throw new IllegalArgumentException("Date can't be null");
 		}
-		if (time == null) { // TODO: not sure of this
+		if (time == null) {
 			throw new IllegalArgumentException("Time can't be null");
 		}
 		if (message == "") {
@@ -747,12 +753,11 @@ public class AutoRepairShopSystemService {
 		if (aFieldTechnician.getIsAvailable() == false) { // if field technician is unavailable
 			throw new IllegalArgumentException("Field Technician is currently unavailable");
 		}
-		
+
 		if (emergencyService == null) {
 			throw new IllegalArgumentException("No Emergency Service with such name!");
 		}
-		
-		
+
 		int price = emergencyService.getPrice();
 
 		Receipt aReceipt = createReceipt(price);
@@ -761,15 +766,14 @@ public class AutoRepairShopSystemService {
 		if (customer == null) {
 			throw new IllegalArgumentException("Customer can't be null");
 		}
-		
-		
+
 		bookableEmergencyService.setName(bookingName);
 
 		bookableEmergencyService.setPrice(price);
 		bookableEmergencyService.setLocation(aLocation);
 		bookableEmergencyService.setTechnician(aFieldTechnician);
 		aFieldTechnician.setIsAvailable(false);
-		//System.out.println(aFieldTechnician.getIsAvailable());
+		// System.out.println(aFieldTechnician.getIsAvailable());
 		bookableEmergencyService.setCustomer(customer);
 		bookableEmergencyService.setReceipt(aReceipt);
 		emergencyServiceRepository.save(bookableEmergencyService);
@@ -784,11 +788,11 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public EmergencyService getEmergencyServiceByServiceId(Long serviceId) {
 		EmergencyService emergencyService = emergencyServiceRepository.findEmergencyServiceByServiceId(serviceId);
-		
+
 		if (emergencyService == null) {
 			throw new IllegalArgumentException("No Emergency Service with such ID exist!");
 		}
-		
+
 		else {
 			return emergencyService;
 		}
@@ -1199,6 +1203,10 @@ public class AutoRepairShopSystemService {
 	}
 
 	public Boolean deleteBusinessHour(BusinessHour businessHour) {
+		List<Business> businesses = (List<Business>) businessRepository.findAll();
+		Business business = businesses.get(0);
+		List<BusinessHour> businessHours = business.getBusinessHours();
+		businessHours.remove(businessHour);
 		businessHourRepository.delete(businessHour);
 		return true;
 	}

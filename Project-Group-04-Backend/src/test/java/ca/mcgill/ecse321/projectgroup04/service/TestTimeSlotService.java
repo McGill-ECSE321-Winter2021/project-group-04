@@ -214,4 +214,27 @@ public class TestTimeSlotService {
         assertNull(timeSlot);
         assertEquals(error, "StartTime cannot be after endTime");
     }
+
+    @Test
+    public void TestDeleteTimeSlot() {
+        Date date = Date.valueOf(LocalDate.parse("2020-03-20"));
+        Time aStartTime = Time.valueOf(LocalTime.parse("08:00:00"));
+        Time aEndTime = Time.valueOf(LocalTime.parse("09:00:00"));
+        Integer garageSpot = 123;
+
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setEndDate(date);
+        timeSlot.setEndTime(aEndTime);
+        timeSlot.setStartDate(date);
+        timeSlot.setStartTime(aStartTime);
+        timeSlot.setGarageSpot(garageSpot);
+
+        try {
+            timeSlot = service.deleteTimeSlot(timeSlot);
+        } catch (IllegalArgumentException e) {
+            fail();
+        }
+
+        assertNull(timeSlot);
+    }
 }
