@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.projectgroup04.controller;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -601,7 +603,7 @@ public class AutoRepairShopSystemRestController {
 
 	////////////////////////////////////////////////////////////////////////
 
-	@GetMapping(value = { "/chekupReminder", "/checkupReminder/" })
+	@GetMapping(value = { "/checkupReminder", "/checkupReminder/" })
 	public List<CheckupReminderDto> getAllCheckupReminders() {
 		List<CheckupReminderDto> checkupReminderDtos = new ArrayList<>();
 		for (CheckupReminder checkupReminder : service.getAllCheckupReminder()) {
@@ -623,10 +625,11 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/create/checkupReminder/{message}", "/create/checkupReminder/{message}/" })
 	public CheckupReminderDto createCheckupReminder(@PathVariable("message") String message,
-			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "yyyy-mm-dd") Date date,
-			@RequestParam(name = "time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time time)
+			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "yyyy-MM-dd") String date,
+			@RequestParam(name = "time") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String time)
 			throws IllegalArgumentException {
-		CheckupReminder checkupReminder = service.createCheckupReminder(date, time, message);
+		CheckupReminder checkupReminder = service.createCheckupReminder(Date.valueOf(LocalDate.parse(date)),
+				Time.valueOf(LocalTime.parse(time)), message);
 		CheckupReminderDto checkupReminderDto = convertToDto(checkupReminder);
 		return checkupReminderDto;
 	}
