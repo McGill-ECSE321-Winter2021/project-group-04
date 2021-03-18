@@ -19,6 +19,7 @@ project-group-04 created by GitHub Classroom
 [abrarfahad7]: https://github.com/abrarfahad7
 
 ## Roles and Time Spent
+### Sprint 1
 
 | Name            | Tasks                                   | Time in hours |
 | --------------- |:------------------------------------------------:|-----:|  
@@ -27,6 +28,15 @@ project-group-04 created by GitHub Classroom
 | Cesar Lahoud    | Use Case Diagrams, Persistence Layer, Build System | 50 |
 | Yasmina Matta   | Use Case Diagrams, Persistence Layer, Build System | 50 |
 | Abrar Fahad     | Use Case Diagrams, Persistence Layer, Build System | 50 |
+
+### Sprint 2
+| Name            | Tasks                                                                 | Time in hours |
+| --------------- |:--------------------------------------------------------------------------------:|---:|  
+| Mohamad Dimassi | Appointment, Receipt, Profile                                                    | 50 |
+| Artus Julliard  | Car, Customer, TimeSlot                                                          | 50 |
+| Cesar Lahoud    | Business, BusinessHour, CheckupReminder                                          | 50 |
+| Yasmina Matta   | AdministrativeAssistant, BookabaleService, GarageTechnician, AppointmentRemidner | 50 |
+| Abrar Fahad     | Use Case Diagrams, Persistence Layer, Build System                               | 50 |
 
 Click [here] for meeting minutes!
 
