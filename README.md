@@ -38,7 +38,12 @@ project-group-04 created by GitHub Classroom
 | Yasmina Matta   | AdministrativeAssistant, BookabaleService, GarageTechnician, AppointmentRemidner | 50 |
 | Abrar Fahad     | Use Case Diagrams, Persistence Layer, Build System                               | 50 |
 
-Click [here] for meeting minutes!
-[here]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference
-Click [here] for quality assurance report
-[here]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Software-Quality-Assurance-Plan
+Click [for meeting minutes!]
+
+[for meeting minutes!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference
+
+
+[quality assurance report!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Software-Quality-Assurance-Plan
+
+Click [quality assurance report!]
+
