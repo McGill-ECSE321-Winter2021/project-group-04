@@ -32,7 +32,6 @@ public class TestOwnerService {
 
 	private static final String OWNER_NAME = "ownerTestName";
 	private static final String OWNER_PASSWORD = "ownerTestPassword";
-	private static final Long OWNER_ID = 123l;
 
 	@BeforeEach
 	public void setMockOutput() {
