@@ -449,7 +449,7 @@ public class AutoRepairShopSystemService {
 		car = null;
 		return car;
 	}
-	
+
 	@Transactional
 	public Car getCarByCarId(Long carId) {
 		Car car = carRepository.findByCarId(carId);
@@ -463,7 +463,7 @@ public class AutoRepairShopSystemService {
 		reminders.add(reminder);
 		return reminders;
 	}
-	
+
 	@Transactional
 	public Customer createCustomer(String userId, String password, List<Reminder> reminder, Car car, Profile profile) {
 
@@ -1121,7 +1121,7 @@ public class AutoRepairShopSystemService {
 		} else if (day.equals("Saturday")) {
 			dayOfWeek = DayOfWeek.Saturday;
 		} else if (day.equals("Sunday")) {
-			dayOfWeek = DayOfWeek.Saturday;
+			dayOfWeek = DayOfWeek.Sunday;
 		}
 
 		return dayOfWeek;
