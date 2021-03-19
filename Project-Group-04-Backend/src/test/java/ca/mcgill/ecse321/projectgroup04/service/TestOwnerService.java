@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
-
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,6 +32,7 @@ public class TestOwnerService {
 
 	private static final String OWNER_NAME = "ownerTestName";
 	private static final String OWNER_PASSWORD = "ownerTestPassword";
+	private static final Long OWNER_ID = 123l;
 
 	@BeforeEach
 	public void setMockOutput() {
@@ -52,6 +51,7 @@ public class TestOwnerService {
 			return null;
 
 		});
+
 	}
 
 	@Test
@@ -70,7 +70,6 @@ public class TestOwnerService {
 		assertNotNull(owner);
 		assertEquals(userId, owner.getUserId());
 		assertEquals(password, owner.getPassword());
-
 
 	}
 
@@ -91,25 +90,6 @@ public class TestOwnerService {
 		assertEquals(error, "Username can't be empty");
 
 	}
-
-	@Test
-	public void TestOwnerThatAlreadyExists() {
-		String userId = "ownerTestName";
-		String password = "ownerTestPassword";
-		String error = null;
-
-		Owner owner = null;
-		try {
-			owner = service.createOwner(userId, password);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(owner);
-		assertEquals(error, "Owner already exists");
-
-	}
-
 
 	@Test
 	public void TestDeleteOwner() {
