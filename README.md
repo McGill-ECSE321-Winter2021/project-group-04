@@ -32,11 +32,11 @@ project-group-04 created by GitHub Classroom
 ### Sprint 2
 | Name            | Tasks                                                                 | Time in hours |
 | --------------- |:--------------------------------------------------------------------------------:|---:|  
-| Mohamad Dimassi | Appointment, Receipt, Profile                                                    | 50 |
-| Artus Julliard  | Car, Customer, TimeSlot                                                          | 50 |
-| Cesar Lahoud    | Business, BusinessHour, CheckupReminder                                          | 50 |
-| Yasmina Matta   | AdministrativeAssistant, BookabaleService, GarageTechnician, AppointmentRemidner | 50 |
-| Abrar Fahad     | Use Case Diagrams, Persistence Layer, Build System                               | 50 |
+| Mohamad Dimassi | Appointment, Receipt, Profile                                                    | 70 |
+| Artus Julliard  | Car, Customer, TimeSlot                                                          | 70 |
+| Cesar Lahoud    | Business, BusinessHour, CheckupReminder                                          | 70 |
+| Yasmina Matta   | AdministrativeAssistant, BookabaleService, GarageTechnician, AppointmentRemidner | 70 |
+| Abrar Fahad     | Owner, EmergencyService, FieldTechnician                              | 70 |
 
 Click [for meeting minutes!]
 
