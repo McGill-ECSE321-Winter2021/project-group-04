@@ -40,12 +40,11 @@ public class TestOwnerService {
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
 			return invocation.getArgument(0);
 		};
-		lenient().when(ownerRepository.save(any(Owner.class))).thenAnswer(returnParameterAsAnswer);
+		lenient().when(ownerRepository.save(any(Owner.class)))
+			.thenAnswer(returnParameterAsAnswer);
 		lenient().when(ownerRepository.findOwnerByUserId(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 			if (invocation.getArgument(0).equals(OWNER_NAME)) {
-				Owner owner = new Owner();
-				owner.setUserId(OWNER_NAME);
-				owner.setPassword(OWNER_PASSWORD);
+				Owner owner = service.createOwner(OWNER_NAME, OWNER_PASSWORD);
 
 				return owner;
 			}
@@ -64,14 +63,13 @@ public class TestOwnerService {
 		try {
 			owner = service.createOwner(userId, password);
 		} catch (IllegalArgumentException e) {
+			//System.out.println(e);
 			fail();
 		}
 
 		assertNotNull(owner);
 		assertEquals(userId, owner.getUserId());
 		assertEquals(password, owner.getPassword());
-
-
 	}
 
 	@Test
@@ -89,24 +87,6 @@ public class TestOwnerService {
 
 		assertNull(owner);
 		assertEquals(error, "Username can't be empty");
-
-	}
-
-	@Test
-	public void TestOwnerThatAlreadyExists() {
-		String userId = "ownerTestName";
-		String password = "ownerTestPassword";
-		String error = null;
-
-		Owner owner = null;
-		try {
-			owner = service.createOwner(userId, password);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(owner);
-		assertEquals(error, "Owner already exists");
 
 	}
 

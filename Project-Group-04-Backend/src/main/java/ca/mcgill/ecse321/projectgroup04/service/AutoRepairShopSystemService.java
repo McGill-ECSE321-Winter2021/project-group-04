@@ -325,23 +325,34 @@ public class AutoRepairShopSystemService {
 
 	/////////////////////////////////////////////////////////////////////////////
 
+	
+	
 	@Transactional
 	public Owner createOwner(String userId, String password) {
+		
 
-		if (ownerExists()) {
-			throw new IllegalArgumentException("Owner already exists");
-		}
 		if (userId == "") {
 			throw new IllegalArgumentException("Username can't be empty");
 		}
 		if (password == "") {
 			throw new IllegalArgumentException("Password can't be empty");
 		}
+		
+		//System.out.println(getOwner());
+		
+		if (!getOwner().isEmpty()) {
+			throw new IllegalArgumentException("Owner already exists");
+		}
+		
+		
 
 		Owner owner = new Owner();
 		owner.setUserId(userId);
 		owner.setPassword(password);
 		ownerRepository.save(owner);
+		//System.out.println(ownerRepository.findAll());
+		
+		
 		return owner;
 	}
 
@@ -358,6 +369,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Owner deleteOwner(Owner owner) {
 		ownerRepository.delete(owner);
+		
 		owner = null;
 		return owner;
 	}
