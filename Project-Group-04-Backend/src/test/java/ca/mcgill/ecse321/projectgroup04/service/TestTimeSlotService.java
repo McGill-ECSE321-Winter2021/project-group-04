@@ -26,12 +26,15 @@ import ca.mcgill.ecse321.projectgroup04.model.BusinessHour;
 import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+
 
 @ExtendWith(MockitoExtension.class)
 public class TestTimeSlotService {
@@ -51,6 +54,7 @@ public class TestTimeSlotService {
     private static final Long timeSlotId = 1234l;
     private static final Integer garageSpot = 123;
 
+
     private static final String BUSINESS_NAME = "TestName";
     private static final String BUSINESS_PHONENUMBER = "438123456";
     private static final String BUSINESS_ADDRESS = "1234 MTL, Quebec";
@@ -62,6 +66,7 @@ public class TestTimeSlotService {
 
     private static final List<BusinessHour> BUSINESS_BUSINESSHOUR = new ArrayList<BusinessHour>();
     private static final List<TimeSlot> BUSINESS_TIMESLOTS = new ArrayList<TimeSlot>();
+
 
     @BeforeEach
     public void setMockOutput() {
@@ -281,14 +286,24 @@ public class TestTimeSlotService {
         timeSlot.setStartDate(date);
         timeSlot.setStartTime(aStartTime);
         timeSlot.setGarageSpot(garageSpot);
+
+
         Business business = service.getBusinessById(BUSINESS_ID);
 
         try {
             timeSlot = service.deleteTimeSlot(timeSlot, business);
+
         } catch (IllegalArgumentException e) {
             fail();
         }
+        
 
-        assertNull(timeSlot);
+            if (ts.equals(timeSlot)) {
+                 bool2 = true;
+            
+        }
+
+            assertFalse(bool2);
+            assertTrue(tc);
     }
 }
