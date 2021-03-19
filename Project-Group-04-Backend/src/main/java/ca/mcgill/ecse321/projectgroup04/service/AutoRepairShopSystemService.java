@@ -607,15 +607,14 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public boolean deleteTimeSlot(TimeSlot timeSlot) {
-    //    Business business = getBusinessById(busId);
 
-//		List<TimeSlot> timeSlot = business.getBusinessHours();
-//		businessHours.remove(businessHour);
-//		business.setBusinessHours(businessHours);
-//		businessRepository.save(business);
-//		businessHourRepository.delete(businessHour);
-//		timeSlotRepository.delete(timeSlot);
+	public TimeSlot deleteTimeSlot(TimeSlot timeSlot, Business business) {
+
+		List<TimeSlot> timeSlots = business.getRegular();
+		timeSlots.remove(timeSlot);
+		business.setRegular(timeSlots);
+		businessRepository.save(business);
+		timeSlotRepository.delete(timeSlot);
 		timeSlot = null;
 		return true;
 	}
@@ -1068,9 +1067,9 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public List<Business> getBusiness() {
-		if(businessRepository.findAll() != null) {
-		return (List<Business>) businessRepository.findAll();
-		}else {
+		if (businessRepository.findAll() != null) {
+			return (List<Business>) businessRepository.findAll();
+		} else {
 			return null;
 		}
 	}
@@ -1432,12 +1431,12 @@ public class AutoRepairShopSystemService {
 		if (today.plusDays(1).equals(appDate) && now.isAfter(appTime)) {
 			throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
 		}
-		Customer customer=appointment.getCustomer();
-		AppointmentReminder appointmentReminder= appointment.getReminder();
+		Customer customer = appointment.getCustomer();
+		AppointmentReminder appointmentReminder = appointment.getReminder();
 		Receipt receipt = appointment.getReceipt();
 		TimeSlot timeSlot = appointment.getTimeSlot();
 		appointmentRepository.delete(appointment);
-		if(customer.getReminders()!=null) {
+		if (customer.getReminders() != null) {
 			customer.getReminders().remove(appointmentReminder);
 		}
 		appointmentReminderRepository.delete(appointmentReminder);
