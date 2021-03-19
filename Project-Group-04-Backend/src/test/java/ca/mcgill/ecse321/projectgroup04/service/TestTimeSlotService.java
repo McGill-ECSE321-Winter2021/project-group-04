@@ -6,6 +6,8 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +17,12 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import ca.mcgill.ecse321.projectgroup04.dao.BusinessRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.TimeSlotRepository;
+import ca.mcgill.ecse321.projectgroup04.model.Business;
+import ca.mcgill.ecse321.projectgroup04.model.BusinessHour;
 import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +35,9 @@ import static org.mockito.ArgumentMatchers.anyLong;
 
 @ExtendWith(MockitoExtension.class)
 public class TestTimeSlotService {
+
+	@Autowired
+    BusinessRepository businessRepository;
 
     @Mock
     private TimeSlotRepository timeSlotRepository;
@@ -228,7 +237,16 @@ public class TestTimeSlotService {
         timeSlot.setStartDate(date);
         timeSlot.setStartTime(aStartTime);
         timeSlot.setGarageSpot(garageSpot);
-
+        
+//        BusinessHour bu = service.createBusinessHour("Monday", aStartTime, aEndTime);
+//        List<BusinessHour> bu1 = new ArrayList<BusinessHour>();
+//        bu1.add(bu);
+//        List<TimeSlot> regular = new ArrayList<TimeSlot>();
+//        TimeSlot timeSlot1 = service.createTimeSlot(aStartTime, aEndTime, date, date, garageSpot);
+//        regular.add(timeSlot1);
+//
+//        Business busi = service.createBusiness("aaaa", "123", "12354", "a@a", bu1, regular);
+//        businessRepository.save(busi);
         try {
             timeSlot = service.deleteTimeSlot(timeSlot);
         } catch (IllegalArgumentException e) {
