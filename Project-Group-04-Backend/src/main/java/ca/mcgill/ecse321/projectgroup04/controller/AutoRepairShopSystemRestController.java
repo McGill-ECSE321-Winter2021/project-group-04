@@ -1004,7 +1004,7 @@ public class AutoRepairShopSystemRestController {
 		return timeSlotDtos;
 	}
 
-	@GetMapping(value = { "/timeSlot/{startDate}/ {startTime}", "/timeSlot/{startDate}/ {startTime}/" })
+	@GetMapping(value = { "/timeSlot/{startDate}/{startTime}", "/timeSlot/{startDate}/{startTime}/" })
 	public TimeSlotDto getTimeSlotByStartDateAndStartTime(
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String startDate,
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime)
@@ -1016,7 +1016,7 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(timeSlot);
 	}
 
-	@PostMapping(value = { "/add/timeSlot/{startDate}/ {startTime}", "/add/timeSlot/{startDate}/ {startTime}/" })
+	@PostMapping(value = { "/add/timeSlot/{startDate}/{startTime}", "/add/timeSlot/{startDate}/{startTime}/" })
 	public TimeSlotDto createTimeSlot(
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String startDate,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String endDate,

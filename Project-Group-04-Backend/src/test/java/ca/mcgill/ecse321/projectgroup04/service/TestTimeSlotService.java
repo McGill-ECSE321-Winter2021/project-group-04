@@ -26,9 +26,7 @@ import ca.mcgill.ecse321.projectgroup04.model.BusinessHour;
 import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -272,7 +270,6 @@ public class TestTimeSlotService {
         assertNull(timeSlot);
         assertEquals(error, "StartTime cannot be after endTime");
     }
-
     @Test
     public void TestDeleteTimeSlot() {
         Date date = Date.valueOf(LocalDate.parse("2020-03-20"));
@@ -286,24 +283,14 @@ public class TestTimeSlotService {
         timeSlot.setStartDate(date);
         timeSlot.setStartTime(aStartTime);
         timeSlot.setGarageSpot(garageSpot);
-
-
         Business business = service.getBusinessById(BUSINESS_ID);
 
         try {
             timeSlot = service.deleteTimeSlot(timeSlot, business);
-
         } catch (IllegalArgumentException e) {
             fail();
         }
-        
 
-            if (ts.equals(timeSlot)) {
-                 bool2 = true;
-            
-        }
-
-            assertFalse(bool2);
-            assertTrue(tc);
+        assertNull(timeSlot);
     }
 }
