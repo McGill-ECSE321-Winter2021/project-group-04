@@ -1102,7 +1102,6 @@ public class AutoRepairShopSystemService {
 	////////////////////////////////////////////////////////////////////
 
 	public DayOfWeek convertStringToDayOfWeek(String day) {
-		System.out.println(day);
 		if (day == null) {
 			throw new IllegalArgumentException("There is no such day of the week!");
 		}
@@ -1124,7 +1123,6 @@ public class AutoRepairShopSystemService {
 		} else if (day.equals("Sunday")) {
 			dayOfWeek = DayOfWeek.Sunday;
 		}
-		System.out.println("this is the " + dayOfWeek.toString());
 		return dayOfWeek;
 	}
 
@@ -1135,11 +1133,8 @@ public class AutoRepairShopSystemService {
 			if (businessHour.getDayOfWeek().equals(convertStringToDayOfWeek(aDayOfWeek))) {
 				if (businessHour.getStartTime().equals(aStartTime)) {
 					if (businessHour.getEndTime().equals(aEndTime)) {
-						System.out.println("Exception 1");
 						throw new IllegalArgumentException("These business hours already exist!");
 					}
-					System.out.println("Exception 2");
-
 					throw new IllegalArgumentException(
 							"Business hours with this start time already exist, update end time instead");
 				}
@@ -1167,7 +1162,6 @@ public class AutoRepairShopSystemService {
 		}
 
 		BusinessHour businessHour = new BusinessHour();
-		System.out.println("going to set day now" + aDayOfWeek);
 		businessHour.setDayOfWeek(convertStringToDayOfWeek(aDayOfWeek));
 		businessHour.setEndTime(aEndTime);
 		businessHour.setStartTime(aStartTime);
@@ -1178,7 +1172,6 @@ public class AutoRepairShopSystemService {
 	public BusinessHour updateBusinessHour(Long id, String dayOfWeek, Time startTime, Time endTime) {
 
 		BusinessHour tempBusinessHour = getBusinessHourById(id);
-
 		for (BusinessHour businessHour : getAllBusinessHours()) {
 			if (businessHour.getDayOfWeek().equals(convertStringToDayOfWeek(dayOfWeek))) {
 				if (businessHour.getStartTime().equals(startTime)) {
