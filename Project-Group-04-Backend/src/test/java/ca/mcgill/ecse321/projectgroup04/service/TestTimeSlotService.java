@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import ca.mcgill.ecse321.projectgroup04.dao.BusinessRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.TimeSlotRepository;
