@@ -39,5 +39,6 @@ project-group-04 created by GitHub Classroom
 | Abrar Fahad     | Use Case Diagrams, Persistence Layer, Build System                               | 50 |
 
 Click [here] for meeting minutes!
-
 [here]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference
+Click [here] for quality assurance report
+[here]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Software-Quality-Assurance-Plan
