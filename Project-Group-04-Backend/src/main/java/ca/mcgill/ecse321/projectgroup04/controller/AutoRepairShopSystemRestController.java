@@ -1004,26 +1004,26 @@ public class AutoRepairShopSystemRestController {
 		return timeSlotDtos;
 	}
 
-	@GetMapping(value = { "/timeSlot/{startDate, startTime}", "/timeSlot/{startDate, startTime}/" })
+	@GetMapping(value = { "/timeSlot/{startDate}/ {startTime}", "/timeSlot/{startDate}/ {startTime}/" })
 	public TimeSlotDto getTimeSlotByStartDateAndStartTime(
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") Date startDate,
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime)
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String startDate,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime)
 			throws IllegalArgumentException {
-		TimeSlot timeSlot = service.getTimeSlotByStartDateAndStartTime(startDate, startTime);
+		TimeSlot timeSlot = service.getTimeSlotByStartDateAndStartTime(Date.valueOf(LocalDate.parse(startDate)),Time.valueOf(LocalTime.parse(startTime)));
 		if (startDate == null || startTime == null) {
 			throw new IllegalArgumentException("No time slot with such start date or start time!");
 		}
 		return convertToDto(timeSlot);
 	}
 
-	@PostMapping(value = { "/add/timeSlot/{timeSlotId}", "/add/timeSlot/{timeSlotId}/" })
-	public TimeSlotDto createTimeSlot(@RequestParam("timeSlotId") Long timeSlotId,
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") Date startDate,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") Date endDate,
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time startTime,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") Time endTime,
+	@PostMapping(value = { "/add/timeSlot/{startDate}/ {startTime}", "/add/timeSlot/{startDate}/ {startTime}/" })
+	public TimeSlotDto createTimeSlot(
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String startDate,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String endDate,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String endTime,
 			@RequestParam Integer garageSpot) throws IllegalArgumentException {
-		TimeSlot timeSlot = service.createTimeSlot(startTime, endTime, startDate, endDate, garageSpot);
+		TimeSlot timeSlot = service.createTimeSlot(Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)), Date.valueOf(LocalDate.parse(startDate)), Date.valueOf(LocalDate.parse(endDate)), garageSpot);
 		TimeSlotDto timeSlotDtos = convertToDto(timeSlot);
 		return timeSlotDtos;
 	}

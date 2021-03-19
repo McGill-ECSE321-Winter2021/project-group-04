@@ -22,12 +22,15 @@ import ca.mcgill.ecse321.projectgroup04.dao.TimeSlotRepository;
 import ca.mcgill.ecse321.projectgroup04.model.TimeSlot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+
 
 @ExtendWith(MockitoExtension.class)
 public class TestTimeSlotService {
@@ -46,6 +49,7 @@ public class TestTimeSlotService {
     private static final String OLD_APPOINTMENT_END_TIME = "13:30:00";
     private static final Long timeSlotId = 1234l;
     private static final Integer garageSpot = 123;
+
 
     @BeforeEach
     public void setMockOutput() {
@@ -233,24 +237,24 @@ public class TestTimeSlotService {
         timeSlot.setStartDate(date);
         timeSlot.setStartTime(aStartTime);
         timeSlot.setGarageSpot(garageSpot);
+        TimeSlot ts = timeSlot;
 
-        // BusinessHour bu = service.createBusinessHour("Monday", aStartTime, aEndTime);
-        // List<BusinessHour> bu1 = new ArrayList<BusinessHour>();
-        // bu1.add(bu);
-        // List<TimeSlot> regular = new ArrayList<TimeSlot>();
-        // TimeSlot timeSlot1 = service.createTimeSlot(aStartTime, aEndTime, date, date,
-        // garageSpot);
-        // regular.add(timeSlot1);
-        //
-        // Business busi = service.createBusiness("aaaa", "123", "12354", "a@a", bu1,
-        // regular);
-        // businessRepository.save(busi);
+        boolean bool2 = false;
+        boolean tc = false;
+
         try {
-            timeSlot = service.deleteTimeSlot(timeSlot);
+             tc = service.deleteTimeSlot(timeSlot);
         } catch (IllegalArgumentException e) {
             fail();
         }
+        
 
-        assertNull(timeSlot);
+            if (ts.equals(timeSlot)) {
+                 bool2 = true;
+            
+        }
+
+            assertFalse(bool2);
+            assertTrue(tc);
     }
 }

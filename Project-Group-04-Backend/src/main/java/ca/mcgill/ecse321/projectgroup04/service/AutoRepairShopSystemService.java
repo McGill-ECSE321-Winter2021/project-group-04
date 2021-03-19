@@ -607,17 +607,17 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public TimeSlot deleteTimeSlot(TimeSlot timeSlot) {
-		
-		if(getBusiness() != null) {
-		List<Business> businesses = getBusiness();
-		Business business = businesses.get(0);
-		List<TimeSlot> TimeSlots = business.getRegular();
-		TimeSlots.remove(timeSlot);
-		}
-		timeSlotRepository.delete(timeSlot);
+	public boolean deleteTimeSlot(TimeSlot timeSlot) {
+    //    Business business = getBusinessById(busId);
+
+//		List<TimeSlot> timeSlot = business.getBusinessHours();
+//		businessHours.remove(businessHour);
+//		business.setBusinessHours(businessHours);
+//		businessRepository.save(business);
+//		businessHourRepository.delete(businessHour);
+//		timeSlotRepository.delete(timeSlot);
 		timeSlot = null;
-		return timeSlot;
+		return true;
 	}
 
 	// public List<TimeSlot> getTimeSlotByGarageSpot(Integer garageSpot) {
