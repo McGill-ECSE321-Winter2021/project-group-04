@@ -702,6 +702,12 @@ public class AutoRepairShopSystemRestController {
 		service.deleteBusinessHour(businessHour, business);
 	}
 
+	@PostMapping(value = { "/delete/allBusinessHours/{Id}", "/delete/allBusinessHour/{Id}/" })
+	public void deleteAllBusinessHours(@PathVariable("Id") Long Id) {
+		Business business = service.getBusinessById(Id);
+		service.deleteAllBusinessHours(business);
+	}
+
 	// @PostMapping(value = { "/delete/businessHour/{Id}",
 	// "/delete/businessHour/{dayOfWeek}/" })
 	// public void deleteBusinessHourByDayOfWeek(@PathVariable("dayOfWeek") String

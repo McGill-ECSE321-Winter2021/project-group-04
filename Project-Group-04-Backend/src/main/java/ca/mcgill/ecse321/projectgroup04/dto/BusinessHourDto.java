@@ -52,22 +52,22 @@ public class BusinessHourDto {
         this.hourId = id;
     }
 
-    public void setDayOfWeek(DayOfWeek dow) {
-        if (dow.toString().equals("Monday")) {
-            dayOfWeek = dow;
-        } else if (dow.toString().equals("Tuesday")) {
-            dayOfWeek = dow;
-        } else if (dow.toString().equals("Wednseday")) {
-            dayOfWeek = dow;
-        } else if (dow.toString().equals("Thursday")) {
-            dayOfWeek = dow;
-        } else if (dow.toString().equals("Friday")) {
-            dayOfWeek = dow;
-        } else if (dow.toString().equals("Saturday")) {
-            dayOfWeek = dow;
-        } else if (dow.toString().equals("Sunday")) {
-            dayOfWeek = dow;
-        }
-
-    }
+//    public void setDayOfWeek(DayOfWeek dow) {
+//        if (dow.toString().equals("Monday")) {
+//            dayOfWeek = dow;
+//        } else if (dow.toString().equals("Tuesday")) {
+//            dayOfWeek = dow;
+//        } else if (dow.toString().equals("Wednseday")) {
+//            dayOfWeek = dow;
+//        } else if (dow.toString().equals("Thursday")) {
+//            dayOfWeek = dow;
+//        } else if (dow.toString().equals("Friday")) {
+//            dayOfWeek = dow;
+//        } else if (dow.toString().equals("Saturday")) {
+//            dayOfWeek = dow;
+//        } else if (dow.toString().equals("Sunday")) {
+//            dayOfWeek = dow;
+//        }
+//
+//    }
 }

@@ -18,52 +18,52 @@ import java.util.List;
 public class AutoRepairShopSystemService {
 
 	@Autowired
-	ProfileRepository profileRepository;
+	private ProfileRepository profileRepository;
 
 	@Autowired
-	ReceiptRepository receiptRepository;
+	private ReceiptRepository receiptRepository;
 
 	@Autowired
-	AppointmentRepository appointmentRepository;
+	private AppointmentRepository appointmentRepository;
 
 	@Autowired
-	CarRepository carRepository;
+	private CarRepository carRepository;
 
 	@Autowired
-	CustomerRepository customerRepository;
+	private CustomerRepository customerRepository;
 
 	@Autowired
-	TimeSlotRepository timeSlotRepository;
+	private TimeSlotRepository timeSlotRepository;
 
 	@Autowired
-	AdministrativeAssistantRepository administrativeAssistantRepository;
+	private AdministrativeAssistantRepository administrativeAssistantRepository;
 
 	@Autowired
-	OwnerRepository ownerRepository;
+	private OwnerRepository ownerRepository;
 
 	@Autowired
-	AppointmentReminderRepository appointmentReminderRepository;
+	private AppointmentReminderRepository appointmentReminderRepository;
 
 	@Autowired
-	BookableServiceRepository bookableServiceRepository;
+	private BookableServiceRepository bookableServiceRepository;
 
 	@Autowired
-	EmergencyServiceRepository emergencyServiceRepository;
+	private EmergencyServiceRepository emergencyServiceRepository;
 
 	@Autowired
-	GarageTechnicianRepository garageTechnicianRepository;
+	private GarageTechnicianRepository garageTechnicianRepository;
 
 	@Autowired
-	FieldTechnicianRepository fieldTechnicianRepository;
+	private FieldTechnicianRepository fieldTechnicianRepository;
 
 	@Autowired
-	BusinessRepository businessRepository;
+	private BusinessRepository businessRepository;
 
 	@Autowired
-	BusinessHourRepository businessHourRepository;
+	private BusinessHourRepository businessHourRepository;
 
 	@Autowired
-	CheckupReminderRepository checkupReminderRepository;
+	private CheckupReminderRepository checkupReminderRepository;
 
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
@@ -1102,6 +1102,7 @@ public class AutoRepairShopSystemService {
 	////////////////////////////////////////////////////////////////////
 
 	public DayOfWeek convertStringToDayOfWeek(String day) {
+		System.out.println(day);
 		if (day == null) {
 			throw new IllegalArgumentException("There is no such day of the week!");
 		}
@@ -1112,7 +1113,7 @@ public class AutoRepairShopSystemService {
 			dayOfWeek = DayOfWeek.Monday;
 		} else if (day.equals("Tuesday")) {
 			dayOfWeek = DayOfWeek.Tuesday;
-		} else if (day.equals("Wednseday")) {
+		} else if (day.equals("Wednesday")) {
 			dayOfWeek = DayOfWeek.Wednesday;
 		} else if (day.equals("Thursday")) {
 			dayOfWeek = DayOfWeek.Thursday;
@@ -1123,7 +1124,7 @@ public class AutoRepairShopSystemService {
 		} else if (day.equals("Sunday")) {
 			dayOfWeek = DayOfWeek.Sunday;
 		}
-
+		System.out.println("this is the " + dayOfWeek.toString());
 		return dayOfWeek;
 	}
 
@@ -1134,8 +1135,11 @@ public class AutoRepairShopSystemService {
 			if (businessHour.getDayOfWeek().equals(convertStringToDayOfWeek(aDayOfWeek))) {
 				if (businessHour.getStartTime().equals(aStartTime)) {
 					if (businessHour.getEndTime().equals(aEndTime)) {
+						System.out.println("Exception 1");
 						throw new IllegalArgumentException("These business hours already exist!");
 					}
+					System.out.println("Exception 2");
+
 					throw new IllegalArgumentException(
 							"Business hours with this start time already exist, update end time instead");
 				}
@@ -1163,6 +1167,7 @@ public class AutoRepairShopSystemService {
 		}
 
 		BusinessHour businessHour = new BusinessHour();
+		System.out.println("going to set day now" + aDayOfWeek);
 		businessHour.setDayOfWeek(convertStringToDayOfWeek(aDayOfWeek));
 		businessHour.setEndTime(aEndTime);
 		businessHour.setStartTime(aStartTime);
@@ -1224,6 +1229,14 @@ public class AutoRepairShopSystemService {
 		business.setBusinessHours(businessHours);
 		businessRepository.save(business);
 		businessHourRepository.delete(businessHour);
+		return true;
+	}
+
+	public Boolean deleteAllBusinessHours(Business business) {
+		List<BusinessHour> businessHours = new ArrayList<BusinessHour>();
+		business.setBusinessHours(businessHours);
+		businessRepository.save(business);
+		businessHourRepository.deleteAll();
 		return true;
 	}
 

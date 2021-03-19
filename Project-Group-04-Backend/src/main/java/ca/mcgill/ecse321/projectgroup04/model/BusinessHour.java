@@ -53,4 +53,20 @@ public class BusinessHour {
   public Time getEndTime() {
     return endTime;
   }
+
+  public String toString() {
+    return super.toString() + "[" + "]" + System.getProperties().getProperty("line.separator") + "  " + "dayOfWeek"
+        + "="
+        + (getDayOfWeek() != null
+            ? !getDayOfWeek().equals(this) ? getDayOfWeek().toString().replaceAll("  ", "    ") : "this"
+            : "null")
+        + System.getProperties().getProperty("line.separator") + "  " + "startTime" + "="
+        + (getStartTime() != null
+            ? !getStartTime().equals(this) ? getStartTime().toString().replaceAll("  ", "    ") : "this"
+            : "null")
+        + System.getProperties().getProperty("line.separator") + "  " + "endTime" + "="
+        + (getEndTime() != null ? !getEndTime().equals(this) ? getEndTime().toString().replaceAll("  ", "    ") : "this"
+            : "null");
+  }
+
 }
