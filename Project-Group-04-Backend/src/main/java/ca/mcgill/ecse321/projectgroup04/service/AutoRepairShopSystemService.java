@@ -396,11 +396,6 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Car createCar(String model, String year, String color) {
 
-		// List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
-		//
-		// if (existingCars != null) {
-		// throw new IllegalArgumentException("This car already exists");
-		// }
 		if (model == null || model == "") {
 			throw new IllegalArgumentException("Model can't be empty");
 		}
@@ -419,19 +414,6 @@ public class AutoRepairShopSystemService {
 		carRepository.save(car);
 		return car;
 	}
-
-	// @Transactional
-	// public List<Car> createCars(Long carId, String model, String year, String
-	// color) {
-	//
-	// List<Car> existingCars = getCarByModelAndYearAndColor(model,year,color);
-	//
-	// if (existingCars != null) {
-	// throw new IllegalArgumentException("This car already exists");
-	// }
-	//
-	// return cars
-	// }
 
 	@Transactional
 	public List<Car> getCarByModelAndYearAndColor(String model, String year, String color) {
@@ -519,21 +501,7 @@ public class AutoRepairShopSystemService {
 		if (customer == null) {
 			throw new IllegalArgumentException("This customer does not exist");
 		}
-		// if(Id == null || Id == "") {
-		// throw new IllegalArgumentException("userId can't be empty");
-		// }
-		// if(password == null || password == "") {
-		// throw new IllegalArgumentException("password can't be empty");
-		// }
-		// if(reminders == null) {
-		// throw new IllegalArgumentException("reminders can't be empty");
-		// }
-		// if(car == null) {
-		// throw new IllegalArgumentException("Car can't be empty");
-		// }
-		// if(profile == null) {
-		// throw new IllegalArgumentException("Profile can't be empty");
-		// }
+
 		customer.setUserId(Id);
 		customer.setPassword(password);
 		customer.setCar(car);
@@ -576,13 +544,7 @@ public class AutoRepairShopSystemService {
 		if (garageSpot == null) {
 			throw new IllegalArgumentException("garageSpot cannot be null");
 		}
-		// TimeSlot test =
-		// timeSlotRepository.findTimeSlotByGarageSpotAndStartTimeAndStartDate(garageSpot,
-		// startTime , startDate);
-		// if(test.getStartDate() == startDate && test.getStartTime() == startTime &&
-		// test.getGarageSpot() == garageSpot) {
-		// throw new IllegalArgumentException("This TimeSlot already exists");
-		// }
+
 		if (startTime.after(endTime)) {
 			throw new IllegalArgumentException("StartTime cannot be after endTime");
 		}
@@ -618,10 +580,6 @@ public class AutoRepairShopSystemService {
 		return timeSlot;
 	}
 
-	// public List<TimeSlot> getTimeSlotByGarageSpot(Integer garageSpot) {
-	// return timeSlotRepository.findTimeSlotByGarageSpot(garageSpot);
-	// }
-
 	public AppointmentReminder createAppointmentReminder(Date date, Time time, String message) {
 		if (message == "") {
 			throw new IllegalArgumentException("Message can't be empty");
@@ -650,20 +608,6 @@ public class AutoRepairShopSystemService {
 	public AppointmentReminder getAppointmentReminderById(Long id) {
 		return appointmentReminderRepository.findAppointmentReminderByReminderId(id);
 	}
-	// @Transactional
-	// public List<AppointmentReminder> getAppointmentReminderByCustomer(Customer
-	// customer) {
-	// return (List<AppointmentReminder>)
-	// appointmentReminderRepository.findByCustomer(customer);
-	// }
-	//
-	// @Transactional
-	// public AppointmentReminder
-	// getAppointmentReminderByCustomerAndAppointment(Customer customer,
-	// Appointment appointment) {
-	// return appointmentReminderRepository.findByCustomerAndAppointment(customer,
-	// appointment);
-	// }
 
 	@Transactional
 	public List<AppointmentReminder> getAllAppointmentReminders() {
@@ -704,12 +648,6 @@ public class AutoRepairShopSystemService {
 		return bookableService;
 	}
 
-	// @Transactional
-	// public BookableService getBookableServiceByAppointment(Appointment
-	// appointment) {
-	// return
-	// bookableServiceRepository.findBookableServiceByAppointments(appointment);
-	// }
 	@Transactional
 	public BookableService getBookableServiceById(Long serviceId) {
 		return bookableServiceRepository.findBookableServiceByServiceId(serviceId);
@@ -1083,27 +1021,6 @@ public class AutoRepairShopSystemService {
 		return true;
 	}
 
-	// @Transactional
-	// public Business getBusinessByEmailAddress(String emailAddress) {
-	// return businessRepository.findBusinessByEmailAddress(emailAddress);
-	// }
-	//
-	// @Transactional
-	// public Business getBusinessByPhoneNumber(String phoneNumber) {
-	// return businessRepository.findBusinessByPhoneNumber(phoneNumber);
-	// }
-
-	// @Transactional
-	// public Business getBusinessByBusinessHours(List<BusinessHour> businessHours)
-	// {
-	// return businessRepository.findBusinessByBusinessHours(businessHours);
-	// }
-	//
-	// @Transactional
-	// public Business getBusinessByTimeSlots(List<TimeSlot> timeSlot) {
-	// return businessRepository.findBusinessByTimeSlot(timeSlot);
-	// }
-
 	////////////////////////////////////////////////////////////////////
 
 	public DayOfWeek convertStringToDayOfWeek(String day) {
@@ -1248,11 +1165,6 @@ public class AutoRepairShopSystemService {
 		return (List<BusinessHour>) businessHourRepository.findAll();
 	}
 
-	// @Transactional
-	// public BusinessHour getBusinessHourByDayOfWeek(DayOfWeek dayOfWeek) {
-	// return businessHourRepository.findBusinessHourByDayOfWeek(dayOfWeek);
-	// }
-
 	@Transactional
 	public CheckupReminder createCheckupReminder(Date aDate, Time aTime, String aMessage) {
 		CheckupReminder checkupReminder = new CheckupReminder();
@@ -1312,28 +1224,6 @@ public class AutoRepairShopSystemService {
 		return checkupReminderRepository.findByMessage(message);
 	}
 
-	// @Transactional
-	// public List<CheckupReminder> getCheckupReminderByCustomer(Customer customer)
-	// {
-	// return (List<CheckupReminder>)
-	// checkupReminderRepository.findCheckupReminderByCustomer(customer);
-	// }
-
-	// @Transactional
-	// public CheckupReminder getCheckupReminderByDate(Date date) {
-	// return checkupReminderRepository.findCheckupReminderByDate(date);
-	// }
-	//
-	// @Transactional
-	// public CheckupReminder getCheckupReminderByMessage(String message) {
-	// return checkupReminderRepository.findCheckupReminderByMessage(message);
-	// }
-	//
-	// @Transactional
-	// public CheckupReminder getCheckupReminderByTime(Time time) {
-	// return checkupReminderRepository.findCheckupReminderByTime(time);
-	// }
-
 	@Transactional
 	public List<CheckupReminder> getAllCheckupReminder() {
 		return (List<CheckupReminder>) checkupReminderRepository.findAll();
@@ -1346,11 +1236,6 @@ public class AutoRepairShopSystemService {
 	public List<Reminder> getAllReminder() {
 		return (List<Reminder>) reminderRepository.findAll();
 	}
-
-	// @Transactional
-	// public List<Reminder> getCustomerReminders(Customer customer) {
-	// return reminderRepository.findByCustomer(customer);
-	// }
 
 	@Transactional
 	public Appointment getAppointment(Long Id) {

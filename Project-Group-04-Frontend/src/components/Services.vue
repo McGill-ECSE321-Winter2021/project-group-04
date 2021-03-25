@@ -10,7 +10,11 @@
       <i class="fa fa-bars"></i>
     </a>
   </div>
+  <!-- <div class="">
+
+  </div> -->
 </template>
+
 <script>
   function myFunction() {
     var x = document.getElementById("myTopnav");
@@ -41,7 +45,7 @@
 
       /* Change the color of links on hover */
       .topnav a:hover {
-        background-color: #ddd;
+        background-color: rgb(255, 255, 255);
         color: black;
       }
 
