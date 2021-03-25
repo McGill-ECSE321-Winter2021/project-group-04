@@ -8,6 +8,9 @@ import AboutUs from '@/components/AboutUs'
 import Profile from '@/components/Profile'
 import Team from '@/components/Team'
 import Services from '@/components/Services'
+import Login from '@/components/Login'
+import Register from '@/components/Register'
+import WelcomePage from '@/components/WelcomePage'
 
 
 
@@ -18,8 +21,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'Welcome',
+      component: WelcomePage
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/app',
