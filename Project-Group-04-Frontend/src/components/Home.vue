@@ -1,11 +1,38 @@
 <template>
-  <div class="topnav">
-    <a class="active" href="#home">Home</a>
-    <a href="#profile">My Profile</a>
-    <a href="#car">My Car</a>
-    <a href="#services">Our Services</a>
-    <a href="#team">Our Team</a>
-    <a href="#about">About Us</a>
+  <div class="topnav">  
+    <a class="active"> <router-link to="/home">Home</router-link></a>
+    
+      <a>
+    <router-link to="/profile">
+        My Profile
+    </router-link>
+      </a>
+    
+    
+      <a>
+    <router-link to="/car">
+        My Car
+    </router-link>
+      </a>
+    
+      <a>
+        <router-link to="/services">
+          Our Services
+        </router-link>
+
+      </a>
+      <a>
+        <router-link to="/team">
+          Our Team
+        </router-link>
+
+      </a>
+      <a>
+        <router-link to="/about">
+          About Us
+        </router-link>
+
+      </a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
@@ -34,13 +61,14 @@
       float: left;
       color: #f2f2f2;
       text-align: center;
-      padding: 14px 16px;
+      padding: 8px;
       text-decoration: none;
       font-size: 17px;
     }
+    
 
       /* Change the color of links on hover */
-      .topnav a:hover {
+      .topnav a:not(active):hover {
         background-color: #ddd;
         color: black;
       }
