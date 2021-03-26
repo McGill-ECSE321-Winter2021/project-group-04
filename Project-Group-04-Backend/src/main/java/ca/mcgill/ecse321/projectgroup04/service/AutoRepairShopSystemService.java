@@ -1446,5 +1446,29 @@ public class AutoRepairShopSystemService {
 		profileRepository.save(profile);
 		return profile;
 	}
+	
+		public void editCar(Car car, String model, String year, String color) {
+
+		if ( car == null){
+			throw new IllegalArgumentException("This car does not exist");
+		}
+		if (model == null || model == "") {
+			throw new IllegalArgumentException("Model can't be empty");
+		}
+
+		if (color == null || color == "") {
+			throw new IllegalArgumentException("Color can't be empty");
+		}
+
+		if (year == null || year == "") {
+			throw new IllegalArgumentException("Year can't be empty");
+		}
+		car.setColor(color);
+		car.setModel(model);
+		car.setYear(year);
+		carRepository.save(car);
+
+	}
+
 
 }

@@ -975,5 +975,12 @@ public class AutoRepairShopSystemRestController {
 		Customer customer = service.getCustomerById(Id);
 		service.deleteCustomer(customer);
 	}
+	
+	@PatchMapping(value = { "/edit/car/{carId}", "/edit/car/{carId}/" })
+	public void editCar(@PathVariable("Id") Long carId, @RequestParam String model,
+			@RequestParam String year, @RequestParam String color) throws IllegalArgumentException {
+		Car car = service.getCarByCarId(carId);
+		service.editCar(car, model, year, color);
+	}
 
 }

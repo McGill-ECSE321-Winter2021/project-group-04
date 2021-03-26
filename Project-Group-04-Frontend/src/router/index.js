@@ -8,9 +8,11 @@ import AboutUs from '@/components/AboutUs'
 import Profile from '@/components/Profile'
 import Team from '@/components/Team'
 import Services from '@/components/Services'
+import Receipts from '@/components/Receipts'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import WelcomePage from '@/components/WelcomePage'
+
 
 
 
@@ -68,6 +70,12 @@ export default new Router({
       path: '/services',
       name: 'Services',
       component: Services
+    }
+    ,
+    {
+      path: '/receipts',
+      name: 'Receipts',
+      component: Receipts
     }
   ]
 })
