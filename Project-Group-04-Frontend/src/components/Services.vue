@@ -35,10 +35,33 @@
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
+  <!-- </div> -->
+  <!-- <div>     -->
+    <hr>
+    ​<table>
+      ​<tr class="table">
+        ​<th>Service</th>
+        ​<th>Duration</th>
+        ​<th>Price</th> 
+        <!-- <th>Edit</th>
+        <th>Delete</th> -->
+        ​<!--<th>Edit</th>-->
+      ​</tr>
+      ​<tr v-for="Service in services" :key="Service.serviceId">
+        ​<td>{{ Service.name }}</td>
+        ​<td>{{ Service.Duration }}</td>
+        ​<td>{{ Service.Price }}</td>
+        ​<td>
+          ​<button v-on:click="updateEvent(Service.name, Service.Duration, Service.Price)">Edit</button>
+        ​</td>
+        <td>
+          <button v-on:click="deleteEvent(service)">Delete</button>
+        </td>
+      ​</tr>
+    ​</table>
+         ​<span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span>
+  <hr>
   </div>
-  <!-- <div class="">
-
-  </div> -->
 </template>
 
 <script>
@@ -53,6 +76,23 @@
 </script>
 
 <style>
+
+  .template {
+    background-color: #696969;
+  }
+
+  .table {
+    background-color: #696969;
+    margin: 0px;
+  }
+    .table th {
+      color: #ddd;
+      text-align: center;
+      padding-left: 100px;
+      padding-right: 100px;
+
+    }
+
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;

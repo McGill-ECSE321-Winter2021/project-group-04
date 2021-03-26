@@ -18,6 +18,7 @@ function ProfileDto(firstName, lastName, addressLine, emailAddress, zipCode, pho
   this.phoneNumber = phoneNumber
   this.profileId = profileId
 }
+
 function myFunction() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -69,7 +70,7 @@ export default {
       profile.emailAddress = emailAddress
       profile.zipCode = zipCode
       profile.phoneNumber = phoneNumber
-      AXIOS.post('/edit/profile/'.concat(profileId), {},
+      AXIOS.patch('/edit/profile/'.concat(profileId), {},
         {
           params: {
             "Email Address": emailAddress,

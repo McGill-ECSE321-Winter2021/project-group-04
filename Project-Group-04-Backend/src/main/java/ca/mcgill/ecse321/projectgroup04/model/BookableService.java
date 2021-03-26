@@ -48,16 +48,6 @@ public class BookableService extends Service {
     return super.getPrice();
   }
 
-  @Override
-  public AutoRepairShop getAutoRepairShop() {
-    return super.getAutoRepairShop();
-  }
-
-  @Override
-  public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
-    super.setAutoRepairShop(aAutoRepairShop);
-  }
-
   public String toString() {
     return super.toString() + "[" + "duration" + ":" + getDuration() + "]";
   }
