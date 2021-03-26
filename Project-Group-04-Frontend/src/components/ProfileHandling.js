@@ -4,6 +4,7 @@ var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 
+
 var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
@@ -25,6 +26,7 @@ function myFunction() {
   } else {
     x.className = "topnav";
   }
+
 }
 
 export default {
@@ -38,7 +40,7 @@ export default {
       emailAddress: 'mohamad@dimassi',
       zipCode: 'H2X',
       phoneNumber: '4389786824',
-      profileId:'4242',
+      profileId: '4242',
       errorProfile: '',
       response: []
     }
@@ -59,9 +61,10 @@ export default {
       .catch(e => {
         this.errorProfile = e
       })
+
   },
   methods: {
-    editProfile: function (firstName,lastName,addressLine,emailAddress,zipCode,phoneNumber) {
+    editProfile: function (firstName, lastName, addressLine, emailAddress, zipCode, phoneNumber) {
       // Create a new person and add it to the list of people
       profile.firstName = firstName
       profile.lastName = lastName
@@ -91,8 +94,8 @@ export default {
           this.errorProfile = errorMsg
         })
       // Reset the name field for new people
-      
     }
   }
   //...
+
 }

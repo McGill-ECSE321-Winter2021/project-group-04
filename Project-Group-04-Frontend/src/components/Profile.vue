@@ -40,12 +40,16 @@
     </div>
     <div id="myProfile">
       <h2>My Profile</h2>
-      <button v-bind="!newFirstName" @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">Save Changes</button>
+
+      <button v-bind="!newFirstName" @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
+        Save Changes
+      </button>
+
       <table class="paddingBetweenCols">
         <tr>
           <td>First Name</td>
           <td>
-            <input type="text" name="newFirstName" value="firstName">
+            <input type="text" name="newFirstName" value=firstName>
           </td>
         </tr>
         <tr>
@@ -84,10 +88,11 @@
   </div>
 </template>
 <script>
-  src = "./registration.js"
+  src = "./ProfileHandling.js"
 </script>
 
 <style>
+
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;
@@ -98,32 +103,32 @@
     padding: 0 15px;
   }
 
-    /* Style the links inside the navigation bar */
-    .topnav a {
-      float: left;
-      color: #f2f2f2;
-      text-align: center;
-      padding: 8px;
-      text-decoration: none;
-      font-size: 17px;
+  /* Style the links inside the navigation bar */
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 8px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+
+    /* Change the color of links on hover */
+    .topnav a:not(active):hover {
+      background-color: #ddd;
+      color: black;
     }
 
-
-      /* Change the color of links on hover */
-      .topnav a:not(active):hover {
-        background-color: #ddd;
-        color: black;
-      }
-
-      /* Add a color to the active/current link */
-      .topnav a.active {
-        background-color: #FF4500;
-        color: white;
-      }
-    /* Hide the link that should open and close the topnav on small screens */
-    .topnav .icon {
-      display: none;
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #FF4500;
+      color: white;
     }
+  /* Hide the link that should open and close the topnav on small screens */
+  .topnav .icon {
+    display: none;
+  }
   /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
   @media screen and (max-width: 600px) {
     .topnav a:not(first-child) {
@@ -134,29 +139,29 @@
       float: right;
       display: block;
     }
-  }
 
-  myProfile h2{
-      padding-top:10px;
-      justify-content:space-around;
-  }
-
-  /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-  @media screen and (max-width: 600px) {
-    .topnav.responsive {
-      position: relative;
+    myProfile h2 {
+      padding-top: 10px;
+      justify-content: space-around;
     }
 
-      .topnav.responsive a.icon {
-        position: absolute;
-        right: 0;
-        top: 0;
+    /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+    @media screen and (max-width: 600px) {
+      .topnav.responsive {
+        position: relative;
       }
 
-      .topnav.responsive a {
-        float: none;
-        display: block;
-        text-align: left;
-      }
+        .topnav.responsive a.icon {
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+
+        .topnav.responsive a {
+          float: none;
+          display: block;
+          text-align: left;
+        }
+    }
   }
 </style>
