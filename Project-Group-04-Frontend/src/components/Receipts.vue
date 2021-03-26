@@ -1,79 +1,60 @@
 <template>
-  <div>
-    <div class="topnav">
-      <a> <router-link to="/home">Home</router-link></a>
-      <a>
-        <router-link to="/profile">
-          My Profile
-        </router-link>
-      </a>
-      <a class="active">
-        <router-link to="/car">
-          My Car
-        </router-link>
-      </a>
+  <div class="topnav">
+    <a> <router-link to="/home">Home</router-link></a>
 
-      <a>
-        <router-link to="/receipts">
-          My Receipts
-        </router-link>
-      </a>
-      <a>
-        <router-link to="/services">
-          Our Services
-        </router-link>
-      </a>
-      <a>
-        <router-link to="/team">
-          Our Team
-        </router-link>
-      </a>
-      <a>
-        <router-link to="/about">
-          About Us
-        </router-link>
-      </a>
-      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-      </a>
-    </div>
-    <div id="myCar">
-      <h2>My Car</h2>
+    <a>
+      <router-link to="/profile">
+        My Profile
+      </router-link>
+    </a>
 
-      <button @click="editCar(newModel,newYear,newColor)">
-        Save Changes
-      </button>
 
-      <table class="paddingBetweenCols">
-        <tr>
-          <td>Model</td>
-          <td>
-            <input type="text" name="newModel" placeholder="Model">
-          </td>
-        </tr>
-        <tr>
-          <td>Year</td>
-          <td>
-            <input type="text" name="newYear" placeholder="Year">
-          </td>
-        </tr>
-        <tr>
-          <td>Color</td>
-          <td>
-            <input type="text" name="newColor" placeholder="Color">
-          </td>
-        </tr>
-      </table>
-      <span v-if="errorCar" style="color:red">Error: {{errorCar}} </span>
-    </div>
+    <a>
+      <router-link to="/car">
+        My Car
+      </router-link>
+    </a>
+    <a class="active">
+      <router-link to="/receipts">
+        My Receipts
+      </router-link>
+    </a>
+
+    <a>
+      <router-link to="/services">
+        Our Services
+      </router-link>
+
+    </a>
+    <a>
+      <router-link to="/team">
+        Our Team
+      </router-link>
+
+    </a>
+    <a>
+      <router-link to="/about">
+        About Us
+      </router-link>
+
+    </a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
   </div>
 </template>
 <script>
-  src = "./CarHandling.js"
+  function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  }
 </script>
 
 <style>
-
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;

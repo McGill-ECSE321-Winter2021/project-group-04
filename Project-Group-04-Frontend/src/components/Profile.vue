@@ -17,6 +17,12 @@
       </a>
 
       <a>
+        <router-link to="/receipts">
+          My Receipts
+        </router-link>
+      </a>
+
+      <a>
         <router-link to="/services">
           Our Services
         </router-link>
