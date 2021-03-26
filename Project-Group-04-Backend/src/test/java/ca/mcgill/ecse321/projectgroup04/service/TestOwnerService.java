@@ -50,6 +50,7 @@ public class TestOwnerService {
 			return null;
 
 		});
+
 	}
 
 	@Test
@@ -86,43 +87,6 @@ public class TestOwnerService {
 
 		assertNull(owner);
 		assertEquals(error, "Username can't be empty");
-
-	}
-
-	@Test
-	public void TestOwnerThatAlreadyExists() {
-		String userId = "ownerTestName";
-		String password = "ownerTestPassword";
-		String error = null;
-
-		Owner owner = null;
-		try {
-			owner = service.createOwner(userId, password);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(owner);
-		assertEquals(error, "Owner already exists");
-
-	}
-
-	@Test
-	public void TestOwnerNoPassword() {
-		String userId = "ownerTestUserId";
-		String password = "";
-
-		String error = null;
-
-		Owner owner = null;
-		try {
-			owner = service.createOwner(userId, password);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(owner);
-		assertEquals(error, "Password can't be empty");
 
 	}
 

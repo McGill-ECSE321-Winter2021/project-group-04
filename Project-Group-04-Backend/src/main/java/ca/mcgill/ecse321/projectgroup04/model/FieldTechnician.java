@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "fieldTechnician")
 public class FieldTechnician extends Technician {
 	
-	private boolean isAvailable;
+	private boolean isAvailable = true;
 
     @Override
     public Long getTechnicianId() {

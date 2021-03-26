@@ -15,14 +15,18 @@ import ca.mcgill.ecse321.projectgroup04.dao.CustomerRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.EmergencyServiceRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.FieldTechnicianRepository;
 import ca.mcgill.ecse321.projectgroup04.dao.ReceiptRepository;
+
 import ca.mcgill.ecse321.projectgroup04.model.Customer;
 import ca.mcgill.ecse321.projectgroup04.model.EmergencyService;
 import ca.mcgill.ecse321.projectgroup04.model.FieldTechnician;
+
 import ca.mcgill.ecse321.projectgroup04.model.Receipt;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -116,6 +120,8 @@ public class TestEmergencyServiceService {
 						FieldTechnician fieldTechnician = new FieldTechnician();
 						fieldTechnician.setName(FIELD_TECHNICIAN_NAME1);
 						fieldTechnician.setTechnicianId(FIELD_TECHNICIAN_ID1);
+						
+						//System.out.println(fieldTechnician.getIsAvailable());
 
 						return fieldTechnician;
 					}
@@ -124,6 +130,8 @@ public class TestEmergencyServiceService {
 						FieldTechnician fieldTechnician = new FieldTechnician();
 						fieldTechnician.setName(FIELD_TECHNICIAN_NAME2);
 						fieldTechnician.setTechnicianId(FIELD_TECHNICIAN_ID2);
+						
+						//System.out.println(fieldTechnician.getIsAvailable());
 
 						return fieldTechnician;
 					}
@@ -347,16 +355,12 @@ public class TestEmergencyServiceService {
 		Long fieldTechnicianId = (long) 55999;
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianId);
 
-		EmergencyService emergencyService = service.getEmergencyServiceByServiceName(serviceName);
-
-		int price = emergencyService.getPrice();
-
 		EmergencyService booking = null;
 
 		try {
-			booking = service.bookEmergencyService(bookingName, price, "Montreal", userId, fieldTechnician);
+			booking = service.bookEmergencyService(bookingName, serviceName, "Montreal", userId, fieldTechnician);
 		} catch (IllegalArgumentException e) {
-			System.out.println(e);
+			//System.out.println(e);
 			fail();
 		}
 
@@ -376,28 +380,164 @@ public class TestEmergencyServiceService {
 
 		String bookingName = serviceName + " for " + userId;
 
-		Long fieldTechnicianId = (long) 51999;
+		Long fieldTechnicianId = (long) 55999;
 		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianId);
 
-		EmergencyService emergencyService = service.getEmergencyServiceByServiceName(serviceName);
-
-		int price = emergencyService.getPrice();
 
 		EmergencyService booking = null;
 		String error = null;
 
 		try {
-			booking = service.bookEmergencyService(bookingName, price, "Montreal", userId, fieldTechnician);
+			booking = service.bookEmergencyService(bookingName, serviceName, "Montreal", userId, fieldTechnician);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// System.out.println(fieldTechnician.getName());
-		// System.out.println(fieldTechnician.getIsAvailable());
+		//System.out.println(fieldTechnician.getIsAvailable());
 
 		assertNull(booking);
-		assertEquals(error, "No customer with such userId");
+		assertEquals(error, "No customer with such userId!");
 
 	}
+	
+	@Test
+	public void TestBookEmergencyServiceNoService() {
+		String serviceName = "wrongService1";
 
+		String userId = "UserTestId";
+
+		String bookingName = serviceName + " for " + userId;
+
+		Long fieldTechnicianId = (long) 55999;
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianId);
+
+		EmergencyService booking = null;
+		String error = null;
+
+		try {
+			booking = service.bookEmergencyService(bookingName, serviceName, "Montreal", userId, fieldTechnician);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// System.out.println(fieldTechnician.getName());
+		//System.out.println(fieldTechnician.getIsAvailable());
+
+		assertNull(booking);
+		assertEquals(error, "No Emergency Service with such name!");
+
+	}
+	
+	@Test
+	public void TestBookEmergencyServiceUnavailableFieldTechnician() {
+		String serviceName1 = "EmergencyService1";
+		String userId = "UserTestId";
+		String bookingName1 = serviceName1 + " for " + userId;
+		
+		String serviceName2 = "EmergencyService2";
+		String bookingName2 = serviceName2 + " for " + userId;
+
+		Long fieldTechnicianId = (long) 55999;
+		FieldTechnician fieldTechnician = service.getFieldTechnicianById(fieldTechnicianId);
+		
+		EmergencyService booking1 = service.bookEmergencyService(bookingName1, serviceName1,
+				"Montreal", userId, fieldTechnician);
+
+		String error = null;
+		EmergencyService booking2 = null;
+
+		try {
+			booking2 = service.bookEmergencyService(bookingName2, serviceName2, "Montreal", userId, fieldTechnician);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// System.out.println(fieldTechnician.getName());
+		//System.out.println(fieldTechnician.getIsAvailable());
+		
+		assertNull(booking2);
+		assertFalse(booking1.getTechnician().getIsAvailable());
+		assertEquals(error, "Field Technician is currently unavailable");
+
+	}
+	
+	@Test
+	public void TestGetEmergencyService() {
+		EmergencyService booking = null;
+		
+		try {
+			booking = service.getEmergencyServiceByServiceId((long) 45321);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertNotNull(booking);
+		assertNotNull(booking.getCustomer());
+		assertNotNull(booking.getReceipt());
+		assertNotNull(booking.getTechnician());
+		assertEquals(CUSTOMER_USERID, booking.getCustomer().getUserId());
+		assertEquals(FIELD_TECHNICIAN_ID1, booking.getTechnician().getTechnicianId());
+		assertEquals(FIELD_TECHNICIAN_NAME1, booking.getTechnician().getName());
+		assertEquals(SERVICE_NAME + " for " + booking.getCustomer().getUserId(), booking.getName());
+		assertEquals(SERVICE_PRICE, booking.getPrice());
+		assertEquals(CUSTOMER_PASSWORD, booking.getCustomer().getPassword());	
+		assertEquals(SERVICE_PRICE, booking.getReceipt().getTotalPrice());	
+		assertEquals("Montreal", booking.getLocation());
+		
+	}
+	
+	@Test
+	public void TestGetAppointmentInvalidId() {
+		EmergencyService booking = null;
+		String error = null;
+		try {
+			booking = service.getEmergencyServiceByServiceId(321l);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNull(booking);
+		assertEquals(error, "No Emergency Service with such ID exist!");
+	
+	}
+	
+	@Test
+	public void TestEndEmergencyService() {
+		EmergencyService booking = new EmergencyService();
+		booking.setServiceId(EMERGENCYSERVICE_BOOKING_TO_DELETE_ID);
+		
+		Customer customer = new Customer();
+		customer.setPassword(CUSTOMER_PASSWORD);
+		customer.setUserId(CUSTOMER_USERID);
+		
+		EmergencyService emergencyService = new EmergencyService();
+		
+		emergencyService.setName(SERVICE_NAME);
+		emergencyService.setPrice(SERVICE_PRICE);
+		
+		FieldTechnician fieldTechnician = new FieldTechnician();
+		fieldTechnician.setName(FIELD_TECHNICIAN_NAME1);
+		fieldTechnician.setTechnicianId(FIELD_TECHNICIAN_ID1);
+		
+		Receipt receipt = new Receipt();
+		receipt.setTotalPrice(SERVICE_PRICE);
+		
+		booking.setCustomer(customer);
+		booking.setName(emergencyService.getName() + " for " + customer.getUserId());
+		booking.setReceipt(receipt);
+		booking.setLocation(SERVICE_LOCATION);
+		booking.setTechnician(fieldTechnician);
+		
+		try {
+			booking = service.endEmergencyService(booking);
+		} catch (IllegalArgumentException e) {
+			//System.out.println(e.getMessage());
+			fail();
+		}
+		
+		assertTrue(booking.getTechnician().getIsAvailable());	
+		
+	}	
+	
 }

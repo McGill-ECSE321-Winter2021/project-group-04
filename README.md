@@ -19,6 +19,7 @@ project-group-04 created by GitHub Classroom
 [abrarfahad7]: https://github.com/abrarfahad7
 
 ## Roles and Time Spent
+### Sprint 1
 
 | Name            | Tasks                                   | Time in hours |
 | --------------- |:------------------------------------------------:|-----:|  
@@ -28,6 +29,21 @@ project-group-04 created by GitHub Classroom
 | Yasmina Matta   | Use Case Diagrams, Persistence Layer, Build System | 50 |
 | Abrar Fahad     | Use Case Diagrams, Persistence Layer, Build System | 50 |
 
-Click [here] for meeting minutes!
+### Sprint 2
+| Name            | Tasks                                                                 | Time in hours |
+| --------------- |:--------------------------------------------------------------------------------:|---:|  
+| Mohamad Dimassi | Appointment, Receipt, Profile                                                    | 70 |
+| Artus Julliard  | Car, Customer, TimeSlot                                                          | 70 |
+| Cesar Lahoud    | Business, BusinessHour, CheckupReminder                                          | 70 |
+| Yasmina Matta   | AdministrativeAssistant, BookabaleService, GarageTechnician, AppointmentRemidner | 70 |
+| Abrar Fahad     | Owner, EmergencyService, FieldTechnician                              | 70 |
 
-[here]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference
+Click [for meeting minutes!]
+
+[for meeting minutes!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference
+
+
+[quality assurance report!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Software-Quality-Assurance-Plan
+
+Click [quality assurance report!]
+
