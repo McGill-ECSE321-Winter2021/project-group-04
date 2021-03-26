@@ -26,7 +26,6 @@ function myFunction() {
   } else {
     x.className = "topnav";
   }
-
 }
 
 export default {
@@ -61,7 +60,6 @@ export default {
       .catch(e => {
         this.errorProfile = e
       })
-
   },
   methods: {
     editProfile: function (firstName, lastName, addressLine, emailAddress, zipCode, phoneNumber) {

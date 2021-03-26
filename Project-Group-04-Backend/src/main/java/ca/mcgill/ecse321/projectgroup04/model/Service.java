@@ -41,15 +41,4 @@ public abstract class Service {
         return this.name;
     }
 
-    private AutoRepairShop autoRepairShop;
-
-    @ManyToOne
-    public AutoRepairShop getAutoRepairShop() {
-        return this.autoRepairShop;
-    }
-
-    public void setAutoRepairShop(AutoRepairShop aAutoRepairShop) {
-        this.autoRepairShop = aAutoRepairShop;
-    }
-
 }
