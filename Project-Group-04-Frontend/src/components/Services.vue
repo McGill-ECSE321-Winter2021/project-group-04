@@ -15,12 +15,20 @@
       </router-link>
     </a>
 
+    <a>
+      <router-link to="/receipts">
+        My Receipts
+      </router-link>
+    </a>
+
     <a class="active">
-      <router-link  to="/services" >
+      <router-link to="/services">
         Our Services
       </router-link>
 
     </a>
+
+
     <a>
       <router-link to="/team">
         Our Team
@@ -35,32 +43,32 @@
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
-  <!-- </div> -->
-  <!-- <div>     -->
+    <!-- </div> -->
+    <!-- <div>     -->
     <hr>
     ​<table>
-      ​<tr class="table">
-        ​<th>Service</th>
-        ​<th>Duration</th>
-        ​<th>Price</th> 
+      <tr class="table">
+        <th>Service</th>
+        <th>Duration</th>
+        <th>Price</th>
         <!-- <th>Edit</th>
-        <th>Delete</th> -->
+      <th>Delete</th> -->
         ​<!--<th>Edit</th>-->
-      ​</tr>
-      ​<tr v-for="Service in services" :key="Service.serviceId">
-        ​<td>{{ Service.name }}</td>
-        ​<td>{{ Service.Duration }}</td>
-        ​<td>{{ Service.Price }}</td>
-        ​<td>
+      </tr>
+      <tr v-for="Service in services" :key="Service.serviceId">
+        <td>{{ Service.name }}</td>
+        <td>{{ Service.Duration }}</td>
+        <td>{{ Service.Price }}</td>
+        <td>
           ​<button v-on:click="updateEvent(Service.name, Service.Duration, Service.Price)">Edit</button>
-        ​</td>
+        </td>
         <td>
           <button v-on:click="deleteEvent(service)">Delete</button>
         </td>
-      ​</tr>
-    ​</table>
-         ​<span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span>
-  <hr>
+      </tr>
+    </table>
+    ​<span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span>
+    <hr>
   </div>
 </template>
 
