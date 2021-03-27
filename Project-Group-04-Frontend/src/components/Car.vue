@@ -38,12 +38,13 @@
       </a>
     </div>
     <div id="myCar">
+      <br />
       <h2>My Car</h2>
 
       <button @click="editCar(newModel,newYear,newColor)">
         Save Changes
       </button>
-
+      
       <table class="paddingBetweenCols">
         <tr>
           <td>Model</td>
