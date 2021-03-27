@@ -45,8 +45,14 @@
     </div>
     <div>
       <br />
-      <button type="bookingButton">Book a new appointment</button>
-      <button type="cancelButton">Cancel your appointment</button>
+      <router-link to="/book">
+              <button type="bookingButton" class="btn btn-primary">
+                Book a new Appointment
+              </button>
+            </router-link>
+      <button type="cancelAppointment" class="btn btn-primary">
+                Cancel your appointment
+              </button>
     </div>
     <div>
       <br/>

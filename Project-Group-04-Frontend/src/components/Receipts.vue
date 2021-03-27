@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="topnav">
     <a> <router-link to="/home">Home</router-link></a>
 
@@ -14,11 +15,12 @@
         My Car
       </router-link>
     </a>
+
     <a class="active">
-      <router-link to="/receipts">
-        My Receipts
-      </router-link>
-    </a>
+        <router-link to="/receipts">
+          My Receipts
+        </router-link>
+      </a>
 
     <a>
       <router-link to="/services">
@@ -38,23 +40,53 @@
       </router-link>
 
     </a>
+    </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
+    
+    <div class="secondnav">
+    <hr>
+     <h2> My Receipts </h2>
+    ​<table>
+      <tr class="table">
+       <th>Service </th>
+        <th> Date</th>
+        <th>Total Price</th>
+      </tr>
+      <tr v-for="receipt in receipts" :key="receipt.totalPrice">
+        <td>{{ receipt.totalPrice }}</td> 
+      </tr>
+    </table>
+    
+    ​<span v-if="errorReceipt" style="color:red">Error: {{errorRecepit}} </span>
+    <hr>
   </div>
+</div>
 </template>
+ 
 <script>
-  function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-  }
+  src = './ReceiptHandling.js'
 </script>
 
 <style>
+
+  .template {
+    background-color: #696969;
+  }
+
+  .table {
+    background-color: #f2f2f2;
+    margin: 0px;
+  }
+    .table th {
+      color: #0e1a36;
+      text-align: center;
+      padding-left: 100px;
+      padding-right: 100px;
+
+    }
+
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;
@@ -70,7 +102,7 @@
       text-decoration: none;
       font-size: 17px;
     }
-
+      
 
       /* Change the color of links on hover */
       .topnav a:not(active):hover {
