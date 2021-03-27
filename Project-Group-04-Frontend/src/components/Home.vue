@@ -1,46 +1,91 @@
 <template>
-  <div class="topnav">
-    <a class="active"> <router-link to="/home">Home</router-link></a>
+  <div>
+    <div class="topnav">
+      <a class="active"> <router-link to="/home">Home</router-link></a>
 
-    <a>
-      <router-link to="/profile">
-        My Profile
-      </router-link>
-    </a>
+      <a>
+        <router-link to="/profile">
+          My Profile
+        </router-link>
+      </a>
 
 
-    <a>
-      <router-link to="/car">
-        My Car
-      </router-link>
-    </a>
-    <a>
-      <router-link to="/receipts">
-        My Receipts
-      </router-link>
-    </a>
+      <a>
+        <router-link to="/car">
+          My Car
+        </router-link>
+      </a>
+      <a>
+        <router-link to="/receipts">
+          My Receipts
+        </router-link>
+      </a>
 
-    <a>
-      <router-link to="/services">
-        Our Services
-      </router-link>
+      <a>
+        <router-link to="/services">
+          Our Services
+        </router-link>
 
-    </a>
-    <a>
-      <router-link to="/team">
-        Our Team
-      </router-link>
+      </a>
+      <a>
+        <router-link to="/team">
+          Our Team
+        </router-link>
 
-    </a>
-    <a>
-      <router-link to="/about">
-        About Us
-      </router-link>
+      </a>
+      <a>
+        <router-link to="/about">
+          About Us
+        </router-link>
 
-    </a>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-      <i class="fa fa-bars"></i>
-    </a>
+      </a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+    <div>
+      <br />
+      <button type="bookingButton">Book a new appointment</button>
+      <button type="cancelButton">Cancel your appointment</button>
+    </div>
+    <div>
+      <br/>
+      <h3>Your next appointment:</h3>
+    </div>
+    <div>
+      <table class="paddingBetweenCols">
+        <tr>
+          <td>Date</td>
+          <td>
+            
+          </td>
+        </tr>
+        <tr>
+          <td>Start Time</td>
+          <td>
+            
+          </td>
+        </tr>
+        <tr>
+          <td>End Time</td>
+          <td>
+
+          </td>
+        </tr>
+        <tr>
+          <td>Service</td>
+          <td>
+
+          </td>
+        </tr>
+        <tr>
+          <td>Garage Spot</td>
+          <td>
+
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 <script>
@@ -116,5 +161,8 @@
         display: block;
         text-align: left;
       }
+  }
+  .paddingBetweenCols td {
+    padding: 0 15px;
   }
 </style>
