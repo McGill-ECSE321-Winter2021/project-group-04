@@ -45,12 +45,13 @@
       </a>
     </div>
     <div id="myProfile">
+      <br />
       <h2>My Profile</h2>
 
       <button v-bind="!newFirstName" @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
         Save Changes
       </button>
-
+   
       <table class="paddingBetweenCols">
         <tr>
           <td>First Name</td>

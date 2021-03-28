@@ -12,6 +12,7 @@ import Receipts from '@/components/Receipts'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import WelcomePage from '@/components/WelcomePage'
+import BookAppointment from '@/components/BookAppointment'
 
 
 
@@ -76,6 +77,11 @@ export default new Router({
       path: '/receipts',
       name: 'Receipts',
       component: Receipts
+    },
+    {
+      path: '/book',
+      name: 'Booking',
+      component: BookAppointment
     }
   ]
 })
