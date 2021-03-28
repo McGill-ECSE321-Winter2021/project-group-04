@@ -48,15 +48,16 @@
       <br />
       <h2>My Profile</h2>
 
-      <button v-bind="!newFirstName" @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
+      <button class = "btn btn-primary" v-bind="!newFirstName" @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
         Save Changes
       </button>
-   
+    <h3 class ="updateMessage"> Update </h3>
       <table class="paddingBetweenCols">
+       
         <tr>
           <td>First Name</td>
           <td>
-            <input type="text" name="newFirstName" value=firstName>
+           <input type="text" name="newLastName" placeholder="Last Name">
           </td>
         </tr>
         <tr>
@@ -89,13 +90,53 @@
             <input type="text" name="newPhoneNumber" placeholder="Phone Number">
           </td>
         </tr>
-      </table>
+        </table>
+      <!-- </table>
+      <table class="secondTables">
+       
+        <tr>
+          <td>First Name</td>
+          <td>
+            <input type="text" name="newFirstName" value=firstName>
+          </td>
+        </tr>
+        <tr>
+          <td>Last Name</td>
+          <td>
+            <input type="text" name="newLastName" >
+          </td>
+        </tr>
+        <tr>
+          <td>Address Line</td>
+          <td>
+            <input type="text" name="newAddressLine" >
+          </td>
+        </tr>
+        <tr>
+          <td>Email Address</td>
+          <td>
+            <input type="text" name="newEmailAddress" >
+          </td>
+        </tr>
+        <tr>
+          <td>Zip Code</td>
+          <td>
+            <input type="text" name="newZipCode">
+          </td>
+        </tr>
+        <tr>
+          <td>Phone Number</td>
+          <td>
+            <input type="text" name="newPhoneNumber" >
+          </td>
+        </tr>
+      </table> -->
       <span v-if="errorProfile" style="color:red">Error: {{errorProfile}} </span>
     </div>
   </div>
 </template>
-<script>
-  src = "./ProfileHandling.js"
+<script  src = "./ProfileHandling.js">
+ 
 </script>
 
 <style>
@@ -107,6 +148,10 @@
   }
 
   .paddingBetweenCols td {
+    padding: 0 15px;
+  }
+
+  .secondTable td{
     padding: 0 15px;
   }
 
@@ -129,7 +174,7 @@
 
     /* Add a color to the active/current link */
     .topnav a.active {
-      background-color: #FF4500;
+      background-color: #ff2600;
       color: white;
     }
   /* Hide the link that should open and close the topnav on small screens */
@@ -171,4 +216,15 @@
         }
     }
   }
+
+  .updateMessage{
+    float: left;
+    color: #ff2600;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 23px;
+      }
+
+ 
 </style>
