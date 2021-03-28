@@ -23,7 +23,7 @@
       </a>
 
     <a>
-      <router-link to="/services">
+      <router-link to="/bookableServices">
         Our Services
       </router-link>
 
@@ -40,7 +40,7 @@
       </router-link>
 
     </a>
-    </div>
+  </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
@@ -70,7 +70,7 @@
       </table>
     ​<span v-if="errorReceipt" style="color:red">Error: {{errorRecepit}} </span>
     <hr>
-  </div>
+    </div>
 </div>
 </template>
  
@@ -79,6 +79,11 @@
 </script>
 
 <style>
+
+  .secondnav table {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   .template {
     background-color: #696969;
