@@ -64,6 +64,108 @@ public class AutoRepairShopSystemService {
 
 	@Autowired
 	private CheckupReminderRepository checkupReminderRepository;
+	
+	private static User currentUser = null;
+	
+	/////////////////////////////////LOGIN LOGOUT///////////////////////////////////////////////
+	
+	@Transactional
+	public Customer loginAsCustomer(String userId, String password) {
+		if (userId == null || userId.trim().length() == 0) {
+			throw new IllegalArgumentException("Please enter a valid UserId");
+		}
+		if (password == null || password.trim().length() == 0) {
+			throw new IllegalArgumentException("Please enter a valid Password");
+		}
+		
+		List<Customer> customers = getAllCustomers();
+		Customer foundCustomer = null;
+		
+		for (Customer customer : customers) {
+			if (customer.getUserId().equals(userId) && customer.getPassword().equals(password)) {
+				currentUser = customer;
+				foundCustomer = customer;
+				break;
+			}
+		}
+		
+		if (foundCustomer == null) {
+			throw new IllegalArgumentException("User does not exist, please register a new account or try again.");
+		}
+		
+		return foundCustomer;
+		
+	}
+	
+	@Transactional
+	public Owner loginAsOwner(String userId, String password) {
+		if (userId == null || userId.trim().length() == 0) {
+			throw new IllegalArgumentException("Please enter a valid UserId");
+		}
+		if (password == null || password.trim().length() == 0) {
+			throw new IllegalArgumentException("Please enter a valid Password");
+		}
+		
+		List<Owner> owners  = getOwner();
+		Owner foundOwner = null;
+		
+		for (Owner owner : owners) {
+			if (owner.getUserId().equals(userId) && owner.getPassword().equals(password)) {
+				currentUser = owner;
+				foundOwner = owner;
+				break;
+			}
+		}
+		
+		if (foundOwner == null) {
+			throw new IllegalArgumentException("User does not exist, please register a new account or try again.");
+		}
+		
+		return foundOwner;
+		
+	}
+	
+	@Transactional
+	public AdministrativeAssistant loginAsAdmin(String userId, String password) {
+		if (userId == null || userId.trim().length() == 0) {
+			throw new IllegalArgumentException("Please enter a valid UserId");
+		}
+		if (password == null || password.trim().length() == 0) {
+			throw new IllegalArgumentException("Please enter a valid Password");
+		}
+		
+		List<AdministrativeAssistant> admins  = getAllAdministrativeAssistants();
+		AdministrativeAssistant foundAdmin = null;
+		
+		for (AdministrativeAssistant admin : admins) {
+			if (admin.getUserId().equals(userId) && admin.getPassword().equals(password)) {
+				currentUser = admin;
+				foundAdmin = admin;
+				break;
+			}
+		}
+		
+		if (foundAdmin == null) {
+			throw new IllegalArgumentException("User does not exist, please register a new account or try again.");
+		}
+		
+		return foundAdmin;
+		
+	}
+	
+	@Transactional
+	public void logout() {
+		currentUser = null;
+	}
+	
+	@Transactional
+	public User getLoggedUser() {
+		return currentUser;
+	}
+	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////
+	
 
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
@@ -308,6 +410,7 @@ public class AutoRepairShopSystemService {
 		AdministrativeAssistant administrativeAssistant = new AdministrativeAssistant();
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
+		currentUser = administrativeAssistant;
 		administrativeAssistantRepository.save(administrativeAssistant);
 		return administrativeAssistant;
 
@@ -341,6 +444,7 @@ public class AutoRepairShopSystemService {
 		Owner owner = new Owner();
 		owner.setUserId(userId);
 		owner.setPassword(password);
+		currentUser = owner;
 		ownerRepository.save(owner);
 		return owner;
 	}
@@ -371,6 +475,7 @@ public class AutoRepairShopSystemService {
 
 		owner.setUserId(userId);
 		owner.setPassword(password);
+		currentUser = owner;
 		ownerRepository.save(owner);
 
 		return owner;
@@ -476,6 +581,7 @@ public class AutoRepairShopSystemService {
 		customer.setReminders(reminder);
 		customer.setCar(car);
 		customer.setCustomerProfile(profile);
+		currentUser = customer;
 		customerRepository.save(customer);
 		return customer;
 	}
@@ -507,6 +613,7 @@ public class AutoRepairShopSystemService {
 		customer.setCar(car);
 		customer.setCustomerProfile(profile);
 		customer.setReminders(reminders);
+		currentUser = customer;
 		customerRepository.save(customer);
 		return customer;
 	}
@@ -1403,6 +1510,7 @@ public class AutoRepairShopSystemService {
 		}
 		administrativeAssistant.setUserId(userId);
 		administrativeAssistant.setPassword(password);
+		currentUser = administrativeAssistant;
 		administrativeAssistantRepository.save(administrativeAssistant);
 		return administrativeAssistant;
 	}
