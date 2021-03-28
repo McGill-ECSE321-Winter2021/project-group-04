@@ -57,8 +57,8 @@
           <label>Service
       ​<select v-model="selectedService">
        ​<option disabled value="">Please select one</option>
-       ​<option v-for="service in services" :key="service.name" >
-         ​{{ service.name }}
+       ​<option v-for="bookableService in bookableServices" :key="bookableService.name" >
+         ​{{ bookableService.name }}
        ​</option>
      ​</select>
    ​</label>
@@ -88,7 +88,7 @@
   </div>
  </template>
  
- <script>
+ <script src = './HandlingBookableService.js'>
 
  </script>
 

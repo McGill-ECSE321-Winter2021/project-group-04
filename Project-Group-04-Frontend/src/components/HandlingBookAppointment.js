@@ -27,9 +27,9 @@ function ReceiptDto (totalPrice){
     this.totalPrice = totalPrice
 }
 
-function AppointmentDto(timeSlot, service, receipt){
+function AppointmentDto(timeSlot, bookableService, receipt){
     this.timeSlot = timeSlot
-    this.service = service
+    this.bookableService = bookableService
     this.receipt = receipt
 }
 
@@ -60,25 +60,25 @@ export default {
 
     this.appointments = [a]
 
-},
-methods: {
-    createAppointment: function (selectedService, date,time,garageSpot) {
-    //   AXIOS.post('/appointment/'.concat(appointmentId), {}, {})
-    //     .then(response => {
-        // JSON responses are automatically parsed.
-        var timeSlot = new TimeSlotDto(date, time, date, time+ selectedService.duration, garageSpot)
-        var receipt = new ReceiptDto(selectedService.price)
-        var appointment = new AppointmentDto(timeSlot, selectedService,receipt)
-          this.appointments.push(appointment)
-        //   this.errorPerson = ''
+}
+// methods: {
+//     createAppointment: function (selectedService, date,time,garageSpot) {
+//     //   AXIOS.post('/appointment/'.concat(appointmentId), {}, {})
+//     //     .then(response => {
+//         // JSON responses are automatically parsed.
+//         var timeSlot = new TimeSlotDto(date, time, date, time+ selectedService.duration, garageSpot)
+//         var receipt = new ReceiptDto(selectedService.price)
+//         var appointment = new AppointmentDto(timeSlot, selectedService,receipt)
+//         this.appointments.push(appointment)
+//         //   this.errorPerson = ''
         
-        }
-        // .catch(e => {
-        //   var errorMsg = e.response.data.message
-        //   console.log(errorMsg)
-        //   this.errorPerson = errorMsg
-        // })
-    }
+//         }
+//         // .catch(e => {
+//         //   var errorMsg = e.response.data.message
+//         //   console.log(errorMsg)
+//         //   this.errorPerson = errorMsg
+//         // })
+//     }
 }
 
 

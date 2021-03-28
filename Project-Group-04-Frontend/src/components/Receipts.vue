@@ -58,8 +58,8 @@
       </tr>
       
         <tr  v-for="appointment in appointments" :key="appointment.service">
-        <td> {{ appointment.service }}</td> 
-        <td>{{ appointment.date }}</td> 
+        <td> {{ appointment.bookableService.name }}</td> 
+        <td>{{ appointment.timeSlot.startDate }}</td> 
         <td> {{appointment.receipt.totalPrice}}</td>
         </tr>
       
@@ -74,7 +74,7 @@
 </div>
 </template>
  
-<script  src = './ReceiptHandling.js'>
+<script  src = './HandlingBookAppointment.js'>
  
 </script>
 
