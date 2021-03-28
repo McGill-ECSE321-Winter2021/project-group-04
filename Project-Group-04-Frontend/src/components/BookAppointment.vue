@@ -176,9 +176,7 @@
         text-align: left;
       }
   }
-  .paddingBetweenCols td {
-    padding: 0 15px;
-  }
+
  </style>
  
  

@@ -61,11 +61,11 @@
     <div>
       <table class="paddingBetweenCols">
         <tr>
-          <td>Date</td>
-           <td>Start Time</td>
-           <td>End Time</td> 
-           <td>Service</td>
-           <td> Spot </td>
+          <th>Date</th>
+           <th>Start Time</th>
+           <th>End Time</th> 
+           <th>Service</th>
+           <th>Spot</th>
          
         </tr>
          <tr  v-for="appointment in appointments" :key="appointment.service">           
@@ -146,7 +146,21 @@
         text-align: left;
       }
   }
-  .paddingBetweenCols td {
-    padding: 0 15px;
+  .paddingBetweenCols  {
+      margin-left: auto;
+    margin-right: auto;
+
   }
+  .paddingBetweenCols table{
+     background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+  .paddingBetweenCols th{
+    color: #696969;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
 </style>

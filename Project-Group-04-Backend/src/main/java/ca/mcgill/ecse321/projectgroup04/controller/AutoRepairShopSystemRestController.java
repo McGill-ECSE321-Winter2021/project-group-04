@@ -1,6 +1,6 @@
 package ca.mcgill.ecse321.projectgroup04.controller;
 
-import java.sql.Date;
+import java.sql.Date; 
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -316,6 +316,30 @@ public class AutoRepairShopSystemRestController {
 		checkupReminderDto.setId(checkupReminder.getReminderId());
 		return checkupReminderDto;
 	}
+	
+	///////////////////////////////////LOGIN LOGOUT///////////////////////////////////////
+	
+	@PostMapping(value = {"/login", "/login/"})
+	public void userLogin(@RequestParam String userId, @RequestParam String password) throws IllegalArgumentException {
+		if (userId.equalsIgnoreCase("owner")) {
+			service.loginAsOwner(userId, password);
+		}
+		
+		else if (userId.equalsIgnoreCase("admin")) {
+			service.loginAsAdmin(userId, password);
+		}
+		
+		else {
+			service.loginAsCustomer(userId, password);
+		}
+	}
+	
+	@PostMapping(value = {"/logout", "/logout/"})
+	public void logout() {
+		service.logout();
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////
 
 	@GetMapping(value = { "/profiles", "/profiles/" })
 	public List<ProfileDto> getAllProfiles() {
