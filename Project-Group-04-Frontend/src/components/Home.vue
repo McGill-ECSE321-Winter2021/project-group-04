@@ -62,47 +62,25 @@
       <table class="paddingBetweenCols">
         <tr>
           <td>Date</td>
-          <td>
-            
-          </td>
+           <td>Start Time</td>
+           <td>End Time</td> 
+           <td>Service</td>
+           <td> Spot </td>
+         
         </tr>
-        <tr>
-          <td>Start Time</td>
-          <td>
-            
-          </td>
-        </tr>
-        <tr>
-          <td>End Time</td>
-          <td>
-
-          </td>
-        </tr>
-        <tr>
-          <td>Service</td>
-          <td>
-
-          </td>
-        </tr>
-        <tr>
-          <td>Garage Spot</td>
-          <td>
-
-          </td>
+         <tr  v-for="appointment in appointments" :key="appointment.service">           
+        <td> {{ appointment.timeSlot.startDate }}</td> 
+        <td>{{ appointment.timeSlot.startTime }}</td> 
+        <td> {{appointment.timeSlot.endTime}}</td>
+        <td> {{appointment.service.name}}</td>
+        <td> {{appointment.timeSlot.garageSpot}}</td>
         </tr>
       </table>
     </div>
   </div>
 </template>
-<script>
-  function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-  }
+<script src='./BookAppointmentHandling'>
+  
 </script>
 
 <style>

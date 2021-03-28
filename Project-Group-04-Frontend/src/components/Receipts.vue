@@ -50,18 +50,20 @@
      <h2> My Receipts </h2>
   
       <table>
-        <thead>
+       
       <tr class="table">
-       <th>Service </th>
+       <th > Service</th>
         <th> Date</th>
         <th>Total Price</th>
       </tr>
-        </thead>
-        <tbody>
-         <tr v-for="receipt in receipts" :key="receipt.totalPrice">
-        <td>{{ receipt.totalPrice }}</td> 
+      
+        <tr  v-for="appointment in appointments" :key="appointment.service">
+        <td> {{ appointment.service }}</td> 
+        <td>{{ appointment.date }}</td> 
+        <td> {{appointment.receipt.totalPrice}}</td>
         </tr>
-          </tbody>
+      
+      
 
      
    

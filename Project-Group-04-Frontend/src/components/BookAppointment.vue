@@ -62,19 +62,19 @@
        ​</option>
      ​</select>
    ​</label>
-          <label> Date  <input type="date" name="date">
+          <label> Date  <input type="date" v-model="date">
           </label>
-          <label> Time  <input type="time" name="time" >
+          <label> Time  <input type="time" v-model="time" >
           </label>
-          <label> Spot  <input type="number" name="garageSpot" >
+          <label> Spot  <input type="number" v-model="garageSpot" >
           </label>
         </tr>
     </div>
     <div class="bookButton">
-      <button type="bookAppointmentButton" class="btn btn-primary">
+ <!-- <button v-bind:disabled="!garageSpot" @click="createAppointment(selectedService, date,time,garageSpot)" class="btn btn-primary">Book</button> -->
+  <button type="bookAppointmentButton" class="btn btn-primary" @click="createAppointment(selectedService, date,time,garageSpot)" >
                Book
-        </button>
-
+      </button>
   </div>
    <div class="backButton">
        <router-link to="/home">

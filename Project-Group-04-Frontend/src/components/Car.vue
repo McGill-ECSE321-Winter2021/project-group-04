@@ -69,8 +69,8 @@
     </div>
   </div>
 </template>
-<script>
-  src = "./CarHandling.js"
+<script  src = "./CarHandling.js">
+ 
 </script>
 
 <style>
