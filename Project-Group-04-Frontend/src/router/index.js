@@ -7,7 +7,8 @@ import Car from '@/components/Car'
 import AboutUs from '@/components/AboutUs'
 import Profile from '@/components/Profile'
 import Team from '@/components/Team'
-import Services from '@/components/Services'
+import BookableServices from '@/components/BookableServices'
+import EmergencyServices from '@/components/EmergencyServices'
 import Receipts from '@/components/Receipts'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
@@ -68,11 +69,19 @@ export default new Router({
       component: Team
     },
     {
-      path: '/services',
-      name: 'Services',
-      component: Services
+      path: '/bookableServices',
+      name: 'BookableServices',
+      component: BookableServices
     }
     ,
+
+    {
+      path: '/emergencyServices',
+      name: 'EmergencyServices',
+      component: EmergencyServices
+    }
+    ,
+
     {
       path: '/receipts',
       name: 'Receipts',
