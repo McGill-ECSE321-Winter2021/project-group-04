@@ -61,48 +61,26 @@
     <div>
       <table class="paddingBetweenCols">
         <tr>
-          <td>Date</td>
-          <td>
-            
-          </td>
+          <th>Date</th>
+           <th>Start Time</th>
+           <th>End Time</th> 
+           <th>Service</th>
+           <th>Spot</th>
+         
         </tr>
-        <tr>
-          <td>Start Time</td>
-          <td>
-            
-          </td>
-        </tr>
-        <tr>
-          <td>End Time</td>
-          <td>
-
-          </td>
-        </tr>
-        <tr>
-          <td>Service</td>
-          <td>
-
-          </td>
-        </tr>
-        <tr>
-          <td>Garage Spot</td>
-          <td>
-
-          </td>
+         <tr  v-for="appointment in appointments" :key="appointment.service">           
+        <td> {{ appointment.timeSlot.startDate }}</td> 
+        <td>{{ appointment.timeSlot.startTime }}</td> 
+        <td> {{appointment.timeSlot.endTime}}</td>
+        <td> {{appointment.service.name}}</td>
+        <td> {{appointment.timeSlot.garageSpot}}</td>
         </tr>
       </table>
     </div>
   </div>
 </template>
-<script>
-  function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-  }
+<script src='./BookAppointmentHandling'>
+  
 </script>
 
 <style>
@@ -168,7 +146,21 @@
         text-align: left;
       }
   }
-  .paddingBetweenCols td {
-    padding: 0 15px;
+  .paddingBetweenCols  {
+      margin-left: auto;
+    margin-right: auto;
+
   }
+  .paddingBetweenCols table{
+     background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+  .paddingBetweenCols th{
+    color: #696969;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
 </style>

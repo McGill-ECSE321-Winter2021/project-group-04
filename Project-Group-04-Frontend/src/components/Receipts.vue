@@ -48,25 +48,34 @@
     <div class="secondnav">
     <hr>
      <h2> My Receipts </h2>
-    ​<table>
+  
+      <table>
+       
       <tr class="table">
-       <th>Service </th>
+       <th > Service</th>
         <th> Date</th>
         <th>Total Price</th>
       </tr>
-      <tr v-for="receipt in receipts" :key="receipt.totalPrice">
-        <td>{{ receipt.totalPrice }}</td> 
-      </tr>
-    </table>
-    
+      
+        <tr  v-for="appointment in appointments" :key="appointment.service">
+        <td> {{ appointment.bookableService.name }}</td> 
+        <td>{{ appointment.timeSlot.startDate }}</td> 
+        <td> {{appointment.receipt.totalPrice}}</td>
+        </tr>
+      
+      
+
+     
+   
+      </table>
     ​<span v-if="errorReceipt" style="color:red">Error: {{errorRecepit}} </span>
     <hr>
     </div>
 </div>
 </template>
  
-<script>
-  src = './ReceiptHandling.js'
+<script  src = './HandlingBookAppointment.js'>
+ 
 </script>
 
 <style>
@@ -79,16 +88,17 @@
   .template {
     background-color: #696969;
   }
-
+ 
   .table {
     background-color: #f2f2f2;
     margin: 0px;
   }
-    .table th {
-      color: #0e1a36;
-      text-align: center;
+    .table th { 
+      color: #290e36;
+      
       padding-left: 100px;
       padding-right: 100px;
+      text-align: center;
 
     }
 

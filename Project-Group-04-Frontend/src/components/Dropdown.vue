@@ -1,53 +1,62 @@
-<template>
-  <div class="menu-item" @click="isOpen = !isOpen">
-    <a href="#">
-      {{ title }}
-    </a>
-    <svg viewBox="0 0 1030 638" width="10">
-      <path d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z" fill="#FFF"></path>
-    </svg>
-    <transition name="fade" appear>
-      <div class="sub-menu" v-if="isOpen">
-        <div v-for="(item, i) in items" :key="i" class="menu-item">
-          <a :href="item.link">{{ item.title }}</a>
-        </div>
-      </div>
-    </transition>
+<template lang="html">
+  <div class="examplex">
+
+    <vs-dropdown >
+      <a class="a-icon" href="#">
+        Dropdown hover
+        <vs-icon class="" icon="expand_more"></vs-icon>
+      </a>
+
+      <vs-dropdown-menu>
+        <vs-dropdown-item>
+          Option 1
+        </vs-dropdown-item>
+        <vs-dropdown-item>
+          Option 2
+        </vs-dropdown-item>
+        <vs-dropdown-item divider>
+          Option 3
+        </vs-dropdown-item>
+      </vs-dropdown-menu>
+    </vs-dropdown>
+
+    <vs-dropdown >
+      <a class="a-icon" href.prevent>
+        Dropdown Option Disabled
+        <vs-icon class="" icon="expand_more"></vs-icon>
+      </a>
+
+      <vs-dropdown-menu>
+        <vs-dropdown-item>
+          Option 1
+        </vs-dropdown-item>
+        <vs-dropdown-item disabled>
+          Option 2
+        </vs-dropdown-item >
+        <vs-dropdown-item disabled divider>
+          Option 3
+        </vs-dropdown-item>
+      </vs-dropdown-menu>
+    </vs-dropdown>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'dropdown',
-  props: ['title', 'items'],
-  data () {
-    return {
-      isOpen: false
-    }
-  }
 }
 </script>
 
-<style>
-nav .menu-item svg {
-  width: 10px;
-  margin-left: 10px;
-}
-nav .menu-item .sub-menu {
-  position: absolute;
-  background-color: #222;
-  top: calc(100% + 18px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
-  border-radius: 0px 0px 16px 16px;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: all .5s ease-out;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
+<style lang="stylus">
+.examplex
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .a-icon
+    outline: none;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i
+      font-size: 18px;
 </style>
