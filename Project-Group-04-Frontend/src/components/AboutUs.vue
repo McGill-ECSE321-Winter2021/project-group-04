@@ -1,15 +1,12 @@
 <template>
   <div>
-    <div class="topnav">
-      <a> <router-link to="/home">Home</router-link></a>
-
+      <div class="topnav">
+      <a><router-link to="/home">Home</router-link></a>
       <a>
         <router-link to="/profile">
           My Profile
         </router-link>
       </a>
-
-
       <a>
         <router-link to="/car">
           My Car
@@ -20,9 +17,8 @@
           My Receipts
         </router-link>
       </a>
-
       <a>
-        <router-link to="/bookableServices">
+        <router-link to="/emergencyServices">
           Our Services
         </router-link>
 
@@ -31,7 +27,6 @@
         <router-link to="/team">
           Our Team
         </router-link>
-
       </a>
       <a class="active">
         <router-link to="/about">
@@ -39,65 +34,97 @@
         </router-link>
 
       </a>
-      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-        <i class="fa fa-bars"></i>
-      </a>
     </div>
-    <div>
-      <br />
-    </div>
-    <div>
+    
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+       <div>
       <br/>
-      <h3>Our Business</h3>
+      <h3>Our Business:</h3>
     </div>
     <div>
       <table class="paddingBetweenCols">
         <tr>
           <td>Adress</td>
           <td>
-            
+           <tr v-for="business in business" :key="business.name">
+              <td>{{ business.address }}</td>
+          </tr>            
           </td>
         </tr>
         <tr>
-          <td>Openning Hour</td>
+          <td>Phone Number</td>
           <td>
             
           </td>
         </tr>
         <tr>
-          <td>Closing Hour</td>
+          <td>Email Address</td>
           <td>
 
           </td>
         </tr>
         <tr>
-          <td>Phone number</td>
-          <td>
-
-          </td>
-        </tr>
-        <tr>
-          <td>Email Adress</td>
+          <td>Service</td>
           <td>
 
           </td>
         </tr>
       </table>
     </div>
-  </div>
+        <table>
+          <tr class="table">
+            <th>Days</th>
+            <th>Openning Hours</th>
+          </tr>
+            <tr v-for="businessHour in businessHours" :key="businessHour.openningHour">
+              <td>{{ businessHour.day }}</td>
+              <td>{{ businessHour.openningHour }}</td>
+          </tr>
+            <!-- <td class = "button">
+              <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
+            </td> -->
+
+        </table>
+        <!-- ​<span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span> -->
+        <hr>
+    </div>
+
 </template>
-<script>
-  function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-  }
+
+<script src="./BusinessHourHandling.js">
 </script>
 
+
 <style>
+
+  .button {
+    padding: 10px;
+  }
+
+  .template {
+    background-color: #ffffff;
+  }
+
+  .serviceTable table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .table {
+    background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+  
+  .table th {
+    color: #696969;
+    text-align: center;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;
@@ -113,7 +140,7 @@
       text-decoration: none;
       font-size: 17px;
     }
-    
+      
 
       /* Change the color of links on hover */
       .topnav a:not(active):hover {
@@ -160,7 +187,46 @@
         text-align: left;
       }
   }
-  .paddingBetweenCols td {
-    padding: 0 15px;
-  }
+
+  /* Dropdown Button */
+.dropbtn {
+  background-color: #696969;
+  color: white;
+  padding: 16px;
+  font-size: 30px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #FF4500;}
 </style>
