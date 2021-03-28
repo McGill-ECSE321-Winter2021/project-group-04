@@ -23,7 +23,7 @@
       </a>
 
       <a>
-        <router-link to="/services">
+        <router-link to="/Bookableservices">
           Our Services
         </router-link>
 
@@ -56,7 +56,7 @@
         <tr>
           <td>First Name</td>
           <td>
-            <input type="text" name="newFirstName" value=firstName>
+            <input type="text" name="newFirstName" placeholder="First Name">
           </td>
         </tr>
         <tr>
