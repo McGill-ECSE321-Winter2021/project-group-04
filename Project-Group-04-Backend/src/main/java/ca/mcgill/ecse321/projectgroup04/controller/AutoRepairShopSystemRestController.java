@@ -319,8 +319,10 @@ public class AutoRepairShopSystemRestController {
 	
 	///////////////////////////////////LOGIN LOGOUT///////////////////////////////////////
 	
-	@PostMapping(value = {"/login", "/login/"})
-	public void userLogin(@RequestParam String userId, @RequestParam String password) throws IllegalArgumentException {
+	@PostMapping(value = {"/login/{userId}", "/login/{userId}/"})
+	public void userLogin(@PathVariable("userId") String userId,
+	 	@RequestParam String password) throws IllegalArgumentException {
+		//System.out.println(userId);
 		if (userId.equalsIgnoreCase("owner")) {
 			service.loginAsOwner(userId, password);
 		}
@@ -839,11 +841,17 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/register/customer/{userId}", "/register/customer/{userId}/" })
 	public CustomerDto registerCustomer(@PathVariable("userId") String userId, @RequestParam String password,
-			@RequestParam Long reminders, @RequestParam Long car, @RequestParam Long profile)
+			@RequestParam String firstName, @RequestParam String lastName,
+			@RequestParam String address, @RequestParam String phoneNumber,
+			@RequestParam String zipCode, @RequestParam String emailAddress,
+			@RequestParam String modelNumber, @RequestParam String year,
+			@RequestParam String color)
 			throws IllegalArgumentException {
-		Car car1 = service.getCarByCarId(car);
-		Profile profile1 = service.getProfile(profile);
-		List<Reminder> reminder = service.getReminderByReminderId(reminders);
+		
+		Car car1 = service.createCar(modelNumber, year, color);
+		Profile profile1 = service.createProfile(address, phoneNumber, firstName, lastName, zipCode, emailAddress);
+		
+		List<Reminder> reminder = new ArrayList<>();
 		Customer customer = service.createCustomer(userId, password, reminder, car1, profile1);
 		CustomerDto customerDto = convertToDto(customer);
 		return customerDto;
