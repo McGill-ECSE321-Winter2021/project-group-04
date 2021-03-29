@@ -16,6 +16,59 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
+
+// window.onload = function() {
+//     var spanName = document.getElementsByClassName("newName")
+
+//     if (spanName.contentEditable) {
+//         spanName.onblur = function() {
+//             var text = this.innerHTML;
+//             newName = text.replace(/&/g, "&amp").replace(/</g, "&lt;");
+//         };
+//     }
+
+
+//     var spanPrice = document.getElementsByClassName("newPrice")
+
+//     if (spanPrice.contentEditable) {
+//         spanPrice.onblur = function() {
+//             var text = this.innerHTML;
+//             newPrice = text.replace(/&/g, "&amp").replace(/</g, "&lt;");
+//         };
+//     }
+// }
+
+// window.onload = function() {
+// 	if(localStorage.getItem('newName')) {
+// 		document.querySelector('.newName').innerHTML = localStorage.getItem('newName');
+//   }
+// }
+
+// let editBtn = document.querySelector('#edit_content');
+// let content = document.querySelector('.newName');
+
+// editBtn.addEventListener('click', () => {
+//   // Toggle contentEditable on button click
+// 	content.contentEditable = !content.isContentEditable;
+  
+//   // If disabled, save text
+//   if(content.contentEditable === 'false') {
+//   	localStorage.setItem('newName', content.innerHTML);
+//   }
+// });
+
+// $(window).load(function () {
+//     $(".trigger_popup_fricc").click(function(){
+//        $('.hover_bkgr_fricc').show();
+//     });
+//     $('.hover_bkgr_fricc').click(function(){
+//         $('.hover_bkgr_fricc').hide();
+//     });
+//     $('.popupCloseButton').click(function(){
+//         $('.hover_bkgr_fricc').hide();
+//     });
+// });
+
 export default {
     name: 'services',
     data() {
@@ -29,26 +82,58 @@ export default {
     },
 
     created: function(){
-        //test data
-        const emergencyService1 = new EmergencyServiceDto('$50', 'Towing')
-        //sample initial content
-        this.emergencyServices = [emergencyService1]
+        AXIOS.get('/emergencyServices')
+        .then(response => {this.emergencyServices = response.data})
+        .catch(e => {this.errorEmergencyService = e});
     }, 
 
     methods: {
         createEmergencyService: function(price, name){
-            var e = new emergencyServiceDto(price, name)
-            this.emergencyServicesServices.push(e)
-            this.newEmergencyService = ''
+          AXIOS.post('/create/emergencyService/' + name + '?price=' + price, {}, {})
+          .then(response => {
+            //   this.emergencyService = response.data.emergencyService
+              this.emergencyServices.push(response.data)
+              this.errorEmergencyService = ''
+              this.newEmergencyService = ''
+          })
+          .catch(e => {
+              var errorMSg = e
+              console.log(errorMSg)
+              this.errorEmergencyService = errorMSg
+              window.alert(e)
+          })
         },
 
         deleteEmergencyService: function(emergencyService){
-            this.emergencyServices.pop(emergencyService)
+            const id = emergencyService.id
+            AXIOS.delete('/delete/emergencyService/' + id , {}, {})
+            .then(response => {
+                this.emergencyServices.pop(response.data)
+            })
+            .catch(e => {
+                var errorMSg = e
+                console.log(errorMSg)
+                this.errorEmergencyService = errorMSg
+                window.alert(e)
+            })
         },
 
-        updateEmergencyService: function(emergencyService, price, name){
-          emergencyService.price = price
-          emergencyService.name = name
+        updateEmergencyService: function(emergencyService){
+            const id = emergencyService.id
+            AXIOS.patch('/edit/emergencyService/' + id + '?name=' + newName + '&price=' + newPrice, {}, {})
+            .then(response => {
+              //   this.emergencyService = response.data.emergencyService
+                // this.emergencyServices.push(response.data)
+                // this.errorEmergencyService = ''
+                // this.newEmergencyService = ''
+                this.emergencyService = response.data
+            })
+            .catch(e => {
+                var errorMSg = e
+                console.log(errorMSg)
+                this.errorEmergencyService = errorMSg
+                window.alert(e)
+            })
         }
 
     }

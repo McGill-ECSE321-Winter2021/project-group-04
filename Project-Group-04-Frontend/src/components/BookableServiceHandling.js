@@ -29,32 +29,59 @@ export default {
         }
     },
 
+
     created: function(){
-        //test data
-        const bookableService1 = new BookableServiceDto('0:10:00', '$20', 'Oil change')
-        const bookableService2 = new BookableServiceDto('1:00:00', '$50', 'Car wash')
-        //sample initial content
-        this.bookableServices = [bookableService1, bookableService2]
+        AXIOS.get('/bookableServices')
+        .then(response => {this.bookableServices = response.data})
+        .catch(e => {this.errorBookableService = e});
     }, 
 
     methods: {
-        createBookableService: function(duration, price, name){
-            var b = new BookableServiceDto(duration, price, name)
-            this.bookableServices.push(b)
-            this.newBookableService = ''
-        },
-
-        deleteBookableService: function(bookableService){
-            this.bookableServices.pop(bookableService)
-        },
-
-        updateBookableService: function(bookableService, duration, price, name){
-          bookableService.duration = duration
-          bookableService.price = price
-          bookableService.name = name
-        }
-
-    }
+        createBookableService: function(price, name, duration){
+            AXIOS.post('/create/bookableService/' + name + '?duration=' + duration + '&price=' + price, {}, {})
+            .then(response => {
+              //   this.bookableService = response.data.bookableService
+                this.bookableServices.push(response.data)
+                this.errorBookableService = ''
+                this.newBookableService = ''
+            })
+            .catch(e => {
+                var errorMSg = e
+                console.log(errorMSg)
+                this.errorBookableService = errorMSg
+                window.alert(e)
+            })
+          },
+  
+          deleteBookableService: function(bookableService){
+              const id = bookableService.id
+              AXIOS.delete('/delete/bookableService/' + id , {}, {})
+              .then(response => {
+                  this.bookableServices.pop(response.data)
+              })
+              .catch(e => {
+                  var errorMSg = e
+                  console.log(errorMSg)
+                  this.errorBookableService = errorMSg
+                  window.alert(e)
+              })
+          },
+  
+          updateBookableService: function(bookableService){
+              const id = bookableService.id
+              AXIOS.patch('/edit/bookableService/' + id + '?name=' + newName + '&duration=' + newDuration +'&price=' + newPrice, {}, {})
+              .then(response => {
+                  this.bookableService = response.data
+              })
+              .catch(e => {
+                  var errorMSg = e
+                  console.log(errorMSg)
+                  this.errorbookableService = errorMSg
+                  window.alert(e)
+              })
+          }
+  
+      }
 }
 
 // import axios from 'axios'
