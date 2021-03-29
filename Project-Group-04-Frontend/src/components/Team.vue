@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="topnav">
     <a> <router-link to="/home">Home</router-link></a>
 
@@ -37,23 +38,61 @@
       </router-link>
 
     </a>
+    </div>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
+        <div class="secondnav">
+    <hr>
+     <h2> Our Team </h2>
+  
+      <table>
+       
+      <tr class="table">
+       <th > Name</th>
+        <th> is Available</th>
+        <!-- <th>Total Price</th> -->
+      </tr>
+      
+        <tr  v-for="team in teams" :key="team.service">
+        <td> {{ team.name }}</td> 
+        <td>{{ team.isAvailable }}</td> 
+        <!-- <td> {{appointment.receipt.totalPrice}}</td> -->
+        </tr>
+
+      </table>
+    ​<span v-if="errorTeam" style="color:red">Error: {{errorTeam}} </span>
+    <hr>
+    </div>
   </div>
 </template>
-<script>
-  function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-  }
+
+<script  src = './TeamHandling.js'>
+ 
 </script>
 
 <style>
+
+ .secondnav table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+ .template {
+    background-color: #696969;
+  }
+ 
+  .table {
+    background-color: #f2f2f2;
+    margin: 0px;
+  }
+    .table th { 
+      color: #290e36;
+      
+      padding-left: 100px;
+      padding-right: 100px;
+      text-align: center;
+
+    }
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;
