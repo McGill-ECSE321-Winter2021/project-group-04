@@ -62,11 +62,14 @@
        ​</option>
      ​</select>
    ​</label>
-          <label> Date  <input type="date" v-model="date">
+
+          <label> Date  <input type="date" v-model="date" min="datePickerIdMin" required >
           </label>
-          <label> Time  <input type="time" v-model="time" >
+          <label> Time  <input type="time" v-model="time" step="300" min="08:00" max="18:00" required>
           </label>
-          <label> Spot  <input type="number" v-model="garageSpot" >
+          <label>
+            Spot  <input type="number" v-model="garageSpot" min="1" max="4" required>
+
           </label>
         </tr>
     </div>
@@ -87,7 +90,9 @@
   <span v-if="errorBooking" style="color:red">Error: {{errorBooking}} </span>
   </div>
  </template>
- 
+
+
+
  <script src = './HandlingBookableService.js'>
 
  </script>

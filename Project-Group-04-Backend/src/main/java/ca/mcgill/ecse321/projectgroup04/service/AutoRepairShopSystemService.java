@@ -324,6 +324,12 @@ public class AutoRepairShopSystemService {
 		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
 		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
 		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
+		if(garageSpot<1 || garageSpot >4) {
+			throw new IllegalArgumentException("Please chose a garage sport between 1 and 4");
+		}
+		if(date.before(Date.valueOf(LocalDate.now()))){
+			throw new IllegalArgumentException("Please book an appointment in the future");
+		}
 		for (BusinessHour businessHour : getAllBusinessHours()) {
 			if (businessHour.getStartTime().after(startTime) || businessHour.getEndTime().before(endTime)) {
 				throw new IllegalArgumentException("This time doesn't fall within business hours!");

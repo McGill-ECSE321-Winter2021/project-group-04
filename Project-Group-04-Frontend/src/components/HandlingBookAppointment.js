@@ -40,7 +40,22 @@ function myFunction() {
     } else {
       x.className = "topnav";
     }
-  }
+
+}
+
+function getMinDate() {
+    var todaysDate = new Date(); // Gets today's date
+    // Max date attribute is in "YYYY-MM-DD".  Need to format today's date accordingly
+    var year = todaysDate.getFullYear();                        // YYYY
+    var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2);  // MM
+    var day = ("0" + todaysDate.getDate()).slice(-2);           // DD
+  var maxDate = (day + "/" + month + "/" + year); // Results in "YYYY-MM-DD" for today's date 
+  // Now to set the max date value for the calendar to be today's date
+  return maxDate;
+}
+
+
+
 
 export default {
     name: 'receiptHandling',
@@ -48,7 +63,9 @@ export default {
       return {
         appointments: [],
         errorBookAppointment: '',
-        response: []
+
+        response: [],
+        datePickerIdMin : new Date().toISOString().split("T")[0]
       }
     },
 
