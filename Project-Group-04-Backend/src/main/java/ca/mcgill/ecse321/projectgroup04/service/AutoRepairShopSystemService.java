@@ -79,10 +79,18 @@ public class AutoRepairShopSystemService {
 		}
 		
 		List<Customer> customers = getAllCustomers();
+		//System.out.println(customers);
 		Customer foundCustomer = null;
 		
 		for (Customer customer : customers) {
+			/*System.out.println(customer.getUserId());
+			System.out.println(customer.getPassword());
+			
+			System.out.println(userId);
+			System.out.println(password);*/
+			
 			if (customer.getUserId().equals(userId) && customer.getPassword().equals(password)) {
+				//System.out.println(customer.getUserId());
 				currentUser = customer;
 				foundCustomer = customer;
 				break;

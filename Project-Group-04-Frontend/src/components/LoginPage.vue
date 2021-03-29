@@ -1,45 +1,49 @@
 <template>
   <div class="container">
     <div class="register-href">
-      <router-link to="/login"> Log In </router-link>
+      <router-link to="/register"> Register </router-link>
     </div>
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-6">
         <br />
         <br />
-        <h2 class="heading">Register!</h2>
+        <h2 class="heading">Log In!</h2>
         <h5 class="subheading">Using your User ID and Password</h5>
         <br style="margin-bottom: 240px" />
         <br style="margin-bottom: 240px" />
         <label for="floatingInput">User ID</label>
         <div class="form-floating mb-3">
           <input
-            type="email"
+            type="text"
+            v-model="userId"
             class="form-control"
             id="floatingInput"
             placeholder="User ID"
+            required
           />
         </div>
         <label for="floatingPassword">Password</label>
         <div class="form-floating">
           <input
-            type="password"
+            type="text"
+            v-model="password"
             class="form-control"
             id="floatingPassword"
             placeholder="Password"
+            required
           />
         </div>
         <br style="margin-bottom: 240px" />
         <br style="margin-bottom: 240px" />
         <div class="button">
           <h3>
-            <button type="LoginButton" class="btn btn-primary">Next</button>
+            <button @click="loginUser(userId, password)" type="LoginButton" class="btn btn-primary">Log In</button>
           </h3>
           <h3>
             <br />
             <router-link to="/">
-              <button type="RegisterButton" class="btn btn-primary">
+              <button type="CancelButton" class="btn btn-primary">
                 Cancel
               </button>
             </router-link>
@@ -53,12 +57,12 @@
   </div>
 </template>
 
-<script>
+<script src = "./Login.js">
 </script>
 
 <style scoped>
 .register-href {
-  padding: 20px 10px;
+  padding: 20px 1px;
   font-size: 25px;
   position: absolute;
   top: 0;
