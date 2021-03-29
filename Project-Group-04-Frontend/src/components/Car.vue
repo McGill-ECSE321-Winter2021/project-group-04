@@ -19,7 +19,7 @@
         </router-link>
       </a>
       <a>
-        <router-link to="/services">
+        <router-link to="/bookableServices">
           Our Services
         </router-link>
       </a>
@@ -69,8 +69,8 @@
     </div>
   </div>
 </template>
-<script>
-  src = "./CarHandling.js"
+<script  src = "./CarHandling.js">
+ 
 </script>
 
 <style>

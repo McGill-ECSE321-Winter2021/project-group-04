@@ -7,11 +7,15 @@ import Car from '@/components/Car'
 import AboutUs from '@/components/AboutUs'
 import Profile from '@/components/Profile'
 import Team from '@/components/Team'
-import Services from '@/components/Services'
+import BookableServices from '@/components/BookableServices'
+import EmergencyServices from '@/components/EmergencyServices'
 import Receipts from '@/components/Receipts'
-import Login from '@/components/Login'
-import Register from '@/components/Register'
+import LoginPage from '@/components/LoginPage'
+import UserSelectPage from '@/components/UserSelectPage'
+import EmployeeRegistrationPage from '@/components/EmployeeRegistrationPage'
+import CustomerRegistrationPage from '@/components/CustomerRegistrationPage'
 import WelcomePage from '@/components/WelcomePage'
+import BookAppointment from '@/components/BookAppointment'
 
 
 
@@ -28,14 +32,25 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'Login',
-      component: Login
+      name: 'LoginPage',
+      component: LoginPage
     },
     {
       path: '/register',
-      name: 'Register',
-      component: Register
+      name: 'UserSelectPage',
+      component: UserSelectPage
     },
+    {
+      path: '/register/employee',
+      name: 'EmployeeRegistrationPage',
+      component: EmployeeRegistrationPage
+    },
+    {
+      path: '/register/customer',
+      name: 'CustomerRegistrationPage',
+      component: CustomerRegistrationPage
+    },
+
     {
       path: '/app',
       name: 'AutoRepairShop',
@@ -67,15 +82,28 @@ export default new Router({
       component: Team
     },
     {
-      path: '/services',
-      name: 'Services',
-      component: Services
+      path: '/bookableServices',
+      name: 'BookableServices',
+      component: BookableServices
     }
     ,
+
+    {
+      path: '/emergencyServices',
+      name: 'EmergencyServices',
+      component: EmergencyServices
+    }
+    ,
+
     {
       path: '/receipts',
       name: 'Receipts',
       component: Receipts
+    },
+    {
+      path: '/book',
+      name: 'Booking',
+      component: BookAppointment
     }
   ]
 })

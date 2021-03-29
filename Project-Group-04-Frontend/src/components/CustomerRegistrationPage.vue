@@ -1,0 +1,204 @@
+<template>
+  <div class="container">
+    <div class="register-href">
+      <router-link to="/login"> Log In </router-link>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <br />
+        <br />
+        <h2 class="heading">Register!</h2>
+        <h4 class="subheading">Using your User ID and Password</h4>
+        <br style="margin-bottom: 240px" />
+        <br style="margin-bottom: 240px" />
+        <label for="floatingInput">User ID</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="userId"
+            class="form-control"
+            id="floatingInput"
+            placeholder="User ID"
+            required
+          />
+        </div>
+        <label for="floatingPassword">Password</label>
+        <div class="form-floating">
+          <input
+            type="text"
+            v-model="password"
+            class="form-control"
+            id="floatingPassword"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <br style="margin-bottom: 240px" />
+        <br style="margin-bottom: 240px" />
+        <h4> Fill up the form below to create your profile </h4>
+        <br />
+        <br />
+
+        <label for="floatingInput">First Name</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="firstName"
+            class="form-control"
+            id="floatingInput"
+            placeholder="First Name"
+            required
+          />
+        </div>
+
+        <label for="floatingInput">Last Name</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="lastName"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Last Name"
+            required
+          />
+        </div>
+
+        <label for="floatingInput">Address</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="address"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Address"
+            required
+          />
+        </div>
+
+        <label for="floatingInput">Phone Number</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="phoneNumber"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Phone Number"
+            required
+          />
+        </div>
+
+        <label for="floatingInput">Zip Code</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="zipCode"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Zip Code"
+            required
+          />
+        </div>
+
+        <label for="floatingInput">Email Address</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="emailAddress"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Email Address"
+            required
+          />
+        </div>
+        <br />
+
+        <h4> Enter your car details below </h4>
+        <br />
+        <br />
+
+        <label for="floatingInput">Model No.</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="modelNumber"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Model Number"
+            required
+          />
+        </div>
+
+        <label for="floatingInput">Year</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="year"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Year"
+            required
+          />
+        </div>
+
+        <label for="floatingInput">Color</label>
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            v-model="color"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Color"
+            required
+          />
+        </div>
+
+        <br />
+        <br />
+
+        <div class="button">
+          <h3>
+            <button @click="registerCustomer(userId, password, firstName, lastName, address, 
+            phoneNumber, zipCode, emailAddress, modelNumber, year, color)" 
+            type="RegisterButton" class="btn btn-primary">Register</button>
+          </h3>
+          <h3>
+            <br />
+            <router-link to="/">
+              <button type="CancelButton" class="btn btn-primary">
+                Cancel
+              </button>
+            </router-link>
+          </h3>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <br />
+    <br />
+  </div>
+</template>
+
+<script src = "./CustomerRegistrationHandling.js">
+</script>
+
+<style scoped>
+.register-href {
+  padding: 20px 10px;
+  font-size: 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  text-align: left;
+}
+
+.container {
+  background-color: rgb(248, 247, 247);
+}
+.btn-primary {
+  padding: 10px 20px;
+  font-size: 25px;
+  border-radius: 10px;
+}
+</style>

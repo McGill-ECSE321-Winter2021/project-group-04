@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       profile: '',
+      newProfile :{
       firstName: 'Mohamad',
       lastName: 'Dimassi',
       addressLine: 'Beirut, Lebanon',
@@ -41,6 +42,7 @@ export default {
       phoneNumber: '4389786824',
       profileId: '4242',
       errorProfile: '',
+      },
       response: []
     }
   },
@@ -56,6 +58,7 @@ export default {
         this.emailAddress = profile.emailAddress
         this.zipCode = profile.zipCode
         this.phoneNumber = profile.phoneNumber
+       
       })
       .catch(e => {
         this.errorProfile = e
