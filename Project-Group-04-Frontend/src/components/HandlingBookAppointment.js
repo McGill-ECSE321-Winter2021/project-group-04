@@ -52,33 +52,42 @@ export default {
       }
     },
 
-    created: function () {
-    const b = new BookableServiceDto(30, 'oil')
-    const t = new TimeSlotDto('2021-02-12', '09:00:00','2021-02-12', '12:00:00','1')
-    const r = new ReceiptDto(b.price)
-    const a = new AppointmentDto(t,b,r)
+    // created: function () {
+    // const b = new BookableServiceDto(30, 'oil')
+    // const t = new TimeSlotDto('2021-02-12', '09:00:00','2021-02-12', '12:00:00','1')
+    // const r = new ReceiptDto(b.price)
+    // const a = new AppointmentDto(t,b,r)
 
-    this.appointments = [a]
+    // this.appointments = [a]
 
-}
-// methods: {
-//     createAppointment: function (selectedService, date,time,garageSpot) {
-//     //   AXIOS.post('/appointment/'.concat(appointmentId), {}, {})
-//     //     .then(response => {
-//         // JSON responses are automatically parsed.
-//         var timeSlot = new TimeSlotDto(date, time, date, time+ selectedService.duration, garageSpot)
-//         var receipt = new ReceiptDto(selectedService.price)
-//         var appointment = new AppointmentDto(timeSlot, selectedService,receipt)
-//         this.appointments.push(appointment)
-//         //   this.errorPerson = ''
-        
-//         }
-//         // .catch(e => {
-//         //   var errorMsg = e.response.data.message
-//         //   console.log(errorMsg)
-//         //   this.errorPerson = errorMsg
-//         // })
-//     }
+    
+
+
+methods: {
+    bookAppointment: function (selectedService, date,time,garageSpot) {
+     
+        AXIOS.post('/book/appointment/'+yasmina +selectedService +'?date='+date+ '&garageSpot=' 
+        + garageSpot+ '&startTime='+time+ '&garageTechnicianId=' + 74 ,{},{})
+        .then(response => {
+          this.$router.go('Home')
+            // if(userId.localeCompare("owner")){
+            //     this.$router.push('Home')    // need to change to owner homepage
+            // }
+
+            // else if(userId.localeCompare("admin")){
+            //   this.$router.push('Home')      // need to change to owner homepage
+            // }
+
+            // else{
+            //   this.$router.push('Home')
+            // }
+        })
+        .catch(e => {
+            var errMsg = e.response.data.message
+            window.alert("Please register an account")
+        });
+    },
+    }
 }
 
 

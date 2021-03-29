@@ -71,10 +71,8 @@
         </tr>
     </div>
     <div class="bookButton">
- <!-- <button v-bind:disabled="!garageSpot" @click="createAppointment(selectedService, date,time,garageSpot)" class="btn btn-primary">Book</button> -->
-  <button type="bookAppointmentButton" class="btn btn-primary" @click="createAppointment(selectedService, date,time,garageSpot)" >
-               Book
-      </button>
+  <button @click="bookAppointment(selectedService, date,time,garageSpot)" type="bookAppointmentButton" 
+        class="btn btn-primary"  >  Book</button>
   </div>
    <div class="backButton">
        <router-link to="/home">

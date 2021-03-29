@@ -41,7 +41,7 @@
     </a>
        <div>
       <br/>
-      <h3>Our Business:</h3>
+      <h3>Our Business</h3>
     </div>
     <div>
       <table class="paddingBetweenCols">
