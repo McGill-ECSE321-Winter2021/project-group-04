@@ -1404,6 +1404,27 @@ public class AutoRepairShopSystemService {
 		}
 		throw new IllegalArgumentException("No Profile with such First Name and Last Name");
 	}
+	
+	@Transactional
+	public Profile getProfileByUserId(String userId) {
+		System.out.println("enterred the function");
+		if(userId=="" || userId==null) {
+			throw new IllegalArgumentException("userId can't be null or empty");
+		}
+		System.out.println("gonna get user");
+		Customer customer = customerRepository.findCustomerByUserId(userId);
+		if(customer==null) {
+			throw new IllegalArgumentException("No customer with such userId exist");
+		}
+		System.out.println("gonna get profile");
+		Profile profile = customer.getCustomerProfile();
+		if(profile==null) {
+			throw new IllegalArgumentException("This customer does not have a valid profile");
+		}
+		System.out.println("gonna return");
+
+		return profile;
+	}
 
 	public boolean isOverlap(TimeSlot timeSlot1, Time startTime, Time endTime, Integer garageSpot) {
 		if (timeSlot1.getGarageSpot().equals(garageSpot)) {

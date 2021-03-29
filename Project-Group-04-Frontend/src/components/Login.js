@@ -37,8 +37,8 @@ var AXIOS = axios.create({
                   }
               })
               .catch(e => {
-                  var errMsg = e.response.data.message
-                  window.alert("Please register an account")
+                var errMsg = e.response.data.message
+                window.alert("Please register an account")
               });
           },
       }

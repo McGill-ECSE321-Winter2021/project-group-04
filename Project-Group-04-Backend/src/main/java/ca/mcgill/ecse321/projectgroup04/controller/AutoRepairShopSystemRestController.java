@@ -356,6 +356,11 @@ public class AutoRepairShopSystemRestController {
 	public ProfileDto getProfileById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
 		return convertToDto(service.getProfile(Id));
 	}
+	
+	@GetMapping(value = { "/profiles/{userId}", "/profiles/{userId}/" })
+	public ProfileDto getProfileByUserId(@PathVariable("userId") String userId) throws IllegalArgumentException {
+		return convertToDto(service.getProfileByUserId(userId));
+	}
 
 	@GetMapping(value = { "/appointments", "/appointments/" })
 	public List<AppointmentDto> getAllAppointments() {
