@@ -48,90 +48,93 @@
       <br />
       <h2>My Profile</h2>
 
-      <button class = "btn btn-primary" v-bind="!newFirstName" @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
+      <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
         Save Changes
       </button>
     <h3 class ="updateMessage"> Update </h3>
       <table class="paddingBetweenCols">
        
         <tr>
-          <td>First Name</td>
+          <td>New First Name</td>
           <td>
 
-            <input type="text" name="newFirstName" placeholder="First Name">
+            <input type="text" v-model="newFirstName" v-if="profile" placeholder="First Name" required>
           </td>
         </tr>
         <tr>
-          <td>Last Name</td>
+          <td>New Last Name</td>
           <td>
-            <input type="text" name="newLastName" placeholder="Last Name">
+            <input type="text" v-model="newLastName" v-if="profile" placeholder="Last name" required>
           </td>
         </tr>
         <tr>
-          <td>Address Line</td>
+          <td>New Address Line</td>
           <td>
-            <input type="text" name="newAddressLine" placeholder="Address Line">
+            <input type="text" v-model="newAddressLine" v-if="profile" placeholder="Address Line" required>
           </td>
         </tr>
         <tr>
-          <td>Email Address</td>
+          <td>New Email Address</td>
           <td>
-            <input type="text" name="newEmailAddress" placeholder="Email Address">
+            <input type="text" v-model="newEmailAddress" v-if="profile" placeholder="Email Address" required>
           </td>
         </tr>
         <tr>
-          <td>Zip Code</td>
+          <td>New Zip Code</td>
           <td>
-            <input type="text" name="newZipCode" placeholder="Zip Code">
+            <input type="text" v-model="newZipCode" v-if="profile" placeholder="Zip Code" required>
           </td>
         </tr>
         <tr>
-          <td>Phone Number</td>
+          <td>New Phone Number</td>
           <td>
-            <input type="text" name="newPhoneNumber" placeholder="Phone Number">
+            <input type="text" v-model="newPhoneNumber" v-if="profile" placeholder="Phone Number" required>
           </td>
         </tr>
         </table>
-      <!-- </table>
-      <table class="secondTables">
+      <button class="btn btn-primary" @click="getProfile()">
+        Get Profile
+      </button>
+      <table class="paddingBetweenCols">
        
         <tr>
-          <td>First Name</td>
+          <td>Current First Name</td>
           <td>
-            <input type="text" name="newFirstName" value=firstName>
+            <input type="text" name="currentFirstName" v-if="profile" :value=profile.firstName>
           </td>
         </tr>
         <tr>
-          <td>Last Name</td>
+          <td>Current Last Name</td>
           <td>
-            <input type="text" name="newLastName" >
+            <input type="text" name="currentLastName" v-if="profile" :value=profile.lastName >
           </td>
         </tr>
         <tr>
-          <td>Address Line</td>
+          <td>Current Address Line</td>
           <td>
-            <input type="text" name="newAddressLine" >
+            <input type="text" name="currentAddressLine" v-if="profile" :value=profile.addressLine>
           </td>
         </tr>
         <tr>
-          <td>Email Address</td>
+          <td>Current Email Address</td>
           <td>
-            <input type="text" name="newEmailAddress" >
+            <input type="text" name="currentEmailAddress" v-if="profile" :value=profile.emailAddress>
           </td>
         </tr>
         <tr>
-          <td>Zip Code</td>
+          <td>Current Zip Code</td>
           <td>
-            <input type="text" name="newZipCode">
+            <input type="text" name="currentZipCode" v-if="profile" :value=profile.zipCode>
           </td>
         </tr>
         <tr>
-          <td>Phone Number</td>
+          <td>Current Phone Number</td>
           <td>
-            <input type="text" name="newPhoneNumber" >
+            <input type="text" name="currentPhoneNumber" v-if="profile" :value=profile.phoneNumber>
           </td>
         </tr>
-      </table> -->
+      </table>
+      <br/>
       <span v-if="errorProfile" style="color:red">Error: {{errorProfile}} </span>
     </div>
   </div>
