@@ -40,6 +40,7 @@ function myFunction() {
     } else {
       x.className = "topnav";
     }
+
 }
 
 function getMinDate() {
@@ -55,12 +56,14 @@ function getMinDate() {
 
 
 
+
 export default {
     name: 'receiptHandling',
     data() {
       return {
         appointments: [],
         errorBookAppointment: '',
+
         response: [],
         datePickerIdMin : new Date().toISOString().split("T")[0]
       }
