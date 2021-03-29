@@ -48,94 +48,90 @@
       <br />
       <h2>My Profile</h2>
 
-      <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
+     
+    <!-- <h3 class ="updateMessage"> Update </h3> -->
+    <div>
+      <table class="paddingBetweenCols" >
+        <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
         Save Changes
       </button>
-    <h3 class ="updateMessage"> Update </h3>
-      <table class="paddingBetweenCols">
-       
         <tr>
           <td>New First Name</td>
           <td>
 
-            <input type="text" v-model="newFirstName" v-if="profile" placeholder="First Name" required>
+            <input type="text" v-model="newFirstName"  placeholder="First Name" required>
           </td>
         </tr>
         <tr>
           <td>New Last Name</td>
           <td>
-            <input type="text" v-model="newLastName" v-if="profile" placeholder="Last name" required>
+            <input type="text" v-model="newLastName"  placeholder="Last name" required>
           </td>
         </tr>
         <tr>
           <td>New Address Line</td>
           <td>
-            <input type="text" v-model="newAddressLine" v-if="profile" placeholder="Address Line" required>
+            <input type="text" v-model="newAddressLine" placeholder="Address Line" required>
           </td>
         </tr>
         <tr>
           <td>New Email Address</td>
           <td>
-            <input type="text" v-model="newEmailAddress" v-if="profile" placeholder="Email Address" required>
+            <input type="text" v-model="newEmailAddress"  placeholder="Email Address" required>
           </td>
         </tr>
         <tr>
           <td>New Zip Code</td>
           <td>
-            <input type="text" v-model="newZipCode" v-if="profile" placeholder="Zip Code" required>
+            <input type="text" v-model="newZipCode"  placeholder="Zip Code" required>
           </td>
         </tr>
         <tr>
           <td>New Phone Number</td>
           <td>
-            <input type="text" v-model="newPhoneNumber" v-if="profile" placeholder="Phone Number" required>
+            <input type="text" v-model="newPhoneNumber"  placeholder="Phone Number" required>
           </td>
         </tr>
         </table>
-      <button class="btn btn-primary" @click="getProfile()">
-        Get Profile
-      </button>
-      <table class="paddingBetweenCols">
+    </div>
+      <br />
+      <div >
        
+      <table class="paddingBetweenCols" >
+       
+    
+    <tr>
+      <td>Current First Name</td>
+        <td> {{ profile.firstName }}</td>
+   </tr>
+   <tr>
+     <td> Current Last Name</td>
+        <td>{{ profile.lastName}}</td> 
+   </tr>
+   <tr>
+         <td>Current Address Line</td>
+         <!-- <td v-if="profile" :key="profile.addressLine"> -->
+         
+        <td>{{ profile.addressLine}}</td> 
+</tr>
+         <td>Current Email Address</td>
+       
+        <td>{{ profile.emailAddress}}</td> 
         <tr>
-          <td>Current First Name</td>
-          <td>
-            <input type="text" name="currentFirstName" v-if="profile" :value=profile.firstName>
-          </td>
-        </tr>
-        <tr>
-          <td>Current Last Name</td>
-          <td>
-            <input type="text" name="currentLastName" v-if="profile" :value=profile.lastName >
-          </td>
-        </tr>
-        <tr>
-          <td>Current Address Line</td>
-          <td>
-            <input type="text" name="currentAddressLine" v-if="profile" :value=profile.addressLine>
-          </td>
-        </tr>
-        <tr>
-          <td>Current Email Address</td>
-          <td>
-            <input type="text" name="currentEmailAddress" v-if="profile" :value=profile.emailAddress>
-          </td>
-        </tr>
-        <tr>
-          <td>Current Zip Code</td>
-          <td>
-            <input type="text" name="currentZipCode" v-if="profile" :value=profile.zipCode>
-          </td>
-        </tr>
-        <tr>
-          <td>Current Phone Number</td>
-          <td>
-            <input type="text" name="currentPhoneNumber" v-if="profile" :value=profile.phoneNumber>
-          </td>
-        </tr>
+        <td>Current Zip Code</td>
+       
+        <td>{{ profile.zipCode}}</td> 
+</tr>
+<tr>
+        <td>Current Phone Number</td>
+       
+        <td>{{ profile.phoneNumber}}</td>
+    </tr>
+       
       </table>
+      </div>
       <br/>
-      <span v-if="errorProfile" style="color:red">Error: {{errorProfile}} </span>
+      <span v-if="errorProfile" style="color:red"> {{errorProfile}} </span>
     </div>
   </div>
 </template>
@@ -151,13 +147,8 @@
     overflow: hidden;
   }
 
-  .paddingBetweenCols td {
-    padding: 0 15px;
-  }
 
-  .secondTable td{
-    padding: 0 15px;
-  }
+
 
   /* Style the links inside the navigation bar */
   .topnav a {
@@ -230,5 +221,8 @@
     font-size: 23px;
       }
 
+.paddingBetweenCols {
+ padding: 0 15px;
+}
  
 </style>

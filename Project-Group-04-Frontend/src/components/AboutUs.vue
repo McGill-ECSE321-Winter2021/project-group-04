@@ -40,6 +40,7 @@
       <i class="fa fa-bars"></i>
     </a>
 
+
       <div class = "businessTable">  
         <hr>
           <h2>
@@ -61,6 +62,7 @@
           </h2>
 
         ​<table>
+
           <tr class="table">
             <th>Adress</th>
             <th>Phone Number</th>

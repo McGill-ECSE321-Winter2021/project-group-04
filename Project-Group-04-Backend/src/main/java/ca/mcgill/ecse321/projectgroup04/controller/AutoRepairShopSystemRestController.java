@@ -802,11 +802,11 @@ public class AutoRepairShopSystemRestController {
 	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
-			@RequestParam Integer garageSpot,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String startTime,
+			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
+			@RequestParam(name = "garageSpot") Integer garageSpot,
+			@RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime,
 			@RequestParam(name = "Garage Technician Id") Long garageTechnicianId) throws IllegalArgumentException {
-
+				System.out.println("Entered");
 		return convertToDto(service.bookAppointment(userId, serviceName, Date.valueOf(LocalDate.parse(date)),
 				garageSpot, Time.valueOf(LocalTime.parse(startTime)), garageTechnicianId));
 	}
@@ -944,7 +944,7 @@ public class AutoRepairShopSystemRestController {
 
 	@GetMapping(value = { "/timeSlot/{startDate}/{startTime}", "/timeSlot/{startDate}/{startTime}/" })
 	public TimeSlotDto getTimeSlotByStartDateAndStartTime(
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String startDate,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "c") String startDate,
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime)
 			throws IllegalArgumentException {
 		TimeSlot timeSlot = service.getTimeSlotByStartDateAndStartTime(Date.valueOf(LocalDate.parse(startDate)),
