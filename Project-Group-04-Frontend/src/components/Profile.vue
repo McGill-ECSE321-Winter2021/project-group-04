@@ -49,9 +49,9 @@
       <h2>My Profile</h2>
 
      
-    <h3 class ="updateMessage"> Update </h3>
-    <div class= "col-md-6 col-sm-12">
-      <table class="paddingBetweenCols" style="float: left; width: 50%;">
+    <!-- <h3 class ="updateMessage"> Update </h3> -->
+    <div>
+      <table class="paddingBetweenCols" >
         <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
         Save Changes
       </button>
@@ -94,23 +94,18 @@
         </tr>
         </table>
     </div>
-      
-      <div class = "col-md-6 col-sm-12">
+      <br />
+      <div >
        
-      <table class="secondPaddingBetweenCols" style="float: right; width: 50%;" >
-        <button class="btn btn-primary" @click="getProfile()">
-        Get Profile
-      </button>
+      <table class="paddingBetweenCols" >
+       
     
     <tr>
       <td>Current First Name</td>
-      <td  v-if="profile" :key="profile.firstName">
         <td> {{ profile.firstName }}</td>
    </tr>
    <tr>
      <td> Current Last Name</td>
-     
-       
         <td>{{ profile.lastName}}</td> 
    </tr>
    <tr>
@@ -136,7 +131,7 @@
       </table>
       </div>
       <br/>
-      <span v-if="errorProfile" style="color:red">Error: {{errorProfile}} </span>
+      <span v-if="errorProfile" style="color:red"> {{errorProfile}} </span>
     </div>
   </div>
 </template>
@@ -226,8 +221,8 @@
     font-size: 23px;
       }
 
-.secondPaddingBetweenCols table{
- padding: 1000px;
+.paddingBetweenCols {
+ padding: 0 15px;
 }
  
 </style>

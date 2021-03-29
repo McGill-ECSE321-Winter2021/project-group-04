@@ -18,7 +18,8 @@ function TimeSlotDto(startDate, startTime,endDate, endTime, garageSpot){
     this.garageSpot = garageSpot
 }
 
-function BookableServiceDto(price, name){
+function BookableServiceDto(duration,price, name){
+  this.duration = duration
     this.price = price
     this.name = name
 }
@@ -61,47 +62,39 @@ export default {
     name: 'receiptHandling',
     data() {
       return {
-        appointments: [],
+        appointment: '',
         errorBookAppointment: '',
+        bookableServices: [],
 
         response: [],
         datePickerIdMin : new Date().toISOString().split("T")[0]
       }
     },
 
-    // created: function () {
-    // const b = new BookableServiceDto(30, 'oil')
-    // const t = new TimeSlotDto('2021-02-12', '09:00:00','2021-02-12', '12:00:00','1')
-    // const r = new ReceiptDto(b.price)
-    // const a = new AppointmentDto(t,b,r)
-
-    // this.appointments = [a]
-
-    
-
+    created: function(){
+      AXIOS.get('/bookableServices')
+      .then(response => {this.bookableServices = response.data})
+      .catch(e => {this.errorBookAppointment})
+    },
 
 methods: {
     bookAppointment: function (selectedService, date,time,garageSpot) {
-     
-        AXIOS.post('/book/appointment/'+yasmina +selectedService +'?date='+date+ '&garageSpot=' 
-        + garageSpot+ '&startTime='+time+ '&garageTechnicianId=' + 74 ,{},{})
+     console.log(selectedService)
+     console.log(date)
+     console.log(garageSpot)
+     console.log(time)
+
+        AXIOS.post('/book/appointment/'+ "abrarfahad7" + selectedService +'?date='+date+ '&garageSpot=' 
+        + garageSpot+ '&startTime='+time+ '&Garage Technician Id=' + 74 ,{},{})
         .then(response => {
-          this.$router.go('Home')
-            // if(userId.localeCompare("owner")){
-            //     this.$router.push('Home')    // need to change to owner homepage
-            // }
-
-            // else if(userId.localeCompare("admin")){
-            //   this.$router.push('Home')      // need to change to owner homepage
-            // }
-
-            // else{
-            //   this.$router.push('Home')
-            // }
+          this.appointment = response.data
+          // this.$router.go('Home')
+        
         })
         .catch(e => {
-            var errMsg = e.response.data.message
-            window.alert("Please register an account")
+
+            var errMsg = e
+            window.alert(errMsg)
         });
     },
     }
