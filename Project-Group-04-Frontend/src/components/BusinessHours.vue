@@ -29,7 +29,7 @@
         </router-link>
       </a>
       <a class="active">
-        <router-link to="/about">
+        <router-link to="/businessHours">
           About Us
         </router-link>
 
@@ -39,7 +39,6 @@
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
-
 
       <div class = "businessTable">  
         <hr>
@@ -61,17 +60,14 @@
             </div>
           </h2>
 
-        ​<table>
-
+       <table>
           <tr class="table">
-            <th>Adress</th>
-            <th>Phone Number</th>
-            <th>Email Address</th>
+            <th>Days</th>
+            <th>Openning Hours</th>
           </tr>
-          <tr v-for="business in businesses" :key="business.services">
-            <td>{{ business.address }}</td>
-            <td>{{ business.phoneNumber }}</td>
-            <td>{{ business.emailAddress }}</td>
+            <tr v-for="businessHour in businessHours" :key="businessHour.openningHour">
+              <td>{{ businessHour.day }}</td>
+              <td>{{ businessHour.openningHour }}</td>
           </tr>
         </table>
         <hr>
@@ -79,7 +75,7 @@
   </div>
 </template>
 
-<script src="./BusinessHandling.js">
+<script src="./BusinessHourHandling.js">
 </script>
 
 <style>
