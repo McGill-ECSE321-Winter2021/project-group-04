@@ -34,7 +34,6 @@ export default {
     name: 'receiptHandling',
     data() {
       return {
-        receipts: [],
         appointments: [],
         errorReceipt: '',
         response: []

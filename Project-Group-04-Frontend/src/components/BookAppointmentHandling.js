@@ -69,7 +69,7 @@ methods: {
         var timeSlot = new TimeSlotDto(date, time, date, time+ selectedService.duration, garageSpot)
         var receipt = new ReceiptDto(selectedService.price)
         var appointment = new AppointmentDto(timeSlot, selectedService,receipt)
-          this.appointments.push(appointment)
+        this.appointments.push(appointment)
         //   this.errorPerson = ''
         
         }
