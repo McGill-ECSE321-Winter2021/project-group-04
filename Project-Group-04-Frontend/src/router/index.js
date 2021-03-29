@@ -10,8 +10,10 @@ import Team from '@/components/Team'
 import BookableServices from '@/components/BookableServices'
 import EmergencyServices from '@/components/EmergencyServices'
 import Receipts from '@/components/Receipts'
-import Login from '@/components/Login'
-import Register from '@/components/Register'
+import LoginPage from '@/components/LoginPage'
+import UserSelectPage from '@/components/UserSelectPage'
+import EmployeeRegistrationPage from '@/components/EmployeeRegistrationPage'
+import CustomerRegistrationPage from '@/components/CustomerRegistrationPage'
 import WelcomePage from '@/components/WelcomePage'
 import BookAppointment from '@/components/BookAppointment'
 
@@ -30,14 +32,25 @@ export default new Router({
     },
     {
       path: '/login',
-      name: 'Login',
-      component: Login
+      name: 'LoginPage',
+      component: LoginPage
     },
     {
       path: '/register',
-      name: 'Register',
-      component: Register
+      name: 'UserSelectPage',
+      component: UserSelectPage
     },
+    {
+      path: '/register/employee',
+      name: 'EmployeeRegistrationPage',
+      component: EmployeeRegistrationPage
+    },
+    {
+      path: '/register/customer',
+      name: 'CustomerRegistrationPage',
+      component: CustomerRegistrationPage
+    },
+
     {
       path: '/app',
       name: 'AutoRepairShop',
