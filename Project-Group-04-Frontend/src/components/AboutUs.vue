@@ -18,7 +18,7 @@
         </router-link>
       </a>
       <a>
-        <router-link to="/emergencyServices">
+        <router-link to="/BookableServices">
           Our Services
         </router-link>
 
@@ -39,63 +39,46 @@
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
       <i class="fa fa-bars"></i>
     </a>
-       <div>
-      <br/>
-      <h3>Our Business:</h3>
-    </div>
-    <div>
-      <table class="paddingBetweenCols">
-        <tr>
-          <td>Adress</td>
-          <td>
-           <tr v-for="business in business" :key="business.name">
-              <td>{{ business.address }}</td>
-          </tr>            
-          </td>
-        </tr>
-        <tr>
-          <td>Phone Number</td>
-          <td>
-            
-          </td>
-        </tr>
-        <tr>
-          <td>Email Address</td>
-          <td>
 
-          </td>
-        </tr>
-        <tr>
-          <td>Service</td>
-          <td>
+      <div class = "businessTable">  
+        <hr>
+          <h2>
+            <div class="dropdown">
+              <button class="dropbtn">Our Business</button>
+              <div class="dropdown-content">
+                <a>
+                  <router-link to="/businessHours">
+                    Business Hours
+                  </router-link>
+                </a>
+                <a>
+                  <router-link to="/about">
+                    Contact us
+                  </router-link>
+                </a>
+              </div>
+            </div>
+          </h2>
 
-          </td>
-        </tr>
-      </table>
-    </div>
-        <table>
+        ​<table>
           <tr class="table">
-            <th>Days</th>
-            <th>Openning Hours</th>
+            <th>Adress</th>
+            <th>Phone Number</th>
+            <th>Email Address</th>
           </tr>
-            <tr v-for="businessHour in businessHours" :key="businessHour.openningHour">
-              <td>{{ businessHour.day }}</td>
-              <td>{{ businessHour.openningHour }}</td>
+          <tr v-for="business in businesses" :key="business.services">
+            <td>{{ business.address }}</td>
+            <td>{{ business.phoneNumber }}</td>
+            <td>{{ business.emailAddress }}</td>
           </tr>
-            <!-- <td class = "button">
-              <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
-            </td> -->
-
         </table>
-        <!-- ​<span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span> -->
         <hr>
     </div>
-
+  </div>
 </template>
 
-<script src="./BusinessHourHandling.js">
+<script src="./BusinessHandling.js">
 </script>
-
 
 <style>
 

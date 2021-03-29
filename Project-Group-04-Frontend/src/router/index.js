@@ -5,6 +5,7 @@ import AutoRepairShop from '@/components/AutoRepairShop'
 import Home from '@/components/Home'
 import Car from '@/components/Car'
 import AboutUs from '@/components/AboutUs'
+import BusinessHours from '@/components/BusinessHours'
 import Profile from '@/components/Profile'
 import Team from '@/components/Team'
 import BookableServices from '@/components/BookableServices'
@@ -75,6 +76,11 @@ export default new Router({
       path: '/about',
       name: 'AboutUs',
       component: AboutUs
+    },
+    {
+      path: '/businessHours',
+      name: 'BusinessHours',
+      component: BusinessHours
     },
     {
       path: '/team',
