@@ -44,7 +44,7 @@ export default {
     editProfile: function (firstName, lastName, addressLine, emailAddress, zipCode, phoneNumber) {
       // Create a new person and add it to the list of people
       
-      AXIOS.patch('/edit/profile/' + this.profileId + '?Email Address=' + emailAddress + '&Phone Number=' + phoneNumber
+      AXIOS.patch('/edit/profile/' + this.profile.profileId + '?Email Address=' + emailAddress + '&Phone Number=' + phoneNumber
         + '&Address Line=' + addressLine + '&Zip Code=' + zipCode + '&First Name=' + firstName + '&Last Name=' + lastName,
         {}, {}
         )
@@ -62,7 +62,7 @@ export default {
     },
     getProfile: function () {
       // Initializing persons from backend
-      AXIOS.get('/profile/' + "abrarfahad7")
+      AXIOS.get('/profiles/' + "abrarfahad7")
         .then(response => {
           // JSON responses are automatically parsed.
           this.profile = response.data
