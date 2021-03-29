@@ -341,6 +341,23 @@ public class AutoRepairShopSystemRestController {
 		service.logout();
 	}
 	
+	@GetMapping(value = {"/login/currentUser", "/login/currentUser/"})
+	public User getCurrentUser() {
+		User currentUser = service.getLoggedUser();
+		if (currentUser.getUserId().equalsIgnoreCase("owner")) {
+			return ((Owner) currentUser);
+		}
+		
+		else if (currentUser.getUserId().equalsIgnoreCase("admin")) {
+			return ((AdministrativeAssistant) currentUser);
+		}
+		
+		else {
+			return ((Customer) currentUser);
+		}
+	}
+	
+	
 	//////////////////////////////////////////////////////////////////////////////////////
 
 	@GetMapping(value = { "/profiles", "/profiles/" })
