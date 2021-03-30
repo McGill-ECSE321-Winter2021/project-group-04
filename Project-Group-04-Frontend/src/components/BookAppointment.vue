@@ -95,6 +95,7 @@
 
  </script>
 
+
  <style>
  .table {
      display: flex;

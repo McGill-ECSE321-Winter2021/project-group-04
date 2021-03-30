@@ -50,7 +50,7 @@
                 Book a new Appointment
               </button>
             </router-link>
-      <button type="cancelAppointment" class="btn btn-primary">
+      <button type="cancelAppointment" class="btn btn-primary"  @click="cancelAppointment()">
                 Cancel your appointment
               </button>
     </div>
@@ -68,18 +68,18 @@
            <th>Spot</th>
          
         </tr>
-         <tr  v-for="appointment in appointments" :key="appointment.service">           
-        <td> {{ appointment.timeSlot.startDate }}</td> 
+         <tr v-for="appointment in appointments" :key="appointment.timeSlot.startDate">           
+         <td> {{ appointment.timeSlot.startDate }}</td> 
         <td>{{ appointment.timeSlot.startTime }}</td> 
-        <td> {{appointment.timeSlot.endTime}}</td>
-        <td> {{appointment.service.name}}</td>
+        <td> {{appointment.timeSlot.endTime}}</td> 
+         <td> {{appointment.bookableService.name}}</td> 
         <td> {{appointment.timeSlot.garageSpot}}</td>
         </tr>
       </table>
     </div>
   </div>
 </template>
-<script src='./BookAppointmentHandling'>
+<script src='./BookAppointmentHandling.js'>
   
 </script>
 

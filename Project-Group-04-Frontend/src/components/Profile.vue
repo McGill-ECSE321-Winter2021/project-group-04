@@ -99,7 +99,9 @@
        
       <table class="paddingBetweenCols" >
        
-    
+    <!-- <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
+       Show Profile
+      </button> -->
     <tr>
       <td>Current First Name</td>
         <td> {{ profile.firstName }}</td>

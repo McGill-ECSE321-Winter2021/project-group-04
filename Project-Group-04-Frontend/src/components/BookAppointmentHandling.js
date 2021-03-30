@@ -18,7 +18,8 @@ function TimeSlotDto(startDate, startTime,endDate, endTime, garageSpot){
     this.garageSpot = garageSpot
 }
 
-function BookableServiceDto(price, name){
+function BookableServiceDto(duration,price, name){
+  this.duration = duration
     this.price = price
     this.name = name
 }
@@ -27,9 +28,9 @@ function ReceiptDto (totalPrice){
     this.totalPrice = totalPrice
 }
 
-function AppointmentDto(timeSlot, service, receipt){
+function AppointmentDto(timeSlot, bookableService, receipt){
     this.timeSlot = timeSlot
-    this.service = service
+    this.bookableService = bookableService
     this.receipt = receipt
 }
 
@@ -40,43 +41,75 @@ function myFunction() {
     } else {
       x.className = "topnav";
     }
-  }
+
+}
+
+function getMinDate() {
+    var todaysDate = new Date(); // Gets today's date
+    // Max date attribute is in "YYYY-MM-DD".  Need to format today's date accordingly
+    var year = todaysDate.getFullYear();                        // YYYY
+    var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2);  // MM
+    var day = ("0" + todaysDate.getDate()).slice(-2);           // DD
+  var maxDate = (day + "/" + month + "/" + year); // Results in "YYYY-MM-DD" for today's date 
+  // Now to set the max date value for the calendar to be today's date
+  return maxDate;
+}
+
+
+
 
 export default {
-    name: 'receiptHandling',
+    name: 'BookAppointmentHandling',
     data() {
       return {
         appointments: [],
         errorBookAppointment: '',
-        response: []
+        appointmentId:'',
+     // bookableServices: [],
+
+        response: [],
+        datePickerIdMin : new Date().toISOString().split("T")[0]
       }
     },
 
     created: function () {
-    const b = new BookableServiceDto(30, 'oil')
-    const t = new TimeSlotDto('2021-02-12', '09:00:00','2021-02-12', '12:00:00','1')
-    const r = new ReceiptDto(b.price)
-    const a = new AppointmentDto(t,b,r)
+      // Test data
+AXIOS.get('/appointments/' + "abrarfahad7")
+  .then(response => {
+    // JSON responses are automatically parsed.
+    this.appointments = response.data
+    this.appointmentId=  this.appointments.get(0).id
+    // console.log(this.appointmentId)
+  })
+  .catch(e => {
+    this.errorBookAppointment = e
+  })
+    },
+    methods:{
+    cancelAppointment: function () {
+      // Create a new person and add it to the list of people
+      // console.log(this.appointments.get(0).id)
 
-    this.appointments = [a]
+      AXIOS.post('/cancel/appointment/' + 88,
+        {}, {}
+        )
+        .then(response => {
+          // Update appropriate DTO collections
 
-},
-methods: {
-    createAppointment: function (selectedService, date,time,garageSpot) {
-    //   AXIOS.post('/appointment/'.concat(appointmentId), {}, {})
-    //     .then(response => {
-        // JSON responses are automatically parsed.
-        var timeSlot = new TimeSlotDto(date, time, date, time+ selectedService.duration, garageSpot)
-        var receipt = new ReceiptDto(selectedService.price)
-        var appointment = new AppointmentDto(timeSlot, selectedService,receipt)
-        this.appointments.push(appointment)
-        //   this.errorPerson = ''
-        
-        }
-        // .catch(e => {
-        //   var errorMsg = e.response.data.message
-        //   console.log(errorMsg)
-        //   this.errorPerson = errorMsg
-        // })
+          this.errorProfile=""
+          this.appointments.pop(response.data)
+          // this.appointment = response.data
+          
+        })
+        .catch(e => {
+          var errorMsg = e
+          this.errorProfile = errorMsg
+          window.alert(e);
+        })
+      // Reset the name field for new people
     }
+  
 }
+
+}
+

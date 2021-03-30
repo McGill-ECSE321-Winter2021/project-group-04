@@ -62,7 +62,7 @@ export default {
     name: 'HandlingBookAppointment',
     data() {
       return {
-        appointment: '',
+        appointments: [],
         errorBookAppointment: '',
         bookableServices: [],
 
@@ -87,7 +87,7 @@ methods: {
         AXIOS.post('/book/appointment/'+ "abrarfahad7" + selectedService +'?date='+date+ '&garageSpot=' 
         + garageSpot+ '&startTime='+time+ '&Garage Technician Id=' + 74)
         .then(response => {
-          this.appointment = response.data
+          this.appointments = response.data
           // this.$router.go('Home')
         
         })
