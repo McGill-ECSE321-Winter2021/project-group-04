@@ -72,6 +72,8 @@ export default {
     name: 'HandlingBookAppointment',
     data() {
       return {
+        userID: '',
+        errorUser:'',
         appointments: '',
         errorBookAppointment: '',
         bookableServices: [],
@@ -92,7 +94,10 @@ export default {
       .catch(e => {this.errorBookAppointment})
       AXIOS.get('/garageTechnicians')
       .then(response => {this.garageTechnicians = response.data})
-      .catch(e => {this.errorBookAppointment})
+        .catch(e => { this.errorBookAppointment })
+      AXIOS.get('/login/currentCustomer')
+        .then(response => { this.userID = response.data.userID })
+        .catch(e => {this.errorUser=e})
     
     },
 
@@ -100,35 +105,30 @@ methods: {
    
 
     bookAppointment: function (selectedService, date,time,garageSpot,selectedGarageTechnician) {
-        console.log(selectedService+"a")
-        console.log(date+"a")
-        console.log(time+"a")
-        console.log(garageSpot+"a")
-        //  console.log(selectedGarageTechnician)
+        console.log(selectedGarageTechnician)
         
         AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
-              .then(response => {
+          .then(response => {
               this.chosenGarageTech = response.data
-              this.chosenTechnicianId = response.data.technicianId
+            this.chosenTechnicianId = response.data.technicianId
                })
-              .catch(e => {this.errorChosenTechnicianId})
+          .catch(e => { this.errorChosenTechnicianId })
+          .finally(() => {
 
-        // AXIOS.post('/book/appointment/'+ "abrarfahad7" + selectedService +'?date='+date+ '&garageSpot=' 
-        // + garageSpot+ '&startTime='+time+ '&Garage Technician Id=' + 115, {}, {})
-        // .then(response => {
-        //   console.log(selectedService)
-        //   this.appointments = response.data
-          
-        
-        // })
-        // .catch(e => {
+            AXIOS.post('/book/appointment/' + this.userID + selectedService + '?date=' + date + '&garageSpot='
+              + garageSpot + '&startTime=' + time + '&Garage Technician Id=' + this.chosenTechnicianId, {}, {})
+              .then(response => {
+                console.log(selectedService)
+                this.appointments = response.data
 
-        //     var errMsg = e
-        //     window.alert(errMsg)
-        // });
-    
-        
-      
+
+              })
+              .catch(e => {
+
+                var errMsg = e
+                window.alert(errMsg)
+              });
+          })
 
     }  
 

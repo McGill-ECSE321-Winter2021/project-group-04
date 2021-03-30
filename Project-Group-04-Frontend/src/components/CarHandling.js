@@ -27,6 +27,8 @@ export default {
   name: 'CarHandling',
   data() {
     return {
+      userID: '',
+      errorUser:'',
       car: '',
       carId: '',
       errorCar: '',
@@ -35,15 +37,23 @@ export default {
   },
   created: function () {
     // Initializing persons from backend
-    AXIOS.get('/car/'+"abrarfahad7")
+    AXIOS.get('/login/currentCustomer')
       .then(response => {
-        // JSON responses are automatically parsed.
-        this.car = response.data
-        this.carId=this.car.carId
+        this.userID = response.data.userID;
       })
-      .catch(e => {
-        this.errorCar = e
+      .catch(e => { this.errorUser = e })
+      .finally(() => {
+        AXIOS.get('/car/' + this.userID)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.car = response.data
+          this.carId = this.car.carId
+        })
+        .catch(e => {
+          this.errorCar = e
+        })
       })
+    
   },
   methods: {
     editCar: function (model, year, color) {

@@ -1085,5 +1085,24 @@ public class AutoRepairShopSystemRestController {
 		Car car = service.getCustomerCar(userId);
 		return convertToDto(car);
 	}
+	
+	@GetMapping(value = {"/appointments/date/{date}","/appointments/date/{date}/"})
+	public List<AppointmentDto> getAppointmentsByDate
+	(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String date){
+		List<AppointmentDto> appointmentsDto = new ArrayList<>();
+		for(Appointment appointment:service.getAppointmentsByDate(Date.valueOf(date))) {
+			appointmentsDto.add(convertToDto(appointment));
+		}
+		return appointmentsDto;
+	}
+	
+	@GetMapping(value = {"/appointments/next/{userId}","/appointments/next/{userId}/"})
+	public List<AppointmentDto> getFuturAppointments(@PathVariable("userId") String userId){
+		List<AppointmentDto> appointmentsDto = new ArrayList<AppointmentDto>();
+		for(Appointment appointment:service.getNextAppointments(userId)) {
+			appointmentsDto.add(convertToDto(appointment));
+		}
+		return appointmentsDto;
+	}
 
 }

@@ -34,6 +34,8 @@ export default {
     name: 'receiptHandling',
     data() {
       return {
+        userID: '',
+        errorUsr:'',
         appointments: [],
         errorReceipt: '',
         response: []
@@ -41,13 +43,19 @@ export default {
     },
     created: function () {
             // Test data
-      AXIOS.get('/appointments/' + "abrarfahad7")
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.appointments = response.data
+      AXIOS.get('/login/currentCustomer')
+        .then(response => { this.userID = response.data.userID })
+        .catch(e => { this.errorUser = e })
+        .finally(() => {
+          AXIOS.get('/appointments/' + this.userID)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.appointments = response.data
+          })
+          .catch(e => {
+            this.errorReceipt = e
+          })
         })
-        .catch(e => {
-          this.errorReceipt = e
-        })
+      
           }
       }
