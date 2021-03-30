@@ -16,58 +16,14 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
+document.getElementsById('editButton').addEventListener("click", function() {
+    var pop = document.getElementsByClassName('bg-modal')
+    pop.display = "flex";
+});
 
-// window.onload = function() {
-//     var spanName = document.getElementsByClassName("newName")
-
-//     if (spanName.contentEditable) {
-//         spanName.onblur = function() {
-//             var text = this.innerHTML;
-//             newName = text.replace(/&/g, "&amp").replace(/</g, "&lt;");
-//         };
-//     }
-
-
-//     var spanPrice = document.getElementsByClassName("newPrice")
-
-//     if (spanPrice.contentEditable) {
-//         spanPrice.onblur = function() {
-//             var text = this.innerHTML;
-//             newPrice = text.replace(/&/g, "&amp").replace(/</g, "&lt;");
-//         };
-//     }
-// }
-
-// window.onload = function() {
-// 	if(localStorage.getItem('newName')) {
-// 		document.querySelector('.newName').innerHTML = localStorage.getItem('newName');
-//   }
-// }
-
-// let editBtn = document.querySelector('#edit_content');
-// let content = document.querySelector('.newName');
-
-// editBtn.addEventListener('click', () => {
-//   // Toggle contentEditable on button click
-// 	content.contentEditable = !content.isContentEditable;
-  
-//   // If disabled, save text
-//   if(content.contentEditable === 'false') {
-//   	localStorage.setItem('newName', content.innerHTML);
-//   }
-// });
-
-// $(window).load(function () {
-//     $(".trigger_popup_fricc").click(function(){
-//        $('.hover_bkgr_fricc').show();
-//     });
-//     $('.hover_bkgr_fricc').click(function(){
-//         $('.hover_bkgr_fricc').hide();
-//     });
-//     $('.popupCloseButton').click(function(){
-//         $('.hover_bkgr_fricc').hide();
-//     });
-// });
+document.querySelector('.close').addEventListener("click", function() {
+    document.querySelector('.bg-modal').display = "none";
+});
 
 export default {
     name: 'services',
@@ -138,73 +94,3 @@ export default {
 
     }
 }
-
-
-// import axios from 'axios'
-// var config = require('../../config')
-
-// var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-// var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
-
-// var AXIOS = axios.create({
-//   baseURL: backendUrl,
-//   headers: { 'Access-Control-Allow-Origin': frontendUrl }
-// })
-
-// function EmergencyServiceDto(price, name, location){
-//     this.price = price;
-//     this.name = name;
-//     this.location = location;
-// }
-
-// export default {
-//     name: 'emergencyService',
-//     data () {
-//       return {
-//         emergencyService: '',
-//         price: '50$',
-//         name: 'Towing',
-//         location: '',
-//         emergencyServiceId: '',
-//         erroremergencyService:'',
-//         response: []
-//       }
-//     },
-
-//     created: function () {
-//       AXIOS.get('/emergencyService/'.concat(emergencyServiceId))
-//       .then(response => {
-//         this.emergencyService = response.data
-//         this.location = emergencyService.location
-//         this.price = emergencyService.price
-//         this.name = emergencyService.name
-//       })
-//       .catch(e => {
-//         this.erroremergencyService = e
-//       })
-//     },
-
-//     methods: {
-//       editemergencyService: function (price, name, location){
-//         emergencyService.location = location
-//         emergencyService.price = price
-//         emergencyService.name = name
-//         AXIOS.patch('/edit/emergencyService/'.concat(emergencyServiceId), {},
-//         {
-//           params: {
-//             "location" : location,
-//             "Price": price,
-//             "name": name
-//           }
-//         })
-//         .then(response => {
-          
-//         })
-//         .catch(e => {
-//           var errorMsg = e
-//           console.log(errorMsg)
-//           this.erroremergencyService = errorMsg
-//         })
-//       }
-//     }
-//   }
