@@ -21,27 +21,24 @@ export default {
     data() {
         return{
             businessHours: [],
+            days: '',
+            startTime: '',
+            endTime: '',
+            response: []
         }
     },
 
-    created: function(){
-        //test data
-        const businessHourMonday = new BusinessHourDto('Monday', '08:00 a.m. - 06:00 p.m.')
-        const businessHourTuesday = new BusinessHourDto('Tuesday', '08:00 a.m. - 06:00 p.m.')
-        const businessHourWednesday = new BusinessHourDto('Wednesday', '08:00 a.m. - 06:00 p.m.')
-        const businessHourThursday = new BusinessHourDto('Thursday', '08:00 a.m. - 06:00 p.m.')
-        const businessHourFriday = new BusinessHourDto('Friday', '08:00 a.m. - 08:00 p.m.')
-        const businessHourSatruday = new BusinessHourDto('Saturday', '09:00 a.m. - 08:00 p.m.')
-        const businessHourSunday = new BusinessHourDto('Sunday', 'Closed')
-        //sample initial content
-        this.businessHours = [businessHourMonday, 
-            businessHourTuesday,
-            businessHourWednesday,
-            businessHourThursday,
-            businessHourFriday,
-            businessHourSatruday,
-            businessHourSunday]
-    }, 
+    created: function () {
+        AXIOS.get('/businessHours/')
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.businessHours = response.data
+            this.businessHourId = this.business.businessHourId
+          })
+          .catch(e => {
+            this.errorProfile = e
+          })
+      },
 
     methods: {
         createBusinessHour: function(days, openningHours){

@@ -50,13 +50,13 @@
        
       <tr class="table">
        <th > Name</th>
-        <th> is Available</th>
+  
         <!-- <th>Total Price</th> -->
       </tr>
       
         <tr  v-for="team in teams" :key="team.service">
         <td> {{ team.name }}</td> 
-        <td>{{ team.isAvailable }}</td> 
+        
         <!-- <td> {{appointment.receipt.totalPrice}}</td> -->
         </tr>
 
