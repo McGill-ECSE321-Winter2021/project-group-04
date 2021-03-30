@@ -1652,5 +1652,17 @@ public class AutoRepairShopSystemService {
 		}
 		return car;
 	}
+	
+	public List<Appointment> getNextAppointments(String userId){
+		Date today = Date.valueOf(LocalDate.now());
+		List<Appointment> nextAppointments = new ArrayList<Appointment>();
+		for(Appointment appointment : getAppointmentsByCustomer(userId)) {
+			if(appointment.getTimeSlot().getStartDate().after(today) 
+					|| appointment.getTimeSlot().getStartDate().compareTo(today)==0 ) {
+				nextAppointments.add(appointment);
+			}
+		}
+		return nextAppointments;
+	}
 
 }
