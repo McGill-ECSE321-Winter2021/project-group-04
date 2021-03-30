@@ -52,12 +52,12 @@
       <tr class="table">
        <th > Service</th>
         <th> Date</th>
-        <th>Total Price</th>
+        <th>Total Price ($)</th>
       </tr>
       
         <tr  v-for="appointment in appointments" :key="appointment.bookableService.name">
           <td>{{ appointment.bookableService.name }}</td> 
-          <td>{{ appointment.timeSlot.startTime }}</td> 
+          <td>{{ appointment.timeSlot.startDate }}</td> 
           <td> {{appointment.receipt.totalPrice}}</td>
         </tr>
       

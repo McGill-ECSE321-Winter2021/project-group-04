@@ -50,9 +50,7 @@
                 Book a new Appointment
               </button>
             </router-link>
-      <button type="cancelAppointment" class="btn btn-primary"  @click="cancelAppointment()">
-                Cancel your appointment
-              </button>
+     
     </div>
     <div>
       <br/>
@@ -66,6 +64,7 @@
            <th>End Time</th> 
            <th>Service</th>
            <th>Spot</th>
+           <th> Technician </th>
          
         </tr>
          <tr v-for="appointment in appointments" :key="appointment.timeSlot.startDate">           
@@ -74,6 +73,11 @@
         <td> {{appointment.timeSlot.endTime}}</td> 
          <td> {{appointment.bookableService.name}}</td> 
         <td> {{appointment.timeSlot.garageSpot}}</td>
+        <td> {{appointment.technician.name}}</td>
+        <td>  <button type="cancelAppointment" class="btn btn-primary"  @click="cancelAppointment(appointment.id)">
+                Cancel
+              </button>
+        </td>
         </tr>
       </table>
     </div>
@@ -159,8 +163,8 @@
   .paddingBetweenCols th{
     color: #696969;
     text-align: center;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding-left: 70px;
+    padding-right: 70px;
   }
 
 </style>

@@ -55,16 +55,31 @@ function getMinDate() {
   return maxDate;
 }
 
+// function getTechId(selectedGarageTechnician){
+//   console.log(selectedGarageTechnician)
+//   AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
+//       .then(response => {
+//       this.chosenGarageTech = response.data
+//       this.chosenTechnicianId = response.data.technicianId
+//        })
+//       .catch(e => {this.errorChosenTechnicianId})
+// }
 
 
 
-export default {
+
+export default {  
     name: 'HandlingBookAppointment',
     data() {
       return {
-        appointments: [],
+        appointments: '',
         errorBookAppointment: '',
         bookableServices: [],
+        garageTechnicians:[],
+        chosenTechnicianId:'',
+        chosenGarageTech:'',
+        errorGarageTechnician:'',
+        errorChosenTechnicianId:'',
 
         response: [],
         datePickerIdMin : new Date().toISOString().split("T")[0]
@@ -75,29 +90,47 @@ export default {
       AXIOS.get('/bookableServices')
       .then(response => {this.bookableServices = response.data})
       .catch(e => {this.errorBookAppointment})
+      AXIOS.get('/garageTechnicians')
+      .then(response => {this.garageTechnicians = response.data})
+      .catch(e => {this.errorBookAppointment})
+    
     },
 
 methods: {
-    bookAppointment: function (selectedService, date,time,garageSpot) {
-     console.log(selectedService)
-     console.log(date)
-     console.log(garageSpot)
-     console.log(time)
+   
 
-        AXIOS.post('/book/appointment/'+ "abrarfahad7" + selectedService +'?date='+date+ '&garageSpot=' 
-        + garageSpot+ '&startTime='+time+ '&Garage Technician Id=' + 74)
-        .then(response => {
-          this.appointments = response.data
-          // this.$router.go('Home')
+    bookAppointment: function (selectedService, date,time,garageSpot,selectedGarageTechnician) {
+        console.log(selectedService+"a")
+        console.log(date+"a")
+        console.log(time+"a")
+        console.log(garageSpot+"a")
+        //  console.log(selectedGarageTechnician)
         
-        })
-        .catch(e => {
+        AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
+              .then(response => {
+              this.chosenGarageTech = response.data
+              this.chosenTechnicianId = response.data.technicianId
+               })
+              .catch(e => {this.errorChosenTechnicianId})
 
-            var errMsg = e
-            window.alert(errMsg)
-        });
-    },
-    }
+        // AXIOS.post('/book/appointment/'+ "abrarfahad7" + selectedService +'?date='+date+ '&garageSpot=' 
+        // + garageSpot+ '&startTime='+time+ '&Garage Technician Id=' + 115, {}, {})
+        // .then(response => {
+        //   console.log(selectedService)
+        //   this.appointments = response.data
+          
+        
+        // })
+        // .catch(e => {
+
+        //     var errMsg = e
+        //     window.alert(errMsg)
+        // });
+    
+        
+      
+
+    }  
+
+  }
 }
-
-

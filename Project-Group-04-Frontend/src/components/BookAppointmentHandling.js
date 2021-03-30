@@ -78,7 +78,7 @@ AXIOS.get('/appointments/' + "abrarfahad7")
   .then(response => {
     // JSON responses are automatically parsed.
     this.appointments = response.data
-    this.appointmentId=  this.appointments.get(0).id
+    this.appointmentId=  this.appointments[0].id
     // console.log(this.appointmentId)
   })
   .catch(e => {
@@ -86,11 +86,10 @@ AXIOS.get('/appointments/' + "abrarfahad7")
   })
     },
     methods:{
-    cancelAppointment: function () {
+    cancelAppointment: function (appointmentId) {
       // Create a new person and add it to the list of people
-      // console.log(this.appointments.get(0).id)
-
-      AXIOS.post('/cancel/appointment/' + 88,
+      
+      AXIOS.delete('/cancel/appointment/' + appointmentId,
         {}, {}
         )
         .then(response => {
