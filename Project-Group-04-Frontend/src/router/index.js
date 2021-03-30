@@ -93,14 +93,12 @@ export default new Router({
       component: BookableServices
     }
     ,
-
     {
       path: '/emergencyServices',
       name: 'EmergencyServices',
       component: EmergencyServices
     }
     ,
-
     {
       path: '/receipts',
       name: 'Receipts',

@@ -94,9 +94,6 @@
  <script src = './HandlingBookAppointment.js' >
 
  </script>
- <!-- <script src = './HandlingBookableService.js' >
-
- </script> -->
 
  <style>
  .table {
