@@ -74,6 +74,7 @@ export default {
           this.errorProfile = errorMsg
           window.alert(e);
         })
+
       // Reset the name field for new people
     }
   

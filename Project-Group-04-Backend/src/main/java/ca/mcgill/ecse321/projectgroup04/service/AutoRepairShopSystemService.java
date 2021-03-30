@@ -950,12 +950,29 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public GarageTechnician getGarageTechnicianById(Long technicianId) {
-		return garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
+		GarageTechnician garageTechnician = garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
+		if (garageTechnician == null) {
+			throw new IllegalArgumentException("No garage technician with such id!");
+		}
+		return garageTechnician;
 	}
 
 	@Transactional
 	public GarageTechnician getGarageTechnicianByName(String name) {
-		return garageTechnicianRepository.findGarageTechnicianByName(name);
+		
+		String trim = new String(name.trim());
+		System.out.println(trim+"v");
+		GarageTechnician garageTech = null;
+		for(GarageTechnician garageTechnician: garageTechnicianRepository.findAll()){
+			
+			if(name.contains(garageTechnician.getName())){
+				System.out.println("level2");
+			garageTech = garageTechnician;
+			break;
+			}
+		}
+
+		return garageTech;
 	}
 	/////////////////////////////////////////////////////////////////////////////////
 
@@ -1401,8 +1418,13 @@ public class AutoRepairShopSystemService {
 
 	@Transactional
 	public BookableService getBookableServiceByServiceName(String name) {
-		return bookableServiceRepository.findBookableServiceByName(name);
 
+		for(BookableService bookableService: bookableServiceRepository.findAll()){
+			if(name.contains(bookableService.getName())){
+				return bookableService;
+			}
+		}
+		return null;
 	}
 
 	@Transactional

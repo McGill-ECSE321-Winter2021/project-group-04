@@ -71,10 +71,17 @@
             Spot  <input type="number" v-model="garageSpot" min="1" max="4" required>
 
           </label>
+          <label> Technician ​<select v-model="selectedGarageTechnician">
+       ​<option disabled value="">Please select one</option>
+       ​<option v-for="garageTechnician in garageTechnicians" :key="garageTechnician.name" >
+         ​{{garageTechnician.name}}
+       ​</option>
+     ​</select>
+          </label>
         </tr>
     </div>
     <div class="bookButton">
-  <button @click="bookAppointment(selectedService, date,time,garageSpot)" type="bookAppointmentButton" 
+  <button @click="bookAppointment(selectedService, date,time,garageSpot,selectedGarageTechnician)" type="bookAppointmentButton" 
         class="btn btn-primary"  >  Book</button>
   </div>
    <div class="backButton">
@@ -94,6 +101,7 @@
  <script src = './HandlingBookAppointment.js' >
 
  </script>
+
 
  <style>
  .table {

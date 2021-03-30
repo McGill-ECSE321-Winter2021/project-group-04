@@ -16,14 +16,14 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-document.getElementsById('editButton').addEventListener("click", function() {
-    var pop = document.getElementsByClassName('bg-modal')
-    pop.display = "flex";
-});
+// document.getElementsById('editButton').addEventListener("click", function() {
+//     var pop = document.getElementsByClassName('bg-modal')
+//     pop.display = "flex";
+// });
 
-document.querySelector('.close').addEventListener("click", function() {
-    document.querySelector('.bg-modal').display = "none";
-});
+// document.querySelector('.close').addEventListener("click", function() {
+//     document.querySelector('.bg-modal').display = "none";
+// });
 
 export default {
     name: 'services',

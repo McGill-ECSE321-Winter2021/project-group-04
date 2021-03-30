@@ -822,8 +822,14 @@ public class AutoRepairShopSystemRestController {
 	@GetMapping(value = { "/garageTechnician/{Id}", "/garageTechnician/{Id}/" })
 	public GarageTechnicianDto getGarageTechnicianById(@PathVariable("Id") Long Id) {
 		GarageTechnician garageTechnician = service.getGarageTechnicianById(Id);
+		return convertToDto(garageTechnician);
+	}
+	@GetMapping(value = { "/garageTechnicians/{name}", "/garageTechnicians/{name}/" })
+	public GarageTechnicianDto getGarageTechnicianIdByName(@PathVariable("name") String name) {
+		
+		GarageTechnician garageTechnician = service.getGarageTechnicianByName(name);
 		if (garageTechnician == null) {
-			throw new IllegalArgumentException("No garage technician with such id!");
+			throw new IllegalArgumentException("No such garage technician exists!");
 		}
 		return convertToDto(garageTechnician);
 	}
@@ -1005,7 +1011,7 @@ public class AutoRepairShopSystemRestController {
 		return timeSlotDtos;
 	}
 
-	@PostMapping(value = { "/cancel/appointment/{appointmentId}", "/cancel/appointment/{appointmentId}/" })
+	@DeleteMapping(value = { "/cancel/appointment/{appointmentId}", "/cancel/appointment/{appointmentId}/" })
 	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
 		Appointment appointment = service.getAppointment(appointmentId);
 		service.deleteAppointment(appointment, null, null);
