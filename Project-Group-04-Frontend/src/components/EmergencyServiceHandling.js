@@ -16,14 +16,6 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-document.getElementsById('editButton').addEventListener("click", function() {
-    var pop = document.getElementsByClassName('bg-modal')
-    pop.display = "flex";
-});
-
-document.querySelector('.close').addEventListener("click", function() {
-    document.querySelector('.bg-modal').display = "none";
-});
 
 export default {
     name: 'services',
@@ -38,9 +30,11 @@ export default {
     },
 
     created: function(){
-        AXIOS.get('/emergencyServices')
-        .then(response => {this.emergencyServices = response.data})
-        .catch(e => {this.errorEmergencyService = e});
+        const es = new EmergencyServiceDto('70', 'towing')
+        this.emergencyServices = [es]
+        // AXIOS.get('/emergencyServices')
+        // .then(response => {this.emergencyServices = response.data})
+        // .catch(e => {this.errorEmergencyService = e});
     }, 
 
     methods: {
@@ -90,7 +84,10 @@ export default {
                 this.errorEmergencyService = errorMSg
                 window.alert(e)
             })
-        }
+        },
+
+
+        
 
     }
 }
