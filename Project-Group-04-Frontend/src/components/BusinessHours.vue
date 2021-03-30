@@ -63,11 +63,13 @@
        <table>
           <tr class="table">
             <th>Days</th>
-            <th>Openning Hours</th>
+            <th>Openning Hour</th>
+            <th>Closing Hour</th>
           </tr>
             <tr v-for="businessHour in businessHours" :key="businessHour.openningHour">
-              <td>{{ businessHour.day }}</td>
-              <td>{{ businessHour.openningHour }}</td>
+              <td>{{ businessHour.dayOfWeek }}</td>
+              <td>{{ businessHour.startTime }}</td>
+              <td>{{ businessHour.endTime }}</td>
           </tr>
         </table>
         <hr>

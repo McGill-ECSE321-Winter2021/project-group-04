@@ -21,27 +21,23 @@ export default {
   name: 'business',
   data() {
     return {
-      businesses: []
+      businesses: [],
+      adress: '',
+      phoneNumber: '',
+      emailAdress: '',
+      response: []
     }
   },
   created: function () {
-
-    const business1 = new BusinessDto('Auto', '123 McGill street', '123-456-9874', 'business@cizo.com', [])
-    this.businesses = [business1]
-    // Initializing persons from backend
-    // AXIOS.get('/business/'.concat(businessId))
-    //   .then(response => {
-    //     // JSON responses are automatically parsed.
-    //     this.business = response.data
-    //     this.name = business.name
-    //     this.adress = business.adress
-    //     this.phoneNumber = business.phoneNumber
-    //     this.emailAddress = business.emailAddress
-    //     this.businessHours = business.businessHours
-    //   })
-    //   .catch(e => {
-    //     this.errorProfile = e
-    //   })
+    AXIOS.get('/business/')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.businesses = response.data
+        this.businessId = this.business.businessId
+      })
+      .catch(e => {
+        this.errorProfile = e
+      })
   },
   methods: {
     editBusiness: function (business, name, adress, phoneNumber, emailAddress, businessHours) {
