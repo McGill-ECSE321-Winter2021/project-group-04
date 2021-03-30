@@ -64,11 +64,12 @@ public class AutoRepairShopSystemService {
 
 	@Autowired
 	private CheckupReminderRepository checkupReminderRepository;
-	
+
 	private static User currentUser = null;
-	
-	/////////////////////////////////LOGIN LOGOUT///////////////////////////////////////////////
-	
+
+	///////////////////////////////// LOGIN
+	///////////////////////////////// LOGOUT///////////////////////////////////////////////
+
 	@Transactional
 	public Customer loginAsCustomer(String userId, String password) {
 		if (userId == null || userId.trim().length() == 0) {
@@ -77,34 +78,35 @@ public class AutoRepairShopSystemService {
 		if (password == null || password.trim().length() == 0) {
 			throw new IllegalArgumentException("Please enter a valid Password");
 		}
-		
+
 		List<Customer> customers = getAllCustomers();
-		//System.out.println(customers);
+		// System.out.println(customers);
 		Customer foundCustomer = null;
-		
+
 		for (Customer customer : customers) {
-			/*System.out.println(customer.getUserId());
-			System.out.println(customer.getPassword());
-			
-			System.out.println(userId);
-			System.out.println(password);*/
-			
+			/*
+			 * System.out.println(customer.getUserId());
+			 * System.out.println(customer.getPassword());
+			 * 
+			 * System.out.println(userId); System.out.println(password);
+			 */
+
 			if (customer.getUserId().equals(userId) && customer.getPassword().equals(password)) {
-				//System.out.println(customer.getUserId());
+				// System.out.println(customer.getUserId());
 				currentUser = customer;
 				foundCustomer = customer;
 				break;
 			}
 		}
-		
+
 		if (foundCustomer == null) {
 			throw new IllegalArgumentException("User does not exist, please register a new account or try again.");
 		}
-		
+
 		return foundCustomer;
-		
+
 	}
-	
+
 	@Transactional
 	public Owner loginAsOwner(String userId, String password) {
 		if (userId == null || userId.trim().length() == 0) {
@@ -113,10 +115,10 @@ public class AutoRepairShopSystemService {
 		if (password == null || password.trim().length() == 0) {
 			throw new IllegalArgumentException("Please enter a valid Password");
 		}
-		
-		List<Owner> owners  = getOwner();
+
+		List<Owner> owners = getOwner();
 		Owner foundOwner = null;
-		
+
 		for (Owner owner : owners) {
 			if (owner.getUserId().equals(userId) && owner.getPassword().equals(password)) {
 				currentUser = owner;
@@ -124,15 +126,15 @@ public class AutoRepairShopSystemService {
 				break;
 			}
 		}
-		
+
 		if (foundOwner == null) {
 			throw new IllegalArgumentException("User does not exist, please register a new account or try again.");
 		}
-		
+
 		return foundOwner;
-		
+
 	}
-	
+
 	@Transactional
 	public AdministrativeAssistant loginAsAdmin(String userId, String password) {
 		if (userId == null || userId.trim().length() == 0) {
@@ -141,10 +143,10 @@ public class AutoRepairShopSystemService {
 		if (password == null || password.trim().length() == 0) {
 			throw new IllegalArgumentException("Please enter a valid Password");
 		}
-		
-		List<AdministrativeAssistant> admins  = getAllAdministrativeAssistants();
+
+		List<AdministrativeAssistant> admins = getAllAdministrativeAssistants();
 		AdministrativeAssistant foundAdmin = null;
-		
+
 		for (AdministrativeAssistant admin : admins) {
 			if (admin.getUserId().equals(userId) && admin.getPassword().equals(password)) {
 				currentUser = admin;
@@ -152,29 +154,27 @@ public class AutoRepairShopSystemService {
 				break;
 			}
 		}
-		
+
 		if (foundAdmin == null) {
 			throw new IllegalArgumentException("User does not exist, please register a new account or try again.");
 		}
-		
+
 		return foundAdmin;
-		
+
 	}
-	
+
 	@Transactional
 	public void logout() {
 		currentUser = null;
 	}
-	
+
 	@Transactional
 	public User getLoggedUser() {
-		
+
 		return currentUser;
 	}
-	
-	
+
 	////////////////////////////////////////////////////////////////////////////////////////////
-	
 
 	@Transactional
 	public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
@@ -271,7 +271,7 @@ public class AutoRepairShopSystemService {
 		for (Appointment a : appointmentRepository.findByCustomer(customer)) {
 			customerReceipts.add(a.getReceipt());
 		}
-		
+
 		return customerReceipts;
 	}
 
@@ -324,10 +324,10 @@ public class AutoRepairShopSystemService {
 		LocalTime localTimeEnd = myTimeEnd.toLocalTime();
 		localTimeEnd = localTimeEnd.plusMinutes(bookableService.getDuration());
 		java.sql.Time endTime = java.sql.Time.valueOf(localTimeEnd);
-		if(garageSpot<1 || garageSpot >4) {
+		if (garageSpot < 1 || garageSpot > 4) {
 			throw new IllegalArgumentException("Please chose a garage sport between 1 and 4");
 		}
-		if(date.before(Date.valueOf(LocalDate.now()))){
+		if (date.before(Date.valueOf(LocalDate.now()))) {
 			throw new IllegalArgumentException("Please book an appointment in the future");
 		}
 		for (BusinessHour businessHour : getAllBusinessHours()) {
@@ -555,7 +555,7 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Car getCarByCarId(Long carId) {
 		Car car = carRepository.findByCarId(carId);
-		if(car==null) {
+		if (car == null) {
 			System.out.println("No car with such id exist");
 			throw new IllegalArgumentException("No car with such id exist");
 		}
@@ -1214,6 +1214,12 @@ public class AutoRepairShopSystemService {
 		businessHour.setEndTime(aEndTime);
 		businessHour.setStartTime(aStartTime);
 		businessHourRepository.save(businessHour);
+
+		// TODO check this!!!!
+		Business business = getBusiness().get(0);
+		business.setBusinessHours(getAllBusinessHours());
+		businessRepository.save(business);
+
 		return businessHour;
 	}
 
@@ -1409,18 +1415,18 @@ public class AutoRepairShopSystemService {
 		}
 		throw new IllegalArgumentException("No Profile with such First Name and Last Name");
 	}
-	
+
 	@Transactional
 	public Profile getProfileByUserId(String userId) {
-		if(userId=="" || userId==null) {
+		if (userId == "" || userId == null) {
 			throw new IllegalArgumentException("userId can't be null or empty");
 		}
 		Customer customer = customerRepository.findCustomerByUserId(userId);
-		if(customer==null) {
+		if (customer == null) {
 			throw new IllegalArgumentException("No customer with such userId exist");
 		}
 		Profile profile = customer.getCustomerProfile();
-		if(profile==null) {
+		if (profile == null) {
 			throw new IllegalArgumentException("This customer does not have a valid profile");
 		}
 
@@ -1590,8 +1596,8 @@ public class AutoRepairShopSystemService {
 		profileRepository.save(profile);
 		return profile;
 	}
-	
-		public Car editCar(Car car, String model, String year, String color) {
+
+	public Car editCar(Car car, String model, String year, String color) {
 		if (model == null || model == "") {
 			System.out.println("Model can't be empty");
 			throw new IllegalArgumentException("Model can't be empty");
@@ -1615,15 +1621,14 @@ public class AutoRepairShopSystemService {
 		return car;
 
 	}
-		
+
 	public Car getCustomerCar(String userId) {
-		Customer customer=getCustomerByUserId(userId);
-		Car car= customer.getCar();
-		if(car==null) {
+		Customer customer = getCustomerByUserId(userId);
+		Car car = customer.getCar();
+		if (car == null) {
 			throw new IllegalArgumentException("This customer does not have a car yet");
 		}
 		return car;
 	}
-
 
 }
