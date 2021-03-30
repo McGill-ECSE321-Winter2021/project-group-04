@@ -18,7 +18,8 @@ function TimeSlotDto(startDate, startTime,endDate, endTime, garageSpot){
     this.garageSpot = garageSpot
 }
 
-function BookableServiceDto(price, name){
+function BookableServiceDto(duration,price, name){
+  this.duration = duration
     this.price = price
     this.name = name
 }
@@ -58,44 +59,45 @@ function getMinDate() {
 
 
 export default {
-    name: 'receiptHandling',
+    name: 'HandlingBookAppointment',
     data() {
       return {
-        appointments: [],
+        appointment: '',
         errorBookAppointment: '',
+        bookableServices: [],
 
         response: [],
         datePickerIdMin : new Date().toISOString().split("T")[0]
       }
     },
 
-    created: function () {
-    const b = new BookableServiceDto(30, 'oil')
-    const t = new TimeSlotDto('2021-02-12', '09:00:00','2021-02-12', '12:00:00','1')
-    const r = new ReceiptDto(b.price)
-    const a = new AppointmentDto(t,b,r)
+    created: function(){
+      AXIOS.get('/bookableServices')
+      .then(response => {this.bookableServices = response.data})
+      .catch(e => {this.errorBookAppointment})
+    },
 
-    this.appointments = [a]
+methods: {
+    bookAppointment: function (selectedService, date,time,garageSpot) {
+     console.log(selectedService)
+     console.log(date)
+     console.log(garageSpot)
+     console.log(time)
 
-}
-// methods: {
-//     createAppointment: function (selectedService, date,time,garageSpot) {
-//     //   AXIOS.post('/appointment/'.concat(appointmentId), {}, {})
-//     //     .then(response => {
-//         // JSON responses are automatically parsed.
-//         var timeSlot = new TimeSlotDto(date, time, date, time+ selectedService.duration, garageSpot)
-//         var receipt = new ReceiptDto(selectedService.price)
-//         var appointment = new AppointmentDto(timeSlot, selectedService,receipt)
-//         this.appointments.push(appointment)
-//         //   this.errorPerson = ''
+        AXIOS.post('/book/appointment/'+ "abrarfahad7" + selectedService +'?date='+date+ '&garageSpot=' 
+        + garageSpot+ '&startTime='+time+ '&Garage Technician Id=' + 74)
+        .then(response => {
+          this.appointment = response.data
+          // this.$router.go('Home')
         
-//         }
-//         // .catch(e => {
-//         //   var errorMsg = e.response.data.message
-//         //   console.log(errorMsg)
-//         //   this.errorPerson = errorMsg
-//         // })
-//     }
+        })
+        .catch(e => {
+
+            var errMsg = e
+            window.alert(errMsg)
+        });
+    },
+    }
 }
 
 

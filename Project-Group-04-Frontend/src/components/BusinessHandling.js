@@ -4,46 +4,30 @@ var config = require('../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 
+function BusinessDto(name, address, phoneNumber, emailAddress, businessHours) {
+  this.name = name
+  this.address = address
+  this.phoneNumber = phoneNumber
+  this.emailAddress = emailAddress
+  this.businessHours = businessHours
+}
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-function BusinessDto(name, adress, phoneNumber, emailAddress, businessHours) {
-  this.name = name
-  this.adress = adress
-  this.phoneNumber = phoneNumber
-  this.emailAddress = emailAddress
-  this.addressLine = addressLine
-  this.businessHours = businessHours
-}
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
-
 export default {
-  name: 'businessHandling',
+  name: 'business',
   data() {
     return {
-      business: [],
-      name: 'AutoRepair',
-      adress: '123 McGill street',
-      emailAdress: 'business@cizo.com',
-      phoneNumber: '123-456-9874',
-      businessHours: [],
-      response: []
+      businesses: []
     }
   },
   created: function () {
 
     const business1 = new BusinessDto('Auto', '123 McGill street', '123-456-9874', 'business@cizo.com', [])
-    this.business = [business1]
+    this.businesses = [business1]
     // Initializing persons from backend
     // AXIOS.get('/business/'.concat(businessId))
     //   .then(response => {
@@ -67,7 +51,7 @@ export default {
       business.phoneNumber = phoneNumber
       business.emailAddress = emailAddress
       business.businessHours = businessHours
-      AXIOS.post('/edit/profile/'.concat(businessId), {},
+      AXIOS.post('/edit/business/'.concat(businessId), {},
         {
           params: {
             "Name": name,

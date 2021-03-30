@@ -388,6 +388,15 @@ public class AutoRepairShopSystemRestController {
 		}
 		return appointmentDtos;
 	}
+	
+	@GetMapping(value = { "/appointments/{userId}", "/appointments/{userId}/" })
+	public List<AppointmentDto> getCustomerAppointments(@PathVariable("userId") String userId) throws IllegalArgumentException {
+		List<AppointmentDto> appointmentDtos = new ArrayList<>();
+		for (Appointment appointment : service.getAppointmentsByCustomer(userId)) {
+			appointmentDtos.add(convertToDto(appointment));
+		}
+		return appointmentDtos;
+	}
 
 	@GetMapping(value = { "/appointment/{Id}", "/appointment/{Id}/" })
 	public AppointmentDto getAppointmentById(@PathVariable("Id") Long Id) throws IllegalArgumentException {
@@ -398,6 +407,15 @@ public class AutoRepairShopSystemRestController {
 	public List<ReceiptDto> getAllReceipts() {
 		List<ReceiptDto> receiptDtos = new ArrayList<>();
 		for (Receipt receipt : service.getAllReceipts()) {
+			receiptDtos.add(convertToDto(receipt));
+		}
+		return receiptDtos;
+	}
+	
+	@GetMapping(value = { "/receipts/{userId}", "/receipts/{userId}/" })
+	public List<ReceiptDto> getCustomerReceipts(@PathVariable("userId") String userId) {
+		List<ReceiptDto> receiptDtos = new ArrayList<>();
+		for (Receipt receipt : service.getCustomerReceipts(userId)) {
 			receiptDtos.add(convertToDto(receipt));
 		}
 		return receiptDtos;
@@ -803,11 +821,10 @@ public class AutoRepairShopSystemRestController {
 	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
-			@RequestParam Integer garageSpot,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String startTime,
+			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
+			@RequestParam(name = "garageSpot") Integer garageSpot,
+			@RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime,
 			@RequestParam(name = "Garage Technician Id") Long garageTechnicianId) throws IllegalArgumentException {
-
 		return convertToDto(service.bookAppointment(userId, serviceName, Date.valueOf(LocalDate.parse(date)),
 				garageSpot, Time.valueOf(LocalTime.parse(startTime)), garageTechnicianId));
 	}
@@ -945,7 +962,7 @@ public class AutoRepairShopSystemRestController {
 
 	@GetMapping(value = { "/timeSlot/{startDate}/{startTime}", "/timeSlot/{startDate}/{startTime}/" })
 	public TimeSlotDto getTimeSlotByStartDateAndStartTime(
-			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-mm-dd") String startDate,
+			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "c") String startDate,
 			@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime)
 			throws IllegalArgumentException {
 		TimeSlot timeSlot = service.getTimeSlotByStartDateAndStartTime(Date.valueOf(LocalDate.parse(startDate)),
@@ -1032,10 +1049,17 @@ public class AutoRepairShopSystemRestController {
 	}
 	
 	@PatchMapping(value = { "/edit/car/{carId}", "/edit/car/{carId}/" })
-	public void editCar(@PathVariable("Id") Long carId, @RequestParam String model,
+	public CarDto editCar(@PathVariable("carId") Long carId, @RequestParam String model,
 			@RequestParam String year, @RequestParam String color) throws IllegalArgumentException {
+		System.out.println("Entered");
 		Car car = service.getCarByCarId(carId);
-		service.editCar(car, model, year, color);
+		return convertToDto(service.editCar(car, model, year, color));
+	}
+	
+	@GetMapping(value = { "/car/{userId}", "/car/{userId}/" })
+	public CarDto getCustomerCar(@PathVariable("userId") String userId) throws IllegalArgumentException {
+		Car car = service.getCustomerCar(userId);
+		return convertToDto(car);
 	}
 
 }

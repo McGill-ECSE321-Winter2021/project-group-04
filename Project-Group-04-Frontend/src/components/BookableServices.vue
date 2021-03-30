@@ -63,8 +63,8 @@
         ​<table>
           <tr class="table">
             <th>Bookable Service</th>
-            <th>Duration</th>
-            <th>Price</th>
+            <th>Duration (min)</th>
+            <th>Price ($)</th>
             <!-- <th>Edit</th>
           <th>Delete</th> -->
             ​<!--<th>Edit</th>-->
@@ -85,7 +85,7 @@
             <td><input type="text" v-model="serviceDuration" placeholder="Service Duration"></td>
             <td><input type="text" v-model="servicePrice" placeholder="Service Price"></td>
             <td class = "button">
-              ​<button v-on:click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
+              ​<button v-on:click="createBookableService(servicePrice, serviceName, serviceDuration)">Add</button>
             </td>
           <!-- <td class = "button">
             <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>

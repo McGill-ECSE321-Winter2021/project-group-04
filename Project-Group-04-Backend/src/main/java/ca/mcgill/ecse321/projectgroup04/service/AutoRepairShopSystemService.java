@@ -262,7 +262,8 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public List<Receipt> getCustomerReceipts(Customer customer) {
+	public List<Receipt> getCustomerReceipts(String userId) {
+		Customer customer = getCustomerByUserId(userId);
 		if (customer == null) {
 			throw new IllegalArgumentException("Customer can't be null!");
 		}
@@ -270,9 +271,7 @@ public class AutoRepairShopSystemService {
 		for (Appointment a : appointmentRepository.findByCustomer(customer)) {
 			customerReceipts.add(a.getReceipt());
 		}
-		for (EmergencyService emergencyService : emergencyServiceRepository.findByCustomer(customer)) {
-			customerReceipts.add(emergencyService.getReceipt());
-		}
+		
 		return customerReceipts;
 	}
 
@@ -366,7 +365,8 @@ public class AutoRepairShopSystemService {
 	}
 
 	@Transactional
-	public List<Appointment> getAppointmentsByCustomer(Customer customer) {
+	public List<Appointment> getAppointmentsByCustomer(String userId) {
+		Customer customer = getCustomerByUserId(userId);
 		if (customer == null) {
 			throw new IllegalArgumentException("Customer can't be null");
 		}
@@ -555,6 +555,10 @@ public class AutoRepairShopSystemService {
 	@Transactional
 	public Car getCarByCarId(Long carId) {
 		Car car = carRepository.findByCarId(carId);
+		if(car==null) {
+			System.out.println("No car with such id exist");
+			throw new IllegalArgumentException("No car with such id exist");
+		}
 		return car;
 	}
 
@@ -1408,21 +1412,17 @@ public class AutoRepairShopSystemService {
 	
 	@Transactional
 	public Profile getProfileByUserId(String userId) {
-		System.out.println("enterred the function");
 		if(userId=="" || userId==null) {
 			throw new IllegalArgumentException("userId can't be null or empty");
 		}
-		System.out.println("gonna get user");
 		Customer customer = customerRepository.findCustomerByUserId(userId);
 		if(customer==null) {
 			throw new IllegalArgumentException("No customer with such userId exist");
 		}
-		System.out.println("gonna get profile");
 		Profile profile = customer.getCustomerProfile();
 		if(profile==null) {
 			throw new IllegalArgumentException("This customer does not have a valid profile");
 		}
-		System.out.println("gonna return");
 
 		return profile;
 	}
@@ -1591,27 +1591,38 @@ public class AutoRepairShopSystemService {
 		return profile;
 	}
 	
-		public void editCar(Car car, String model, String year, String color) {
-
-		if ( car == null){
-			throw new IllegalArgumentException("This car does not exist");
-		}
+		public Car editCar(Car car, String model, String year, String color) {
 		if (model == null || model == "") {
+			System.out.println("Model can't be empty");
 			throw new IllegalArgumentException("Model can't be empty");
 		}
 
 		if (color == null || color == "") {
+			System.out.println("Color can't be empty");
+
 			throw new IllegalArgumentException("Color can't be empty");
 		}
 
 		if (year == null || year == "") {
+			System.out.println("Year can't be empty");
+
 			throw new IllegalArgumentException("Year can't be empty");
 		}
 		car.setColor(color);
 		car.setModel(model);
 		car.setYear(year);
 		carRepository.save(car);
+		return car;
 
+	}
+		
+	public Car getCustomerCar(String userId) {
+		Customer customer=getCustomerByUserId(userId);
+		Car car= customer.getCar();
+		if(car==null) {
+			throw new IllegalArgumentException("This customer does not have a car yet");
+		}
+		return car;
 	}
 
 

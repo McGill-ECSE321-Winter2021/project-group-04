@@ -34,23 +34,39 @@ export default {
     return {
       profile: '',
       newProfile :'',
+      customer: '',
       profileId: '',
       errorProfile: '',
       response: []
     }
   },
+  created: function () {
+    // Initializing persons from backend
+    AXIOS.get('/profiles/' + "abrarfahad7")
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.profile = response.data
+        this.profileId = this.profile.profileId
+      })
+      .catch(e => {
+        this.errorProfile = e
+      })
+  },
+
   
   methods: {
     editProfile: function (firstName, lastName, addressLine, emailAddress, zipCode, phoneNumber) {
       // Create a new person and add it to the list of people
-      
-      AXIOS.patch('/edit/profile/' + this.profileId + '?Email Address=' + emailAddress + '&Phone Number=' + phoneNumber
+      // const id = profile.profileId
+      AXIOS.patch('/edit/profile/' + 67 + '?Email Address=' + emailAddress + '&Phone Number=' + phoneNumber
         + '&Address Line=' + addressLine + '&Zip Code=' + zipCode + '&First Name=' + firstName + '&Last Name=' + lastName,
         {}, {}
         )
         .then(response => {
           // Update appropriate DTO collections
-          this.profile = response.data.profile
+          this.errorProfile=""
+          this.profile = response.data
+          
         })
         .catch(e => {
           var errorMsg = e
@@ -59,19 +75,8 @@ export default {
           window.alert(e);
         })
       // Reset the name field for new people
-    },
-    getProfile: function () {
-      // Initializing persons from backend
-      AXIOS.get('/profile/' + "abrarfahad7")
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.profile = response.data
-          this.profileId = profile.profileId
-        })
-        .catch(e => {
-          this.errorProfile = e
-        })
-    },
+    }
+  
   }
   //...
 

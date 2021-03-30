@@ -34,7 +34,6 @@ export default {
     name: 'receiptHandling',
     data() {
       return {
-        receipts: [],
         appointments: [],
         errorReceipt: '',
         response: []
@@ -42,12 +41,13 @@ export default {
     },
     created: function () {
             // Test data
-          const r1 = new ReceiptDto('30')
-          const r2 = new ReceiptDto('20')
-            const a1 = new AppointmentDto('2021-02-21', 'oil',r1)
-            const a2 = new AppointmentDto('2022-02-21', 'tire change',r2)
-            // Sample initial content
-           
-            this.appointments = [a1,a2]
+      AXIOS.get('/appointments/' + "abrarfahad7")
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.appointments = response.data
+        })
+        .catch(e => {
+          this.errorReceipt = e
+        })
           }
       }

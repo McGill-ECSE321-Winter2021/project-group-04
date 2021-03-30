@@ -24,27 +24,22 @@ function myFunction() {
 }
 
 export default {
-  name: 'profileHandling',
+  name: 'CarHandling',
   data() {
     return {
       car: '',
-      model: 'Mercedes',
-      year: '2010',
-      color: 'Black',
-      carId: '4242',
+      carId: '',
       errorCar: '',
       response: []
     }
   },
   created: function () {
     // Initializing persons from backend
-    AXIOS.get('/car/'.concat(carId))
+    AXIOS.get('/car/'+"abrarfahad7")
       .then(response => {
         // JSON responses are automatically parsed.
         this.car = response.data
-        this.model = car.model
-        this.year = car.year
-        this.color = car.color
+        this.carId=this.car.carId
       })
       .catch(e => {
         this.errorCar = e
@@ -52,29 +47,21 @@ export default {
   },
   methods: {
     editCar: function (model, year, color) {
+      console.log(this.carId);
+      console.log(model);
+      console.log(year);
+      console.log(color);
       // Create a new person and add it to the list of people
-      car.model = model
-      car.year = year
-      car.color = color
-      AXIOS.patch('/edit/profile/'.concat(profileId), {},
-        {
-          params: {
-            "Email Address": emailAddress,
-            "Phone Number": phoneNumber,
-            "Address Line": addressLine,
-            "Zip Code": zipCode,
-            "First Name": firstName,
-            "Last Name": lastName
-          }
-        })
+      AXIOS.patch('/edit/car/' + this.carId+'?model='+model+'&year='+year+'&color='+color, {}, {})
         .then(response => {
+          this.errorCar = '';
           // Update appropriate DTO collections
           this.car = response.data
         })
         .catch(e => {
-          var errorMsg = e
-          console.log(errorMsg)
-          this.errorCar = errorMsg
+          this.errorCar=e
+          console.log(errorCar)
+          window.alert(errorCar)
         })
       // Reset the name field for new people
 
