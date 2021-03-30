@@ -168,6 +168,7 @@ public class AutoRepairShopSystemService {
 	
 	@Transactional
 	public User getLoggedUser() {
+		
 		return currentUser;
 	}
 	

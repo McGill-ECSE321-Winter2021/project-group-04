@@ -341,21 +341,40 @@ public class AutoRepairShopSystemRestController {
 		service.logout();
 	}
 	
-	@GetMapping(value = {"/login/currentUser", "/login/currentUser/"})
-	public User getCurrentUser() {
+	@GetMapping(value = {"/login/currentCustomer", "/login/currentCustomer/"})
+	public CustomerDto getCurrentUser() {
+		User currentUser = service.getLoggedUser();
+		if (!currentUser.getUserId().equalsIgnoreCase("owner") && !currentUser.getUserId().equalsIgnoreCase("admin")) {
+			return (convertToDto((Customer) currentUser));
+		}
+		else {
+			return null;
+		}
+		
+	}
+	
+	@GetMapping(value = {"/login/currentOwner", "/login/currentOwner/"})
+	public OwnerDto getCurrentOwner() {
 		User currentUser = service.getLoggedUser();
 		if (currentUser.getUserId().equalsIgnoreCase("owner")) {
-			return ((Owner) currentUser);
+			return (convertToDto((Owner) currentUser));
 		}
-		
-		else if (currentUser.getUserId().equalsIgnoreCase("admin")) {
-			return ((AdministrativeAssistant) currentUser);
-		}
-		
 		else {
-			return ((Customer) currentUser);
+			return null;
 		}
 	}
+	
+	@GetMapping (value = {"/login/currentAdmin", "/login/currentAdmin/"})
+	public AdministrativeAssistantDto getCurrentAdmin() {
+		User currentUser = service.getLoggedUser();
+		if (currentUser.getUserId().equalsIgnoreCase("admin")) {
+			return (convertToDto((AdministrativeAssistant) currentUser));
+		}
+		else {
+			return null;
+		}
+	}
+	
 	
 	
 	//////////////////////////////////////////////////////////////////////////////////////
