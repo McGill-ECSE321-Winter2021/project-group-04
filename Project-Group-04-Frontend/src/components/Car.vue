@@ -41,32 +41,56 @@
       <br />
       <h2>My Car</h2>
 
-      <button @click="editCar(newModel,newYear,newColor)">
+      <button class="btn btn-primary" @click="editCar(newModel,newYear,newColor)">
         Save Changes
       </button>
-      
+
       <table class="paddingBetweenCols">
         <tr>
           <td>Model</td>
           <td>
-            <input type="text" name="newModel" placeholder="Model">
+            <input type="text" v-model="newModel" placeholder="Model">
           </td>
         </tr>
         <tr>
           <td>Year</td>
           <td>
-            <input type="text" name="newYear" placeholder="Year">
+            <input type="text" v-model="newYear" placeholder="Year">
           </td>
         </tr>
         <tr>
           <td>Color</td>
           <td>
-            <input type="text" name="newColor" placeholder="Color">
+            <input type="text" v-model="newColor" placeholder="Color">
           </td>
         </tr>
       </table>
-      <span v-if="errorCar" style="color:red">Error: {{errorCar}} </span>
     </div>
+    <br />
+    <div>
+      <table class="paddingBetweenCols">
+        <tr>
+          <td>Model</td>
+          <td>
+            {{car.model}}
+          </td>
+        </tr>
+        <tr>
+          <td>Year</td>
+          <td>
+            {{car.year}}
+          </td>
+        </tr>
+        <tr>
+          <td>Color</td>
+          <td>
+            {{car.color}}
+          </td>
+        </tr>
+      </table>
+    </div>
+    <br/>
+    <span v-if="errorCar" style="color:red">Error: {{errorCar}} </span>
   </div>
 </template>
 <script  src = "./CarHandling.js">
@@ -74,7 +98,9 @@
 </script>
 
 <style>
-
+  .paddingBetweenCols {
+    padding: 0 15px;
+  }
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;
@@ -107,6 +133,7 @@
     .topnav .icon {
       display: none;
     }
+
   /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
   @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {
@@ -118,6 +145,7 @@
       display: block;
     }
   }
+
 
   /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
   @media screen and (max-width: 600px) {

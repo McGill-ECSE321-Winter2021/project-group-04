@@ -41,9 +41,7 @@
 
     </a>
   </div>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-      <i class="fa fa-bars"></i>
-    </a>
+
     
     <div class="secondnav">
     <hr>
@@ -57,10 +55,10 @@
         <th>Total Price</th>
       </tr>
       
-        <tr  v-for="appointment in appointments" :key="appointment.service">
-        <td> {{ appointment.bookableService.name }}</td> 
-        <td>{{ appointment.timeSlot.startDate }}</td> 
-        <td> {{appointment.receipt.totalPrice}}</td>
+        <tr  v-for="appointment in appointments" :key="appointment.bookableService.name">
+          <td>{{ appointment.bookableService.name }}</td> 
+          <td>{{ appointment.timeSlot.startTime }}</td> 
+          <td> {{appointment.receipt.totalPrice}}</td>
         </tr>
       
       
@@ -74,8 +72,8 @@
 </div>
 </template>
  
-<script  src = './HandlingBookAppointment.js'>
- 
+<script src = './ReceiptHandling.js'>
+  
 </script>
 
 <style>
