@@ -18,7 +18,7 @@
         </router-link>
       </a>
       <a class="active">
-        <router-link to="/BookableServices">
+        <router-link to="/bookableServices">
           Our Services
         </router-link>
 
