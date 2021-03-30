@@ -344,6 +344,7 @@ public class AutoRepairShopSystemRestController {
 	@GetMapping(value = {"/login/currentUser", "/login/currentUser/"})
 	public User getCurrentUser() {
 		User currentUser = service.getLoggedUser();
+		//System.out.println(currentUser);
 		if (currentUser.getUserId().equalsIgnoreCase("owner")) {
 			return ((Owner) currentUser);
 		}
