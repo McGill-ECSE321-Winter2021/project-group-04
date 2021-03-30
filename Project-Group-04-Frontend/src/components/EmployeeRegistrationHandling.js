@@ -22,10 +22,13 @@ var AXIOS = axios.create({
 
       methods: {
           registerEmployee: function(userId, password){
+              
               if (userId.localeCompare("owner") == 0){
-                AXIOS.post('/register/owner'+userId+'?password='+password)
+                
+                AXIOS.post('/register/owner/'+userId+'?password='+password,{},{})
                 .then(response => {
-                    this.$router.push('LoginPage') // needs to be changed
+                    window.alert(userId)
+                    this.$router.push('Home') // needs to be changed
                 })          
                 .catch(e => {
                     var errMsg = e.response.data.message
@@ -34,9 +37,9 @@ var AXIOS = axios.create({
               }
 
               else if (userId.localeCompare("admin") == 0){
-                AXIOS.post('/register/administrativeAssistant'+userId+'?password='+password,{},{})
+                AXIOS.post('/register/administrativeAssistant/'+userId+'?password='+password,{},{})
                 .then(response => {
-                    this.$router.push('LoginPage')  // needs to be changed
+                    this.$router.push('Home')  // needs to be changed
                 })
                 .catch(e => {
                     var errMsg = e.response.data.message

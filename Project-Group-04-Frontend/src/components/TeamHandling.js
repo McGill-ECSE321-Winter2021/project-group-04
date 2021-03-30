@@ -30,16 +30,29 @@ export default {
     data() {
       return {
         teams: [],
+        name: '',
+        technicianId: '',
         errorTeam: '',
+        reponse: []
       }
     },
     created: function () {
-            // Test data
-          const tech1 = new TechnicianDto('Cesar', true)
-          const tech2 = new TechnicianDto('Abrar', false)
-
-            // Sample initial content
-           
-            this.teams = [tech1,tech2]
-          }
+      // Initializing persons from backend
+      AXIOS.get('/garageTechnicians')
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.teams = response.data 
+        })
+        .catch(e => {
+          this.errorProfile = e
+        })
+        AXIOS.get('/fieldTechnician')
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.teams += response.data
+        })
+        .catch(e => {
+          this.errorProfile = e
+        })
+    },
       }

@@ -9,7 +9,7 @@
         <br />
         <br />
         <h2 class="heading">Register!</h2>
-        <h5 class="subheading">Using your User ID and Password</h5>
+        <h5 class="subheading2">Using your User ID and Password</h5>
         <br style="margin-bottom: 240px" />
         <br style="margin-bottom: 240px" />
         <label for="floatingInput">User ID</label>

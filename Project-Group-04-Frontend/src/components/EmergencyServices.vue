@@ -66,10 +66,11 @@
             <th>Price ($)</th>
           </tr>
             <tr v-for="emergencyService in emergencyServices" :key="emergencyService.name">
-              <td><span contenteditable="true" class="newName">{{ emergencyService.name }}</span></td>
-              <td><span contenteditable="true" class="newPrice">{{ emergencyService.price }}</span></td>
+              <td><span class="newName">{{ emergencyService.name }}</span></td>
+              <td><span class="newPrice">{{ emergencyService.price }}</span></td>
             <td class = "button">
-              ​<button v-on:click="updateEmergencyService(emergencyService)">Edit</button>
+              <!-- v-on:click="updateEmergencyService(emergencyService) -->
+              ​<button id="editButton">Edit</button>
             </td>
             <td class = "button">
               <button v-on:click="deleteEmergencyService(emergencyService)">Delete</button>
@@ -89,20 +90,31 @@
         <!-- ​<span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span> -->
         <hr>
     </div>
+
+  ​<button href="#" id="editButton">Edit</button>
+  <div class="bg-modal">
+    <div class="modal-content">
+      <div class="close">
+        +
+      </div>
+      <form action="">
+        <input type="text" placeholder="New Name" class="newInfo">
+        <input type="text" placeholder="New Price" class="newInfo">
+        <button href="#" class="button">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+
   </div>
 </template>
 
 <script src="./EmergencyServiceHandling.js">
-function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
 
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
 </script>
 
 <style>
+
 
   .button {
     padding: 10px;
@@ -295,8 +307,44 @@ function closeForm() {
     display: inline-block;
     font-weight: bold;
 }
+
 /* Popup box BEGIN */
 
+.bg-modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.7);
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
 
+.modal-content {
+  width: 500px;
+  height: 300px;
+  background-color: white;
+  border-radius: 4px;
+  justify-content: center;
+  /* align-items: center; */
+  position: relative;
+}
+
+.newInfo {
+  width: 50%;
+  display: block;
+  margin: 25px auto;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 14px;
+  font-size: 42px;
+  transform: rotate(45deg);
+  cursor: pointer;
+}
 
 </style>

@@ -91,8 +91,7 @@ export default new Router({
       path: '/bookableServices',
       name: 'BookableServices',
       component: BookableServices
-    }
-    ,
+    },
     {
       path: '/emergencyServices',
       name: 'EmergencyServices',
