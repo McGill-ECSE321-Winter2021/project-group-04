@@ -62,6 +62,8 @@
         <tr class="table">
           <th>Emergency Service</th>
           <th>Price ($)</th>
+          <th>New Name</th>
+          <th>New Price</th>
         </tr>
         <tr
           v-for="emergencyService in emergencyServices"
@@ -73,9 +75,23 @@
           <td>
             <span class="newPrice">{{ emergencyService.price }}</span>
           </td>
+          <td>
+            <input
+              type="text"
+              v-model="newServiceName"
+              placeholder="New Service Name"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              v-model="newServicePrice"
+              placeholder="New Service Price"
+            />
+          </td>
           <td class="button">
             <!-- v-on:click="updateEmergencyService(emergencyService) -->
-            ​<button id="editButton">Edit</button>
+            ​<button v-on:click="updateEmergencyService(emergencyService, newServiceName, newServicePrice)">Edit</button>
           </td>
           <td class="button">
             <button v-on:click="deleteEmergencyService(emergencyService)">
@@ -99,9 +115,7 @@
             />
           </td>
           <td class="button">
-            ​<button
-              v-on:click="createEmergencyService(servicePrice, serviceName)"
-            >
+            ​<button v-on:click="createEmergencyService(servicePrice, serviceName)">
               Add
             </button>
           </td>
@@ -115,7 +129,7 @@
       <hr />
     </div>
 
-    ​<button v-on:click="popupAppear()">Edit</button>
+    <!-- ​<button v-on:click="popupAppear()">Edit</button>
     <div id="test" class="bg-modal">
       <div class="modal-content">
         <div class="close">
@@ -127,9 +141,9 @@
           <button href="#" class="button">Save Changes</button>
          </form>
       </div>
-    </div>
-  </div>
-</template>
+    </div> -->
+  </div> 
+</template> 
 
 <script src="./EmergencyServiceHandling.js">
 // function popupAppear() {

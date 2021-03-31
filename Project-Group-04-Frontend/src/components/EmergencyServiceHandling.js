@@ -30,11 +30,11 @@ export default {
     },
 
     created: function(){
-        const es = new EmergencyServiceDto('70', 'towing')
-        this.emergencyServices = [es]
-        // AXIOS.get('/emergencyServices')
-        // .then(response => {this.emergencyServices = response.data})
-        // .catch(e => {this.errorEmergencyService = e});
+        // const es = new EmergencyServiceDto('70', 'towing')
+        // this.emergencyServices = [es]
+        AXIOS.get('/emergencyServices')
+        .then(response => {this.emergencyServices = response.data})
+        .catch(e => {this.errorEmergencyService = e});
     }, 
 
     methods: {
@@ -68,15 +68,12 @@ export default {
             })
         },
 
-        updateEmergencyService: function(emergencyService){
+        updateEmergencyService: function(emergencyService, newName, newPrice){
             const id = emergencyService.id
             AXIOS.patch('/edit/emergencyService/' + id + '?name=' + newName + '&price=' + newPrice, {}, {})
             .then(response => {
-              //   this.emergencyService = response.data.emergencyService
-                // this.emergencyServices.push(response.data)
-                // this.errorEmergencyService = ''
-                // this.newEmergencyService = ''
                 this.emergencyService = response.data
+                location.reload()
             })
             .catch(e => {
                 var errorMSg = e
@@ -85,9 +82,6 @@ export default {
                 window.alert(e)
             })
         },
-
-
-        
 
     }
 }
