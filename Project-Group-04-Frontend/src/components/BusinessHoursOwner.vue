@@ -75,7 +75,7 @@
     </div>
   </div>
 </template>
-<script src="./AboutOwnerHandling.js" >
+<script src="./BusinessHourOwnerHandling.js" >
 </script>
 
 <style>
