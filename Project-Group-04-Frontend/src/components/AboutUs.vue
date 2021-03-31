@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="topnav">
+    <div class="topnav">
       <a><router-link to="/home">Home</router-link></a>
       <a>
         <router-link to="/profile">
@@ -15,6 +15,11 @@
       <a>
         <router-link to="/receipts">
           My Receipts
+        </router-link>
+      </a>
+      <a>
+        <router-link to="/reminders">
+          My Reminders
         </router-link>
       </a>
       <a>
