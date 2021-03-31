@@ -136,11 +136,15 @@ export default new Router({
       name: 'AboutOwner',
       component: AboutOwner
     },
-    
-
+    // {
+    //   path: '/businessHoursOwner',
+    //   name: 'BusinessHoursOwner',
+    //   component: BusinessHoursOwner
+    // },
+    {
       path: '/reminders',
       name: 'Reminders',
       component: Reminders
-
+    } 
   ]
 })
