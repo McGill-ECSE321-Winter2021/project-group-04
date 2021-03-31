@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -90,11 +91,10 @@ public class AppointmentService {
         if (date.before(Date.valueOf(LocalDate.now()))) {
             throw new IllegalArgumentException("Please book an appointment in the future");
         }
-        for (BusinessHour businessHour : getAllBusinessHours()) {
-            if (businessHour.getStartTime().after(startTime) || businessHour.getEndTime().before(endTime)) {
-                throw new IllegalArgumentException("This time doesn't fall within business hours!");
-            }
+        if(!fallsWithinBusinessHours(date,startTime,endTime)) {
+            throw new IllegalArgumentException("This time doesn't fall within business hours!");
         }
+        
         for (Appointment appointment : getAppointmentsByDate(date)) {
             if (isOverlap(appointment.getTimeSlot(), startTime, endTime, garageSpot)) {
                 throw new IllegalArgumentException("This attempted booking overlaps with another!");
@@ -113,6 +113,21 @@ public class AppointmentService {
 
     }
     
+    public Boolean fallsWithinBusinessHours(Date date, Time startTime, Time endTime) {
+    	DayOfWeek dayOfWeekOfAppointment = LocalDate.parse(date.toString()).getDayOfWeek();
+    	Boolean fallsWithinBusinessHours=false;
+    	for(BusinessHour businessHour : getAllBusinessHours()) {
+    		if(dayOfWeekOfAppointment.toString().equals(businessHour.getDayOfWeek().toString())) {
+    			if (businessHour.getStartTime().before(startTime) && businessHour.getEndTime().after(endTime)) {
+    				fallsWithinBusinessHours=true;
+    			}
+    		}
+    	}
+    	
+    	return fallsWithinBusinessHours;
+    }
+    
+    @Transactional
     public AppointmentReminder createAppointmentReminder(Date date, Time time, String message) {
         if (message == "") {
             throw new IllegalArgumentException("Message can't be empty");
