@@ -278,7 +278,7 @@ public class AutoRepairShopSystemRestController {
 			dayOfWeek = DayOfWeek.Monday;
 		} else if (day.equals("Tuesday")) {
 			dayOfWeek = DayOfWeek.Tuesday;
-		} else if (day.equals("Wednseday")) {
+		} else if (day.equals("Wednesday")) {
 			dayOfWeek = DayOfWeek.Wednesday;
 		} else if (day.equals("Thursday")) {
 			dayOfWeek = DayOfWeek.Thursday;

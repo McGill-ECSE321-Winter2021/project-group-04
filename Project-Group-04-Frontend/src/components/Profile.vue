@@ -48,17 +48,55 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
-    <div id="myProfile">
+    <div class="myProfile">
       <br />
       <h2>My Profile</h2>
 
-     
+           <br />
+      <div >
+       
+      <table class="paddingBetweenCols" >
+       
+    <!-- <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
+       Show Profile
+      </button> -->
+    <tr class="table">
+      <td>Current First Name</td>
+        <td> {{ profile.firstName }}</td>
+   </tr>
+   <tr>
+     <td> Current Last Name</td>
+        <td>{{ profile.lastName}}</td> 
+   </tr>
+   <tr>
+         <td>Current Address Line</td>
+         <!-- <td v-if="profile" :key="profile.addressLine"> -->
+         
+        <td>{{ profile.addressLine}}</td> 
+</tr>
+         <td>Current Email Address  </td>
+       
+        <td>{{ profile.emailAddress}}</td> 
+        <tr>
+        <td>Current Zip Code</td>
+       
+        <td>{{ profile.zipCode}}</td> 
+</tr>
+<tr>
+        <td>Current Phone Number</td>
+       
+        <td>{{ profile.phoneNumber}}</td>
+    </tr>
+       
+      </table>
+      </div>
+      <br/>
+      <span v-if="errorProfile" style="color:red"> {{errorProfile}} </span>
+    </div>
+
     <!-- <h3 class ="updateMessage"> Update </h3> -->
     <div>
       <table class="paddingBetweenCols" >
-        <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
-        Save Changes
-      </button>
         <tr>
           <td>New First Name</td>
           <td>
@@ -96,48 +134,10 @@
             <input type="text" v-model="newPhoneNumber"  placeholder="Phone Number" required>
           </td>
         </tr>
+      <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
+        Save Changes
+      </button>
         </table>
-    </div>
-      <br />
-      <div >
-       
-      <table class="paddingBetweenCols" >
-       
-    <!-- <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
-       Show Profile
-      </button> -->
-    <tr>
-      <td>Current First Name</td>
-        <td> {{ profile.firstName }}</td>
-   </tr>
-   <tr>
-     <td> Current Last Name</td>
-        <td>{{ profile.lastName}}</td> 
-   </tr>
-   <tr>
-         <td>Current Address Line</td>
-         <!-- <td v-if="profile" :key="profile.addressLine"> -->
-         
-        <td>{{ profile.addressLine}}</td> 
-</tr>
-         <td>Current Email Address</td>
-       
-        <td>{{ profile.emailAddress}}</td> 
-        <tr>
-        <td>Current Zip Code</td>
-       
-        <td>{{ profile.zipCode}}</td> 
-</tr>
-<tr>
-        <td>Current Phone Number</td>
-       
-        <td>{{ profile.phoneNumber}}</td>
-    </tr>
-       
-      </table>
-      </div>
-      <br/>
-      <span v-if="errorProfile" style="color:red"> {{errorProfile}} </span>
     </div>
   </div>
 </template>
@@ -152,8 +152,10 @@
     background-color: #696969;
     overflow: hidden;
   }
-
-
+/* 
+ .btn btn-primary {
+   right: 50px;
+ } */
 
 
   /* Style the links inside the navigation bar */
@@ -193,7 +195,7 @@
       display: block;
     }
 
-    myProfile h2 {
+    .myProfile h2 {
       padding-top: 10px;
       justify-content: space-around;
     }
@@ -229,6 +231,18 @@
 
 .paddingBetweenCols {
  padding: 0 15px;
+ align-content: center;
+}
+
+.paddingBetweenCols table {
+ margin-left: auto;
+ margin-right: auto;
+}
+
+.table {
+  background-color: #ffffff;
+  margin: 0px;
+  align-content: center;
 }
  
 </style>

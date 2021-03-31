@@ -45,33 +45,7 @@
     <div id="myCar">
       <br />
       <h2>My Car</h2>
-
-      <button class="btn btn-primary" @click="editCar(newModel,newYear,newColor)">
-        Save Changes
-      </button>
-
-      <table class="paddingBetweenCols">
-        <tr>
-          <td>Model</td>
-          <td>
-            <input type="text" v-model="newModel" placeholder="Model">
-          </td>
-        </tr>
-        <tr>
-          <td>Year</td>
-          <td>
-            <input type="text" v-model="newYear" placeholder="Year">
-          </td>
-        </tr>
-        <tr>
-          <td>Color</td>
-          <td>
-            <input type="text" v-model="newColor" placeholder="Color">
-          </td>
-        </tr>
-      </table>
-    </div>
-    <br />
+<br />
     <div>
       <table class="paddingBetweenCols">
         <tr>
@@ -97,6 +71,31 @@
     <br/>
     <span v-if="errorCar" style="color:red">Error: {{errorCar}} </span>
   </div>
+      <table class="paddingBetweenCols">
+        <tr>
+          <td>Model</td>
+          <td>
+            <input type="text" v-model="newModel" placeholder="Model">
+          </td>
+        </tr>
+        <tr>
+          <td>Year</td>
+          <td>
+            <input type="text" v-model="newYear" placeholder="Year">
+          </td>
+        </tr>
+        <tr>
+          <td>Color</td>
+          <td>
+            <input type="text" v-model="newColor" placeholder="Color">
+          </td>
+        </tr>
+        <button class="btn btn-primary" @click="editCar(newModel,newYear,newColor)">
+        Save Changes
+      </button>
+      </table>
+    </div>
+          
 </template>
 <script  src = "./CarHandling.js">
  
