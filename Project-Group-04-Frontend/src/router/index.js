@@ -19,10 +19,9 @@ import EmployeeRegistrationPage from '@/components/EmployeeRegistrationPage'
 import CustomerRegistrationPage from '@/components/CustomerRegistrationPage'
 import WelcomePage from '@/components/WelcomePage'
 import BookAppointment from '@/components/BookAppointment'
-
 import TeamOwner from '@/components/TeamOwner'
 import HomeOwner from '@/components/HomeOwner'
-import BookableServicesOwner from '@/components/BookableServicesOwner'
+import BusinessHoursOwner from '@/components/BusinessHoursOwner'
 import AboutOwner from '@/components/AboutOwner'
 import BusinessHoursOwner from '@/components/BusinessHoursOwner'
 
@@ -139,11 +138,6 @@ export default new Router({
       component: HomeOwner
     },
   
-    {
-      path: '/bookableServicesOwner',
-      name: 'BookableServicesOwner',
-      component: BookableServicesOwner
-    },
     {
       path: '/teamOwner',
       name: 'TeamOwner',

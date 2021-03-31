@@ -55,15 +55,6 @@ function getMinDate() {
   return maxDate;
 }
 
-// function getTechId(selectedGarageTechnician){
-//   console.log(selectedGarageTechnician)
-//   AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
-//       .then(response => {
-//       this.chosenGarageTech = response.data
-//       this.chosenTechnicianId = response.data.technicianId
-//        })
-//       .catch(e => {this.errorChosenTechnicianId})
-// }
 
 
 

@@ -5,7 +5,7 @@
 
     
       <a>
-        <router-link to="/bookableServicesOwner">
+        <router-link to="/owner/bookableServices">
           Our Services
         </router-link>
 
@@ -34,12 +34,12 @@
               <button class="dropbtn">Our Business</button>
               <div class="dropdown-content">
                 <a>
-                  <router-link to="/businessHours">
+                  <router-link to="/businessHoursOwner">
                     Business Hours
                   </router-link>
                 </a>
                 <a>
-                  <router-link to="/about">
+                  <router-link to="/aboutOwner">
                     Contact us
                   </router-link>
                 </a>
