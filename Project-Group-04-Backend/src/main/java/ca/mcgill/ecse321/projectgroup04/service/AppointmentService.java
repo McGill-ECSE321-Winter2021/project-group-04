@@ -24,14 +24,16 @@ public class AppointmentService {
     private AppointmentReminderRepository appointmentReminderRepository;
     @Autowired
     private TimeSlotRepository timeSlotRepository;
-
-    private CustomerService customerService;
-    private BookableServiceService bookableServiceService;
-    private BusinessHourService businessHourService;
-    private TimeSlotService timeSlotService;
-    private ReceiptService receiptService;
-    private AppointmentReminderService appointmentReminderService;
-    private GarageTechnicianService garageTechnicianService;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private BookableServiceRepository bookableServiceRepository;
+    @Autowired
+    private BusinessHourRepository businessHourRepository;
+    @Autowired
+    private GarageTechnicianRepository garageTechnicianRepository;
+    
+   
 
     @Transactional
     public Appointment createAppointment(Customer aCustomer, BookableService aBookableService,
@@ -69,11 +71,11 @@ public class AppointmentService {
     @Transactional
     public Appointment bookAppointment(String userId, String serviceName, Date date, Integer garageSpot, Time startTime,
             Long garageTechnicianId) {
-        Customer customer = customerService.getCustomerByUserId(userId);
+        Customer customer = getCustomerByUserId(userId);
         if (customer == null) {
             throw new IllegalArgumentException("No customer with such userId!");
         }
-        BookableService bookableService = bookableServiceService.getBookableServiceByServiceName(serviceName);
+        BookableService bookableService = getBookableServiceByServiceName(serviceName);
         if (bookableService == null) {
             throw new IllegalArgumentException("No Bookable Service with such name!");
         }
@@ -88,7 +90,7 @@ public class AppointmentService {
         if (date.before(Date.valueOf(LocalDate.now()))) {
             throw new IllegalArgumentException("Please book an appointment in the future");
         }
-        for (BusinessHour businessHour : businessHourService.getAllBusinessHours()) {
+        for (BusinessHour businessHour : getAllBusinessHours()) {
             if (businessHour.getStartTime().after(startTime) || businessHour.getEndTime().before(endTime)) {
                 throw new IllegalArgumentException("This time doesn't fall within business hours!");
             }
@@ -98,17 +100,136 @@ public class AppointmentService {
                 throw new IllegalArgumentException("This attempted booking overlaps with another!");
             }
         }
-        TimeSlot timeSlot = timeSlotService.createTimeSlot(startTime, endTime, date, date, garageSpot);
-        Receipt receipt = receiptService.createReceipt(bookableService.getPrice());
-        GarageTechnician garageTechnician = garageTechnicianService.getGarageTechnicianById(garageTechnicianId);
+        TimeSlot timeSlot = createTimeSlot(startTime, endTime, date, date, garageSpot);
+        Receipt receipt = createReceipt(bookableService.getPrice());
+        GarageTechnician garageTechnician = getGarageTechnicianById(garageTechnicianId);
         date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
-        AppointmentReminder appReminder = appointmentReminderService.createAppointmentReminder(date, startTime,
+        AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
                 "You have an appointment in 24hours");
-        appointmentReminderService.addAppointmentReminderToCustomer(customer, appReminder);
+        addAppointmentReminderToCustomer(customer, appReminder);
         Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
                 receipt);
         return appointment;
 
+    }
+    
+    public AppointmentReminder createAppointmentReminder(Date date, Time time, String message) {
+        if (message == "") {
+            throw new IllegalArgumentException("Message can't be empty");
+        }
+        if (date == null) {
+            throw new IllegalArgumentException("Date can't be null");
+        }
+        if (time == null) {
+            throw new IllegalArgumentException("Time can't be null");
+        }
+        if (message == "") {
+            throw new IllegalArgumentException("Message can't be empty");
+        }
+        AppointmentReminder appointmentReminder = new AppointmentReminder();
+
+        appointmentReminder.setDate(date);
+        appointmentReminder.setTime(time);
+        appointmentReminder.setMessage(message);
+
+        appointmentReminderRepository.save(appointmentReminder);
+        return appointmentReminder;
+
+    }
+    
+    @Transactional
+    public void addAppointmentReminderToCustomer(Customer customer, AppointmentReminder appointmentReminder) {
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer can't be null!");
+        }
+        if (appointmentReminder == null) {
+            throw new IllegalArgumentException("Appointment Reminder can't be null!");
+        }
+        List<Reminder> newReminders = new ArrayList<>();
+        if (customer.getReminders() != null) {
+            for (Reminder a : customer.getReminders()) {
+                newReminders.add(a);
+            }
+        }
+        newReminders.add(appointmentReminder);
+        customer.setReminders(newReminders);
+    }
+    
+    @Transactional
+    public GarageTechnician getGarageTechnicianById(Long technicianId) {
+        GarageTechnician garageTechnician = garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
+        if (garageTechnician == null) {
+            throw new IllegalArgumentException("No garage technician with such id!");
+        }
+        return garageTechnician;
+    }
+
+    
+    @Transactional
+    public Receipt createReceipt(double aTotalPrice) {
+        if (aTotalPrice == 0) {
+            throw new IllegalArgumentException("Total Price can't be 0");
+        }
+        if (aTotalPrice < 0) {
+            throw new IllegalArgumentException("Total Price can't be negative");
+        }
+        Receipt receipt = new Receipt();
+        receipt.setTotalPrice(aTotalPrice);
+        receiptRepository.save(receipt);
+        return receipt;
+    }
+    
+    @Transactional
+    public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
+
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Date cannot be null");
+        }
+        if (startTime == null) {
+            throw new IllegalArgumentException("startTime cannot be null");
+        }
+        if (endTime == null) {
+            throw new IllegalArgumentException("endTime cannot be null");
+        }
+        if (garageSpot == null) {
+            throw new IllegalArgumentException("garageSpot cannot be null");
+        }
+
+        if (startTime.after(endTime)) {
+            throw new IllegalArgumentException("StartTime cannot be after endTime");
+        }
+        TimeSlot timeSlot = new TimeSlot();
+        timeSlot.setStartDate(startDate);
+        timeSlot.setStartTime(startTime);
+        timeSlot.setEndDate(endDate);
+        timeSlot.setEndTime(endTime);
+        timeSlot.setGarageSpot(garageSpot);
+        timeSlotRepository.save(timeSlot);
+        return timeSlot;
+    }
+    
+    @Transactional
+    public List<BusinessHour> getAllBusinessHours() {
+        return (List<BusinessHour>) businessHourRepository.findAll();
+    }
+    
+    @Transactional
+    public Customer getCustomerByUserId(String userId) {
+        Customer customer = customerRepository.findCustomerByUserId(userId);
+        if (customer == null) {
+            throw new IllegalArgumentException("No customer with such userId!");
+        }
+        return customer;
+    }
+    @Transactional
+    public BookableService getBookableServiceByServiceName(String name) {
+
+        for (BookableService bookableService : bookableServiceRepository.findAll()) {
+            if (name.contains(bookableService.getName()) || bookableService.getName().equals(name)) {
+                return bookableService;
+            }
+        }
+        return null;
     }
 
     @Transactional
@@ -124,7 +245,7 @@ public class AppointmentService {
 
     @Transactional
     public List<Appointment> getAppointmentsByCustomer(String userId) {
-        Customer customer = customerService.getCustomerByUserId(userId);
+        Customer customer = getCustomerByUserId(userId);
         if (customer == null) {
             throw new IllegalArgumentException("Customer can't be null");
         }
