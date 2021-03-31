@@ -73,7 +73,7 @@ public class TestAppointmentService {
 	private BusinessHourRepository businessHourRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private AppointmentService service;
 
 	private static final String CUSTOMER_USERID = "TestUserId";
 	private static final String CUSTOMER_PASSWORD = "TestPassword0";

@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 
-
 @ExtendWith(MockitoExtension.class)
 public class TestTimeSlotService {
 
@@ -44,14 +43,16 @@ public class TestTimeSlotService {
     private TimeSlotRepository timeSlotRepository;
 
     @InjectMocks
-    private AutoRepairShopSystemService service;
+    private TimeSlotService service;
+
+    @InjectMocks
+    private BusinessService businessService;
 
     private static final String OLD_APPOINTMENT_DATE = "2021-03-18";
     private static final String OLD_APPOINTMENT_START_TIME = "13:00:00";
     private static final String OLD_APPOINTMENT_END_TIME = "13:30:00";
     private static final Long timeSlotId = 1234l;
     private static final Integer garageSpot = 123;
-
 
     private static final String BUSINESS_NAME = "TestName";
     private static final String BUSINESS_PHONENUMBER = "438123456";
@@ -64,7 +65,6 @@ public class TestTimeSlotService {
 
     private static final List<BusinessHour> BUSINESS_BUSINESSHOUR = new ArrayList<BusinessHour>();
     private static final List<TimeSlot> BUSINESS_TIMESLOTS = new ArrayList<TimeSlot>();
-
 
     @BeforeEach
     public void setMockOutput() {
@@ -228,28 +228,6 @@ public class TestTimeSlotService {
         assertEquals(error, "garageSpot cannot be null");
     }
 
-    // @Test
-    // public void TestCreateTimeSlotThatAlreadyExists() {
-    // Date date = Date.valueOf(LocalDate.parse("2020-03-18"));
-    // Time aStartTime = Time.valueOf(LocalTime.parse("13:00:00"));
-    // Time aEndTime = Time.valueOf(LocalTime.parse("13:30:00"));
-    // Integer garageSpot = 123;
-    //
-    // TimeSlot timeSlot = null;
-    //
-    // String error = "";
-    //
-    // try {
-    // timeSlot = service.createTimeSlot(aStartTime, aEndTime, date, date,
-    // garageSpot);
-    // }catch (IllegalArgumentException e){
-    // error = e.getMessage();
-    // }
-    //
-    // assertNull(timeSlot);
-    // assertEquals(error, "This TimeSlot already exists");
-    // }
-
     @Test
     public void TestCreateTimeSlotWithWrongTime() {
         Date date = Date.valueOf(LocalDate.parse("2020-03-20"));
@@ -270,6 +248,7 @@ public class TestTimeSlotService {
         assertNull(timeSlot);
         assertEquals(error, "StartTime cannot be after endTime");
     }
+
     @Test
     public void TestDeleteTimeSlot() {
         Date date = Date.valueOf(LocalDate.parse("2020-03-20"));
@@ -283,7 +262,7 @@ public class TestTimeSlotService {
         timeSlot.setStartDate(date);
         timeSlot.setStartTime(aStartTime);
         timeSlot.setGarageSpot(garageSpot);
-        Business business = service.getBusinessById(BUSINESS_ID);
+        Business business = businessService.getBusinessById(BUSINESS_ID);
 
         try {
             timeSlot = service.deleteTimeSlot(timeSlot, business);

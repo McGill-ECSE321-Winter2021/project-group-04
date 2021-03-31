@@ -34,7 +34,7 @@ public class TestAppointmentReminderService {
 	private AppointmentReminderRepository appointmentReminderRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private AppointmentReminderService service;
 
 	private static final String APPOINTMENTREMINDER_DATE = "2021-03-18";
 	private static final String APPOINTMENTREMINDER_TIME = "11:00:00";

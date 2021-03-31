@@ -45,7 +45,10 @@ public class TestBusinessHourService {
     private BusinessRepository businessRepository;
 
     @InjectMocks
-    private AutoRepairShopSystemService service;
+    private BusinessHourService service;
+
+    @InjectMocks
+    private BusinessService businessService;
 
     private static final Long BUSINESSHOUR_ID = 123l;
     private static final DayOfWeek BUSINESSHOUR_DAY = DayOfWeek.Monday;
@@ -509,7 +512,7 @@ public class TestBusinessHourService {
     public void deleteBusinessHour() {
         boolean bool = false;
         boolean bool2 = false;
-        Business business = service.getBusinessById(BUSINESS_ID);
+        Business business = businessService.getBusinessById(BUSINESS_ID);
         BusinessHour businessHour = service.getBusinessHourById(BUSINESSHOUR_ID);
         try {
             bool = service.deleteBusinessHour(businessHour, business);
