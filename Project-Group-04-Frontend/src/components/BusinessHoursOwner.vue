@@ -64,7 +64,7 @@
             <td><input type="text" v-model="startTime" placeholder="New Openning Hour"></td>
             <td><input type="text" v-model="endTime" placeholder="New Closing Hour"></td>
             <td class = "button">
-              ​<button v-on:click="updateBusinessHour(businessHour, dayOfWeek, startTime, endTime)">Update</button>
+              ​<button v-on:click="updateBusinessHour(dayOfWeek, startTime, endTime)">Update</button>
             </td>
           <!-- <td class = "button">
             <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>

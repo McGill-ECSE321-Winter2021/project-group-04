@@ -41,12 +41,15 @@ export default {
       })
   },
   methods: {
-    editBusiness: function (business) {
-    const businessId = business.businessId
-      AXIOS.post('/edit/business/' + businessId + '?name=' + newName + '&address=' + newAddress + '&phoneNumber=' + newPhoneNumber + '&emailAddress=' + newEmailAdress, {},{})
+    editBusiness: function (newAddress, newPhoneNumber, newEmailAddress) {
+      var business = this.businesses[0]
+    const businessId = business.id
+    const name = business.name
+      AXIOS.patch('/edit/businessInformation/' + businessId + '?name=' + name + '&address=' + newAddress + '&phoneNumber=' + newPhoneNumber + '&emailAddress=' + newEmailAddress, {},{})
         .then(response => {
           // Update appropriate DTO collections
             this.business = response.data
+            location.reload()
         })
         .catch(e => {
           var errorMsg = e
