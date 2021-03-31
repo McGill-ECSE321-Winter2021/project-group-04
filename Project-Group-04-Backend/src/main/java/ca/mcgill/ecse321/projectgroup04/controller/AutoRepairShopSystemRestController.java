@@ -1156,5 +1156,14 @@ public class AutoRepairShopSystemRestController {
 		}
 		return appointmentsDto;
 	}
+	@GetMapping(value = { "/appointments/next/24Hours/{userId}", "/appointments/next/24Hours/{userId}/" })
+	public List<AppointmentDto> get24HoursAppointments(@PathVariable("userId") String userId) {
+		List<AppointmentDto> appointmentsDto = new ArrayList<AppointmentDto>();
+		for (Appointment appointment : appService.get24hoursAppointment(userId)) {
+			appointmentsDto.add(convertToDto(appointment));
+		}
+		return appointmentsDto;
+	}
+	
 
 }
