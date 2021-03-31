@@ -24,6 +24,7 @@ import TeamOwner from '@/components/TeamOwner'
 import HomeOwner from '@/components/HomeOwner'
 import BookableServicesOwner from '@/components/BookableServicesOwner'
 import AboutOwner from '@/components/AboutOwner'
+import BusinessHoursOwner from '@/components/BusinessHoursOwner'
 
 import Reminders from '@/components/Reminders'
 
@@ -153,11 +154,11 @@ export default new Router({
       name: 'AboutOwner',
       component: AboutOwner
     },
-    // {
-    //   path: '/businessHoursOwner',
-    //   name: 'BusinessHoursOwner',
-    //   component: BusinessHoursOwner
-    // },
+    {
+      path: '/businessHoursOwner',
+      name: 'BusinessHoursOwner',
+      component: BusinessHoursOwner
+    },
     {
       path: '/reminders',
       name: 'Reminders',
