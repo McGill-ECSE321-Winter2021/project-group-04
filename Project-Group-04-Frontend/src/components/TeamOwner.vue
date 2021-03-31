@@ -41,8 +41,8 @@
         <tr  v-for="team in teams" :key="team.teamHandling">
         <td> {{ team.name }}</td> 
                    <td class = "button">
-              <button v-on:click="deleteGarageTechnician(garageTechnician)">Delete Garage Technician</button>
-              <button v-on:click="deleteFieldTechnician(fieldTechnician)">Delete Field Technician</button>
+              <button v-on:click="deleteGarageTechnician(team.name)">Delete Garage Technician</button>
+              <button v-on:click="deleteFieldTechnician(team.name)">Delete Field Technician</button>
             </td>
         </tr>
           <tr class = "addGarageTechnician">

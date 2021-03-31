@@ -37,33 +37,12 @@ export default {
             this.businessHourId = this.business.businessHourId
           })
           .catch(e => {
-            this.errorProfile = e
+            this.errorBusinessHour = e
           })
       },
 
     methods: {
         updateBusinessHour: function(dayOfWeek, startTime, endTime){
-            // if (dayOfWeek == 'Monday'){
-            //     var businessHour = this.businessHours[0]
-            // }
-            // if (dayOfWeek == 'Tuesday'){
-            //     var businessHour = this.businessHours[1]
-            // }
-            // if (dayOfWeek == 'Wednesday'){
-            //     var businessHour = this.businessHours[2]
-            // }
-            // if (dayOfWeek == 'Thursday'){
-            //     var businessHour = this.businessHours[3]
-            // }
-            // if (dayOfWeek == 'Friday'){
-            //     var businessHour = this.businessHours[4]
-            // }
-            // if (dayOfWeek == 'Saturday'){
-            //     var businessHour = this.businessHours[5]
-            // }
-            // if (dayOfWeek == 'Sunday'){
-            //     var businessHour = this.businessHours[6]
-            // }
             var i
             for (i =0; i<this.businessHours.length; i++){
                 if(dayOfWeek == this.businessHours[i].dayOfWeek){

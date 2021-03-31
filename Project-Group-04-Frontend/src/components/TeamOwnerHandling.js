@@ -88,7 +88,13 @@ export default {
               })
         },
 
-        deleteGarageTechnician: function (garageTechnician){
+        deleteGarageTechnician: function (name){
+          var i
+          for(i=0; i<teams.length; i++){
+            if(name = this.teams[i].name){
+              var garageTechnician = this.teams[i]
+            }
+          }
             const technicianId = garageTechnician.technicianId
             AXIOS.patch('/delete/garageTechnician/' + technicianId, {}, {})
             .then(response => {
@@ -102,7 +108,13 @@ export default {
                 window.alert(e)
             })
         },
-        deleteFieldTechnician: function (fieldTechnician){
+        deleteFieldTechnician: function (name){
+          var i
+          for(i=0; i<teams.length; i++){
+            if(name = this.teams[i].name){
+              var fieldTechnician = this.teams[i]
+            }
+          }
             const technicianId = fieldTechnician.technicianId
             AXIOS.patch('/delete/fieldTechnician/' + technicianId, {}, {})
             .then(response => {
@@ -117,4 +129,4 @@ export default {
             })
         }
     }
-      }
+  }
