@@ -1,83 +1,80 @@
 <template>
-<div>
-  <div class="topnav">
-    <a> <router-link to="/home">Home</router-link></a>
+  <div>
+    <div class="topnav">
+      <a> <router-link to="/home">Home</router-link></a>
 
-    <a>
-      <router-link to="/profile">
-        My Profile
-      </router-link>
-    </a>
+      <a>
+        <router-link to="/profile">
+          My Profile
+        </router-link>
+      </a>
 
 
-    <a>
-      <router-link to="/car">
-        My Car
-      </router-link>
-    </a>
+      <a>
+        <router-link to="/car">
+          My Car
+        </router-link>
+      </a>
 
-    <a class="active">
-      <router-link to="/receipts">
-        My Receipts
-      </router-link>
-    </a>
-    <a>
-      <router-link to="/reminders">
-        My Reminders
-      </router-link>
-    </a>
-    <a>
-      <router-link to="/bookableServices">
-        Our Services
-      </router-link>
+      <a>
+        <router-link to="/receipts">
+          My Receipts
+        </router-link>
+      </a>
 
-    </a>
-    <a>
-      <router-link to="/team">
-        Our Team
-      </router-link>
+      <a class="active">
+        <router-link to="/reminders">
+          My Reminders
+        </router-link>
+      </a>
 
-    </a>
-    <a>
-      <router-link to="/about">
-        About Us
-      </router-link>
 
-    </a>
-  </div>
+      <a>
+        <router-link to="/bookableServices">
+          Our Services
+        </router-link>
 
-    
-    <div class="secondnav">
-    <hr>
-     <h2> My Receipts </h2>
-  
-      <table>
-       
-      <tr class="table">
-       <th > Service</th>
-        <th> Date</th>
-        <th>Total Price ($)</th>
-      </tr>
-      
-        <tr  v-for="appointment in appointments" :key="appointment.bookableService.name">
-          <td>{{ appointment.bookableService.name }}</td> 
-          <td>{{ appointment.timeSlot.startDate }}</td> 
-          <td> {{appointment.receipt.totalPrice}}</td>
-        </tr>
-      
-      
+      </a>
+      <a>
+        <router-link to="/team">
+          Our Team
+        </router-link>
 
-     
-   
-      </table>
-    ​<span v-if="errorReceipt" style="color:red">Error: {{errorRecepit}} </span>
-    <hr>
+      </a>
+      <a>
+        <router-link to="/about">
+          About Us
+        </router-link>
+
+      </a>
     </div>
-</div>
+
+
+    <div class="secondnav">
+      <hr>
+      <h2> My Reminder </h2>
+
+      <table>
+
+        <tr class="table">
+          <th>Service</th>
+          <th>Message</th>
+        </tr>
+
+        <tr v-for="reminder in reminders" :key="reminder">
+          <td>{{}}</td>
+          <td>{{}}</td>
+          <td>{{}}</td>
+        </tr>
+      </table>
+      ​<span v-if="errorReminder" style="color:red">Error: {{errorReminder}} </span>
+      <hr>
+    </div>
+  </div>
 </template>
- 
-<script src = './ReceiptHandling.js'>
-  
+
+<script src='./RemindersHandling.js'>
+
 </script>
 
 <style>
@@ -90,18 +87,17 @@
   .template {
     background-color: #696969;
   }
- 
+
   .table {
     background-color: #f2f2f2;
     margin: 0px;
   }
-    .table th { 
+
+    .table th {
       color: #290e36;
-      
       padding-left: 100px;
       padding-right: 100px;
       text-align: center;
-
     }
 
   /* Add a black background color to the top navigation */
@@ -119,7 +115,7 @@
       text-decoration: none;
       font-size: 17px;
     }
-      
+
 
       /* Change the color of links on hover */
       .topnav a:not(active):hover {
@@ -167,3 +163,4 @@
       }
   }
 </style>
+
