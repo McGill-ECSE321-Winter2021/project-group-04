@@ -18,7 +18,7 @@
         </router-link>
       </a>
       <a class="active">
-        <router-link to="/emergencyServices">
+        <router-link to="/owner/emergencyServices">
           Our Services
         </router-link>
       </a>
@@ -45,12 +45,12 @@
           <button class="dropbtn">Our Services</button>
           <div class="dropdown-content">
             <a>
-              <router-link to="/bookableServices">
+              <router-link to="/owner/bookableServices">
                 Bookable Services
               </router-link>
             </a>
             <a>
-              <router-link to="/emergencyServices">
+              <router-link to="/owner/emergencyServices">
                 Emergency Services
               </router-link>
             </a>
@@ -79,14 +79,14 @@
             <input
               type="text"
               v-model="newServiceName"
-              placeholder="New Service Name"
+              placeholder="New Name"
             />
           </td>
           <td>
             <input
               type="text"
               v-model="newServicePrice"
-              placeholder="New Service Price"
+              placeholder="New Price"
             />
           </td>
           <td class="button">
@@ -104,14 +104,14 @@
             <input
               type="text"
               v-model="serviceName"
-              placeholder="Service Name"
+              placeholder="Name"
             />
           </td>
           <td>
             <input
               type="text"
               v-model="servicePrice"
-              placeholder="Service Price"
+              placeholder="Price"
             />
           </td>
           <td class="button">
@@ -119,42 +119,14 @@
               Add
             </button>
           </td>
-          <!-- <td class = "button">
-              <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
-            </td> -->
         </tr>
       </table>
-
-      <!-- ​<span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span> -->
       <hr />
     </div>
-
-    <!-- ​<button v-on:click="popupAppear()">Edit</button>
-    <div id="test" class="bg-modal">
-      <div class="modal-content">
-        <div class="close">
-          +
-        </div>
-        <form action="">
-          <input type="text" placeholder="New Name" class="newInfo" />
-          <input type="text" placeholder="New Price" class="newInfo" />
-          <button href="#" class="button">Save Changes</button>
-         </form>
-      </div>
-    </div> -->
   </div> 
 </template> 
 
 <script src="./EmergencyServiceHandling.js">
-// function popupAppear() {
-//     var pop = document.getElementsByClassName('bg-modal');
-//     pop.style.display = 'flex';
-// }
-
-// function popupDisappear() {
-//     var pop = document.getElementsByClassName('bg-modal');
-//     pop.style.display = 'none';
-// }
 </script>
 
 <style>
@@ -178,6 +150,7 @@
 }
 
 .table th {
+  font-size: 20px;
   color: #696969;
   text-align: center;
   padding-left: 100px;

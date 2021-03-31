@@ -45,6 +45,7 @@ export default {
               this.emergencyServices.push(response.data)
               this.errorEmergencyService = ''
               this.newEmergencyService = ''
+            //   location.reload()
           })
           .catch(e => {
               var errorMSg = e
