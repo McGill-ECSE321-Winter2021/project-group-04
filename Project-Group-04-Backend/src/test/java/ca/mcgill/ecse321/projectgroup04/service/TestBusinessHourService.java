@@ -34,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @ExtendWith(MockitoExtension.class)
 public class TestBusinessHourService {
@@ -60,7 +61,7 @@ public class TestBusinessHourService {
     private static final String BUSINESSHOUR_STARTTIME_2 = "08:00:00";
     private static final String BUSINESSHOUR_ENDTIME_2 = "19:00:00";
 
-    private static final String BUSINESS_NAME = "TestName";
+    private static final String BUSINESS_NAME = "AutoRepairShop";
     private static final String BUSINESS_PHONENUMBER = "438123456";
     private static final String BUSINESS_ADDRESS = "1234 MTL, Quebec";
     private static final String BUSINESS_MAIL = "testmail@mail.mcgill.ca";
@@ -161,36 +162,36 @@ public class TestBusinessHourService {
             return null;
         });
 
-        lenient().when(businessRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-            // if (invocation.getArgument(0).equals(BUSINESS_ID)) {
+        lenient().when(businessRepository.findBusinessByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
+            if (invocation.getArgument(0).equals(BUSINESS_NAME)) {
 
-            Business business = new Business();
-            business.setName(BUSINESS_NAME);
-            business.setAddress(BUSINESS_ADDRESS);
-            business.setEmailAddress(BUSINESS_MAIL);
-            business.setPhoneNumber(BUSINESS_PHONENUMBER);
-            business.setId(BUSINESS_ID);
+                Business business = new Business();
+                business.setName(BUSINESS_NAME);
+                business.setAddress(BUSINESS_ADDRESS);
+                business.setEmailAddress(BUSINESS_MAIL);
+                business.setPhoneNumber(BUSINESS_PHONENUMBER);
+                business.setId(BUSINESS_ID);
 
-            BusinessHour businessHour = new BusinessHour();
-            businessHour.setDayOfWeek(BUSINESSHOUR_DAYOFWEEK);
-            businessHour.setStartTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_STARTTIME)));
-            businessHour.setEndTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_ENDTIME)));
+                BusinessHour businessHour = new BusinessHour();
+                businessHour.setDayOfWeek(BUSINESSHOUR_DAYOFWEEK);
+                businessHour.setStartTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_STARTTIME)));
+                businessHour.setEndTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_ENDTIME)));
 
-            BUSINESS_BUSINESSHOUR.add(businessHour);
-            business.setBusinessHours(BUSINESS_BUSINESSHOUR);
+                BUSINESS_BUSINESSHOUR.add(businessHour);
+                business.setBusinessHours(BUSINESS_BUSINESSHOUR);
 
-            TimeSlot timeSlot = new TimeSlot();
-            timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
-            timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
-            timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
-            timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
+                TimeSlot timeSlot = new TimeSlot();
+                timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
+                timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
+                timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
+                timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
 
-            BUSINESS_TIMESLOTS.add(timeSlot);
-            business.setRegular(BUSINESS_TIMESLOTS);
+                BUSINESS_TIMESLOTS.add(timeSlot);
+                business.setRegular(BUSINESS_TIMESLOTS);
 
-            return business;
-            // }
-            // return null;
+                return business;
+            }
+            return null;
         });
 
     }

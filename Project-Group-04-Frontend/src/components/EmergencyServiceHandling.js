@@ -51,7 +51,7 @@ export default {
               var errorMSg = e
               console.log(errorMSg)
               this.errorEmergencyService = errorMSg
-              window.alert(e)
+              window.alert("Emergency Service with this name already exists/Price cannot be less than or equal to zero")
           })
         },
 
@@ -80,7 +80,7 @@ export default {
                 var errorMSg = e
                 console.log(errorMSg)
                 this.errorEmergencyService = errorMSg
-                window.alert(e)
+                window.alert("Emergency Service with this name alreay exists")
             })
         },
 

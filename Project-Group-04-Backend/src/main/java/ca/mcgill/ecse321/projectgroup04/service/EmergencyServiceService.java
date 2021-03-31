@@ -128,10 +128,19 @@ public class EmergencyServiceService {
         if (name == emergencyService.getName() && price == emergencyService.getPrice()) {
             throw new IllegalArgumentException("You have to edit one of the fields");
         }
+
+        // boolean bool = false;
+
+        // if (emergencyService.getName().equals(name)) {
+        // bool = true;
+        // }
+
+        // if (bool) {
         EmergencyService existingEmergencyService = getEmergencyServiceByServiceName(name);
         if (existingEmergencyService != null) {
             throw new IllegalArgumentException("An emergency service with this name already exists");
         }
+        // }
 
         emergencyService.setName(name);
         emergencyService.setPrice(price);

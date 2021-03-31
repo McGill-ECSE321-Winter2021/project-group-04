@@ -49,7 +49,7 @@ export default {
                 var errorMSg = e
                 console.log(errorMSg)
                 this.errorBookableService = errorMSg
-                window.alert(e)
+                window.alert(errorMSg)
             })
           },
   
@@ -78,7 +78,7 @@ export default {
                   var errorMSg = e
                   console.log(errorMSg)
                   this.errorbookableService = errorMSg
-                  window.alert(e)
+                  window.alert(errorMSg)
               })
           }
   

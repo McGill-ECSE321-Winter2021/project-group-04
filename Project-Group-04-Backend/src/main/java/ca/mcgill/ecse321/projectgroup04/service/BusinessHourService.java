@@ -60,7 +60,8 @@ public class BusinessHourService {
         businessHourRepository.save(businessHour);
 
         // // TODO check this!!!!
-        // Business business = getBusiness().get(0);
+        // Business business = businessService.getBusiness().get(0);
+        // Business business = businessService.getBusinessByName("AutoRepairShop");
         // business.setBusinessHours(getAllBusinessHours());
         // businessRepository.save(business);
 
