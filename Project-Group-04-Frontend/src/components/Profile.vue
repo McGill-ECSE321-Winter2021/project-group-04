@@ -91,7 +91,7 @@
       </table>
       </div>
       <br/>
-      <span v-if="errorProfile" style="color:red"> {{errorProfile}} </span>
+      <!-- <span v-if="errorProfile" style="color:red"> {{errorProfile}} </span> -->
     </div>
 
     <!-- <h3 class ="updateMessage"> Update </h3> -->

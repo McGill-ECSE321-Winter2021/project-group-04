@@ -54,22 +54,17 @@
       <hr>
       <br /> 
       <h2>Booking</h2>
-
       <br />
-      <table class="table">
-        <tr>
-          
+    <table class="tableau">
+        <tr class="table">
             <th> Service </th>
             <th>Date </th>
             <th> Time </th>
             <th> Spot </th>
             <th> Technician </th>
-         
+
           </tr>
-         
-         
           <tr>
-          
              <td>
               ​<select v-model="selectedService">
                 ​<option disabled value="">Please select one</option>
@@ -78,11 +73,9 @@
                 ​</option>
               ​</select>
            ​</td>
-         
-        
-                
-              <td> 
-                 <input type="date" v-model="date" min="datePickerIdMin" required >
+
+          <td> 
+           <input type="date" v-model="date" min="datePickerIdMin" required >
               </td>
                 <td> <input type="time" v-model="time" step="300" min="08:00" max="18:00" required>
                 </td>
@@ -93,48 +86,46 @@
                         ​<option disabled value="">Please select one</option>
                         ​<option v-for="garageTechnician in garageTechnicians" :key="garageTechnician.name" >
                             ​{{garageTechnician.name}}
-                        </option>
-                          ​</select>
-                      </td>
-       
+                         </option>
+                ​</select>
+            </td>
         </tr>
-        
           </table>
-      <hr>
-    </div>
-    <div class="bookButton">
-  <button @click="bookAppointment(selectedService, date,time,garageSpot,selectedGarageTechnician)" type="bookAppointmentButton" 
-        class="btn btn-primary"  >  Book</button>
-  </div>
-   <div class="backButton">
-       <router-link to="/home">
-      <button type="backAppointmentButton" class="btn btn-primary">
-               Back
-      </button>
-    </router-link>
 
-  </div>
-  <span v-if="errorBooking" style="color:red">Error: {{errorBooking}} </span>
+    </div>
   </div>
  </template>
 
 
 
  <script src = './HandlingBookAppointment.js' >
-
  </script>
 
 
  <style>
-   
- .table {
-     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 1vh;
+
+     .tableau {
+    margin-left: auto;
     margin-right: auto;
-    margin-left:auto;
-}
+    /* padding-left: 2px;
+    padding-right: 2px;
+    align-content: center; */
+  }
+
+  .tableau table {
+    background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+
+  .tableau th {
+    color: #696969;
+    text-align: center;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+
 .bookButton {
        display: flex;
     align-items: center;
@@ -150,6 +141,7 @@
     height: 10vh;
 
 }
+
  /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;
@@ -182,6 +174,7 @@
     .topnav .icon {
       display: none;
     }
+
   /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
   @media screen and (max-width: 600px) {
     .topnav a:not(:first-child) {
@@ -213,6 +206,7 @@
       }
   }
 
- </style>
+
+</style>
  
  
