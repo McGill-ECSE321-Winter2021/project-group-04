@@ -12,7 +12,9 @@ import java.util.List;
 public class ReceiptService {
     @Autowired
     private ReceiptRepository receiptRepository;
-
+    
+    
+    @Transactional
     public Receipt createReceipt(double aTotalPrice) {
         if (aTotalPrice == 0) {
             throw new IllegalArgumentException("Total Price can't be 0");
