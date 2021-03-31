@@ -56,7 +56,7 @@
             <th>Phone Number</th>
             <th>Email Address</th>
           </tr>
-          <tr v-for="business in businesses" :key="business.services">
+          <tr v-for="business in businesses" :key="business.name">
             <td>{{ business.address }}</td>
             <td>{{ business.phoneNumber }}</td>
             <td>{{ business.emailAddress }}</td>
@@ -64,9 +64,9 @@
           <tr class = "editBusinessInfo">
             <td><input type="text" v-model="newAddress" placeholder="Update Adress"></td>
             <td><input type="text" v-model="newPhoneNumber" placeholder="Update Phone Number"></td>
-            <td><input type="text" v-model="newEmailAdress" placeholder="Update Email Address"></td>
+            <td><input type="text" v-model="newEmailAddress" placeholder="Update Email Address"></td>
             <td class = "button">
-              ​<button v-on:click="editBusiness(business, newAddress, newPhoneNumber, newEmailAdress)">Update</button>
+              ​<button v-on:click="editBusiness(newAddress, newPhoneNumber, newEmailAddress)">Update</button>
             </td>
         </tr>
         </table>
