@@ -49,14 +49,9 @@ public class GarageTechnicianService {
 
     @Transactional
     public GarageTechnician getGarageTechnicianByName(String name) {
-
-        String trim = new String(name.trim());
-        System.out.println(trim + "v");
         GarageTechnician garageTech = null;
         for (GarageTechnician garageTechnician : garageTechnicianRepository.findAll()) {
-
             if (name.contains(garageTechnician.getName())) {
-                System.out.println("level2");
                 garageTech = garageTechnician;
                 break;
             }

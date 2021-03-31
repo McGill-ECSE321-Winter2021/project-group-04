@@ -5,7 +5,7 @@
 
 
       <a>
-        <router-link to="/bookableServicesOwner">
+        <router-link to="/owner/bookableServices">
           Our Services
         </router-link>
 
