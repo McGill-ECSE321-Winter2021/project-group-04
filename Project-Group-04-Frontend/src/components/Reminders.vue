@@ -61,10 +61,9 @@
           <th>Message</th>
         </tr>
 
-        <tr v-for="reminder in reminders" :key="reminder">
-          <td>{{}}</td>
-          <td>{{}}</td>
-          <td>{{}}</td>
+        <tr v-for="appointment in appointments" :key="appointment.id">
+          <td>{{appointment.bookableService.name}}</td>
+          <td>{{appointment.appointmentReminder.message}}</td>
         </tr>
       </table>
       ​<span v-if="errorReminder" style="color:red">Error: {{errorReminder}} </span>
