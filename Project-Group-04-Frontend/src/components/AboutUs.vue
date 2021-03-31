@@ -17,6 +17,11 @@
           My Receipts
         </router-link>
       </a>
+       <a>
+        <router-link to="/reminders">
+          My Reminders
+        </router-link>
+      </a>
       <a>
         <router-link to="/bookableServices">
           Our Services
@@ -68,7 +73,7 @@
             <th>Phone Number</th>
             <th>Email Address</th>
           </tr>
-          <tr v-for="business in businesses" :key="business.services">
+          <tr class="values" v-for="business in businesses" :key="business.services">
             <td>{{ business.address }}</td>
             <td>{{ business.phoneNumber }}</td>
             <td>{{ business.emailAddress }}</td>
@@ -92,7 +97,7 @@
     background-color: #ffffff;
   }
 
-  .serviceTable table {
+  .businessTable table {
     margin-left: auto;
     margin-right: auto;
   }
@@ -104,10 +109,15 @@
   }
   
   .table th {
+    font-size: 17px;
     color: #696969;
     text-align: center;
     padding-left: 100px;
     padding-right: 100px;
+  }
+
+  .values td {
+    font-size: 17px;
   }
 
   /* Add a black background color to the top navigation */
@@ -178,7 +188,7 @@
   background-color: #696969;
   color: white;
   padding: 16px;
-  font-size: 30px;
+  font-size: 17px;
   border: none;
 }
 

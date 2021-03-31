@@ -136,7 +136,7 @@
 }
 
 .table th {
-  font-size: 20px;
+  font-size: 17px;
   color: #696969;
   text-align: center;
   padding-left: 100px;
@@ -210,7 +210,7 @@
   background-color: #696969;
   color: white;
   padding: 16px;
-  font-size: 30px;
+  font-size: 17px;
   border: none;
 }
 
@@ -228,6 +228,7 @@
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  font-size: 17px;
 }
 
 /* Links inside the dropdown */
@@ -286,7 +287,7 @@
   position: absolute;
   top: 0;
   right: 14px;
-  font-size: 42px;
+  font-size: 17px;
   transform: rotate(45deg);
   cursor: pointer;
 }

@@ -51,40 +51,56 @@
       </a>
     </div> 
     <div >
+      <hr>
       <br /> 
       <h2>Booking</h2>
 
       <br />
-        <tr class="table">
-            
-          <!-- <th>Service
-            <input type="text" name="serviceName" value="service name">
-          </th> -->
-          <label>Service
-      ​<select v-model="selectedService">
-       ​<option disabled value="">Please select one</option>
-       ​<option v-for="bookableService in bookableServices" :key="bookableService.name" >
-         ​{{ bookableService.name }}
-       ​</option>
-     ​</select>
-   ​</label>
-
-          <label> Date  <input type="date" v-model="date" min="datePickerIdMin" required >
-          </label>
-          <label> Time  <input type="time" v-model="time" step="300" min="08:00" max="18:00" required>
-          </label>
-          <label>
-            Spot  <input type="number" v-model="garageSpot" min="1" max="4" required>
-
-          </label>
-          <label> Technician ​<select v-model="selectedGarageTechnician">
-       ​<option disabled value="">Please select one</option>
-       ​<option v-for="garageTechnician in garageTechnicians" :key="garageTechnician.name" >
-         ​{{garageTechnician.name}}
-       ​</option>
-     ​</select>
-          </label>
+      <table class="table">
+        <tr>
+          
+            <th> Service </th>
+            <th>Date </th>
+            <th> Time </th>
+            <th> Spot </th>
+            <th> Technician </th>
+         
+          </tr>
+         
+         
+          <tr>
+          
+             <td>
+              ​<select v-model="selectedService">
+                ​<option disabled value="">Please select one</option>
+                ​<option v-for="bookableService in bookableServices" :key="bookableService.name" >
+                  ​{{ bookableService.name }}
+                ​</option>
+              ​</select>
+           ​</td>
+         
+        
+                
+              <td> 
+                 <input type="date" v-model="date" min="datePickerIdMin" required >
+              </td>
+                <td> <input type="time" v-model="time" step="300" min="08:00" max="18:00" required>
+                </td>
+                    <td>
+                    <input type="number" v-model="garageSpot" min="1" max="4" required>
+                    </td>
+                      <td> <select v-model="selectedGarageTechnician">
+                        ​<option disabled value="">Please select one</option>
+                        ​<option v-for="garageTechnician in garageTechnicians" :key="garageTechnician.name" >
+                            ​{{garageTechnician.name}}
+                        </option>
+                          ​</select>
+                      </td>
+       
         </tr>
+        
+          </table>
+      <hr>
     </div>
     <div class="bookButton">
   <button @click="bookAppointment(selectedService, date,time,garageSpot,selectedGarageTechnician)" type="bookAppointmentButton" 
@@ -110,11 +126,14 @@
 
 
  <style>
+   
  .table {
      display: flex;
     align-items: center;
     justify-content: center;
     height: 1vh;
+    margin-right: auto;
+    margin-left:auto;
 }
 .bookButton {
        display: flex;
