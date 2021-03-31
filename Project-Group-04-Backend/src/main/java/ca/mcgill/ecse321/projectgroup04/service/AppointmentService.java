@@ -117,7 +117,7 @@ public class AppointmentService {
     	DayOfWeek dayOfWeekOfAppointment = LocalDate.parse(date.toString()).getDayOfWeek();
     	Boolean fallsWithinBusinessHours=false;
     	for(BusinessHour businessHour : getAllBusinessHours()) {
-    		if(dayOfWeekOfAppointment.toString().equals(businessHour.getDayOfWeek().toString())) {
+    		if(businessHour.getDayOfWeek().name().equalsIgnoreCase(dayOfWeekOfAppointment.name())) {
     			if (businessHour.getStartTime().before(startTime) && businessHour.getEndTime().after(endTime)) {
     				fallsWithinBusinessHours=true;
     			}
