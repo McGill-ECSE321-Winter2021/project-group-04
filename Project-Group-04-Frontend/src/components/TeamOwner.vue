@@ -38,7 +38,7 @@
         <!-- <th>Total Price</th> -->
       </tr>
       
-        <tr  v-for="team in teams" :key="team.service">
+        <tr  v-for="team in teams" :key="team.teamHandling">
         <td> {{ team.name }}</td> 
                    <td class = "button">
               <button v-on:click="deleteGarageTechnician(garageTechnician)">Delete Garage Technician</button>
@@ -53,7 +53,7 @@
             </tr>
 
             <tr class = "addFieldTechnician">
-            <td><input type="text" v-model="name" placeholder="Name"></td>
+            <td><input type="text" v-model="name1" placeholder="Name"></td>
             <td class = "button">
               ​<button v-on:click="createFieldTechnician(name)">Add Field Technician</button>
             </td>
