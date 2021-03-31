@@ -82,12 +82,12 @@ public class TestAppointmentService {
 	private static final int SERVICE_PRICE = 50;
 	private static final int SERVICE_DURATION = 30;
 
-	private static final String OLD_APPOINTMENT_DATE = "2021-04-18";
+	private static final String OLD_APPOINTMENT_DATE = "2021-04-20";
 	private static final Integer OLD_APPOINTMENT_GARAGE_SPOT = 1;
 	private static final String OLD_APPOINTMENT_START_TIME = "13:00:00";
 	private static final String OLD_APPOINTMENT_END_TIME = "13:30:00";
 
-	private static final String OLD_APPOINTMENT_REMINDER_DATE = "2021-04-17";
+	private static final String OLD_APPOINTMENT_REMINDER_DATE = "2021-04-19";
 	private static final String OLD_APPOINTMENT_REMINDER_TIME = "13:00:00";
 	private static final String OLD_APPOINTMENT_REMINDER_MESSAGE = "You have an appointment in 24 hours";
 
@@ -95,7 +95,7 @@ public class TestAppointmentService {
 	private static final String GARAGE_TECHNICIAN_NAME = "Harry Potter";
 
 	private static final Long BUSINESSHOUR_ID = 123l;
-	private static final DayOfWeek BUSINESSHOUR_DAY = DayOfWeek.Monday;
+	private static final DayOfWeek BUSINESSHOUR_DAY = DayOfWeek.Tuesday;
 	private static final String BUSINESSHOUR_STARTTIME = "09:00:00";
 	private static final String BUSINESSHOUR_ENDTIME = "17:00:00";
 
@@ -357,7 +357,7 @@ public class TestAppointmentService {
 		String serviceName = "ServiceName1";
 		String userId = "TestUserId";
 		Time startTime = Time.valueOf(LocalTime.parse("12:45:00"));
-		Date date = Date.valueOf(LocalDate.parse("2021-04-18"));
+		Date date = Date.valueOf(LocalDate.parse("2021-04-20"));
 		Long garageTechnicianId = 4587l;
 		Integer garageSpot = 2;
 
@@ -383,7 +383,7 @@ public class TestAppointmentService {
 		String serviceName = "ServiceName1";
 		String userId = "TestUserId";
 		Time startTime = Time.valueOf(LocalTime.parse("12:45:00"));
-		Date date = Date.valueOf(LocalDate.parse("2021-04-18"));
+		Date date = Date.valueOf(LocalDate.parse("2021-04-20"));
 		Long garageTechnicianId = 4587l;
 		Integer garageSpot = 1;
 		String error = null;
@@ -692,7 +692,7 @@ public class TestAppointmentService {
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(SERVICE_PRICE);
 
-		LocalDate testDate = LocalDate.parse("2021-04-17");
+		LocalDate testDate = LocalDate.parse("2021-04-19");
 		LocalTime testTime = LocalTime.parse("16:45:00");
 
 		TimeSlot timeSlot = new TimeSlot();
@@ -748,7 +748,7 @@ public class TestAppointmentService {
 		Receipt receipt = new Receipt();
 		receipt.setTotalPrice(SERVICE_PRICE);
 
-		LocalDate testDate = LocalDate.parse("2021-04-17");
+		LocalDate testDate = LocalDate.parse("2021-04-19");
 		LocalTime testTime = LocalTime.parse("16:45:00");
 
 		TimeSlot timeSlot = new TimeSlot();
