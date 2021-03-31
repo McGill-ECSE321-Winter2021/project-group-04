@@ -60,7 +60,7 @@
     <!-- <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
        Show Profile
       </button> -->
-    <tr class="table">
+    <tr>
       <td>Current First Name</td>
         <td> {{ profile.firstName }}</td>
    </tr>
@@ -134,10 +134,10 @@
             <input type="text" v-model="newPhoneNumber"  placeholder="Phone Number" required>
           </td>
         </tr>
-      <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
-        Save Changes
-      </button>
         </table>
+        <button class = "btn btn-primary"  @click="editProfile(newFirstName,newLastName,newAddressLine,newEmailAddress,newZipCode,newPhoneNumber)">
+          Save Changes
+      </button>
     </div>
   </div>
 </template>
@@ -230,19 +230,9 @@
       }
 
 .paddingBetweenCols {
- padding: 0 15px;
- align-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.paddingBetweenCols table {
- margin-left: auto;
- margin-right: auto;
-}
-
-.table {
-  background-color: #ffffff;
-  margin: 0px;
-  align-content: center;
-}
  
 </style>

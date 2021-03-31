@@ -90,10 +90,10 @@
             <input type="text" v-model="newColor" placeholder="Color">
           </td>
         </tr>
-        <button class="btn btn-primary" @click="editCar(newModel,newYear,newColor)">
+      </table>
+      <button id="editButton" class="btn btn-primary" @click="editCar(newModel,newYear,newColor)">
         Save Changes
       </button>
-      </table>
     </div>
           
 </template>
@@ -102,8 +102,15 @@
 </script>
 
 <style>
+
   .paddingBetweenCols {
-    padding: 0 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .paddingBetweenCols td{
+    padding-right: 10px;
+    padding-bottom: 10px;
   }
   /* Add a black background color to the top navigation */
   .topnav {

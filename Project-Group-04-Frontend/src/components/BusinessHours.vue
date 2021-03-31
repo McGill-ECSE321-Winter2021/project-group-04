@@ -71,7 +71,7 @@
             <th>Openning Hour</th>
             <th>Closing Hour</th>
           </tr>
-            <tr v-for="businessHour in businessHours" :key="businessHour.openningHour">
+            <tr class="values" v-for="businessHour in businessHours" :key="businessHour.openningHour">
               <td>{{ businessHour.dayOfWeek }}</td>
               <td>{{ businessHour.startTime }}</td>
               <td>{{ businessHour.endTime }}</td>
@@ -95,7 +95,7 @@
     background-color: #ffffff;
   }
 
-  .serviceTable table {
+  .businessTable table {
     margin-left: auto;
     margin-right: auto;
   }
@@ -107,11 +107,16 @@
   }
   
   .table th {
+    font-size: 40px;
     color: #696969;
     text-align: center;
     padding-left: 100px;
     padding-right: 100px;
   }
+
+  .values td {
+    font-size: 20px;
+}
 
   /* Add a black background color to the top navigation */
   .topnav {
