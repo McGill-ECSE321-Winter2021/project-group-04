@@ -1232,10 +1232,10 @@ public class AutoRepairShopSystemService {
 		businessHour.setStartTime(aStartTime);
 		businessHourRepository.save(businessHour);
 
-		// TODO check this!!!!
-		Business business = getBusiness().get(0);
-		business.setBusinessHours(getAllBusinessHours());
-		businessRepository.save(business);
+		// // TODO check this!!!!
+		// Business business = getBusiness().get(0);
+		// business.setBusinessHours(getAllBusinessHours());
+		// businessRepository.save(business);
 
 		return businessHour;
 	}

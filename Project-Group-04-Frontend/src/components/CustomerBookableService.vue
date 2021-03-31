@@ -18,7 +18,7 @@
         </router-link>
       </a>
       <a class="active">
-        <router-link to="/emergencyServices">
+        <router-link to="/bookableServices">
           Our Services
         </router-link>
 
@@ -60,61 +60,60 @@
             </div>
           </h2>
 
-        <table>
+        ​<table class="tableau">
           <tr class="table">
-            <th>Emergency Service</th>
+            <th>Bookable Service</th>
+            <th>Duration (min)</th>
             <th>Price ($)</th>
           </tr>
-            <tr v-for="emergencyService in emergencyServices" :key="emergencyService.name">
-              <td><span class="newName">{{ emergencyService.name }}</span></td>
-              <td><span class="newPrice">{{ emergencyService.price }}</span></td>
-            <td class = "button">
-              <!-- v-on:click="updateEmergencyService(emergencyService) -->
-              ​<button id="editButton">Edit</button>
-            </td>
-            <td class = "button">
-              <button v-on:click="deleteEmergencyService(emergencyService)">Delete</button>
-            </td>
-          </tr>
-          <tr class = "addService">
-            <td><input type="text" v-model="serviceName" placeholder="Service Name"></td>
-            <td><input type="text" v-model="servicePrice" placeholder="Service Price"></td>
-            <td class = "button">
-              ​<button v-on:click="createEmergencyService(servicePrice, serviceName)">Add</button>
-            </td>
-            <!-- <td class = "button">
-              <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
-            </td> -->
-          </tr>
+          <tr class="values" v-for="bookableService in bookableServices" :key="bookableService.name">
+            <td>{{ bookableService.name }}</td>
+            <td>{{ bookableService.duration }}</td>
+            <td>{{ bookableService.price }}</td>
+        </tr>
         </table>
-        <!-- ​<span v-if="errorEvent" style="color:red">Error: {{errorEvent}} </span> -->
         <hr>
     </div>
-<!-- 
-  ​<button href="#" id="editButton">Edit</button>
-  <div class="bg-modal">
-    <div class="modal-content">
-      <div class="close">
-        +
-      </div>
-      <form action="">
-        <input type="text" placeholder="New Name" class="newInfo">
-        <input type="text" placeholder="New Price" class="newInfo">
-        <button href="#" class="button">Save Changes</button>
-      </form>
-    </div>
-  </div> -->
-
-
   </div>
 </template>
 
-<script src="./EmergencyServiceHandling.js">
-
+<script src="./CustomerBookableServiceHandling.js">
 </script>
 
 <style>
 
+    .values td {
+        font-size: 30px;
+    }
+
+  .tableau {
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-left: 2px;
+    padding-right: 2px;
+    align-content: center; */
+  }
+
+  .tableau table {
+    background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+
+  .tableau th {
+    color: #696969;
+    text-align: center;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  /* .tableau input {
+    size="10";
+  } */
+
+  /* .input {
+    width: 10px;
+  } */
 
   .button {
     padding: 10px;
@@ -129,7 +128,7 @@
     margin-right: auto;
   }
 
-  .table {
+  /* .table {
     background-color: #ffffff;
     margin: 0px;
     align-content: center;
@@ -140,7 +139,7 @@
     text-align: center;
     padding-left: 100px;
     padding-right: 100px;
-  }
+  } */
 
   /* Add a black background color to the top navigation */
   .topnav {
@@ -246,44 +245,4 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #FF4500;}
-
-/* Popup box BEGIN */
-
-.bg-modal {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,.7);
-  position: absolute;
-  top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  display: none;
-}
-
-.modal-content {
-  width: 500px;
-  height: 300px;
-  background-color: white;
-  border-radius: 4px;
-  justify-content: center;
-  /* align-items: center; */
-  position: relative;
-}
-
-.newInfo {
-  width: 50%;
-  display: block;
-  margin: 25px auto;
-}
-
-.close {
-  position: absolute;
-  top: 0;
-  right: 14px;
-  font-size: 42px;
-  transform: rotate(45deg);
-  cursor: pointer;
-}
-
 </style>

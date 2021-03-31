@@ -18,7 +18,7 @@
         </router-link>
       </a>
       <a class="active">
-        <router-link to="/bookableServices">
+        <router-link to="/owner/bookableServices">
           Our Services
         </router-link>
 
@@ -47,12 +47,12 @@
               <button class="dropbtn">Our Services</button>
               <div class="dropdown-content">
                 <a>
-                  <router-link to="/bookableServices">
+                  <router-link to="/owner/bookableServices">
                     Bookable Services
                   </router-link>
                 </a>
                 <a>
-                  <router-link to="/emergencyServices">
+                  <router-link to="/owner/emergencyServices">
                     Emergency Services
                   </router-link>
                 </a>
@@ -60,32 +60,53 @@
             </div>
           </h2>
 
-        ​<table>
+        ​<table class="tableau">
           <tr class="table">
             <th>Bookable Service</th>
             <th>Duration (min)</th>
             <th>Price ($)</th>
-            <!-- <th>Edit</th>
-          <th>Delete</th> -->
-            ​<!--<th>Edit</th>-->
+            <th>New Name</th>
+            <th>New Duration</th>
+            <th>New Price</th>
           </tr>
           <tr v-for="bookableService in bookableServices" :key="bookableService.name">
             <td>{{ bookableService.name }}</td>
             <td>{{ bookableService.duration }}</td>
             <td>{{ bookableService.price }}</td>
-            <td class = "button">
-              ​<button v-on:click="updateBookableService(bookableService, Service.price, bookableService.name)">Edit</button>
-            </td>
+          <td>
+            <input size="10"
+              type="text"
+              v-model="newServiceName"
+              placeholder="New Name"
+            />
+          </td>
+          <td>
+            <input size="10"
+              type="text"
+              v-model="newServiceDuration"
+              placeholder="New Duration"
+            />
+          </td>
+          <td>
+            <input size="10"
+              type="text"
+              v-model="newServicePrice"
+              placeholder="New Price"
+            />
+          </td>
+          <td class="button">
+            ​<button v-on:click="updateBookableService(bookableService, newServiceName, newServiceDuration, newServicePrice)">Edit</button>
+          </td>
             <td class = "button">
               <button v-on:click="deleteBookableService(bookableService)">Delete</button>
             </td>
           </tr>
           <tr class = "addService">
-            <td><input type="text" v-model="serviceName" placeholder="Service Name"></td>
-            <td><input type="text" v-model="serviceDuration" placeholder="Service Duration"></td>
-            <td><input type="text" v-model="servicePrice" placeholder="Service Price"></td>
+            <td><input id="myInput" size="10" type="text" v-model="serviceName" placeholder="Name"></td>
+            <td><input id="myInput" size="10" type="text" v-model="serviceDuration" placeholder="Duration"></td>
+            <td><input id="myInput" size="10" type="text" v-model="servicePrice" placeholder="Price"></td>
             <td class = "button">
-              ​<button v-on:click="createBookableService(servicePrice, serviceName, serviceDuration)">Add</button>
+              ​<button v-on:click="createBookableService(servicePrice, serviceName, serviceDuration), document.getElementById('myInput').value = ''" >Add</button>
             </td>
           <!-- <td class = "button">
             <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
@@ -102,6 +123,36 @@
 
 <style>
 
+  .tableau {
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-left: 2px;
+    padding-right: 2px;
+    align-content: center; */
+  }
+
+  .tableau table {
+    background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+
+  .tableau th {
+    font-size: 20px;
+    color: #696969;
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  /* .tableau input {
+    size="10";
+  } */
+
+  /* .input {
+    width: 10px;
+  } */
+
   .button {
     padding: 10px;
   }
@@ -115,7 +166,7 @@
     margin-right: auto;
   }
 
-  .table {
+  /* .table {
     background-color: #ffffff;
     margin: 0px;
     align-content: center;
@@ -126,7 +177,7 @@
     text-align: center;
     padding-left: 100px;
     padding-right: 100px;
-  }
+  } */
 
   /* Add a black background color to the top navigation */
   .topnav {
