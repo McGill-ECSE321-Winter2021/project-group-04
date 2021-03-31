@@ -2,10 +2,10 @@
   <div>
     <div class="topnav">
       <a class="active">
-           <router-link to="/home">
-           Home
-           </router-link>
-           </a>
+        <router-link to="/home">
+          Home
+        </router-link>
+      </a>
       <a>
         <router-link to="/profile">
           My Profile
@@ -19,6 +19,12 @@
       <a>
         <router-link to="/receipts">
           My Receipts
+        </router-link>
+      </a>
+
+      <a>
+        <router-link to="/reminders">
+          My Reminders
         </router-link>
       </a>
 

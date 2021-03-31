@@ -21,7 +21,11 @@
           My Receipts
         </router-link>
       </a>
-
+      <a>
+        <router-link to="/reminders">
+          My Reminders
+        </router-link>
+      </a>
       <a>
         <router-link to="/bookableServices">
           Our Services
