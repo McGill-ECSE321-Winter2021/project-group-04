@@ -17,6 +17,7 @@ import EmployeeRegistrationPage from '@/components/EmployeeRegistrationPage'
 import CustomerRegistrationPage from '@/components/CustomerRegistrationPage'
 import WelcomePage from '@/components/WelcomePage'
 import BookAppointment from '@/components/BookAppointment'
+import Reminders from '@/components/Reminders'
 
 
 
@@ -107,6 +108,11 @@ export default new Router({
       path: '/book',
       name: 'Booking',
       component: BookAppointment
+    },
+    {
+      path: '/reminders',
+      name: 'Reminders',
+      component: Reminders
     }
   ]
 })
