@@ -23,6 +23,8 @@ import TeamOwner from '@/components/TeamOwner'
 import HomeOwner from '@/components/HomeOwner'
 import BusinessHoursOwner from '@/components/BusinessHoursOwner'
 import AboutOwner from '@/components/AboutOwner'
+import BusinessHoursOwner from '@/components/BusinessHoursOwner'
+
 import Reminders from '@/components/Reminders'
 
 
