@@ -105,17 +105,18 @@
 
 
  <script src = './HandlingBookAppointment.js' >
-
  </script>
 
 
- <style>
+<style>
+
  .table {
      display: flex;
     align-items: center;
     justify-content: center;
     height: 1vh;
 }
+
 .bookButton {
        display: flex;
     align-items: center;
@@ -194,6 +195,7 @@
       }
   }
 
- </style>
+
+</style>
  
  
