@@ -69,7 +69,6 @@
       </table>
     </div>
     <br/>
-    <span v-if="errorCar" style="color:red">Error: {{errorCar}} </span>
   </div>
       <table class="paddingBetweenCols">
         <tr>

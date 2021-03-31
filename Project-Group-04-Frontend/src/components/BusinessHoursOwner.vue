@@ -47,9 +47,9 @@
             </div>
           </h2>
 
-        ​<table>
+        ​<table class="table">
 
-          <tr class="table">
+          <tr >
             <th>Days</th>
             <th>Openning Hour</th>
             <th>Closing Hour</th>
@@ -87,15 +87,14 @@
     background-color: #ffffff;
   }
 
-  .serviceTable table {
-    margin-left: auto;
-    margin-right: auto;
-  }
+ 
 
   .table {
     background-color: #ffffff;
     margin: 0px;
     align-content: center;
+    margin-right: auto;
+    margin-left : auto;
   }
   
   .table th {

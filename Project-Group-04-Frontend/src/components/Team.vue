@@ -89,6 +89,7 @@
   .table {
     background-color: #f2f2f2;
     margin: 0px;
+    font-size:17px;
   }
     .table th { 
       color: #290e36;

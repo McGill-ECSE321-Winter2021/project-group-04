@@ -17,6 +17,11 @@
           My Receipts
         </router-link>
       </a>
+       <a>
+        <router-link to="/reminders">
+          My Reminders
+        </router-link>
+      </a>
       <a class="active">
         <router-link to="/bookableServices">
           Our Services
@@ -83,7 +88,7 @@
 <style>
 
     .values td {
-        font-size: 30px;
+        font-size: 15px;
     }
 
   .tableau {
@@ -116,7 +121,7 @@
   } */
 
   .button {
-    padding: 10px;
+    padding: 17px;
   }
 
   .template {
@@ -209,7 +214,7 @@
   background-color: #696969;
   color: white;
   padding: 16px;
-  font-size: 30px;
+  font-size: 17px;
   border: none;
 }
 

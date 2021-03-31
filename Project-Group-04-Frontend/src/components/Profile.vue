@@ -91,7 +91,7 @@
       </table>
       </div>
       <br/>
-      <span v-if="errorProfile" style="color:red"> {{errorProfile}} </span>
+      <!-- <span v-if="errorProfile" style="color:red"> {{errorProfile}} </span> -->
     </div>
 
     <!-- <h3 class ="updateMessage"> Update </h3> -->
@@ -220,18 +220,12 @@
     }
   }
 
-  .updateMessage{
-    float: left;
-    color: #ff2600;
-    text-align: center;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 23px;
-      }
+
 
 .paddingBetweenCols {
   margin-left: auto;
   margin-right: auto;
+  padding:100px;
 }
 
  
