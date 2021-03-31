@@ -25,11 +25,11 @@ var AXIOS = axios.create({
               AXIOS.post('/login/'+userId+'?password='+password,{},{})
               .then(response => {
                   if(userId.localeCompare("owner")){
-                      this.$router.push('Home')    // need to change to owner homepage
+                      this.$router.push('homeOwner')    // need to change to owner homepage
                   }
 
                   else if(userId.localeCompare("admin")){
-                    this.$router.push('Home')      // need to change to owner homepage
+                    this.$router.push('homeOwner')      // need to change to owner homepage
                   }
 
                   else{
