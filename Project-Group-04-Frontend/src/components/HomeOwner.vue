@@ -3,8 +3,6 @@
     <div class="topnav">
       <a class="active"> <router-link to="/homeOwner">Home</router-link></a>
 
-   
-
       <a>
         <router-link to="/bookableServicesOwner">
           Our Services
@@ -29,17 +27,35 @@
     </div>
     <div>
       <br />
-      <router-link to="/book">
-              <button type="bookingButton" class="btn btn-primary">
-                Book a new Appointment
-              </button>
-            </router-link>
-     
+        <label> Pick a date  <input type="date" v-model="date" min="datePickerIdMin" required >
+          </label>
+           <button @click="showAppointment(date)" type="showAppointmentButton" 
+        class="btn btn-primary"  > Show </button>
+     <table class="paddingBetweenCols">
+        <tr>
+          <th>Date</th>
+           <th>Start Time</th>
+           <th>End Time</th> 
+           <th>Service</th>
+           <th>Spot</th>
+           <th> Technician </th>
+         
+        </tr>
+         <tr v-for="appointment in appointments" :key="appointment.timeSlot.startDate">           
+         <td> {{ appointment.timeSlot.startDate }}</td> 
+        <td>{{ appointment.timeSlot.startTime }}</td> 
+        <td> {{appointment.timeSlot.endTime}}</td> 
+         <td> {{appointment.bookableService.name}}</td> 
+        <td> {{appointment.timeSlot.garageSpot}}</td>
+        <td> {{appointment.technician.name}}</td>
+
+        </tr>
+      </table>
     </div>
   </div>
   
 </template>
-<script >
+<script src='./HomeOwnerHandling.js'>
   
 </script>
 
