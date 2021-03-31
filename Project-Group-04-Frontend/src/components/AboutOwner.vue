@@ -66,9 +66,6 @@
             <td class = "button">
               ​<button v-on:click="editBusiness(business, newAddress, newPhoneNumber, newEmailAdress)">Update</button>
             </td>
-          <!-- <td class = "button">
-            <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
-          </td> -->
         </tr>
         </table>
         <hr>
@@ -87,14 +84,15 @@
     background-color: #ffffff;
   }
 
-  .serviceTable table {
+  .businessTable table {
     margin-left: auto;
     margin-right: auto;
   }
 
   .table {
     background-color: #ffffff;
-    margin: 0px;
+    margin-left: auto;
+    margin-right: auto;
     align-content: center;
   }
   
