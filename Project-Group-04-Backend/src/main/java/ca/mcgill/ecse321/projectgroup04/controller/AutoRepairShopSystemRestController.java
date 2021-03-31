@@ -842,6 +842,7 @@ public class AutoRepairShopSystemRestController {
 		return garageTechnicianDto;
 	}
 
+	@CrossOrigin(origins = "*")
 	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName,

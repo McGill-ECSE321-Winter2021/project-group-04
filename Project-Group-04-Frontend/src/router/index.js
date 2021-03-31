@@ -17,11 +17,16 @@ import EmployeeRegistrationPage from '@/components/EmployeeRegistrationPage'
 import CustomerRegistrationPage from '@/components/CustomerRegistrationPage'
 import WelcomePage from '@/components/WelcomePage'
 import BookAppointment from '@/components/BookAppointment'
+
+import TeamOwner from '@/components/TeamOwner'
+import HomeOwner from '@/components/HomeOwner'
+import BookableServicesOwner from '@/components/BookableServicesOwner'
+import AboutOwner from '@/components/AboutOwner'
+
 import Reminders from '@/components/Reminders'
 
 
-
-
+ 
 
 Vue.use(Router)
 
@@ -110,9 +115,32 @@ export default new Router({
       component: BookAppointment
     },
     {
+
+      path: '/homeOwner',
+      name: 'HomeOwner',
+      component: HomeOwner
+    },
+  
+    {
+      path: '/bookableServicesOwner',
+      name: 'BookableServicesOwner',
+      component: BookableServicesOwner
+    },
+    {
+      path: '/teamOwner',
+      name: 'TeamOwner',
+      component: TeamOwner
+    },
+    {
+      path: '/aboutOwner',
+      name: 'AboutOwner',
+      component: AboutOwner
+    },
+    
+
       path: '/reminders',
       name: 'Reminders',
       component: Reminders
-    }
+
   ]
 })
