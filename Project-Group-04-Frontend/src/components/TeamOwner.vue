@@ -22,17 +22,76 @@
         </router-link>
 
       </a>
+        </div>
       <a href="javascript:void(0);" class="icon" onclick="myFunction()">
         <i class="fa fa-bars"></i>
       </a>
+         <div class="secondnav">
+    <hr>
+     <h2> Our Team </h2>
+  
+      <table>
+       
+      <tr class="table">
+       <th > Name</th>
+  
+        <!-- <th>Total Price</th> -->
+      </tr>
+      
+        <tr  v-for="team in teams" :key="team.service">
+        <td> {{ team.name }}</td> 
+                   <td class = "button">
+              <button v-on:click="deleteGarageTechnician(garageTechnician)">Delete Garage Technician</button>
+              <button v-on:click="deleteFieldTechnician(fieldTechnician)">Delete Field Technician</button>
+            </td>
+        </tr>
+          <tr class = "addGarageTechnician">
+            <td><input type="text" v-model="name" placeholder="Name"></td>
+            <td class = "button">
+              ​<button v-on:click="createGarageTechnician(name)">Add Garage Technician</button>
+            </td>
+            </tr>
+
+            <tr class = "addFieldTechnician">
+            <td><input type="text" v-model="name" placeholder="Name"></td>
+            <td class = "button">
+              ​<button v-on:click="createFieldTechnician(name)">Add Field Technician</button>
+            </td>
+            </tr>
+      </table>
+    ​<span v-if="errorTeam" style="color:red">Error: {{errorTeam}} </span>
+    <hr>
     </div>
   </div>
 </template>
-<script >
-  
+
+<script  src = './TeamOwnerHandling.js'>
+ 
 </script>
 
+
 <style>
+
+ .secondnav table {
+    margin-left: auto;
+    margin-right: auto;
+  }
+ .template {
+    background-color: #696969;
+  }
+ 
+  .table {
+    background-color: #f2f2f2;
+    margin: 0px;
+  }
+    .table th { 
+      color: #290e36;
+      
+      padding-left: 100px;
+      padding-right: 100px;
+      text-align: center;
+
+    }
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;
@@ -48,7 +107,7 @@
       text-decoration: none;
       font-size: 17px;
     }
-    
+
 
       /* Change the color of links on hover */
       .topnav a:not(active):hover {
@@ -95,21 +154,4 @@
         text-align: left;
       }
   }
-  .paddingBetweenCols  {
-      margin-left: auto;
-    margin-right: auto;
-
-  }
-  .paddingBetweenCols table{
-     background-color: #ffffff;
-    margin: 0px;
-    align-content: center;
-  }
-  .paddingBetweenCols th{
-    color: #696969;
-    text-align: center;
-    padding-left: 70px;
-    padding-right: 70px;
-  }
-
 </style>
