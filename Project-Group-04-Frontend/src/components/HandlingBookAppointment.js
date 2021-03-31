@@ -82,10 +82,10 @@ export default {
     created: function(){
       AXIOS.get('/bookableServices')
       .then(response => {this.bookableServices = response.data})
-      .catch(e => {this.errorBookAppointment})
+      .catch(e => {this.errorBookAppointment=e})
       AXIOS.get('/garageTechnicians')
       .then(response => {this.garageTechnicians = response.data})
-        .catch(e => { this.errorBookAppointment })
+        .catch(e => { this.errorBookAppointment=e })
       AXIOS.get('/login/currentCustomer')
         .then(response => { this.userID = response.data.userID })
         .catch(e => {this.errorUser=e})
