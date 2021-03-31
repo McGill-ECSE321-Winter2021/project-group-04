@@ -1,34 +1,20 @@
 <template>
   <div>
     <div class="topnav">
-      <a><router-link to="/home">Home</router-link></a>
-      <a>
-        <router-link to="/profile">
-          My Profile
-        </router-link>
-      </a>
-      <a>
-        <router-link to="/car">
-          My Car
-        </router-link>
-      </a>
-      <a>
-        <router-link to="/receipts">
-          My Receipts
-        </router-link>
-      </a>
+      <a><router-link to="/homeOwner">Home</router-link></a>
+      
       <a class="active">
         <router-link to="/owner/emergencyServices">
           Our Services
         </router-link>
       </a>
       <a>
-        <router-link to="/team">
+        <router-link to="/teamOwner">
           Our Team
         </router-link>
       </a>
       <a>
-        <router-link to="/about">
+        <router-link to="/aboutOwner">
           About Us
         </router-link>
       </a>
