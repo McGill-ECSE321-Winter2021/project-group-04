@@ -29,7 +29,7 @@ public class TestAdministrativeAssistantService {
 	private AdministrativeAssistantRepository administrativeAssistantRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private AdministrativeAssistantService service;
 
 	private static final String ADMINASSISTANT_NAME = "TestName";
 	private static final String ADMINASSISTANT_PASSWORD = "TestPassword";

@@ -49,7 +49,7 @@ public class TestBusinessService {
     private BusinessRepository businessRepository;
 
     @InjectMocks
-    private AutoRepairShopSystemService service;
+    private BusinessService service;
 
     private static final String BUSINESS_NAME = "TestName";
     private static final String BUSINESS_PHONENUMBER = "438123456";

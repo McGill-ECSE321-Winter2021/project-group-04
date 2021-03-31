@@ -28,7 +28,7 @@ public class TestOwnerService {
 	private OwnerRepository ownerRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private OwnerService service;
 
 	private static final String OWNER_NAME = "ownerTestName";
 	private static final String OWNER_PASSWORD = "ownerTestPassword";

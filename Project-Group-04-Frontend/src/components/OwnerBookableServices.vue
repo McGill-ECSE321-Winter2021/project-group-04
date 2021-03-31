@@ -17,13 +17,8 @@
           My Receipts
         </router-link>
       </a>
-            <a>
-        <router-link to="/reminders">
-          My Reminders
-        </router-link>
-      </a>
-      <a>
-        <router-link to="/bookableServices">
+      <a class="active">
+        <router-link to="/owner/bookableServices">
           Our Services
         </router-link>
 
@@ -33,8 +28,8 @@
           Our Team
         </router-link>
       </a>
-      <a class="active">
-        <router-link to="/businessHours">
+      <a>
+        <router-link to="/about">
           About Us
         </router-link>
 
@@ -45,47 +40,118 @@
       <i class="fa fa-bars"></i>
     </a>
 
-      <div class = "businessTable">  
+      <div class = "serviceTable">  
         <hr>
           <h2>
             <div class="dropdown">
-              <button class="dropbtn">Our Business</button>
+              <button class="dropbtn">Our Services</button>
               <div class="dropdown-content">
                 <a>
-                  <router-link to="/businessHours">
-                    Business Hours
+                  <router-link to="/owner/bookableServices">
+                    Bookable Services
                   </router-link>
                 </a>
                 <a>
-                  <router-link to="/about">
-                    Contact us
+                  <router-link to="/owner/emergencyServices">
+                    Emergency Services
                   </router-link>
                 </a>
               </div>
             </div>
           </h2>
 
-       <table>
+        ​<table class="tableau">
           <tr class="table">
-            <th>Days</th>
-            <th>Openning Hour</th>
-            <th>Closing Hour</th>
+            <th>Bookable Service</th>
+            <th>Duration (min)</th>
+            <th>Price ($)</th>
+            <th>New Name</th>
+            <th>New Duration</th>
+            <th>New Price</th>
           </tr>
-            <tr v-for="businessHour in businessHours" :key="businessHour.openningHour">
-              <td>{{ businessHour.dayOfWeek }}</td>
-              <td>{{ businessHour.startTime }}</td>
-              <td>{{ businessHour.endTime }}</td>
+          <tr v-for="bookableService in bookableServices" :key="bookableService.name">
+            <td>{{ bookableService.name }}</td>
+            <td>{{ bookableService.duration }}</td>
+            <td>{{ bookableService.price }}</td>
+          <td>
+            <input size="10"
+              type="text"
+              v-model="newServiceName"
+              placeholder="New Name"
+            />
+          </td>
+          <td>
+            <input size="10"
+              type="text"
+              v-model="newServiceDuration"
+              placeholder="New Duration"
+            />
+          </td>
+          <td>
+            <input size="10"
+              type="text"
+              v-model="newServicePrice"
+              placeholder="New Price"
+            />
+          </td>
+          <td class="button">
+            ​<button v-on:click="updateBookableService(bookableService, newServiceName, newServiceDuration, newServicePrice)">Edit</button>
+          </td>
+            <td class = "button">
+              <button v-on:click="deleteBookableService(bookableService)">Delete</button>
+            </td>
           </tr>
+          <tr class = "addService">
+            <td><input id="myInput" size="10" type="text" v-model="serviceName" placeholder="Name"></td>
+            <td><input id="myInput" size="10" type="text" v-model="serviceDuration" placeholder="Duration"></td>
+            <td><input id="myInput" size="10" type="text" v-model="servicePrice" placeholder="Price"></td>
+            <td class = "button">
+              ​<button v-on:click="createBookableService(servicePrice, serviceName, serviceDuration), document.getElementById('myInput').value = ''" >Add</button>
+            </td>
+          <!-- <td class = "button">
+            <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
+          </td> -->
+        </tr>
         </table>
         <hr>
     </div>
   </div>
 </template>
 
-<script src="./BusinessHourHandling.js">
+<script src="./BookableServiceHandling.js">
 </script>
 
 <style>
+
+  .tableau {
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-left: 2px;
+    padding-right: 2px;
+    align-content: center; */
+  }
+
+  .tableau table {
+    background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+
+  .tableau th {
+    font-size: 20px;
+    color: #696969;
+    text-align: center;
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  /* .tableau input {
+    size="10";
+  } */
+
+  /* .input {
+    width: 10px;
+  } */
 
   .button {
     padding: 10px;
@@ -100,7 +166,7 @@
     margin-right: auto;
   }
 
-  .table {
+  /* .table {
     background-color: #ffffff;
     margin: 0px;
     align-content: center;
@@ -111,7 +177,7 @@
     text-align: center;
     padding-left: 100px;
     padding-right: 100px;
-  }
+  } */
 
   /* Add a black background color to the top navigation */
   .topnav {

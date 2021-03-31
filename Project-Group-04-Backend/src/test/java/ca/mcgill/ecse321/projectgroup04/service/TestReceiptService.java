@@ -31,7 +31,7 @@ public class TestReceiptService {
 	private ReceiptRepository receiptRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private ReceiptService service;
 
 	private static final Long RECEIPT_ID1 = 2345l;
 	private static final double TOTAL_PRICE1 = 50;

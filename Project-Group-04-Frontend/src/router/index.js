@@ -8,8 +8,10 @@ import AboutUs from '@/components/AboutUs'
 import BusinessHours from '@/components/BusinessHours'
 import Profile from '@/components/Profile'
 import Team from '@/components/Team'
-import BookableServices from '@/components/BookableServices'
-import EmergencyServices from '@/components/EmergencyServices'
+import CustomerBookableService from '@/components/CustomerBookableService'
+import CustomerEmergencyService from '@/components/CustomerEmergencyService'
+import OwnerBookableServices from '@/components/OwnerBookableServices'
+import OwnerEmergencyServices from '@/components/OwnerEmergencyServices'
 import Receipts from '@/components/Receipts'
 import LoginPage from '@/components/LoginPage'
 import UserSelectPage from '@/components/UserSelectPage'
@@ -95,15 +97,30 @@ export default new Router({
     },
     {
       path: '/bookableServices',
-      name: 'BookableServices',
-      component: BookableServices
-    },
-    {
-      path: '/emergencyServices',
-      name: 'EmergencyServices',
-      component: EmergencyServices
+      name: 'CustomerBookableService',
+      component: CustomerBookableService
     }
     ,
+    {
+      path: '/emergencyServices',
+      name: 'CustomerEmergencyService',
+      component: CustomerEmergencyService
+    }
+    ,
+
+    {
+      path: '/owner/bookableServices',
+      name: 'OwnerBookableServices',
+      component: OwnerBookableServices
+    }
+    ,
+    {
+      path: '/owner/emergencyServices',
+      name: 'OwnerEmergencyServices',
+      component: OwnerEmergencyServices
+    }
+    ,
+
     {
       path: '/receipts',
       name: 'Receipts',
@@ -136,11 +153,15 @@ export default new Router({
       name: 'AboutOwner',
       component: AboutOwner
     },
-    
-
+    // {
+    //   path: '/businessHoursOwner',
+    //   name: 'BusinessHoursOwner',
+    //   component: BusinessHoursOwner
+    // },
+    {
       path: '/reminders',
       name: 'Reminders',
       component: Reminders
-
+    } 
   ]
 })

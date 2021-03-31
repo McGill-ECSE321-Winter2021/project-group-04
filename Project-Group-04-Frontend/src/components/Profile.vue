@@ -27,7 +27,7 @@
         </router-link>
       </a>
       <a>
-        <router-link to="/Bookableservices">
+        <router-link to="/bookableServices">
           Our Services
         </router-link>
 

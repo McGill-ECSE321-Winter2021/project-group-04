@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="topnav">
+      <div class="topnav">
       <a><router-link to="/home">Home</router-link></a>
       <a>
         <router-link to="/profile">
@@ -17,13 +17,8 @@
           My Receipts
         </router-link>
       </a>
-      <a>
-        <router-link to="/reminders">
-          My Reminders
-        </router-link>
-      </a>
       <a class="active">
-        <router-link to="/BookableServices">
+        <router-link to="/bookableServices">
           Our Services
         </router-link>
 
@@ -65,36 +60,16 @@
             </div>
           </h2>
 
-        ​<table>
+        ​<table class="tableau">
           <tr class="table">
             <th>Bookable Service</th>
             <th>Duration (min)</th>
             <th>Price ($)</th>
-            <!-- <th>Edit</th>
-          <th>Delete</th> -->
-            ​<!--<th>Edit</th>-->
           </tr>
-          <tr v-for="bookableService in bookableServices" :key="bookableService.name">
+          <tr class="values" v-for="bookableService in bookableServices" :key="bookableService.name">
             <td>{{ bookableService.name }}</td>
             <td>{{ bookableService.duration }}</td>
             <td>{{ bookableService.price }}</td>
-            <td class = "button">
-              ​<button v-on:click="updateBookableService(bookableService, Service.price, bookableService.name)">Edit</button>
-            </td>
-            <td class = "button">
-              <button v-on:click="deleteBookableService(bookableService)">Delete</button>
-            </td>
-          </tr>
-          <tr class = "addService">
-            <td><input type="text" v-model="serviceName" placeholder="Service Name"></td>
-            <td><input type="text" v-model="serviceDuration" placeholder="Service Duration"></td>
-            <td><input type="text" v-model="servicePrice" placeholder="Service Price"></td>
-            <td class = "button">
-              ​<button v-on:click="createBookableService(servicePrice, serviceName, serviceDuration)">Add</button>
-            </td>
-          <!-- <td class = "button">
-            <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
-          </td> -->
         </tr>
         </table>
         <hr>
@@ -102,10 +77,43 @@
   </div>
 </template>
 
-<script src="./BookableServiceHandling.js">
+<script src="./CustomerBookableServiceHandling.js">
 </script>
 
 <style>
+
+    .values td {
+        font-size: 30px;
+    }
+
+  .tableau {
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-left: 2px;
+    padding-right: 2px;
+    align-content: center; */
+  }
+
+  .tableau table {
+    background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+
+  .tableau th {
+    color: #696969;
+    text-align: center;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  /* .tableau input {
+    size="10";
+  } */
+
+  /* .input {
+    width: 10px;
+  } */
 
   .button {
     padding: 10px;
@@ -120,7 +128,7 @@
     margin-right: auto;
   }
 
-  .table {
+  /* .table {
     background-color: #ffffff;
     margin: 0px;
     align-content: center;
@@ -131,7 +139,7 @@
     text-align: center;
     padding-left: 100px;
     padding-right: 100px;
-  }
+  } */
 
   /* Add a black background color to the top navigation */
   .topnav {

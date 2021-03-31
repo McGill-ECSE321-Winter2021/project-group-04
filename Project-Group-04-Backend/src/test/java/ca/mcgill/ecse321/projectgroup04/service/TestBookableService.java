@@ -27,7 +27,7 @@ public class TestBookableService {
 	private BookableServiceRepository bookableServiceRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private BookableServiceService service;
 
 	private static final String BOOKABLESERVICE_NAME = "TestName";
 	private static final int BOOKABLESERVICE_DURATION = 30;

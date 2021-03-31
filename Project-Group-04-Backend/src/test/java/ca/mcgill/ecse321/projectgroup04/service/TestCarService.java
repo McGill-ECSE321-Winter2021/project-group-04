@@ -30,7 +30,7 @@ public class TestCarService {
 	private CarRepository carRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private CarService service;
 
 	private static final String model = "civic";
 	private static final String year = "2001";

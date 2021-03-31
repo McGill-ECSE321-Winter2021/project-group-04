@@ -45,7 +45,10 @@ public class TestBusinessHourService {
     private BusinessRepository businessRepository;
 
     @InjectMocks
-    private AutoRepairShopSystemService service;
+    private BusinessHourService service;
+
+    @InjectMocks
+    private BusinessService businessService;
 
     private static final Long BUSINESSHOUR_ID = 123l;
     private static final DayOfWeek BUSINESSHOUR_DAY = DayOfWeek.Monday;
@@ -157,11 +160,38 @@ public class TestBusinessHourService {
             }
             return null;
         });
-        // lenient().when(businessHourRepository.findBusinessHourByHourId(anyLong()))
-        // .thenAnswer((InvocationOnMock invocation) -> {
 
-        // return null;
-        // });
+        lenient().when(businessRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+            // if (invocation.getArgument(0).equals(BUSINESS_ID)) {
+
+            Business business = new Business();
+            business.setName(BUSINESS_NAME);
+            business.setAddress(BUSINESS_ADDRESS);
+            business.setEmailAddress(BUSINESS_MAIL);
+            business.setPhoneNumber(BUSINESS_PHONENUMBER);
+            business.setId(BUSINESS_ID);
+
+            BusinessHour businessHour = new BusinessHour();
+            businessHour.setDayOfWeek(BUSINESSHOUR_DAYOFWEEK);
+            businessHour.setStartTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_STARTTIME)));
+            businessHour.setEndTime(Time.valueOf(LocalTime.parse(BUSINESSHOUR_ENDTIME)));
+
+            BUSINESS_BUSINESSHOUR.add(businessHour);
+            business.setBusinessHours(BUSINESS_BUSINESSHOUR);
+
+            TimeSlot timeSlot = new TimeSlot();
+            timeSlot.setEndDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
+            timeSlot.setStartDate(Date.valueOf(LocalDate.parse(OLD_APPOINTMENT_DATE)));
+            timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
+            timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
+
+            BUSINESS_TIMESLOTS.add(timeSlot);
+            business.setRegular(BUSINESS_TIMESLOTS);
+
+            return business;
+            // }
+            // return null;
+        });
 
     }
 
@@ -482,7 +512,7 @@ public class TestBusinessHourService {
     public void deleteBusinessHour() {
         boolean bool = false;
         boolean bool2 = false;
-        Business business = service.getBusinessById(BUSINESS_ID);
+        Business business = businessService.getBusinessById(BUSINESS_ID);
         BusinessHour businessHour = service.getBusinessHourById(BUSINESSHOUR_ID);
         try {
             bool = service.deleteBusinessHour(businessHour, business);

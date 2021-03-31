@@ -33,7 +33,7 @@ public class TestProfileService {
 	private ProfileRepository profileRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private ProfileService service;
 
 	private static final String FIRST_NAME1 = "Harry";
 	private static final String LAST_NAME1 = "Potter";

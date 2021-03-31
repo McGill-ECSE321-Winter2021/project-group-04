@@ -36,7 +36,7 @@ public class TestFieldTechnicianService {
 	private EmergencyServiceRepository emergencyServiceRepository;
 
 	@InjectMocks
-	private AutoRepairShopSystemService service;
+	private FieldTechnicianService service;
 
 	private static final String FIELDTECHNICIAN_NAME = "TestName";
 

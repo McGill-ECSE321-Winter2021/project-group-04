@@ -34,12 +34,12 @@
               <button class="dropbtn">Our Business</button>
               <div class="dropdown-content">
                 <a>
-                  <router-link to="/businessHours">
+                  <router-link to="/businessHoursOwner">
                     Business Hours
                   </router-link>
                 </a>
                 <a>
-                  <router-link to="/about">
+                  <router-link to="/aboutOwner">
                     Contact us
                   </router-link>
                 </a>
@@ -50,21 +50,21 @@
         ​<table>
 
           <tr class="table">
-            <th>Address</th>
-            <th>Phone Number</th>
-            <th>Email Address</th>
+            <th>Days</th>
+            <th>Openning Hour</th>
+            <th>Closing Hour</th>
           </tr>
-          <tr v-for="business in businesses" :key="business.services">
-            <td>{{ business.address }}</td>
-            <td>{{ business.phoneNumber }}</td>
-            <td>{{ business.emailAddress }}</td>
+            <tr v-for="businessHour in businessHours" :key="businessHour.openningHour">
+              <td>{{ businessHour.dayOfWeek }}</td>
+              <td>{{ businessHour.startTime }}</td>
+              <td>{{ businessHour.endTime }}</td>
           </tr>
-          <tr class = "editBusinessInfo">
-            <td><input type="text" v-model="newAddress" placeholder="Update Adress"></td>
-            <td><input type="text" v-model="newPhoneNumber" placeholder="Update Phone Number"></td>
-            <td><input type="text" v-model="newEmailAdress" placeholder="Update Email Address"></td>
+          <tr class = "editBusinessHour">
+            <td><input type="text" v-model="dayOfWeek" placeholder="Which Day"></td>
+            <td><input type="text" v-model="startTime" placeholder="New Openning Hour"></td>
+            <td><input type="text" v-model="endTime" placeholder="New Closing Hour"></td>
             <td class = "button">
-              ​<button v-on:click="editBusiness(business, newAddress, newPhoneNumber, newEmailAdress)">Update</button>
+              ​<button v-on:click="updateBusinessHour(businessHour, dayOfWeek, startTime, endTime)">Update</button>
             </td>
           <!-- <td class = "button">
             <button v-bind:disabled="!newBookableService" @click="createBookableService(serviceDuration, servicePrice, serviceName)">Add</button>
