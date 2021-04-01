@@ -87,7 +87,7 @@ export default {
       .then(response => {this.garageTechnicians = response.data})
         .catch(e => { this.errorBookAppointment=e })
       AXIOS.get('/login/currentCustomer')
-        .then(response => { this.userID = response.data.userID })
+        .then(response => { this.userID = response.data.userID }) 
         .catch(e => {this.errorUser=e})
     
     },
@@ -96,8 +96,8 @@ methods: {
    
 
     bookAppointment: function (selectedService, date,time,garageSpot,selectedGarageTechnician) {
-        console.log("a"+selectedGarageTechnician+"p")
-        console.log("a"+selectedService+"p")
+      
+        
         AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
           .then(response => {
               this.chosenGarageTech = response.data

@@ -177,53 +177,9 @@ public class TestBookableService {
 
 	}
 
-	@Test
-	public void TestEditNameBookableService() {
-		String name = "TestName";
-		String newName = "newName";
-		int duration = 30;
-		int price = 50;
+	
 
-		BookableService bookableService = new BookableService();
-		bookableService.setName(name);
-		bookableService.setDuration(duration);
-		bookableService.setPrice(price);
-		try {
-			bookableService = service.editBookableService(bookableService, newName, duration, price);
-		} catch (IllegalArgumentException e) {
-			fail();
-		}
-
-		assertNotNull(bookableService);
-		assertEquals(newName, bookableService.getName());
-		assertEquals(duration, bookableService.getDuration());
-		assertEquals(price, bookableService.getPrice());
-	}
-
-	@Test
-	public void TestEditExistingNameBookableService() {
-		String name = "TestNameOne";
-		String newName = "TestName";
-		int duration = 30;
-		int price = 50;
-		String error = null;
-
-		BookableService bookableService = new BookableService();
-		bookableService.setName(name);
-		bookableService.setDuration(duration);
-		bookableService.setPrice(price);
-		try {
-			bookableService = service.editBookableService(bookableService, newName, duration, price);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNotNull(bookableService);
-		assertEquals(name, bookableService.getName());
-		assertEquals(duration, bookableService.getDuration());
-		assertEquals(price, bookableService.getPrice());
-		assertEquals(error, "A bookable service with this name already exists");
-	}
+	
 
 	@Test
 	public void TestEditDurationBookableService() {
@@ -237,7 +193,7 @@ public class TestBookableService {
 		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		try {
-			bookableService = service.editBookableService(bookableService, name, newDuration, price);
+			bookableService = service.editBookableService(bookableService,newDuration, price);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -260,7 +216,7 @@ public class TestBookableService {
 		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		try {
-			bookableService = service.editBookableService(bookableService, name, duration, newPrice);
+			bookableService = service.editBookableService(bookableService, duration, newPrice);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
