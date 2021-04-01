@@ -1,8 +1,5 @@
 <template>
   <div>
-       <div class="logout-href">
-      <button @click="logout()" type="homeLogout" class="btn btn-primary">Logout</button>
-    </div>
     <div class="topnav">
       <a class="active">
         <router-link to="/home">
@@ -92,23 +89,19 @@
                          </option>
                 ​</select>
             </td>
-          
-        </tr>
-    </table>
-      <button
+            <td>
+                  <button
         class="btn btn-primary"
         @click="
           bookAppointment(
-            selectedService,
-            date,
-            time,
-            garageSpot,
-            selectedGarageTechnician
+            selectedService,  date, time, garageSpot, selectedGarageTechnician
           )
         "
-      >
-        Book
-      </button>
+      > </button>
+
+      </td>
+        </tr>
+          </table>
 
     </div>
   </div>
@@ -223,15 +216,6 @@
         text-align: left;
       }
   }
-  .logout-href {
-  padding: 20px 1px;
-  font-size: 25px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 120px;
-  text-align: left;
-}
 
 
 </style>

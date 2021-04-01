@@ -28,14 +28,18 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
+     <br />
+    <h3> Appointments </h3>
     <div>
-      <br />
+     
+
         <label> Pick a date  <input type="date" v-model="date" min="datePickerIdMin" required >
           </label>
            <button @click="showAppointment(date)" type="showAppointmentButton" 
         class="btn btn-primary"  > Show </button>
      <table class="paddingBetweenCols">
         <tr>
+          <th> Customer </th>
           <th>Date</th>
            <th>Start Time</th>
            <th>End Time</th> 
@@ -44,7 +48,8 @@
            <th> Technician </th>
          
         </tr>
-         <tr v-for="appointment in appointments" :key="appointment.timeSlot.startDate">           
+         <tr v-for="appointment in appointments" :key="appointment.timeSlot.startDate">  
+           <td> {{appointment.customer.profile.firstName }} {{appointment.customer.profile.lastName}}   </td>     
          <td> {{ appointment.timeSlot.startDate }}</td> 
         <td>{{ appointment.timeSlot.startTime }}</td> 
         <td> {{appointment.timeSlot.endTime}}</td> 

@@ -51,7 +51,7 @@
         <tr class="table">
           <th>Emergency Service</th>
           <th>Price ($)</th>
-          <th>New Name</th>
+       
           <th>New Price</th>
         </tr>
         <tr
@@ -64,13 +64,7 @@
           <td>
             <span class="newPrice">{{ emergencyService.price }}</span>
           </td>
-          <td>
-            <input
-              type="text"
-              v-model="newServiceName"
-              placeholder="New Name"
-            />
-          </td>
+          
           <td>
             <input
               type="text"

@@ -127,7 +127,7 @@ export default new Router({
     },
     {
       path: '/book',
-      name: 'Booking',
+      name: 'BookAppointment',
       component: BookAppointment
     },
     {

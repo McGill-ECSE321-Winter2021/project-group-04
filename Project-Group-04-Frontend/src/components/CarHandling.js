@@ -48,6 +48,7 @@ export default {
           // JSON responses are automatically parsed.
           this.car = response.data
           this.carId = this.car.carId
+          
         })
         .catch(e => {
           this.errorCar = e
@@ -64,9 +65,11 @@ export default {
       // Create a new person and add it to the list of people
       AXIOS.patch('/edit/car/' + this.carId+'?model='+model+'&year='+year+'&color='+color, {}, {})
         .then(response => {
+          this.$router.go('/Home')
           this.errorCar = '';
           // Update appropriate DTO collections
           this.car = response.data
+          
         })
         .catch(e => {
           this.errorCar=e

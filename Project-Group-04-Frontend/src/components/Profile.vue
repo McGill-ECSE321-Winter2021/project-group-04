@@ -46,29 +46,29 @@
        Show Profile
       </button> -->
           <tr>
-            <td>Current First Name</td>
+            <td>First Name</td>
             <td>{{ profile.firstName }}</td>
           </tr>
           <tr>
-            <td>Current Last Name</td>
+            <td>Last Name</td>
             <td>{{ profile.lastName }}</td>
           </tr>
           <tr>
-            <td>Current Address Line</td>
+            <td>Address Line</td>
             <!-- <td v-if="profile" :key="profile.addressLine"> -->
 
             <td>{{ profile.addressLine }}</td>
           </tr>
-          <td>Current Email Address</td>
+          <td>Email Address</td>
 
           <td>{{ profile.emailAddress }}</td>
           <tr>
-            <td>Current Zip Code</td>
+            <td>Zip Code</td>
 
             <td>{{ profile.zipCode }}</td>
           </tr>
           <tr>
-            <td>Current Phone Number</td>
+            <td>Phone Number</td>
 
             <td>{{ profile.phoneNumber }}</td>
           </tr>
