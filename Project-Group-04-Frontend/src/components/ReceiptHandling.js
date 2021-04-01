@@ -11,43 +11,43 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-function ReceiptDto(totalPrice){
+function ReceiptDto(totalPrice) {
   this.totalPrice = totalPrice
 }
 
-function AppointmentDto(date, service, receipt){
+function AppointmentDto(date, service, receipt) {
   this.date = date
   this.service = service
   this.receipt = receipt
 }
 
 function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
   }
+}
 
 export default {
-    name: 'receiptHandling',
-    data() {
-      return {
-        userID: '',
-        errorUsr:'',
-        appointments: [],
-        errorReceipt: '',
-        response: []
-      }
-    },
-    created: function () {
-            // Test data
-      AXIOS.get('/login/currentCustomer')
-        .then(response => { this.userID = response.data.userID })
-        .catch(e => { this.errorUser = e })
-        .finally(() => {
-          AXIOS.get('/appointments/' + this.userID)
+  name: 'receiptHandling',
+  data() {
+    return {
+      userID: '',
+      errorUsr: '',
+      appointments: [],
+      errorReceipt: '',
+      response: []
+    }
+  },
+  created: function () {
+    // Test data
+    AXIOS.get('/login/currentCustomer')
+      .then(response => { this.userID = response.data.userID })
+      .catch(e => { this.errorUser = e })
+      .finally(() => {
+        AXIOS.get('/appointments/' + this.userID)
           .then(response => {
             // JSON responses are automatically parsed.
             this.appointments = response.data
@@ -55,7 +55,22 @@ export default {
           .catch(e => {
             this.errorReceipt = e
           })
+      })
+
+  },
+
+  methods: {
+    logout: function () {
+      AXIOS.post('/logout', {}, {})
+      .then(response => {
+          this.$router.push('/')
+
         })
-      
-          }
-      }
+        .catch(e => {
+          var errMsg = e.response.data.message
+          window.alert(e)
+        })
+    }
+  }
+
+}

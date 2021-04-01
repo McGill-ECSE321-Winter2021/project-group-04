@@ -1,5 +1,8 @@
 <template>
 <div>
+  <div class="logout-href">
+      <button @click="logout()" type="homeLogout" class="btn btn-primary">Logout</button>
+    </div>
   <div class="topnav">
     <a> <router-link to="/home">Home</router-link></a>
 
@@ -77,6 +80,15 @@
 </script>
 
 <style>
+.logout-href {
+  padding: 20px 1px;
+  font-size: 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  text-align: left;
+}
 
  .secondnav table {
     margin-left: auto;

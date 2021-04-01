@@ -1,19 +1,42 @@
 package ca.mcgill.ecse321.projectgroup04.service;
 
+import ca.mcgill.ecse321.projectgroup04.dao.AdministrativeAssistantRepository;
+import ca.mcgill.ecse321.projectgroup04.dao.CustomerRepository;
+import ca.mcgill.ecse321.projectgroup04.dao.OwnerRepository;
 import ca.mcgill.ecse321.projectgroup04.model.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
 public class LogInLogOutService {
+	@Autowired
+    private OwnerRepository ownerRepository;
+	
+	@Autowired
+    private AdministrativeAssistantRepository administrativeAssistantRepository;
+	
+	@Autowired
+    private CustomerRepository customerRepository;
 
     public static User currentUser = null;
-
-    private AdministrativeAssistantService administrativeAssistantService;
-    private CustomerService customerService;
-    private OwnerService ownerService;
+    
+    @Transactional
+    public List<Owner> getOwner() {
+        return (List<Owner>) ownerRepository.findAll();
+    }
+    
+    @Transactional
+    public List<AdministrativeAssistant> getAllAdministrativeAssistants() {
+        return (List<AdministrativeAssistant>) administrativeAssistantRepository.findAll();
+    }
+    
+    @Transactional
+    public List<Customer> getAllCustomers() {
+        return (List<Customer>) customerRepository.findAll();
+    }
 
     @Transactional
     public Customer loginAsCustomer(String userId, String password) {
@@ -24,7 +47,7 @@ public class LogInLogOutService {
             throw new IllegalArgumentException("Please enter a valid Password");
         }
 
-        List<Customer> customers = customerService.getAllCustomers();
+        List<Customer> customers = getAllCustomers();
         // System.out.println(customers);
         Customer foundCustomer = null;
 
@@ -51,6 +74,8 @@ public class LogInLogOutService {
         return foundCustomer;
 
     }
+    
+    
 
     @Transactional
     public Owner loginAsOwner(String userId, String password) {
@@ -61,7 +86,7 @@ public class LogInLogOutService {
             throw new IllegalArgumentException("Please enter a valid Password");
         }
 
-        List<Owner> owners = ownerService.getOwner();
+        List<Owner> owners = getOwner();
         Owner foundOwner = null;
 
         for (Owner owner : owners) {
@@ -89,7 +114,7 @@ public class LogInLogOutService {
             throw new IllegalArgumentException("Please enter a valid Password");
         }
 
-        List<AdministrativeAssistant> admins = administrativeAssistantService.getAllAdministrativeAssistants();
+        List<AdministrativeAssistant> admins = getAllAdministrativeAssistants();
         AdministrativeAssistant foundAdmin = null;
 
         for (AdministrativeAssistant admin : admins) {

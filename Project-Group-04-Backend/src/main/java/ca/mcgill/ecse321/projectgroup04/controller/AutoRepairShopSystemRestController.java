@@ -372,7 +372,7 @@ public class AutoRepairShopSystemRestController {
 	/////////////////////////////////// LOGOUT///////////////////////////////////////
 
 	@PostMapping(value = { "/login/{userId}", "/login/{userId}/" })
-	public void userLogin(@PathVariable String userId, @RequestParam String password)
+	public void userLogin(@PathVariable(value = "userId") String userId, @RequestParam(value = "password") String password)
 			throws IllegalArgumentException {
 		// System.out.println(userId);
 		if (userId.equalsIgnoreCase("owner")) {

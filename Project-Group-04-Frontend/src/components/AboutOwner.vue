@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="logout-href">
+      <button @click="logout()" type="homeLogout" class="btn btn-primary">Logout</button>
+    </div>
     <div class="topnav">
       <div >
       <a > <router-link to="/homeOwner">Home</router-link></a>

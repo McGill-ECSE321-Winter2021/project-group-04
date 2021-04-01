@@ -57,7 +57,20 @@ export default {
           this.errorBusiness = errorMsg
         })
       // Reset the name field for new people
+    },
+
+    logout: function () {
+      AXIOS.post('/logout', {}, {})
+      .then(response => {
+          this.$router.push('/')
+
+        })
+        .catch(e => {
+          var errMsg = e.response.data.message
+          window.alert(e)
+        })
     }
+
   }
   //...
 

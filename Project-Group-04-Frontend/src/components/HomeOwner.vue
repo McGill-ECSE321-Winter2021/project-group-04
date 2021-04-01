@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="logout-href">
+      <button @click="logout()" type="homeLogout" class="btn btn-primary">Logout</button>
+    </div>
     <div class="topnav">
       <a class="active"> <router-link to="/homeOwner">Home</router-link></a>
 
@@ -60,6 +63,15 @@
 </script>
 
 <style>
+.logout-href {
+  padding: 20px 1px;
+  font-size: 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  text-align: left;
+}
   /* Add a black background color to the top navigation */
   .topnav {
     background-color: #696969;
