@@ -10,53 +10,6 @@ var AXIOS = axios.create({
   headers: { 'Access-Control-Allow-Origin': frontendUrl }
 })
 
-function TimeSlotDto(startDate, startTime,endDate, endTime, garageSpot){
-    this.startDate = startDate
-    this.startTime = startTime
-    this.endDate = endDate
-    this.endTime = endTime
-    this.garageSpot = garageSpot
-}
-
-function BookableServiceDto(duration,price, name){
-  this.duration = duration
-    this.price = price
-    this.name = name
-}
-
-function ReceiptDto (totalPrice){
-    this.totalPrice = totalPrice
-}
-
-function AppointmentDto(timeSlot, bookableService, receipt){
-    this.timeSlot = timeSlot
-    this.bookableService = bookableService
-    this.receipt = receipt
-}
-
-function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-      x.className += " responsive";
-    } else {
-      x.className = "topnav";
-    }
-
-}
-
-function getMinDate() {
-    var todaysDate = new Date(); // Gets today's date
-    // Max date attribute is in "YYYY-MM-DD".  Need to format today's date accordingly
-    var year = todaysDate.getFullYear();                        // YYYY
-    var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2);  // MM
-    var day = ("0" + todaysDate.getDate()).slice(-2);           // DD
-  var maxDate = (day + "/" + month + "/" + year); // Results in "YYYY-MM-DD" for today's date 
-  // Now to set the max date value for the calendar to be today's date
-  return maxDate;
-}
-
-
-
 
 
 export default {  
@@ -96,8 +49,6 @@ methods: {
    
 
     bookAppointment: function (selectedService, date,time,garageSpot,selectedGarageTechnician) {
-        console.log("a"+selectedGarageTechnician+"p")
-        console.log("a"+selectedService+"p")
         AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
           .then(response => {
               this.chosenGarageTech = response.data
@@ -111,15 +62,17 @@ methods: {
               .then(response => {
                 console.log(selectedService)
                 this.appointments = response.data
-
+                swal("Success", "Your appointment has successfuly been booked", "success").then(okay => {
+                  if (okay) {
+                    this.$router.go('/Home')
+                  }
+                })
 
               })
               .catch(e => {
-
                 var errMsg = e
-                window.alert(errMsg)
+                swal("ERROR", e.response.data, "error");
               });
-          })
 
     },
     

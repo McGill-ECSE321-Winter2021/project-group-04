@@ -97,16 +97,7 @@
     </table>
       <button
         class="btn btn-primary"
-        @click="
-          bookAppointment(
-            selectedService,
-            date,
-            time,
-            garageSpot,
-            selectedGarageTechnician
-          )
-        "
-      >
+        @click="bookAppointment(selectedService,date,time,garageSpot,selectedGarageTechnician)">
         Book
       </button>
 
