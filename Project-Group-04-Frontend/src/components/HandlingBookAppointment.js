@@ -48,33 +48,34 @@ export default {
 methods: {
    
 
-    bookAppointment: function (selectedService, date,time,garageSpot,selectedGarageTechnician) {
-        AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
+  bookAppointment: function (selectedService, date, time, garageSpot, selectedGarageTechnician) {
+    AXIOS.get('/garageTechnicians/' + selectedGarageTechnician)
+      .then(response => {
+        this.chosenGarageTech = response.data
+        this.chosenTechnicianId = response.data.technicianId
+      })
+      .catch(e => { this.errorChosenTechnicianId })
+      .finally(() => {
+
+        AXIOS.post('/book/appointment/' + this.userID + selectedService + '?date=' + date + '&garageSpot='
+          + garageSpot + '&startTime=' + time + '&Garage Technician Id=' + this.chosenTechnicianId, {}, {})
           .then(response => {
-              this.chosenGarageTech = response.data
-            this.chosenTechnicianId = response.data.technicianId
-               })
-          .catch(e => { this.errorChosenTechnicianId })
-          .finally(() => {
+            console.log(selectedService)
+            this.appointments = response.data
+            swal("Success", "Your appointment has successfuly been booked", "success").then(okay => {
+              if (okay) {
+                this.$router.go('/Home')
+              }
+            })
 
-            AXIOS.post('/book/appointment/' + this.userID + selectedService + '?date=' + date + '&garageSpot='
-              + garageSpot + '&startTime=' + time + '&Garage Technician Id=' + this.chosenTechnicianId, {}, {})
-              .then(response => {
-                console.log(selectedService)
-                this.appointments = response.data
-                swal("Success", "Your appointment has successfuly been booked", "success").then(okay => {
-                  if (okay) {
-                    this.$router.go('/Home')
-                  }
-                })
+          })
+          .catch(e => {
+            var errMsg = e
+            swal("ERROR", e.response.data, "error");
+          });
 
-              })
-              .catch(e => {
-                var errMsg = e
-                swal("ERROR", e.response.data, "error");
-              });
-
-    },
+      })
+  },
     
     logout: function () {
       AXIOS.post('/logout', {}, {})
