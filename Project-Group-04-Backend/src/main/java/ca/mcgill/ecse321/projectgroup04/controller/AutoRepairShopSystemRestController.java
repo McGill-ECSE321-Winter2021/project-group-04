@@ -896,6 +896,7 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
+	@CrossOrigin(origins = "*")
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName,
 			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
@@ -1071,9 +1072,16 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@DeleteMapping(value = { "/cancel/appointment/{appointmentId}", "/cancel/appointment/{appointmentId}/" })
-	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
-		Appointment appointment = appService.getAppointment(appointmentId);
-		appService.deleteAppointment(appointment, null, null);
+	public ResponseEntity<?> cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
+		Appointment appointment =null;
+		try {
+			appointment =  appService.getAppointment(appointmentId);	
+			appService.deleteAppointment(appointment, null, null);
+		} catch(IllegalArgumentException e){
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
+
 	}
 
 	@DeleteMapping(value = { "/delete/appointmentReminder/{reminderId}", "/delete/appointmentReminder/{reminderId}/" })
