@@ -577,10 +577,10 @@ public class AutoRepairShopSystemRestController {
 	// Will not allow updating emergency service as it is spontaneous
 
 	@PatchMapping(value = { "/edit/emergencyService/{serviceId}", "/edit/emergencyService/{serviceId}/" })
-	public void editEmergencyService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
+	public void editEmergencyService(@PathVariable("serviceId") Long serviceId,
 			@RequestParam int price) throws IllegalArgumentException {
 		EmergencyService emergencyService = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
-		emergencyServiceService.editEmergencyService(emergencyService, name, price);
+		emergencyServiceService.editEmergencyService(emergencyService, price);
 	}
 
 	@DeleteMapping(value = { "/delete/emergencyService/{serviceId}", "/delete/emergencyServices/{serviceId}/" })
@@ -901,7 +901,7 @@ public class AutoRepairShopSystemRestController {
 			@RequestParam(name = "garageSpot") Integer garageSpot,
 			@RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime,
 			@RequestParam(name = "Garage Technician Id") Long garageTechnicianId) throws IllegalArgumentException {
-		return convertToDto(appService.bookAppointment(userId, serviceName, Date.valueOf(LocalDate.parse(date)),
+		return convertToDto(appService.bookAppointment(userId, serviceName.trim(), Date.valueOf(LocalDate.parse(date)),
 				garageSpot, Time.valueOf(LocalTime.parse(startTime)), garageTechnicianId));
 	}
 
@@ -1091,10 +1091,10 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PatchMapping(value = { "/edit/bookableService/{serviceId}", "/edit/bookableService/{serviceId}/" })
-	public void editBookableService(@PathVariable("serviceId") Long serviceId, @RequestParam String name,
+	public void editBookableService(@PathVariable("serviceId") Long serviceId, 
 			@RequestParam int duration, @RequestParam int price) throws IllegalArgumentException {
 		BookableService bookableService = bookService.getBookableServiceById(serviceId);
-		bookService.editBookableService(bookableService, name, duration, price);
+		bookService.editBookableService(bookableService, duration, price);
 	}
 
 	@DeleteMapping(value = { "/delete/administrativeAssistant/{Id}", "/delete/administrativeAssistant/{Id}/" })

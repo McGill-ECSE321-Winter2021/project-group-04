@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="logout-href">
+      <button @click="logout()" type="homeLogout" class="btn btn-primary">
+        Logout
+      </button>
+    </div>
     <div class="topnav">
       <a><router-link to="/home">Home</router-link></a>
       <a>
@@ -223,6 +228,7 @@
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  
 }
 
 /* Change color of dropdown links on hover */

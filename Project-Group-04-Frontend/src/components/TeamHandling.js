@@ -29,8 +29,10 @@ export default {
   name: 'teamHandling',
   data() {
     return {
-      teams: [],
+      garageTechnicians: [],
+      fieldTechnicians:[],
       name: '',
+    
       technicianId: '',
       errorTeam: '',
       reponse: []
@@ -41,7 +43,8 @@ export default {
     AXIOS.get('/garageTechnicians')
       .then(response => {
         // JSON responses are automatically parsed.
-        this.teams = response.data
+       
+        this.garageTechnicians = response.data
       })
       .catch(e => {
         this.errorProfile = e
@@ -49,7 +52,8 @@ export default {
     AXIOS.get('/fieldTechnician')
       .then(response => {
         // JSON responses are automatically parsed.
-        this.teams += response.data
+       
+        this.fieldTechnicians = response.data
       })
       .catch(e => {
         this.errorProfile = e

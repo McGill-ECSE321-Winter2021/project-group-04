@@ -117,14 +117,14 @@
         <br />
         <br />
 
-        <label for="floatingInput">Model No.</label>
+        <label for="floatingInput">Model</label>
         <div class="form-floating mb-3">
           <input
             type="text"
             v-model="modelNumber"
             class="form-control"
             id="floatingInput"
-            placeholder="Model Number"
+            placeholder="Model"
             required
           />
         </div>

@@ -54,7 +54,7 @@
             <th>Bookable Service</th>
             <th>Duration (min)</th>
             <th>Price ($)</th>
-            <th>New Name</th>
+           
             <th>New Duration</th>
             <th>New Price</th>
           </tr>
@@ -62,13 +62,7 @@
             <td>{{ bookableService.name }}</td>
             <td>{{ bookableService.duration }}</td>
             <td>{{ bookableService.price }}</td>
-          <td>
-            <input size="10"
-              type="text"
-              v-model="newServiceName"
-              placeholder="New Name"
-            />
-          </td>
+         
           <td>
             <input size="10"
               type="text"

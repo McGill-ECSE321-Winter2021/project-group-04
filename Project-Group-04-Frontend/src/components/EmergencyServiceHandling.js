@@ -42,9 +42,11 @@ export default {
           AXIOS.post('/create/emergencyService/' + name + '?price=' + price, {}, {})
           .then(response => {
             //   this.emergencyService = response.data.emergencyService
+            this.$router.go('/Home')
               this.emergencyServices.push(response.data)
               this.errorEmergencyService = ''
               this.newEmergencyService = ''
+              
             //   location.reload()
           })
           .catch(e => {

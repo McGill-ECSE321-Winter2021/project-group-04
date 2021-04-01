@@ -57,17 +57,22 @@
       <table>
        
       <tr class="table">
+        <th> Type </th>
        <th > Name</th>
-  
+
         <!-- <th>Total Price</th> -->
       </tr>
-      
-        <tr  v-for="team in teams" :key="team.service">
-        <td> {{ team.name }}</td> 
+        
+        <tr  v-for="garageTechnician in garageTechnicians" :key="garageTechnician.name">
+         <td> Garage Technician</td> 
+        <td> {{ garageTechnician.name }}</td> 
         
         <!-- <td> {{appointment.receipt.totalPrice}}</td> -->
         </tr>
-
+ <tr  v-for="fieldTechnician in fieldTechnicians" :key="fieldTechnician.name">
+         <td> Field Technician</td> 
+        <td> {{ fieldTechnician.name }}</td> 
+ </tr>
       </table>
     ​<span v-if="errorTeam" style="color:red">Error: {{errorTeam}} </span>
     <hr>

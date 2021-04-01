@@ -87,16 +87,13 @@ public class BookableServiceService {
         return bookableService;
     }
 
-    public BookableService editBookableService(BookableService bookableService, String name, int duration, int price) {
-        if (name == bookableService.getName() && duration == bookableService.getDuration()
+    public BookableService editBookableService(BookableService bookableService, int duration, int price) {
+        if ( duration == bookableService.getDuration()
                 && price == bookableService.getPrice()) {
             throw new IllegalArgumentException("You have to edit one of the fields");
         }
-        BookableService existingBookableService = getBookableServiceByServiceName(name);
-        if (existingBookableService != null) {
-            throw new IllegalArgumentException("A bookable service with this name already exists");
-        }
-        bookableService.setName(name);
+        
+        
         bookableService.setDuration(duration);
         bookableService.setPrice(price);
         bookableServiceRepository.save(bookableService);

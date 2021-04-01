@@ -96,8 +96,8 @@ methods: {
    
 
     bookAppointment: function (selectedService, date,time,garageSpot,selectedGarageTechnician) {
-        console.log(selectedGarageTechnician)
-        
+        console.log("a"+selectedGarageTechnician+"p")
+        console.log("a"+selectedService+"p")
         AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
           .then(response => {
               this.chosenGarageTech = response.data

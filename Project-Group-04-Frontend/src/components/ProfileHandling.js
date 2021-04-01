@@ -73,6 +73,7 @@ export default {
           // Update appropriate DTO collections
           this.errorProfile=""
           this.profile = response.data
+          this.$router.go('/Home')
           
         })
         .catch(e => {

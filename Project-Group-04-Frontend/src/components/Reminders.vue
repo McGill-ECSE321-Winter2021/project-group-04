@@ -66,7 +66,7 @@
 
         <tr v-for="appointment in appointments" :key="appointment.id">
           <td>{{appointment.bookableService.name}}</td>
-          <td>{{appointment.appointmentReminder.message}}</td>
+          <td>{{appointment.reminder.message}}</td>
         </tr>
       </table>
       ​<span v-if="errorReminder" style="color:red">Error: {{errorReminder}} </span>
