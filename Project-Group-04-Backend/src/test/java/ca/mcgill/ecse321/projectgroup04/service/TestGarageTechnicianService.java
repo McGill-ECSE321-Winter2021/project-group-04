@@ -58,7 +58,7 @@ public class TestGarageTechnicianService {
 				.thenAnswer(returnParameterAsAnswer);
 		lenient().when(appointmentRepository.save(any(Appointment.class))).thenAnswer(returnParameterAsAnswer);
 		lenient().when(appointmentRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
-			List<Appointment> appointments = new ArrayList<>();
+			List<Appointment> appointments = new ArrayList<Appointment>();
 			TimeSlot timeSlot = new TimeSlot();
 			timeSlot.setEndTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_END_TIME)));
 			timeSlot.setStartTime(Time.valueOf(LocalTime.parse(OLD_APPOINTMENT_START_TIME)));
@@ -88,6 +88,17 @@ public class TestGarageTechnicianService {
 					}
 					return null;
 				});
+		lenient().when(garageTechnicianRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+
+			List<GarageTechnician> techs = new ArrayList<GarageTechnician>();
+
+			GarageTechnician garageTechnician = new GarageTechnician();
+			garageTechnician.setName(GARAGETECHNICIAN_NAME);
+
+			techs.add(garageTechnician);
+
+			return techs;
+		});
 
 	}
 
