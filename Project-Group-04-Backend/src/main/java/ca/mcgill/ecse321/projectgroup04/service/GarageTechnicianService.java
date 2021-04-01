@@ -13,8 +13,8 @@ public class GarageTechnicianService {
 
     @Autowired
     private GarageTechnicianRepository garageTechnicianRepository;
-
-    private AppointmentService appointmentService;
+    @Autowired
+    private AppointmentRepository appointmentRepository;
 
     @Transactional
     public GarageTechnician createGarageTechnician(String name) {
@@ -62,7 +62,8 @@ public class GarageTechnicianService {
 
     public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
 
-        List<Appointment> appointmentsList = appointmentService.getAllAppointments();
+        List<Appointment> appointmentsList = (List<Appointment>) appointmentRepository.findAll();
+        ;
 
         for (Appointment appointment : appointmentsList) {
             if (appointment.getTechnician().equals(garageTechnician)) {
