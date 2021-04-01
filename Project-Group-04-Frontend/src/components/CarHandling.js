@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -58,23 +59,18 @@ export default {
   },
   methods: {
     editCar: function (model, year, color) {
-      console.log(this.carId);
-      console.log(model);
-      console.log(year);
-      console.log(color);
       // Create a new person and add it to the list of people
-      AXIOS.patch('/edit/car/' + this.carId+'?model='+model+'&year='+year+'&color='+color, {}, {})
+      AXIOS.patch('/edit/car/' + this.carId + '?model=' + model + '&year=' + year + '&color=' + color, {}, {})
         .then(response => {
-          this.$router.go('/Home')
           this.errorCar = '';
-          // Update appropriate DTO collections
-          this.car = response.data
-          
-        })
+          this.car = response.data;
+          swal("Success", "Changes to your car information are successfully saved", "success").then(okay => {
+            if (okay) {
+              this.$router.go('/Home') }})
+        })  
         .catch(e => {
-          this.errorCar=e
-          console.log(errorCar)
-          window.alert(errorCar)
+          this.errorCar = e
+          swal("ERROR", e.response.data, "error");
         })
       // Reset the name field for new people
 

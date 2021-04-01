@@ -73,14 +73,19 @@ export default {
           // Update appropriate DTO collections
           this.errorProfile=""
           this.profile = response.data
-          this.$router.go('/Home')
+          swal("Success", "Changes to your profile information are successfully saved", "success").then(okay => {
+            if (okay) {
+              this.$router.go('/Home')
+            }
+          })
           
         })
         .catch(e => {
           var errorMsg = e
           console.log(errorMsg)
           this.errorProfile = errorMsg
-          window.alert(e);
+          swal("ERROR", e.response.data, "error");
+
         })
 
       // Reset the name field for new people

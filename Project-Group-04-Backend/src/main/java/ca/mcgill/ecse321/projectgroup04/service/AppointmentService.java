@@ -6,6 +6,8 @@ import ca.mcgill.ecse321.projectgroup04.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.time.DayOfWeek;

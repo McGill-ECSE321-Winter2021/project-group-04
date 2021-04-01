@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -893,14 +895,14 @@ public class AutoRepairShopSystemRestController {
 		return garageTechnicianDto;
 	}
 
-	@CrossOrigin(origins = "*")
 	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
+	@CrossOrigin(origins = "*")
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
 			@PathVariable("serviceName") String serviceName,
 			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
 			@RequestParam(name = "garageSpot") Integer garageSpot,
 			@RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime,
-			@RequestParam(name = "Garage Technician Id") Long garageTechnicianId) throws IllegalArgumentException {
+			@RequestParam(name = "garageTechnicianId") Long garageTechnicianId) throws IllegalArgumentException {
 		return convertToDto(appService.bookAppointment(userId, serviceName.trim(), Date.valueOf(LocalDate.parse(date)),
 				garageSpot, Time.valueOf(LocalTime.parse(startTime)), garageTechnicianId));
 	}
@@ -927,13 +929,19 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PatchMapping(value = { "/edit/profile/{profileId}", "/edit/profile/{profileId}/" })
-	public ProfileDto editProfile(@PathVariable("profileId") Long profileId,
+	public ResponseEntity<?> editProfile(@PathVariable("profileId") Long profileId,
 			@RequestParam(name = "Email Address") String emailAddress,
 			@RequestParam(name = "Phone Number") String phoneNumber,
 			@RequestParam(name = "Address Line") String addressLine, @RequestParam(name = "Zip Code") String zipCode,
 			@RequestParam(name = "First Name") String firstName, @RequestParam(name = "Last Name") String lastName) {
-		return convertToDto(profileService.editProfile(profileId, firstName, lastName, emailAddress, phoneNumber,
-				addressLine, zipCode));
+		Profile profile =null;
+		try {
+			profile=profileService.editProfile(profileId, firstName, lastName, emailAddress, phoneNumber,
+					addressLine, zipCode);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(profile),HttpStatus.CREATED);
 	}
 
 	/////////////////////////////////////// CUSTOMER///////////////////////////
@@ -1064,9 +1072,16 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@DeleteMapping(value = { "/cancel/appointment/{appointmentId}", "/cancel/appointment/{appointmentId}/" })
-	public void cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
-		Appointment appointment = appService.getAppointment(appointmentId);
-		appService.deleteAppointment(appointment, null, null);
+	public ResponseEntity<?> cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
+		Appointment appointment =null;
+		try {
+			appointment =  appService.getAppointment(appointmentId);	
+			appService.deleteAppointment(appointment, null, null);
+		} catch(IllegalArgumentException e){
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
+
 	}
 
 	@DeleteMapping(value = { "/delete/appointmentReminder/{reminderId}", "/delete/appointmentReminder/{reminderId}/" })
@@ -1125,11 +1140,16 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PatchMapping(value = { "/edit/car/{carId}", "/edit/car/{carId}/" })
-	public CarDto editCar(@PathVariable("carId") Long carId, @RequestParam String model, @RequestParam String year,
+	public ResponseEntity<?> editCar(@PathVariable("carId") Long carId, @RequestParam String model, @RequestParam String year,
 			@RequestParam String color) throws IllegalArgumentException {
-		System.out.println("Entered");
-		Car car = carService.getCarByCarId(carId);
-		return convertToDto(carService.editCar(car, model, year, color));
+		Car car = null;
+		try {
+			car = carService.getCarByCarId(carId);
+			car =carService.editCar(car, model, year, color);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(car), HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = { "/car/{userId}", "/car/{userId}/" })
