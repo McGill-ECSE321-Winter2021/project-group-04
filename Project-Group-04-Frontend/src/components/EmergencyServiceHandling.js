@@ -84,5 +84,17 @@ export default {
             })
         },
 
+        logout: function () {
+            AXIOS.post('/logout', {}, {})
+            .then(response => {
+                this.$router.push('/')
+      
+              })
+              .catch(e => {
+                var errMsg = e.response.data.message
+                window.alert(e)
+              })
+          }
+
     }
 }

@@ -42,6 +42,6 @@ export default {
                     var errorMsg = e
                     window.alert(errorMsg)
                 });
-        },
+        }
     }
 }

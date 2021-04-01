@@ -89,6 +89,15 @@
 </script>
 
 <style>
+.logout-href {
+  padding: 20px 1px;
+  font-size: 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  text-align: left;
+}
 .button {
   padding: 10px;
 }

@@ -24,16 +24,16 @@ var AXIOS = axios.create({
           loginUser: function(userId, password){
               AXIOS.post('/login/'+userId+'?password='+password,{},{})
               .then(response => {
-                  if(userId.localeCompare("owner")){
-                      this.$router.push('homeOwner')    // need to change to owner homepage
+                  if(userId.localeCompare("Owner") == 0){
+                      this.$router.push('/homeOwner')    // need to change to owner homepage
                   }
 
-                  else if(userId.localeCompare("admin")){
-                    this.$router.push('homeOwner')      // need to change to owner homepage
+                  else if(userId.localeCompare("Admin") == 0){
+                    this.$router.push('/homeOwner')      // need to change to owner homepage
                   }
 
                   else{
-                    this.$router.push('Home')
+                    this.$router.push('/home')
                   }
               })
               .catch(e => {

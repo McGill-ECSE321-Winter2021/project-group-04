@@ -25,5 +25,19 @@ export default {
         AXIOS.get('/bookableServices')
         .then(response => {this.bookableServices = response.data})
         .catch(e => {this.errorBookableService = e});
-    },   
+    },
+    
+    methods: {
+        logout: function () {
+            AXIOS.post('/logout', {}, {})
+            .then(response => {
+                this.$router.push('/')
+      
+              })
+              .catch(e => {
+                var errMsg = e.response.data.message
+                window.alert(e)
+              })
+          }
+    }
 }
