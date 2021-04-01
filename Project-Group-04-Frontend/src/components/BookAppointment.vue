@@ -51,6 +51,7 @@
       </a>
     </div> 
     <div >
+      <hr>
       <br /> 
       <h2>Booking</h2>
       <br />
@@ -61,6 +62,7 @@
             <th> Time </th>
             <th> Spot </th>
             <th> Technician </th>
+
           </tr>
           <tr>
              <td>
@@ -71,6 +73,7 @@
                 ​</option>
               ​</select>
            ​</td>
+
           <td> 
            <input type="date" v-model="date" min="datePickerIdMin" required >
               </td>
@@ -88,6 +91,7 @@
             </td>
         </tr>
           </table>
+
     </div>
   </div>
  </template>

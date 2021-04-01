@@ -37,14 +37,20 @@ export default {
             this.businessHourId = this.business.businessHourId
           })
           .catch(e => {
-            this.errorProfile = e
+            this.errorBusinessHour = e
           })
       },
 
     methods: {
-        updateBusinessHour: function(businessHour){
-            const businessHourId = businessHour.businessHourId
-            AXIOS.patch('/edit/businessHour/' + businessHourId + '?dayOfWeek=' + day + '&startTime=' + startTime + '&endTime=' + endTime, {}, {})
+        updateBusinessHour: function(dayOfWeek, startTime, endTime){
+            var i
+            for (i =0; i<this.businessHours.length; i++){
+                if(dayOfWeek == this.businessHours[i].dayOfWeek){
+                    var businessHour = this.businessHours[i]
+                }
+            }
+            const businessHourId = businessHour.id
+            AXIOS.patch('/edit/businessHour/' + businessHourId + '?dayOfWeek=' + dayOfWeek + '&startTime=' + startTime + '&endTime=' + endTime, {}, {})
             .then(response=> {
                 this.businessHour = response.data
             })

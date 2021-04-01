@@ -17,6 +17,11 @@
           My Receipts
         </router-link>
       </a>
+      <a>
+        <router-link to="/reminders">
+          My Reminders
+        </router-link>
+      </a>
       <a class="active">
         <router-link to="/emergencyServices">
           Our Services
@@ -104,7 +109,7 @@
 }
 
 .table th {
-    font-size: 40px;
+    font-size: 17px;
     color: #696969;
     text-align: center;
     padding-left: 100px;
@@ -112,7 +117,7 @@
 }
 
 .values td {
-    font-size: 30px;
+    font-size: 17px;
 }
 
 /* Add a black background color to the top navigation */
@@ -182,7 +187,7 @@
   background-color: #696969;
   color: white;
   padding: 16px;
-  font-size: 30px;
+  font-size: 17px;
   border: none;
 }
 
@@ -200,6 +205,7 @@
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  font-size:17px;
 }
 
 /* Links inside the dropdown */

@@ -376,5 +376,18 @@ public class AppointmentService {
         }
         return nextAppointments;
     }
+    
+    public List<Appointment> get24hoursAppointment(String userId){
+        Date today = Date.valueOf(LocalDate.now());
+        List<Appointment> hoursAppointments = new ArrayList<Appointment>();
+        for(Appointment appointment : getAppointmentsByCustomer(userId)) {
+        	Date reminderDate = appointment.getReminder().getDate();
+        	Date appointmentDate = appointment.getTimeSlot().getStartDate();
+        	if(reminderDate.getTime()<= today.getTime() && today.getTime()<=appointmentDate.getTime()) {
+        		hoursAppointments.add(appointment);
+        	}
+        }
+        return hoursAppointments;
+    }
 
 }
