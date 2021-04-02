@@ -14,9 +14,12 @@ import java.util.List;
 public class EmergencyServiceService {
     @Autowired
     private EmergencyServiceRepository emergencyServiceRepository;
-
-    private CustomerService customerService;
-    private ReceiptService receiptService;
+    
+    
+    @Autowired
+    private ReceiptRepository receiptRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Transactional
     public EmergencyService createEmergencyService(String name, int price) {
@@ -71,8 +74,8 @@ public class EmergencyServiceService {
 
         int price = emergencyService.getPrice();
 
-        Receipt aReceipt = receiptService.createReceipt(price);
-        Customer customer = customerService.getCustomerByUserId(userId);
+        Receipt aReceipt = createReceipt(price);
+        Customer customer = getCustomerByUserId(userId);
 
         if (customer == null) {
             throw new IllegalArgumentException("Customer can't be null");
@@ -154,11 +157,35 @@ public class EmergencyServiceService {
     @Transactional
     public List<EmergencyService> getCurrentEmergencyServices(){
     	List<EmergencyService> currentEmergencyServices = new ArrayList<>();
-    	for(EmergencyService es : emergencyServiceRepository.findAll()) {
-    		if(!es.getTechnician().getIsAvailable()) {
-    			currentEmergencyServices.add(es);
+    	for(EmergencyService emergencyService : emergencyServiceRepository.findAll()) {
+    		if(emergencyService.getTechnician() != null){
+            if(!emergencyService.getTechnician().getIsAvailable()) {
+    			currentEmergencyServices.add(emergencyService);
     		}
+        }
     	}
     	return currentEmergencyServices;
+    }
+    @Transactional
+    public Receipt createReceipt(double aTotalPrice) {
+        if (aTotalPrice == 0) {
+            throw new IllegalArgumentException("Total Price can't be 0");
+        }
+        if (aTotalPrice < 0) {
+            throw new IllegalArgumentException("Total Price can't be negative");
+        }
+        Receipt receipt = new Receipt();
+        receipt.setTotalPrice(aTotalPrice);
+        receiptRepository.save(receipt);
+        return receipt;
+    }
+
+    @Transactional
+    public Customer getCustomerByUserId(String userId) {
+        Customer customer = customerRepository.findCustomerByUserId(userId);
+        if (customer == null) {
+            throw new IllegalArgumentException("No customer with such userId!");
+        }
+        return customer;
     }
 }

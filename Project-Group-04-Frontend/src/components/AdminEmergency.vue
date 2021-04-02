@@ -17,34 +17,34 @@
       </a>
     </div>
      <br />
-    <h3> Appointments </h3>
+    <h3> Emergency Booking </h3>
     <div>
      
 
-        <label> Pick a date  <input type="date" v-model="date" min="datePickerIdMin" required >
-          </label>
-           <button @click="showAppointment(date)" type="showAppointmentButton" 
-        class="btn btn-primary"  > Show </button>
+        
+          
      <table class="paddingBetweenCols">
         <tr>
           <th> Customer </th>
-          <th>Date</th>
-           <th>Start Time</th>
-           <th>End Time</th> 
+
            <th>Service</th>
-           <th>Spot</th>
+           <th>Location</th>
            <th> Technician </th>
          
         </tr>
-         <tr v-for="appointment in appointments" :key="appointment.timeSlot.startDate">  
-           <td> {{appointment.customer.profile.firstName }} {{appointment.customer.profile.lastName}}   </td>     
-         <td> {{ appointment.timeSlot.startDate }}</td> 
-        <td>{{ appointment.timeSlot.startTime }}</td> 
-        <td> {{appointment.timeSlot.endTime}}</td> 
-         <td> {{appointment.bookableService.name}}</td> 
-        <td> {{appointment.timeSlot.garageSpot}}</td>
-        <td> {{appointment.technician.name}}</td>
-
+         <tr v-for="booked in bookedEmergency" :key="booked.name">  
+           <td> {{booked.customer.customerProfile.firstName }} {{booked.customer.customerProfile.lastName}}   </td>     
+       
+        <td>{{ booked.name }}</td> 
+        <td> {{booked.location}}</td> 
+         <td> {{booked.technician.name}}</td> 
+   
+        <td> <td>  <button
+        class="btn btn-primary"
+        @click="endEmergency(booked.serviceId)">
+        End
+      </button>
+       </td>
         </tr>
       </table>
     </div>
