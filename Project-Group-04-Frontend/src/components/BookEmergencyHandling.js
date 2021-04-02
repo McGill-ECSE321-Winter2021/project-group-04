@@ -13,18 +13,18 @@ var AXIOS = axios.create({
 
 
 export default {  
-    name: 'HandlingBookAppointment',
+    name: 'BookEmergencyHandling',
     data() {
       return {
         userID: '',
         errorUser:'',
-        appointments: '',
-        errorBookAppointment: '',
-        bookableServices: [],
-        garageTechnicians:[],
+        bookedEmergency: '',
+        errorBookEmergency: '',
+        emergencyServices: [],
+        fieldTechnicians:[],
         chosenTechnicianId:'',
-        chosenGarageTech:'',
-        errorGarageTechnician:'',
+        chosenFieldTech:'',
+        errorFieldTechnician:'',
         errorChosenTechnicianId:'',
 
         response: [],
@@ -33,12 +33,12 @@ export default {
     },
 
     created: function(){
-      AXIOS.get('/bookableServices')
-      .then(response => {this.bookableServices = response.data})
-      .catch(e => {this.errorBookAppointment=e})
-      AXIOS.get('/garageTechnicians')
-      .then(response => {this.garageTechnicians = response.data})
-        .catch(e => { this.errorBookAppointment=e })
+      AXIOS.get('/emergencyServices')
+      .then(response => {this.emergencyServices = response.data})
+      .catch(e => {this.errorBookEmergency=e})
+      AXIOS.get('/fieldTechnician')
+      .then(response => {this.fieldTechnicians = response.data})
+        .catch(e => { this.errorBookEmergency=e })
       AXIOS.get('/login/currentCustomer')
         .then(response => { this.userID = response.data.userID }) 
         .catch(e => {this.errorUser=e})
@@ -48,20 +48,20 @@ export default {
 methods: {
    
 
-  bookAppointment: function (selectedService, date, time, garageSpot, selectedGarageTechnician) {
-    AXIOS.get('/garageTechnicians/' + selectedGarageTechnician)
+  bookEmergency: function (selectedEmergencyService,  location, selectedFieldTechnician) {
+    AXIOS.get('/fieldTechnicians/' + selectedFieldTechnician)
       .then(response => {
-        this.chosenGarageTech = response.data
+        this.chosenFieldTech = response.data
         this.chosenTechnicianId = response.data.technicianId
       })
       .catch(e => { this.errorChosenTechnicianId })
       .finally(() => {
 
-        AXIOS.post('/book/appointment/' + this.userID + selectedService + '?date=' + date + '&garageSpot='
-          + garageSpot + '&startTime=' + time + '&Garage Technician Id=' + this.chosenTechnicianId, {}, {})
+        AXIOS.post('/book/emergencyService/' + this.userID + selectedEmergencyService + '?Location=' + location + '&fieldTechnicianId='
+          + this.chosenTechnicianId , {}, {})
           .then(response => {
-            console.log(selectedService)
-            this.appointments = response.data
+            console.log(selectedEmergencyService)
+            this.bookedEmergency = response.data
             swal("Success", "Your appointment has successfuly been booked", "success").then(okay => {
               if (okay) {
                 this.$router.go('/Home')

@@ -101,7 +101,7 @@ export default {
         .finally(() => {
   
           AXIOS.post('/book/appointment/' + this.userID + selectedService + '?date=' + date + '&garageSpot='
-            + garageSpot + '&startTime=' + time + '&Garage Technician Id=' + this.chosenTechnicianId, {}, {})
+            + garageSpot + '&startTime=' + time + '&garageTechnicianId=' + this.chosenTechnicianId, {}, {})
             .then(response => {
               console.log(selectedService)
               this.appointments = response.data

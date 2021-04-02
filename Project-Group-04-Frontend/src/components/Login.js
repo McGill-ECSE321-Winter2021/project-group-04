@@ -29,7 +29,7 @@ var AXIOS = axios.create({
                   }
 
                   else if(userId.localeCompare("Admin") == 0){
-                    this.$router.push('/homeOwner')      // need to change to owner homepage
+                    this.$router.push('/homeAdmin')      // need to change to owner homepage
                   }
 
                   else{

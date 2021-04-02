@@ -61,45 +61,50 @@
     <table class="tableau">
         <tr class="table">
             <th> Service </th>
-            <th>Date </th>
-            <th> Time </th>
-            <th> Spot </th>
+           
+            <th> Location </th>
             <th> Technician </th>
 
           </tr>
           <tr>
              <td>
-              ​<select v-model="selectedService">
+              ​<select v-model="selectedEmergencyService">
                 ​<option disabled value="">Please select one</option>
-                ​<option v-for="bookableService in bookableServices" :key="bookableService.name" >
-                  ​{{ bookableService.name }}
+                ​<option v-for="emergencyService in emergencyServices" :key="emergencyService.name" >
+                  ​{{ emergencyService.name }}
                 ​</option>
               ​</select>
            ​</td>
 
-          <td> 
-           <input type="date" v-model="date" min="datePickerIdMin" required >
-              </td>
-                <td> <input type="time" v-model="time" step="300" min="08:00" max="18:00" required>
-                </td>
+          
                     <td>
-                    <input type="number" v-model="garageSpot" min="1" max="4" required>
+                    <input type="text" v-model="location"  required>
                     </td>
-                      <td> <select v-model="selectedGarageTechnician">
+                      <td> <select v-model="selectedFieldTechnician">
                         ​<option disabled value="">Please select one</option>
-                        ​<option v-for="garageTechnician in garageTechnicians" :key="garageTechnician.name" >
-                            ​{{garageTechnician.name}}
+                        ​<option v-for="fieldTechnician in fieldTechnicians" :key="fieldTechnician.name" >
+                            ​{{fieldTechnician.name}}
                          </option>
                 ​</select>
             </td>
-          
-        </tr>
-    </table>
-      <button
+           
+           <td>  <button
         class="btn btn-primary"
-        @click="bookAppointment(selectedService,date,time,garageSpot,selectedGarageTechnician)">
+        @click="bookEmergency(selectedEmergencyService,location,selectedFieldTechnician)">
         Book
       </button>
+       </td>
+   <td>   
+      <router-link to="/home">
+        <button type="backEmergencyButton" class="btn btn-primary" color="red">
+          Back
+        </button>
+      </router-link>
+   </td>
+           
+        </tr>
+    </table>
+     
 
     </div>
   </div>
@@ -107,7 +112,7 @@
 
 
 
- <script src = './HandlingBookAppointment.js' >
+ <script src = './BookEmergencyHandling.js' >
  </script>
 
 

@@ -32,14 +32,14 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
-    <!-- <div>
+    <div>
       <br />
-      <router-link to="/book">
-        <button type="bookingButton" class="btn btn-primary">
-          Book a new Appointment
+      <router-link to="/book/emergency">
+        <button type="bookingEmergencyButton" class="btn btn-primary" color="red">
+          Emergency Service
         </button>
       </router-link>
-    </div> -->
+    </div>
     <div >
       <hr>
       <br /> 
@@ -79,14 +79,15 @@
                          </option>
                 ​</select>
             </td>
-          
-        </tr>
-    </table>
-      <button
+          <td> <button
         class="btn btn-primary"
         @click="bookAppointment(selectedService,date,time,garageSpot,selectedGarageTechnician)">
         Book
       </button>
+          </td>
+        </tr>
+    </table>
+     
 
     </div>
     <div>
@@ -125,6 +126,7 @@
         </tr>
       </table>
     </div>
+
   </div>
 </template>
 <script src='./BookAppointmentHandling.js'>
@@ -244,4 +246,5 @@
   padding-left: 70px;
   padding-right: 70px;
 }
+
 </style>
