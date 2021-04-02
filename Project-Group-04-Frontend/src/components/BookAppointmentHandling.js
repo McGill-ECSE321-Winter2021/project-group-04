@@ -77,6 +77,7 @@ export default {
     AXIOS.get('/login/currentCustomer')
       .then(response => {
         this.userID = response.data.userID;
+        console.log(this.userID);
       })
       .catch(e => { this.errorUser = e })
       .finally(() => {
@@ -99,8 +100,8 @@ export default {
         })
         .catch(e => { this.errorChosenTechnicianId })
         .finally(() => {
-            console.log(this.userID)
-          AXIOS.post('/book/appointment/' +"mohamad1"+ "?serviceName="+ selectedService + '&date=' + date + '&garageSpot='
+          console.log(this.userID)
+          AXIOS.post('/book/appointment/' +this.userID+ "?serviceName="+ selectedService + '&date=' + date + '&garageSpot='
             + garageSpot + '&startTime=' + time + '&garageTechnicianId=' + this.chosenTechnicianId, {}, {})
             .then(response => {
               console.log(selectedService)
@@ -133,11 +134,7 @@ export default {
 
           this.errorProfile = ""
           this.appointments.pop(response.data)
-          swal("Success", "Your appointment has successfuly been canceled", "success").then(okay => {
-            if (okay) {
-              this.$router.go('/Home')
-            }
-          })
+          swal("Success", "Your appointment has successfuly been canceled", "success")
 
         })
         .catch(e => {

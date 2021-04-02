@@ -565,20 +565,23 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "book/emergencyService/{userId}",
 			"book/emergencyService/{userId}/" })
-	public EmergencyServiceDto bookEmergencyService(@PathVariable("userId") String userId,
+	public ResponseEntity<?> bookEmergencyService(@PathVariable("userId") String userId,
 			@RequestParam(name ="serviceName") String serviceName, @RequestParam(name = "Location") String location,
 			@RequestParam(name = "fieldTechnicianId") Long fieldTechnicianId) throws IllegalArgumentException {
 
-		// TODO: Only owner and admin can create an emergencyService
-
-		FieldTechnician fieldTechnician = fieldService.getFieldTechnicianById(fieldTechnicianId); // get
-
-		// ft
-		// A bookable emergency service will be created
-		String nameOfBooking = serviceName + " for " + userId; // service for that user
-		EmergencyService bookableEmergencyService = emergencyServiceService.bookEmergencyService(nameOfBooking,
-				serviceName, location, userId, fieldTechnician);
-		return convertToDto(bookableEmergencyService);
+		FieldTechnician fieldTechnician=null;
+		String nameOfBooking = null;
+		EmergencyService bookableEmergencyService=null;
+		try {
+			fieldTechnician = fieldService.getFieldTechnicianById(fieldTechnicianId); // get
+			nameOfBooking = serviceName + " for " + userId; // service for that user
+			bookableEmergencyService = emergencyServiceService.bookEmergencyService(nameOfBooking,
+					serviceName, location, userId, fieldTechnician);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDto(bookableEmergencyService),HttpStatus.CREATED);
 	}
 
 	// Will not allow updating emergency service as it is spontaneous

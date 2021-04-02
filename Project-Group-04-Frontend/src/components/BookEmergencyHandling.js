@@ -40,7 +40,10 @@ export default {
       .then(response => {this.fieldTechnicians = response.data})
         .catch(e => { this.errorBookEmergency=e })
       AXIOS.get('/login/currentCustomer')
-        .then(response => { this.userID = response.data.userID }) 
+        .then(response => {
+          this.userID = response.data.userID
+          console.log(this.userID)
+        }) 
         .catch(e => {this.errorUser=e})
     
     },
@@ -57,12 +60,12 @@ methods: {
       .catch(e => { this.errorChosenTechnicianId })
       .finally(() => {
 
-        AXIOS.post('/book/emergencyService/' + "mohamad1" +'?serviceName=' +selectedEmergencyService + '&Location=' + location + '&fieldTechnicianId='
+        AXIOS.post('/book/emergencyService/' + this.userID +'?serviceName=' +selectedEmergencyService + '&Location=' + location + '&fieldTechnicianId='
           + this.chosenTechnicianId , {}, {})
           .then(response => {
             console.log(selectedEmergencyService)
             this.bookedEmergency = response.data
-            swal("Success", "Your appointment has successfuly been booked", "success").then(okay => {
+            swal("Success", "We have received your request and " + selectedFieldTechnician+" is on his way.", "success").then(okay => {
               if (okay) {
                 this.$router.go('/Home')
               }
