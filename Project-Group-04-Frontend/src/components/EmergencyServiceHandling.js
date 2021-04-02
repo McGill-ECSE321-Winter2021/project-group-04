@@ -46,6 +46,11 @@ export default {
               this.emergencyServices.push(response.data)
               this.errorEmergencyService = ''
               this.newEmergencyService = ''
+              swal("Success", "Emergency service was succesfully added", "success").then(okay => {
+                if (okay) {
+                  this.$router.go('/Home')
+                }
+            })
               
             //   location.reload()
           })
@@ -53,8 +58,8 @@ export default {
               var errorMSg = e
               console.log(errorMSg)
               this.errorEmergencyService = errorMSg
-              window.alert("Emergency Service with this name already exists/Price cannot be less than or equal to zero")
-          })
+              swal("ERROR", e.response.data, "error")
+            })
         },
 
         deleteEmergencyService: function(emergencyService){
@@ -62,12 +67,17 @@ export default {
             AXIOS.delete('/delete/emergencyService/' + id , {}, {})
             .then(response => {
                 this.emergencyServices.pop(response.data)
+                swal("Success", "Emergency service was succesfully deleted", "success").then(okay => {
+                    if (okay) {
+                      this.$router.go('/Home')
+                    }
+                })
             })
             .catch(e => {
                 var errorMSg = e
                 console.log(errorMSg)
                 this.errorEmergencyService = errorMSg
-                window.alert(e)
+                swal("ERROR", e.response.data, "error")
             })
         },
 
@@ -76,13 +86,18 @@ export default {
             AXIOS.patch('/edit/emergencyService/' + id + '?name=' + newName + '&price=' + newPrice, {}, {})
             .then(response => {
                 this.emergencyService = response.data
+                swal("Success", "Emergency service was succesfully updated", "success").then(okay => {
+                    if (okay) {
+                      this.$router.go('/Home')
+                    }
+                })
                 location.reload()
             })
             .catch(e => {
                 var errorMSg = e
                 console.log(errorMSg)
                 this.errorEmergencyService = errorMSg
-                window.alert("Emergency Service with this name alreay exists")
+                swal("ERROR", e.response.data, "error")
             })
         },
 
