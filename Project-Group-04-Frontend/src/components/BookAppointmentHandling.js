@@ -99,8 +99,8 @@ export default {
         })
         .catch(e => { this.errorChosenTechnicianId })
         .finally(() => {
-  
-          AXIOS.post('/book/appointment/' + this.userID + selectedService + '?date=' + date + '&garageSpot='
+            console.log(this.userID)
+          AXIOS.post('/book/appointment/' +"mohamad1"+ "?serviceName="+ selectedService + '&date=' + date + '&garageSpot='
             + garageSpot + '&startTime=' + time + '&garageTechnicianId=' + this.chosenTechnicianId, {}, {})
             .then(response => {
               console.log(selectedService)

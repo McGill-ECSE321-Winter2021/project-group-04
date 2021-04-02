@@ -151,6 +151,7 @@ public class EmergencyServiceService {
     public EmergencyService endEmergencyService(EmergencyService emergencyService) {
         FieldTechnician fieldTechnician = emergencyService.getTechnician();
         fieldTechnician.setIsAvailable(true);
+        
         return emergencyService;
     }
     
