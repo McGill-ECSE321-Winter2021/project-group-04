@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-
+import swal from 'sweetalert'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -53,12 +53,12 @@ export default {
             AXIOS.patch('/edit/businessHour/' + businessHourId + '?dayOfWeek=' + dayOfWeek + '&startTime=' + startTime + '&endTime=' + endTime, {}, {})
             .then(response=> {
                 this.businessHour = response.data
+                swal("Success", "The business Hours of " + dayOfWeek + " has been changed", "success")
             })
             .catch(e =>{
                 var errorMSg = e
                 console.log(errorMSg)
-                this.errorBusinessHour = errorMSg
-                window.alert(e)
+                swal("Error",e.response.data,"error");
             })
         },
 

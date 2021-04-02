@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import swal from 'sweetalert'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -54,13 +54,12 @@ export default {
             .then(response => {
                 this.errorTeam=""
                 this.teams = response.data
-
+                swal("Success", "The garage technician " + name +  " has been added to the database", "success")
             })
             .catch(e => {
                 var errorMsg = e
                 console.log(errorMsg)
-                this.errorTeam = errorMsg
-                window.alert(e);
+                swal("Error",e.response.data,"error");
               })
       
         },

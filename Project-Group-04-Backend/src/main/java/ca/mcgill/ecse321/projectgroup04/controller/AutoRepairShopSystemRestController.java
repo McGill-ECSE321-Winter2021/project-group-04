@@ -599,6 +599,11 @@ public class AutoRepairShopSystemRestController {
 
 	//////////////////////////////// FIELD TECHNICIAN
 	////////////////////////////////////////////////////////////////////
+	
+	@GetMapping(value = {"/onGoingEmergencies","/onGoingEmergencies/"})
+	public List<EmergencyService> getOnGoingEmergencies(){
+		return emergencyServiceService.getCurrentEmergencyServices();
+	}
 
 	@GetMapping(value = { "/fieldTechnician", "/fieldTechnician/" })
 	public List<FieldTechnicianDto> getFieldTechnicians() {
