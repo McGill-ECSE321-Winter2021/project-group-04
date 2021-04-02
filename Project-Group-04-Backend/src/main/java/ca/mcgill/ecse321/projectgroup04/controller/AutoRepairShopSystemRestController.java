@@ -374,25 +374,46 @@ public class AutoRepairShopSystemRestController {
 	/////////////////////////////////// LOGOUT///////////////////////////////////////
 
 	@PostMapping(value = { "/login/{userId}", "/login/{userId}/" })
-	public void userLogin(@PathVariable(value = "userId") String userId,
+	public ResponseEntity<?> userLogin(@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "password") String password) throws IllegalArgumentException {
 		// System.out.println(userId);
 		if (userId.equalsIgnoreCase("owner")) {
-			logService.loginAsOwner(userId, password);
+			try {
+				logService.loginAsOwner(userId, password);
+			} catch (IllegalArgumentException e) {
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
 
 		else if (userId.equalsIgnoreCase("admin")) {
-			logService.loginAsAdmin(userId, password);
+			try {
+				logService.loginAsAdmin(userId, password);
+			} catch (IllegalArgumentException e) {
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
 
 		else {
-			logService.loginAsCustomer(userId, password);
+			try {
+				logService.loginAsCustomer(userId, password);
+			} catch (IllegalArgumentException e) {
+				System.out.println(e);
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping(value = { "/logout", "/logout/" })
-	public void logout() {
+	public ResponseEntity<?> logout() {
+		try {
 		logService.logout();
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping(value = { "/login/currentCustomer", "/login/currentCustomer/" })

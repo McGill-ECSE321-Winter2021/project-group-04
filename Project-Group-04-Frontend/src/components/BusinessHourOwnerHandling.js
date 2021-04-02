@@ -63,16 +63,21 @@ export default {
         },
 
         logout: function () {
-            AXIOS.post('/logout', {}, {})
+          AXIOS.post('/logout', {}, {})
             .then(response => {
+              this.errorProfile = ""
+              this.profile = response.data
+              swal("Success", "You have been logged out successfully", "success").then(okay => {
                 this.$router.push('/')
-      
               })
-              .catch(e => {
-                var errMsg = e.response.data.message
-                window.alert(e)
-              })
-          }
+            })
+            .catch(e => {
+              var errorMsg = e
+              console.log(errorMsg)
+              this.errorProfile = errorMsg
+              swal("ERROR", e.response.data, "error")
+            })
+        }
 
         }
 
