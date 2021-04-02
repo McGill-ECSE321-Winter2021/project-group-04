@@ -107,7 +107,7 @@ public class AppointmentService {
         GarageTechnician garageTechnician = getGarageTechnicianById(garageTechnicianId);
         date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
         AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
-                "You have an appointment in 24hours");
+                "You have an appointment within 24hours");
         addAppointmentReminderToCustomer(customer, appReminder);
         Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
                 receipt);

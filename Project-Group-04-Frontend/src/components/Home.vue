@@ -32,13 +32,62 @@
         <i class="fa fa-bars"></i>
       </a>
     </div>
-    <div>
+    <!-- <div>
       <br />
       <router-link to="/book">
         <button type="bookingButton" class="btn btn-primary">
           Book a new Appointment
         </button>
       </router-link>
+    </div> -->
+    <div >
+      <hr>
+      <br /> 
+      <h2>Booking</h2>
+      <br />
+    <table class="tableau">
+        <tr class="table">
+            <th> Service </th>
+            <th>Date </th>
+            <th> Time </th>
+            <th> Spot </th>
+            <th> Technician </th>
+
+          </tr>
+          <tr>
+             <td>
+              ​<select v-model="selectedService">
+                ​<option disabled value="">Please select one</option>
+                ​<option v-for="bookableService in bookableServices" :key="bookableService.name" >
+                  ​{{ bookableService.name }}
+                ​</option>
+              ​</select>
+           ​</td>
+
+          <td> 
+           <input type="date" v-model="date" min="datePickerIdMin" required >
+              </td>
+                <td> <input type="time" v-model="time" step="300" min="08:00" max="18:00" required>
+                </td>
+                    <td>
+                    <input type="number" v-model="garageSpot" min="1" max="4" required>
+                    </td>
+                      <td> <select v-model="selectedGarageTechnician">
+                        ​<option disabled value="">Please select one</option>
+                        ​<option v-for="garageTechnician in garageTechnicians" :key="garageTechnician.name" >
+                            ​{{garageTechnician.name}}
+                         </option>
+                ​</select>
+            </td>
+          
+        </tr>
+    </table>
+      <button
+        class="btn btn-primary"
+        @click="bookAppointment(selectedService,date,time,garageSpot,selectedGarageTechnician)">
+        Book
+      </button>
+
     </div>
     <div>
       <br />
@@ -82,6 +131,34 @@
 </script>
 
 <style>
+ .tableau {
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-left: 2px;
+    padding-right: 2px;
+    align-content: center; */
+  }
+
+  .tableau table {
+    background-color: #ffffff;
+    margin: 0px;
+    align-content: center;
+  }
+
+  .tableau th {
+    color: #696969;
+    text-align: center;
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+
+.bookButton {
+       display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+}
 .logout-href {
   padding: 20px 1px;
   font-size: 25px;

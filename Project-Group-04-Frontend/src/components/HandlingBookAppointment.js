@@ -48,12 +48,6 @@ export default {
 methods: {
    
 
-<<<<<<< HEAD
-    bookAppointment: function (selectedService, date,time,garageSpot,selectedGarageTechnician) {
-      
-        
-        AXIOS.get('/garageTechnicians/'+selectedGarageTechnician )
-=======
   bookAppointment: function (selectedService, date, time, garageSpot, selectedGarageTechnician) {
     AXIOS.get('/garageTechnicians/' + selectedGarageTechnician)
       .then(response => {
@@ -65,7 +59,6 @@ methods: {
 
         AXIOS.post('/book/appointment/' + this.userID + selectedService + '?date=' + date + '&garageSpot='
           + garageSpot + '&startTime=' + time + '&Garage Technician Id=' + this.chosenTechnicianId, {}, {})
->>>>>>> 291f895eb10093f73228c0b421edfcfd41defbef
           .then(response => {
             console.log(selectedService)
             this.appointments = response.data
