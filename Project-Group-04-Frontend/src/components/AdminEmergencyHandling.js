@@ -47,7 +47,7 @@ function myFunction() {
 
 
 export default {
-  name: 'BookAppointmentHandling',
+  name: 'AdminEmergencyHandling',
   data() {
     return {
       userID: '',
