@@ -38,10 +38,10 @@ export default {
     },
     created: function () {
       // Initializing persons from backend
-      AXIOS.get('/garageTechnicians')
+        AXIOS.get('/fieldTechnician')
         .then(response => {
           // JSON responses are automatically parsed.
-          this.teams = response.data 
+          this.teams = response.data
         })
         .catch(e => {
           this.errorProfile = e
@@ -49,8 +49,8 @@ export default {
     },
 
     methods: {
-        createGarageTechnician: function (name){
-            AXIOS.post('/register/garageTechnician/' + name, {}, {})
+        createFieldTechnician: function (name){
+            AXIOS.post('/register/fieldTechnician/' + name, {}, {})
             .then(response => {
                 this.errorTeam=""
                 this.teams = response.data
@@ -62,18 +62,16 @@ export default {
                 this.errorTeam = errorMsg
                 window.alert(e);
               })
-      
         },
-
-        deleteGarageTechnician: function (name){
+        deleteFieldTechnician: function (name){
           var i
           for(i=0; i<teams.length; i++){
-            if(name == this.teams[i].name){
-              var garageTechnician = this.teams[i]
+            if(name = this.teams[i].name){
+              var fieldTechnician = this.teams[i]
             }
           }
-            const technicianId = garageTechnician.id
-            AXIOS.delete('/delete/garageTechnician/' + technicianId, {}, {})
+            const technicianId = fieldTechnician.id
+            AXIOS.delete('/delete/fieldTechnician/' + technicianId, {}, {})
             .then(response => {
                 this.teams.pop(response.data)
                 this.errorTeam=""
@@ -85,7 +83,6 @@ export default {
                 window.alert(e)
             })
         },
-
 
         logout: function () {
           AXIOS.post('/logout', {}, {})
