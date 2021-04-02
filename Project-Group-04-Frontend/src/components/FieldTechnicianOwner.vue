@@ -57,13 +57,13 @@
         <td> {{ team.name }}</td> 
          
           <td class="button">
-            ​<button v-on:click="deleteGarageTechnician(team.name)">Delete</button>
+            ​<button v-on:click="deleteFieldTechnician(team)">Delete</button>
           </td>
           </tr>
           <tr class = "addService">
             <td><input id="myInput" size="10" type="text" v-model="name" placeholder="Name"></td>
             <td class = "button">
-              ​<button v-on:click="createGarageTechnician(name), document.getElementById('myInput').value = ''" >Add</button>
+              ​<button v-on:click="createFieldTechnician(name), document.getElementById('myInput').value = ''" >Add</button>
             </td>
         </tr>
         </table>
@@ -73,7 +73,7 @@
   </div>
 </template>
 
-<script  src = './TeamOwnerHandling.js'>
+<script  src = './FieldTechnicianOwnerHandling.js'>
  
 </script>
 

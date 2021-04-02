@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -90,13 +91,16 @@ export default {
 
           this.errorProfile = ""
           this.appointments.pop(response.data)
-          // this.appointment = response.data
+          swal("Success", "Your appointment has successfuly been canceled", "success").then(okay => {
+            if (okay) {
+              this.$router.go('/Home')
+            }
+          })
 
         })
         .catch(e => {
-          var errorMsg = e
-          this.errorProfile = errorMsg
-          window.alert(e);
+          console.log(e.response)
+          swal("Error",e.response.data,"error");
         })
       // Reset the name field for new people
     },
