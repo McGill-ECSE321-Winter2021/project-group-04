@@ -83,6 +83,9 @@ export default {
        .then(response => {
         this.$router.go('/Home')
        })
+         .catch(e => {
+           this.errorBookedEmergency = e;
+         })
    },
     logout: function () {
       AXIOS.post('/logout', {}, {})

@@ -96,7 +96,12 @@ public class EmergencyServiceService {
 
     @Transactional
     public EmergencyService getEmergencyServiceByServiceName(String name) {
-        return emergencyServiceRepository.findEmergencyServiceByName(name);
+        for (EmergencyService emergencyService : emergencyServiceRepository.findAll()) {
+            if (name.contains(emergencyService.getName()) || name.equals(emergencyService.getName())) {
+                return emergencyService;
+            }
+        }
+        return null;
     }
 
     @Transactional
@@ -151,7 +156,7 @@ public class EmergencyServiceService {
     public EmergencyService endEmergencyService(EmergencyService emergencyService) {
         FieldTechnician fieldTechnician = emergencyService.getTechnician();
         fieldTechnician.setIsAvailable(true);
-        
+        emergencyService.setTechnician(null);
         return emergencyService;
     }
     
