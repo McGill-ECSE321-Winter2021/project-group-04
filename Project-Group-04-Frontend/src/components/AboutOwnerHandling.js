@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -48,13 +49,15 @@ export default {
       AXIOS.patch('/edit/businessInformation/' + businessId + '?name=' + name + '&address=' + newAddress + '&phoneNumber=' + newPhoneNumber + '&emailAddress=' + newEmailAddress, {},{})
         .then(response => {
           // Update appropriate DTO collections
+          this.errorBusiness=""
             this.business = response.data
+            swal("Success", "The business infos have been updated successfully", "success")
             location.reload()
         })
         .catch(e => {
           var errorMsg = e
           console.log(errorMsg)
-          this.errorBusiness = errorMsg
+          swal("Error",e.response.data,"error");
         })
       // Reset the name field for new people
     },

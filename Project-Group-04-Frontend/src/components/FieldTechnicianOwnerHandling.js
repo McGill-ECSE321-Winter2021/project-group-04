@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 
 var config = require('../../config')
 
@@ -54,22 +55,22 @@ export default {
             .then(response => {
                 this.errorTeam=""
                 this.teams = response.data
-
+                swal("Success", "The field technician " + name +  " has been added to the database", "success")
+                location.reload()
             })
             .catch(e => {
                 var errorMsg = e
                 console.log(errorMsg)
-                this.errorTeam = errorMsg
-                window.alert(e);
+                swal("Error",e.response.data,"error");
               })
         },
-        deleteFieldTechnician: function (name){
-          var i
-          for(i=0; i<teams.length; i++){
-            if(name = this.teams[i].name){
-              var fieldTechnician = this.teams[i]
-            }
-          }
+        deleteFieldTechnician: function (fieldTechnician){
+          // var i
+          // for(i=0; i<teams.length; i++){
+          //   if(name = this.teams[i].name){
+          //     var fieldTechnician = this.teams[i]
+          //   }
+          // }
             const technicianId = fieldTechnician.id
             AXIOS.delete('/delete/fieldTechnician/' + technicianId, {}, {})
             .then(response => {
