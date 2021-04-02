@@ -57,7 +57,7 @@ methods: {
       .catch(e => { this.errorChosenTechnicianId })
       .finally(() => {
 
-        AXIOS.post('/book/emergencyService/' + this.userID + selectedEmergencyService + '?Location=' + location + '&fieldTechnicianId='
+        AXIOS.post('/book/emergencyService/' + "mohamad1" +'?serviceName=' +selectedEmergencyService + '&Location=' + location + '&fieldTechnicianId='
           + this.chosenTechnicianId , {}, {})
           .then(response => {
             console.log(selectedEmergencyService)

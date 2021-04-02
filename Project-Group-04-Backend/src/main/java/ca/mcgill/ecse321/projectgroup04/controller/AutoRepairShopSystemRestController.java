@@ -558,10 +558,10 @@ public class AutoRepairShopSystemRestController {
 		return emergencyServiceDto;
 	}
 
-	@PostMapping(value = { "book/emergencyService/{userId}/{serviceName}",
-			"book/emergencyService/{userId}/{serviceName}/" })
+	@PostMapping(value = { "book/emergencyService/{userId}",
+			"book/emergencyService/{userId}/" })
 	public EmergencyServiceDto bookEmergencyService(@PathVariable("userId") String userId,
-			@PathVariable("serviceName") String serviceName, @RequestParam(name = "Location") String location,
+			@RequestParam(name ="serviceName") String serviceName, @RequestParam(name = "Location") String location,
 			@RequestParam(name = "fieldTechnicianId") Long fieldTechnicianId) throws IllegalArgumentException {
 
 		// TODO: Only owner and admin can create an emergencyService
@@ -909,10 +909,9 @@ public class AutoRepairShopSystemRestController {
 		return garageTechnicianDto;
 	}
 
-	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
-	@CrossOrigin(origins = "*")
+	@PostMapping(value = { "/book/appointment/{userId}", "/book/appointment/{userId}/" })
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
-			@PathVariable("serviceName") String serviceName,
+			@RequestParam(name ="serviceName") String serviceName,
 			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
 			@RequestParam(name = "garageSpot") Integer garageSpot,
 			@RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime,
