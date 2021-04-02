@@ -1,4 +1,5 @@
 import axios from 'axios'
+import swal from 'sweetalert'
 var config = require('../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
@@ -24,6 +25,7 @@ var AXIOS = axios.create({
           loginUser: function(userId, password){
               AXIOS.post('/login/'+userId+'?password='+password,{},{})
               .then(response => {
+                
                   if(userId.localeCompare("Owner") == 0){
                       this.$router.push('/homeOwner')    // need to change to owner homepage
                   }
@@ -37,8 +39,10 @@ var AXIOS = axios.create({
                   }
               })
               .catch(e => {
-                var errMsg = e.response.data.message
-                window.alert("Please register an account")
+                var errorMsg = e
+                console.log(errorMsg)
+                this.errorProfile = errorMsg
+                swal("ERROR", e.response.data, "error");
               });
           },
       }
