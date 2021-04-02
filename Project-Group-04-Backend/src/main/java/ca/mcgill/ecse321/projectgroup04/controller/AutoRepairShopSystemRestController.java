@@ -537,9 +537,14 @@ public class AutoRepairShopSystemRestController {
 
 	@GetMapping(value = { "/emergencyServices", "/emergencyServices/" })
 	public List<EmergencyServiceDto> getAllEmergencyServices() {
+		
+		
 		List<EmergencyServiceDto> emergencyServiceDtos = new ArrayList<>();
 		for (EmergencyService emergencyService : emergencyServiceService.getAllEmergencyServices()) {
-			emergencyServiceDtos.add(convertToDto(emergencyService));
+			if (!emergencyService.getName().contains("for")) {
+				emergencyServiceDtos.add(convertToDto(emergencyService));			
+			}
+			
 		}
 
 		return emergencyServiceDtos;
