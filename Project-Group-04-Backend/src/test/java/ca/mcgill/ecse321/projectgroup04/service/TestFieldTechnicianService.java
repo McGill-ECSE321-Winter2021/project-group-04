@@ -112,22 +112,6 @@ public class TestFieldTechnicianService {
 	}
 
 	@Test
-	public void TestCreatFieldTechnicianAlreadyExists() {
-		String name = "TestName";
-		String error = null;
-
-		FieldTechnician fieldTechnician = null;
-		try {
-			fieldTechnician = service.createFieldTechnician(name);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNull(fieldTechnician);
-		assertEquals(error, "Field Technician with this name already exists");
-	}
-
-	@Test
 	public void TestDeleteFieldTechnician() {
 		String name = "TestNameDelete";
 		FieldTechnician fieldTechnician = new FieldTechnician();
