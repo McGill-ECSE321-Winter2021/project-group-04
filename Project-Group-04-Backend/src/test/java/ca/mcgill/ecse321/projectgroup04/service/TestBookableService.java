@@ -8,6 +8,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,6 +56,20 @@ public class TestBookableService {
 					}
 					return null;
 				});
+		lenient().when(bookableServiceRepository.findAll()).thenAnswer((InvocationOnMock invocation) -> {
+
+			List<BookableService> bookableServices = new ArrayList<BookableService>();
+
+			BookableService bookableService = new BookableService();
+			bookableService.setName(BOOKABLESERVICE_NAME);
+			bookableService.setDuration(BOOKABLESERVICE_DURATION);
+
+			bookableService.setPrice(BOOKABLESERVICE_PRICE);
+
+			bookableServices.add(bookableService);
+
+			return bookableServices;
+		});
 
 	}
 
@@ -99,7 +116,7 @@ public class TestBookableService {
 
 	@Test
 	public void TestCreateBookableServiceNoDuration() {
-		String name = "TestNameDuration";
+		String name = "NewNameDuration";
 		int duration = 0;
 		int price = 50;
 
@@ -119,7 +136,7 @@ public class TestBookableService {
 
 	@Test
 	public void TestCreateBookableServiceNoPrice() {
-		String name = "TestNamePrice";
+		String name = "NewNamePrice";
 		int duration = 30;
 		int price = 0;
 
@@ -178,54 +195,6 @@ public class TestBookableService {
 	}
 
 	@Test
-	public void TestEditNameBookableService() {
-		String name = "TestName";
-		String newName = "newName";
-		int duration = 30;
-		int price = 50;
-
-		BookableService bookableService = new BookableService();
-		bookableService.setName(name);
-		bookableService.setDuration(duration);
-		bookableService.setPrice(price);
-		try {
-			bookableService = service.editBookableService(bookableService, newName, duration, price);
-		} catch (IllegalArgumentException e) {
-			fail();
-		}
-
-		assertNotNull(bookableService);
-		assertEquals(newName, bookableService.getName());
-		assertEquals(duration, bookableService.getDuration());
-		assertEquals(price, bookableService.getPrice());
-	}
-
-	@Test
-	public void TestEditExistingNameBookableService() {
-		String name = "TestNameOne";
-		String newName = "TestName";
-		int duration = 30;
-		int price = 50;
-		String error = null;
-
-		BookableService bookableService = new BookableService();
-		bookableService.setName(name);
-		bookableService.setDuration(duration);
-		bookableService.setPrice(price);
-		try {
-			bookableService = service.editBookableService(bookableService, newName, duration, price);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNotNull(bookableService);
-		assertEquals(name, bookableService.getName());
-		assertEquals(duration, bookableService.getDuration());
-		assertEquals(price, bookableService.getPrice());
-		assertEquals(error, "A bookable service with this name already exists");
-	}
-
-	@Test
 	public void TestEditDurationBookableService() {
 		String name = "TestNameEditDuration";
 		int newDuration = 40;
@@ -237,7 +206,7 @@ public class TestBookableService {
 		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		try {
-			bookableService = service.editBookableService(bookableService, name, newDuration, price);
+			bookableService = service.editBookableService(bookableService, newDuration, price);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -260,7 +229,7 @@ public class TestBookableService {
 		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		try {
-			bookableService = service.editBookableService(bookableService, name, duration, newPrice);
+			bookableService = service.editBookableService(bookableService, duration, newPrice);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}

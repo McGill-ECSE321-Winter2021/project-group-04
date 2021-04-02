@@ -106,7 +106,7 @@ public class TestGarageTechnicianService {
 
 	public void TestCreateGarageTechnician() {
 
-		String name = "TestNameOk";
+		String name = "NewName";
 
 		GarageTechnician garageTechnician = null;
 		try {

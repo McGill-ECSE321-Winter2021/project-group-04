@@ -891,6 +891,15 @@ public class AutoRepairShopSystemRestController {
 		}
 		return convertToDto(garageTechnician);
 	}
+	@GetMapping(value = { "/fieldTechnicians/{name}", "/fieldTechnicians/{name}/" })
+	public FieldTechnicianDto getFieldTechnicianIdByName(@PathVariable("name") String name) {
+
+		FieldTechnician fieldTechnician = fieldService.getFieldTechnicianByName(name);
+		if (fieldTechnician == null) {
+			throw new IllegalArgumentException("No such field technician exists!");
+		}
+		return convertToDto(fieldTechnician);
+	}
 
 	@PostMapping(value = { "/register/garageTechnician/{name}", "/register/garageTechnician/{name}/" })
 	public GarageTechnicianDto createGarageTechnician(@PathVariable("name") String name)

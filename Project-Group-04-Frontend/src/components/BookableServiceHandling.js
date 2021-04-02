@@ -43,7 +43,6 @@ export default {
                 this.bookableServices.push(response.data)
                 this.errorBookableService = ''
                 this.newBookableService = ''
-                this.$router.go('/Home')
                 // location.reload()
             })
             .catch(e => {
