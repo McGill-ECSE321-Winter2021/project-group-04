@@ -6,6 +6,8 @@ import ca.mcgill.ecse321.projectgroup04.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -147,5 +149,16 @@ public class EmergencyServiceService {
         FieldTechnician fieldTechnician = emergencyService.getTechnician();
         fieldTechnician.setIsAvailable(true);
         return emergencyService;
+    }
+    
+    @Transactional
+    public List<EmergencyService> getCurrentEmergencyServices(){
+    	List<EmergencyService> currentEmergencyServices = new ArrayList<>();
+    	for(EmergencyService es : emergencyServiceRepository.findAll()) {
+    		if(!es.getTechnician().getIsAvailable()) {
+    			currentEmergencyServices.add(es);
+    		}
+    	}
+    	return currentEmergencyServices;
     }
 }
