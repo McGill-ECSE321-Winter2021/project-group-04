@@ -43,15 +43,11 @@ export default {
       AXIOS.post('/create/emergencyService/' + name + '?price=' + price, {}, {})
         .then(response => {
           //   this.emergencyService = response.data.emergencyService
-          this.$router.go('/Home')
+          
           this.emergencyServices.push(response.data)
           this.errorEmergencyService = ''
           this.newEmergencyService = ''
-          swal("Success", "Emergency service was succesfully added", "success").then(okay => {
-            if (okay) {
-              this.$router.go('/Home')
-            }
-          })
+          swal("Success", "Emergency service was succesfully added", "success")
 
           //   location.reload()
         })
@@ -92,7 +88,6 @@ export default {
               this.$router.go('/Home')
             }
           })
-          location.reload()
         })
         .catch(e => {
           var errorMSg = e
