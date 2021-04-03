@@ -53,7 +53,7 @@ export default {
           AXIOS.post('/add/businessHour/' + dayOfWeek + '?startTime=' + startTime + '&endTime=' + endTime, {}, {})
                 .then(response => {
                   this.businessHour = response.data
-                  swal("Success", "The business Hours of " + dayOfWeek + " have been added", "success").then(okay => {
+                  swal("Success", "The business hours of " + dayOfWeek + " have been added", "success").then(okay => {
                     if (okay) {
                       location.reload()
                     }

@@ -63,7 +63,7 @@ public class GarageTechnicianService {
     public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
 
         List<Appointment> appointmentsList = (List<Appointment>) appointmentRepository.findAll();
-        ;
+        
 
         for (Appointment appointment : appointmentsList) {
             if (appointment.getTechnician().equals(garageTechnician)) {

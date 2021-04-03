@@ -998,14 +998,24 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/book/appointment/{userId}", "/book/appointment/{userId}/" })
-	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
+	public ResponseEntity<?> bookAppointment(@PathVariable("userId") String userId,
 			@RequestParam(name ="serviceName") String serviceName,
 			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
 			@RequestParam(name = "garageSpot") Integer garageSpot,
 			@RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime,
 			@RequestParam(name = "garageTechnicianId") Long garageTechnicianId) throws IllegalArgumentException {
-		return convertToDto(appService.bookAppointment(userId, serviceName.trim(), Date.valueOf(LocalDate.parse(date)),
-				garageSpot, Time.valueOf(LocalTime.parse(startTime)), garageTechnicianId));
+	Appointment appointment = null;
+				try{
+					appointment = appService.bookAppointment(userId, serviceName.trim(), Date.valueOf(LocalDate.parse(date)),
+					garageSpot, Time.valueOf(LocalTime.parse(startTime)), garageTechnicianId);
+	
+	}
+	catch(IllegalArgumentException e){
+		return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+
+	}
+	return new ResponseEntity<>(convertToDto(appointment),HttpStatus.CREATED);
+				
 	}
 
 	@PostMapping(value = { "/create/profile/{first}/{last}", "/create/profile/{first}/{last}/" })

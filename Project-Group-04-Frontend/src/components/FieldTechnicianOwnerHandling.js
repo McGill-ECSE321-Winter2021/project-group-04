@@ -55,7 +55,7 @@ export default {
             .then(response => {
                 this.errorTeam=""
                 this.teams = response.data
-                swal("Success", "The field technician " + name +  " has been added to the database", "success")
+                swal("Success", "The field technician " + name +  " has been added", "success")
                 location.reload()
             })
             .catch(e => {
@@ -71,7 +71,7 @@ export default {
             .then(response => {
                 this.teams.pop(response.data)
                 this.errorTeam=""
-                swal("Success", "The garage technician " + name +  " has been deleted from the database", "success")
+                swal("Success", "The garage technician " + name +  " has been deleted", "success")
                 location.reload()
             })
             .catch(e => {
