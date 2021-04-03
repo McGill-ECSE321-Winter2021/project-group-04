@@ -53,7 +53,7 @@
     <div class="secondnav">
     <hr>
      <h2> My Receipts </h2>
-  
+ <div>
       <table>
        
       <tr class="table">
@@ -73,6 +73,23 @@
      
    
       </table>
+ </div>
+      <div>
+      <table>
+       
+      <tr class="table">
+       <th > Service</th>
+        <th> Location </th>
+        <th>Total Price ($)</th>
+      </tr>
+        <tr  v-for="emergencyService in emergencyServices" :key="emergencyService.location">
+          <td>{{ cutName(emergencyService.name) }}</td> 
+          <td>{{ emergencyService.location}}</td> 
+          <td> {{emergencyService.receipt.totalPrice}}</td>
+        </tr>
+     
+      </table>
+      </div>
     ​<span v-if="errorReceipt" style="color:red">Error: {{errorRecepit}} </span>
     <hr>
     </div>
@@ -80,7 +97,9 @@
 </template>
  
 <script src = './ReceiptHandling.js'>
-  
+//   function cutName(str) {
+//   str = str.split('for')[0];
+// }
 </script>
 
 <style>

@@ -1306,4 +1306,15 @@ public class AutoRepairShopSystemRestController {
 		return appointmentsDto;
 	}
 
+	@GetMapping(value= { "/booked/emergencies/{userId}", "/booked/emergencies/{userId}/"})
+		public List<EmergencyServiceDto> getReceiptsOfEmergencies(@PathVariable("userId") String userId){
+			List<EmergencyServiceDto> emergencyServiceDto = new ArrayList<EmergencyServiceDto>();
+			for (EmergencyService emergencies : customerService.getEmergencyServiceOfCustomer(userId) ) {
+				emergencyServiceDto.add(convertToDto(emergencies));
+			}
+			return emergencyServiceDto;
+		}
+
+	
+
 }
