@@ -81,10 +81,15 @@ export default {
    endEmergency:function(serviceId){
        AXIOS.post('/end/emergencyService/' + serviceId)
        .then(response => {
-        this.$router.go('/Home')
+         swal("Success", "Emergency service was succesfully ended", "success").then(okay => {
+           if (okay) {
+             this.$router.go('/Home')
+           }
+         })
        })
          .catch(e => {
            this.errorBookedEmergency = e;
+           swal("ERROR", e.response.data, "error")
          })
    },
    logout: function () {

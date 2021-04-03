@@ -641,9 +641,15 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/end/emergencyService/{serviceId}", "/end/emergencyService/{serviceId}/" })
-	public void endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
-		EmergencyService emergencyServiceBooking = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
-		emergencyServiceService.endEmergencyService(emergencyServiceBooking);
+	public ResponseEntity<?> endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
+		EmergencyService emergencyServiceBooking = null;
+		try {
+			emergencyServiceBooking = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
+			emergencyServiceService.endEmergencyService(emergencyServiceBooking);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	} // only admin/owner can end an emergency service
 
 	//////////////////////////////// FIELD TECHNICIAN
@@ -710,23 +716,33 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/register/business/{name}", "/register/business/{name}/" }) // VERIFY PATH
-	public BusinessDto registerBusiness(@PathVariable("name") String name, @RequestParam String address,
+	public ResponseEntity<?> registerBusiness(@PathVariable("name") String name, @RequestParam String address,
 			@RequestParam String phoneNumber, @RequestParam String emailAddress) throws IllegalArgumentException {
-		List<BusinessHour> businessHour = businessHourService.getAllBusinessHours();
-		List<TimeSlot> timeSlots = timeService.getAllTimeSlots();
-		Business business = businessService.createBusiness(name, address, phoneNumber, emailAddress, businessHour,
-				timeSlots);
-		BusinessDto businessDto = convertToDto(business);
-		return businessDto;
+		List<BusinessHour> businessHour=null;
+		List<TimeSlot> timeSlots=null;
+		Business business =null;
+		try {
+			businessHour = businessHourService.getAllBusinessHours();
+			timeSlots = timeService.getAllTimeSlots();
+			business = businessService.createBusiness(name, address, phoneNumber, emailAddress, businessHour,
+					timeSlots);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(business),HttpStatus.CREATED);
 	}
 
 	@PatchMapping(value = { "/edit/businessInformation/{Id}", "/edit/businessInformation/{Id}/" })
-	public BusinessDto updateBusinessInfo(@PathVariable("Id") Long Id, @RequestParam String name,
+	public ResponseEntity<?> updateBusinessInfo(@PathVariable("Id") Long Id, @RequestParam String name,
 			@RequestParam String address, @RequestParam String phoneNumber, @RequestParam String emailAddress) {
-		Business business = businessService.updateBusinessInformation(Id, name, address, phoneNumber, emailAddress,
-				null, null);
-		BusinessDto businessDto = convertToDto(business);
-		return businessDto;
+		Business business = null;
+		try {
+			business = businessService.updateBusinessInformation(Id, name, address, phoneNumber, emailAddress,
+					null, null);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(business),HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = { "/delete/business/{Id}", "/delete/business/{Id}/" })
@@ -791,23 +807,33 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/add/businessHour/{dayOfWeek}", "/add/businessHour/{dayOfWeek}/" }) // VERIFY PATH
-	public BusinessHourDto createBusinessHour(@PathVariable("dayOfWeek") String dayOfWeek,
+	public ResponseEntity<?> createBusinessHour(@PathVariable("dayOfWeek") String dayOfWeek,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String startTime,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String endTime)
 			throws IllegalArgumentException {
-		BusinessHour businessHour = businessHourService.createBusinessHour(dayOfWeek,
-				Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)));
-		BusinessHourDto businessHourDto = convertToDto(businessHour);
-		return businessHourDto;
+		BusinessHour businessHour = null;
+		try {
+			 businessHour = businessHourService.createBusinessHour(dayOfWeek,
+						Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)));
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDto(businessHour),HttpStatus.CREATED);
 	}
 
 	@PatchMapping(value = { "/edit/businessHour/{Id}", "/edit/businessHour/{Id}/" })
-	public BusinessHourDto editBusinessHour(@PathVariable("Id") Long Id, @RequestParam String dayOfWeek,
+	public ResponseEntity<?> editBusinessHour(@PathVariable("Id") Long Id, @RequestParam String dayOfWeek,
 			@RequestParam String startTime, @RequestParam String endTime) {
-		BusinessHour businessHour = businessHourService.updateBusinessHour(Id, dayOfWeek,
-				Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)));
-		BusinessHourDto businessHourDto = convertToDto(businessHour);
-		return businessHourDto;
+		BusinessHour businessHour = null;
+		try {
+			 businessHour = businessHourService.updateBusinessHour(Id, dayOfWeek,
+					Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)));
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDto(businessHour),HttpStatus.CREATED);
 
 	}
 
