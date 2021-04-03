@@ -36,11 +36,18 @@ export default {
             +lastName+'&address='+address+'&phoneNumber='+phoneNumber+'&zipCode='+zipCode+'&emailAddress='
             +emailAddress +'&modelNumber='+ modelNumber+'&year='+year+'&color='+color)
                 .then(response => {
-                    this.$router.go('/Home')
+                    this.errorProfile = ""
+                    this.profile = response.data
+                    swal("Success", "Registration Successful", "success").then(okay =>{
+                        this.$router.push('/home')
+                    })
+                    
                 })
                 .catch(e => {
                     var errorMsg = e
-                    window.alert(errorMsg)
+                    console.log(errorMsg)
+                    this.errorProfile = errorMsg
+                    swal("Error", e.response.data, "error")
                 });
         }
     }
