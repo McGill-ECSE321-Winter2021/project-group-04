@@ -18,14 +18,15 @@ import UserSelectPage from '@/components/UserSelectPage'
 import EmployeeRegistrationPage from '@/components/EmployeeRegistrationPage'
 import CustomerRegistrationPage from '@/components/CustomerRegistrationPage'
 import WelcomePage from '@/components/WelcomePage'
-import BookAppointment from '@/components/BookAppointment'
+import BookEmergency from '@/components/BookEmergency'
 import FieldTechnicianOwner from '@/components/FieldTechnicianOwner'
 import TeamOwner from '@/components/TeamOwner'
 import HomeOwner from '@/components/HomeOwner'
 import BusinessHoursOwner from '@/components/BusinessHoursOwner'
 import AboutOwner from '@/components/AboutOwner'
-
+import HomeAdmin from '@/components/HomeAdmin'
 import Reminders from '@/components/Reminders'
+import AdminEmergency from'@/components/AdminEmergency'
 
 
  
@@ -127,9 +128,9 @@ export default new Router({
       component: Receipts
     },
     {
-      path: '/book',
-      name: 'BookAppointment',
-      component: BookAppointment
+      path: '/book/emergency',
+      name: 'BookEmergency',
+      component: BookEmergency
     },
     {
 
@@ -162,6 +163,16 @@ export default new Router({
       path: '/reminders',
       name: 'Reminders',
       component: Reminders
-    } 
+    },
+    {
+      path: '/homeAdmin',
+      name: 'HomeAdmin',
+      component: HomeAdmin
+    },
+    {
+      path: '/admin/emergencyServices',
+      name: 'AdminEmergency',
+      component: AdminEmergency
+    }    
   ]
 })

@@ -49,30 +49,58 @@ export default {
                     var businessHour = this.businessHours[i]
                 }
             }
-            const businessHourId = businessHour.id
-            AXIOS.patch('/edit/businessHour/' + businessHourId + '?dayOfWeek=' + dayOfWeek + '&startTime=' + startTime + '&endTime=' + endTime, {}, {})
-            .then(response=> {
-                this.businessHour = response.data
-                swal("Success", "The business Hours of " + dayOfWeek + " has been changed", "success")
-            })
-            .catch(e =>{
-                var errorMSg = e
-                console.log(errorMSg)
-                swal("Error",e.response.data,"error");
-            })
+        if (businessHour === undefined) {
+          AXIOS.post('/add/businessHour/' + dayOfWeek + '?startTime=' + startTime + '&endTime=' + endTime, {}, {})
+                .then(response => {
+                  this.businessHour = response.data
+                  swal("Success", "The business Hours of " + dayOfWeek + " have been added", "success").then(okay => {
+                    if (okay) {
+                      location.reload()
+                    }
+                  })
+                })
+                .catch(e => {
+                  var errorMSg = e
+                  console.log(errorMSg)
+                  swal("Error", e.response.data, "error");
+                })
+            }
+            else {
+              const businessHourId = businessHour.id
+              AXIOS.patch('/edit/businessHour/' + businessHourId + '?dayOfWeek=' + dayOfWeek + '&startTime=' + startTime + '&endTime=' + endTime, {}, {})
+                .then(response => {
+                  this.businessHour = response.data
+                  swal("Success", "The business Hours of " + dayOfWeek + " have been changed", "success").then(okay => {
+                    if (okay) {
+                      location.reload()
+                    }
+                  })
+                })
+                .catch(e => {
+                  var errorMSg = e
+                  console.log(errorMSg)
+                  swal("Error", e.response.data, "error");
+                })
+            }
+            
         },
 
         logout: function () {
-            AXIOS.post('/logout', {}, {})
+          AXIOS.post('/logout', {}, {})
             .then(response => {
+              this.errorProfile = ""
+              this.profile = response.data
+              swal("Success", "You have been logged out successfully", "success").then(okay => {
                 this.$router.push('/')
-      
               })
-              .catch(e => {
-                var errMsg = e.response.data.message
-                window.alert(e)
-              })
-          }
+            })
+            .catch(e => {
+              var errorMsg = e
+              console.log(errorMsg)
+              this.errorProfile = errorMsg
+              swal("ERROR", e.response.data, "error")
+            })
+        }
 
         }
 

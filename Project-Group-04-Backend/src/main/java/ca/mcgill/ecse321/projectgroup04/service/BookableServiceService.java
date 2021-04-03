@@ -74,7 +74,7 @@ public class BookableServiceService {
     public BookableService getBookableServiceByServiceName(String name) {
 
         for (BookableService bookableService : bookableServiceRepository.findAll()) {
-            if (name.contains(bookableService.getName())) {
+            if (name.contains(bookableService.getName()) || name.equals(bookableService.getName())) {
                 return bookableService;
             }
         }

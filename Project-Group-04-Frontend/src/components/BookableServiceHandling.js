@@ -43,14 +43,18 @@ export default {
                 this.bookableServices.push(response.data)
                 this.errorBookableService = ''
                 this.newBookableService = ''
-                this.$router.go('/Home')
                 // location.reload()
+                swal("Success", "Bookable service was succesfully added", "success").then(okay => {
+                    if (okay) {
+                      this.$router.go('/Home')
+                    }
+                })
             })
             .catch(e => {
                 var errorMSg = e
                 console.log(errorMSg)
                 this.errorBookableService = errorMSg
-                window.alert(errorMSg)
+                swal("ERROR", e.response.data, "error")
             })
           },
   
@@ -59,12 +63,17 @@ export default {
               AXIOS.delete('/delete/bookableService/' + id , {}, {})
               .then(response => {
                   this.bookableServices.pop(response.data)
+                  swal("Success", "Bookable service was succesfully deleted", "success").then(okay => {
+                    if (okay) {
+                      this.$router.go('/Home')
+                    }
+                })
               })
               .catch(e => {
                   var errorMSg = e
                   console.log(errorMSg)
                   this.errorBookableService = errorMSg
-                  window.alert(e)
+                  swal("ERROR", e.response.data, "error")
               })
           },
   
@@ -73,25 +82,35 @@ export default {
               AXIOS.patch('/edit/bookableService/' + id + '?name=' + newName + '&duration=' + newDuration +'&price=' + newPrice, {}, {})
               .then(response => {
                   this.bookableService = response.data
+                  swal("Success", "Bookable service was succesfully updated", "success").then(okay => {
+                    if (okay) {
+                      this.$router.go('/Home')
+                    }
+                })
                   location.reload()
               })
               .catch(e => {
                   var errorMSg = e
                   console.log(errorMSg)
                   this.errorbookableService = errorMSg
-                  window.alert(errorMSg)
+                  swal("ERROR", e.response.data, "error")
               })
           },
 
           logout: function () {
             AXIOS.post('/logout', {}, {})
-            .then(response => {
-                this.$router.push('/')
-      
+              .then(response => {
+                this.errorProfile = ""
+                this.profile = response.data
+                swal("Success", "You have been logged out successfully", "success").then(okay => {
+                  this.$router.push('/')
+                })
               })
               .catch(e => {
-                var errMsg = e.response.data.message
-                window.alert(e)
+                var errorMsg = e
+                console.log(errorMsg)
+                this.errorProfile = errorMsg
+                swal("ERROR", e.response.data, "error")
               })
           }
   

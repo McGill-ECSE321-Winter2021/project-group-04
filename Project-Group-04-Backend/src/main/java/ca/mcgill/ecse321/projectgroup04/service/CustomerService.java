@@ -29,6 +29,8 @@ public class CustomerService {
         for (Appointment a : appointmentRepository.findByCustomer(customer)) {
             customerReceipts.add(a.getReceipt());
         }
+        //TODO:
+       
 
         return customerReceipts;
     }

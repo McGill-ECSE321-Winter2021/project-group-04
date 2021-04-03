@@ -6,7 +6,6 @@ import ca.mcgill.ecse321.projectgroup04.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -35,8 +34,6 @@ public class AppointmentService {
     private BusinessHourRepository businessHourRepository;
     @Autowired
     private GarageTechnicianRepository garageTechnicianRepository;
-    
-   
 
     @Transactional
     public Appointment createAppointment(Customer aCustomer, BookableService aBookableService,
@@ -93,10 +90,10 @@ public class AppointmentService {
         if (date.before(Date.valueOf(LocalDate.now()))) {
             throw new IllegalArgumentException("Please book an appointment in the future");
         }
-        if(!fallsWithinBusinessHours(date,startTime,endTime)) {
+        if (!fallsWithinBusinessHours(date, startTime, endTime)) {
             throw new IllegalArgumentException("This time doesn't fall within business hours!");
         }
-        
+
         for (Appointment appointment : getAppointmentsByDate(date)) {
             if (isOverlap(appointment.getTimeSlot(), startTime, endTime, garageSpot)) {
                 throw new IllegalArgumentException("This attempted booking overlaps with another!");
@@ -107,28 +104,28 @@ public class AppointmentService {
         GarageTechnician garageTechnician = getGarageTechnicianById(garageTechnicianId);
         date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
         AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
-                "You have an appointment in 24hours");
+                "You have an appointment within 24hours");
         addAppointmentReminderToCustomer(customer, appReminder);
         Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
                 receipt);
         return appointment;
 
     }
-    
+
     public Boolean fallsWithinBusinessHours(Date date, Time startTime, Time endTime) {
-    	DayOfWeek dayOfWeekOfAppointment = LocalDate.parse(date.toString()).getDayOfWeek();
-    	Boolean fallsWithinBusinessHours=false;
-    	for(BusinessHour businessHour : getAllBusinessHours()) {
-    		if(businessHour.getDayOfWeek().name().equalsIgnoreCase(dayOfWeekOfAppointment.name())) {
-    			if (businessHour.getStartTime().before(startTime) && businessHour.getEndTime().after(endTime)) {
-    				fallsWithinBusinessHours=true;
-    			}
-    		}
-    	}
-    	
-    	return fallsWithinBusinessHours;
+        DayOfWeek dayOfWeekOfAppointment = LocalDate.parse(date.toString()).getDayOfWeek();
+        Boolean fallsWithinBusinessHours = false;
+        for (BusinessHour businessHour : getAllBusinessHours()) {
+            if (businessHour.getDayOfWeek().name().equalsIgnoreCase(dayOfWeekOfAppointment.name())) {
+                if (businessHour.getStartTime().before(startTime) && businessHour.getEndTime().after(endTime)) {
+                    fallsWithinBusinessHours = true;
+                }
+            }
+        }
+
+        return fallsWithinBusinessHours;
     }
-    
+
     @Transactional
     public AppointmentReminder createAppointmentReminder(Date date, Time time, String message) {
         if (message == "") {
@@ -153,7 +150,7 @@ public class AppointmentService {
         return appointmentReminder;
 
     }
-    
+
     @Transactional
     public void addAppointmentReminderToCustomer(Customer customer, AppointmentReminder appointmentReminder) {
         if (customer == null) {
@@ -171,7 +168,7 @@ public class AppointmentService {
         newReminders.add(appointmentReminder);
         customer.setReminders(newReminders);
     }
-    
+
     @Transactional
     public GarageTechnician getGarageTechnicianById(Long technicianId) {
         GarageTechnician garageTechnician = garageTechnicianRepository.findGarageTechnicianByTechnicianId(technicianId);
@@ -181,7 +178,6 @@ public class AppointmentService {
         return garageTechnician;
     }
 
-    
     @Transactional
     public Receipt createReceipt(double aTotalPrice) {
         if (aTotalPrice == 0) {
@@ -195,7 +191,7 @@ public class AppointmentService {
         receiptRepository.save(receipt);
         return receipt;
     }
-    
+
     @Transactional
     public TimeSlot createTimeSlot(Time startTime, Time endTime, Date startDate, Date endDate, Integer garageSpot) {
 
@@ -224,12 +220,12 @@ public class AppointmentService {
         timeSlotRepository.save(timeSlot);
         return timeSlot;
     }
-    
+
     @Transactional
     public List<BusinessHour> getAllBusinessHours() {
         return (List<BusinessHour>) businessHourRepository.findAll();
     }
-    
+
     @Transactional
     public Customer getCustomerByUserId(String userId) {
         Customer customer = customerRepository.findCustomerByUserId(userId);
@@ -238,6 +234,7 @@ public class AppointmentService {
         }
         return customer;
     }
+
     @Transactional
     public BookableService getBookableServiceByServiceName(String name) {
 
@@ -369,25 +366,28 @@ public class AppointmentService {
 
     public List<Appointment> getNextAppointments(String userId) {
         Date today = Date.valueOf(LocalDate.now());
+        Time now =Time.valueOf(LocalTime.now());
         List<Appointment> nextAppointments = new ArrayList<Appointment>();
         for (Appointment appointment : getAppointmentsByCustomer(userId)) {
             if (appointment.getTimeSlot().getStartDate().after(today)
-                    || appointment.getTimeSlot().getStartDate().compareTo(today) == 0) {
+                    || 
+                    (appointment.getTimeSlot().getStartDate().compareTo(today) == 0 &&
+                    appointment.getTimeSlot().getEndTime().after(now))) {
                 nextAppointments.add(appointment);
             }
         }
         return nextAppointments;
     }
-    
-    public List<Appointment> get24hoursAppointment(String userId){
+
+    public List<Appointment> get24hoursAppointment(String userId) {
         Date today = Date.valueOf(LocalDate.now());
         List<Appointment> hoursAppointments = new ArrayList<Appointment>();
-        for(Appointment appointment : getAppointmentsByCustomer(userId)) {
-        	Date reminderDate = appointment.getReminder().getDate();
-        	Date appointmentDate = appointment.getTimeSlot().getStartDate();
-        	if(reminderDate.getTime()<= today.getTime() && today.getTime()<=appointmentDate.getTime()) {
-        		hoursAppointments.add(appointment);
-        	}
+        for (Appointment appointment : getAppointmentsByCustomer(userId)) {
+            Date reminderDate = appointment.getReminder().getDate();
+            Date appointmentDate = appointment.getTimeSlot().getStartDate();
+            if (reminderDate.getTime() <= today.getTime() && today.getTime() <= appointmentDate.getTime()) {
+                hoursAppointments.add(appointment);
+            }
         }
         return hoursAppointments;
     }

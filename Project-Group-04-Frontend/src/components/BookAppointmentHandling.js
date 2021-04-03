@@ -55,6 +55,12 @@ export default {
       appointments: [],
       errorBookAppointment: '',
       // bookableServices: [],
+      bookableServices: [],
+      garageTechnicians:[],
+      chosenTechnicianId:'',
+      chosenGarageTech:'',
+      errorGarageTechnician:'',
+      errorChosenTechnicianId:'',
 
       response: [],
       datePickerIdMin: new Date().toISOString().split("T")[0]
@@ -62,10 +68,16 @@ export default {
   },
 
   created: function () {
-
+    AXIOS.get('/bookableServices')
+    .then(response => {this.bookableServices = response.data})
+    .catch(e => {this.errorBookAppointment=e})
+    AXIOS.get('/garageTechnicians')
+    .then(response => {this.garageTechnicians = response.data})
+      .catch(e => { this.errorBookAppointment=e })
     AXIOS.get('/login/currentCustomer')
       .then(response => {
         this.userID = response.data.userID;
+        console.log(this.userID);
       })
       .catch(e => { this.errorUser = e })
       .finally(() => {
@@ -80,6 +92,37 @@ export default {
 
   },
   methods: {
+    bookAppointment: function (selectedService, date, time, garageSpot, selectedGarageTechnician) {
+      AXIOS.get('/garageTechnicians/' + selectedGarageTechnician)
+        .then(response => {
+          this.chosenGarageTech = response.data
+          this.chosenTechnicianId = response.data.technicianId
+        })
+        .catch(e => { this.errorChosenTechnicianId })
+        .finally(() => {
+          console.log(this.userID)
+          AXIOS.post('/book/appointment/' +this.userID+ "?serviceName="+ selectedService + '&date=' + date + '&garageSpot='
+            + garageSpot + '&startTime=' + time + '&garageTechnicianId=' + this.chosenTechnicianId, {}, {})
+            .then(response => {
+              console.log(selectedService)
+              this.appointments = response.data
+              swal("Success", "Your appointment has successfuly been booked", "success").then(okay => {
+                if (okay) {
+                  this.$router.go('/Home')
+                }
+              })
+  
+            })
+            .catch(e => {
+              var errMsg = e
+              swal("ERROR", e.response.data, "error");
+            });
+  
+        })
+    },
+
+
+
     cancelAppointment: function (appointmentId) {
       // Create a new person and add it to the list of people
 
@@ -91,11 +134,7 @@ export default {
 
           this.errorProfile = ""
           this.appointments.pop(response.data)
-          swal("Success", "Your appointment has successfuly been canceled", "success").then(okay => {
-            if (okay) {
-              this.$router.go('/Home')
-            }
-          })
+          swal("Success", "Your appointment has successfuly been canceled", "success")
 
         })
         .catch(e => {
@@ -107,13 +146,18 @@ export default {
 
     logout: function () {
       AXIOS.post('/logout', {}, {})
-      .then(response => {
-          this.$router.push('/')
-
+        .then(response => {
+          this.errorProfile = ""
+          this.profile = response.data
+          swal("Success", "You have been logged out successfully", "success").then(okay => {
+            this.$router.push('/')
+          })
         })
         .catch(e => {
-          var errMsg = e.response.data.message
-          window.alert(e)
+          var errorMsg = e
+          console.log(errorMsg)
+          this.errorProfile = errorMsg
+          swal("ERROR", e.response.data, "error")
         })
     }
 

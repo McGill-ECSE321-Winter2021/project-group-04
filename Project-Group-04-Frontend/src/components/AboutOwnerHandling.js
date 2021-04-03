@@ -44,33 +44,66 @@ export default {
   methods: {
     editBusiness: function (newAddress, newPhoneNumber, newEmailAddress) {
       var business = this.businesses[0]
-    const businessId = business.id
-    const name = business.name
-      AXIOS.patch('/edit/businessInformation/' + businessId + '?name=' + name + '&address=' + newAddress + '&phoneNumber=' + newPhoneNumber + '&emailAddress=' + newEmailAddress, {},{})
-        .then(response => {
-          // Update appropriate DTO collections
-          this.errorBusiness=""
+      console.log(business);
+      if (business === undefined) {
+        console.log("Creating new business");
+        AXIOS.post('/register/business/' + "Auto Repair Shop" + '?address=' + newAddress + '&phoneNumber=' + newPhoneNumber + '&emailAddress=' + newEmailAddress, {}, {})
+          .then(response => {
+            // Update appropriate DTO collections
+            this.errorBusiness = ""
             this.business = response.data
-            swal("Success", "The business infos have been updated successfully", "success")
-            location.reload()
-        })
-        .catch(e => {
-          var errorMsg = e
-          console.log(errorMsg)
-          swal("Error",e.response.data,"error");
-        })
+            swal("Success", "The new business infos have been saved successfully", "success").then(okay => {
+              if (okay) {
+                location.reload()
+              }
+            })
+            
+          })
+          .catch(e => {
+            var errorMsg = e
+            console.log(errorMsg)
+            swal("Error", e.response.data, "error");
+          })
+      }
+      else {
+        console.log("Editing business");
+        const businessId = business.id
+        const name = business.name
+        AXIOS.patch('/edit/businessInformation/' + businessId + '?name=' + name + '&address=' + newAddress + '&phoneNumber=' + newPhoneNumber + '&emailAddress=' + newEmailAddress, {}, {})
+          .then(response => {
+            // Update appropriate DTO collections
+            this.errorBusiness = ""
+            this.business = response.data
+            swal("Success", "The business infos have been updated successfully", "success").then(okay => {
+              if (okay) {
+                location.reload()
+              }
+            })
+          })
+          .catch(e => {
+            var errorMsg = e
+            console.log(errorMsg)
+            swal("Error", e.response.data, "error");
+          })
+      }
+      
       // Reset the name field for new people
     },
 
     logout: function () {
       AXIOS.post('/logout', {}, {})
-      .then(response => {
-          this.$router.push('/')
-
+        .then(response => {
+          this.errorProfile = ""
+          this.profile = response.data
+          swal("Success", "You have been logged out successfully", "success").then(okay => {
+            this.$router.push('/')
+          })
         })
         .catch(e => {
-          var errMsg = e.response.data.message
-          window.alert(e)
+          var errorMsg = e
+          console.log(errorMsg)
+          this.errorProfile = errorMsg
+          swal("ERROR", e.response.data, "error")
         })
     }
 

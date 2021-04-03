@@ -38,6 +38,16 @@ project-group-04 created by GitHub Classroom
 | Yasmina Matta   | AdministrativeAssistant, BookabaleService, GarageTechnician, AppointmentRemidner | 70 |
 | Abrar Fahad     | Owner, EmergencyService, FieldTechnician                              | 70 |
 
+### Sprint 3
+| Name            | Tasks                                                                 | Time in hours |
+| --------------- |:--------------------------------------------------------------------------------:|---:|  
+| Mohamad Dimassi | Appointment and Emergency Service booking, Profile, Car, Receipts, Reminder, Home pages | 70 |
+| Artus Julliard  | Business, Business Hour, Technicians                                             | 70 |
+| Cesar Lahoud    | Emergency Service and Bookable Service creation, Our services customer page      | 70 |
+| Yasmina Matta   | Appointment and Emergency Service booking, profile, car, receipts, Home Pages    | 70 |
+| Abrar Fahad     | Welcome page, Login, Logout, Registration, Profile and Car creation              | 70 |
+
+
 Click [for meeting minutes!]
 
 [for meeting minutes!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference

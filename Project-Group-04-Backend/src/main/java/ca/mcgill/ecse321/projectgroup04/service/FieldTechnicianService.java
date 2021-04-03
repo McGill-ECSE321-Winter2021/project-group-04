@@ -47,7 +47,15 @@ public class FieldTechnicianService {
 
     @Transactional
     public FieldTechnician getFieldTechnicianByName(String name) {
-        return fieldTechnicianRepository.findFieldTechnicianByName(name);
+        FieldTechnician fieldTech = null;
+        for (FieldTechnician fieldTechnician : fieldTechnicianRepository.findAll()) {
+            if (name.contains(fieldTechnician.getName())) {
+                fieldTech = fieldTechnician;
+                break;
+            }
+        }
+
+        return fieldTech;
     }
 
     @Transactional

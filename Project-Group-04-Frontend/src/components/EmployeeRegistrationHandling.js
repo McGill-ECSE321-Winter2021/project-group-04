@@ -27,28 +27,45 @@ var AXIOS = axios.create({
                 
                 AXIOS.post('/register/owner/'+userId+'?password='+password,{},{})
                 .then(response => {
-                    window.alert(userId)
-                    this.$router.push('Home') // needs to be changed
+                    this.errorProfile = ""
+                    this.profile = response.data
+                    swal("Success", "Registration Successful", "success").then(okay =>{
+                        if(okay){
+                            this.$router.push('/homeOwner')
+                        }
+                    })
                 })          
                 .catch(e => {
-                    var errMsg = e.response.data.message
-                    window.alert(errMsg)
+                
+                    var errMsg = e
+                    console.log(errMsg)
+                    this.errorProfile = errMsg
+                    swal("ERROR", e.response.data, "error")
                 });    
               }
 
               else if (userId.localeCompare("admin") == 0){
                 AXIOS.post('/register/administrativeAssistant/'+userId+'?password='+password,{},{})
                 .then(response => {
-                    this.$router.push('Home')  // needs to be changed
+                    this.errorProfile = ""
+                    this.profile = response.data
+                    swal("Success", "Registration Successful", "success").then(okay =>{
+                        if(okay){
+                            this.$router.push('/homeAdmin')
+                        }
+                    })
+                    
                 })
                 .catch(e => {
-                    var errMsg = e.response.data.message
-                    window.alert(errMsg)
+                    var errMsg = e
+                    console.log(errMsg)
+                    this.errorProfile = errMsg
+                    swal("ERROR", e.response.data, "error")
                 });
               }
 
               else {
-                  window.alert("You are not an employee!")
+                  swal("ERROR", "You are not an employee!", "error")
               }
               
           }

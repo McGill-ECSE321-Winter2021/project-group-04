@@ -281,49 +281,6 @@ public class TestEmergencyServiceService {
 
 	}
 
-	@Test
-	public void TestEditNameEmergencyService() {
-		String name = "EmergencyService1";
-		String newName = "EmergencyNewName";
-
-		int price = 50;
-
-		EmergencyService emergencyService = new EmergencyService();
-		emergencyService.setName(name);
-		emergencyService.setPrice(price);
-		try {
-			emergencyService = service.editEmergencyService(emergencyService, price);
-		} catch (IllegalArgumentException e) {
-			fail();
-		}
-
-		assertNotNull(emergencyService);
-		assertEquals(newName, emergencyService.getName());
-		assertEquals(price, emergencyService.getPrice());
-	}
-
-	@Test
-	public void TestEditExistingNameEmergencyService() {
-		String name = "EmergencyTestNameOne";
-		String newName = "EmergencyService1";
-
-		int price = 50;
-		String error = null;
-
-		EmergencyService emergencyService = new EmergencyService();
-		emergencyService.setName(name);
-		emergencyService.setPrice(price);
-		try {
-			emergencyService = service.editEmergencyService(emergencyService, price);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertNotNull(emergencyService);
-		assertEquals(name, emergencyService.getName());
-		assertEquals(price, emergencyService.getPrice());
-		assertEquals(error, "An emergency service with this name already exists");
-	}
 
 	@Test
 	public void TestEditPriceEmergencyService() {

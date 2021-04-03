@@ -374,25 +374,46 @@ public class AutoRepairShopSystemRestController {
 	/////////////////////////////////// LOGOUT///////////////////////////////////////
 
 	@PostMapping(value = { "/login/{userId}", "/login/{userId}/" })
-	public void userLogin(@PathVariable(value = "userId") String userId, @RequestParam(value = "password") String password)
-			throws IllegalArgumentException {
+	public ResponseEntity<?> userLogin(@PathVariable(value = "userId") String userId,
+			@RequestParam(value = "password") String password) throws IllegalArgumentException {
 		// System.out.println(userId);
 		if (userId.equalsIgnoreCase("owner")) {
-			logService.loginAsOwner(userId, password);
+			try {
+				logService.loginAsOwner(userId, password);
+			} catch (IllegalArgumentException e) {
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
 
 		else if (userId.equalsIgnoreCase("admin")) {
-			logService.loginAsAdmin(userId, password);
+			try {
+				logService.loginAsAdmin(userId, password);
+			} catch (IllegalArgumentException e) {
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
 
 		else {
-			logService.loginAsCustomer(userId, password);
+			try {
+				logService.loginAsCustomer(userId, password);
+			} catch (IllegalArgumentException e) {
+				System.out.println(e);
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping(value = { "/logout", "/logout/" })
-	public void logout() {
+	public ResponseEntity<?> logout() {
+		try {
 		logService.logout();
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping(value = { "/login/currentCustomer", "/login/currentCustomer/" })
@@ -512,11 +533,15 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "register/owner/{userId}", "register/owner/{userId}/" })
-	public OwnerDto createOwner(@PathVariable("userId") String userId, @RequestParam String password)
-			throws IllegalArgumentException {
-		Owner owner = ownerService.createOwner(userId, password);
-		OwnerDto ownerDto = convertToDto(owner);
-		return ownerDto;
+	public ResponseEntity<?> createOwner(@PathVariable("userId") String userId, @RequestParam String password)
+			{
+		Owner owner = null;
+		try {
+			owner = ownerService.createOwner(userId, password);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(owner), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = { "/delete/owner/{Id}", "/delete/owner/{Id}/" })
@@ -537,9 +562,14 @@ public class AutoRepairShopSystemRestController {
 
 	@GetMapping(value = { "/emergencyServices", "/emergencyServices/" })
 	public List<EmergencyServiceDto> getAllEmergencyServices() {
+		
+		
 		List<EmergencyServiceDto> emergencyServiceDtos = new ArrayList<>();
 		for (EmergencyService emergencyService : emergencyServiceService.getAllEmergencyServices()) {
-			emergencyServiceDtos.add(convertToDto(emergencyService));
+			if (!emergencyService.getName().contains("for")) {
+				emergencyServiceDtos.add(convertToDto(emergencyService));			
+			}
+			
 		}
 
 		return emergencyServiceDtos;
@@ -551,57 +581,86 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/create/emergencyService/{serviceName}", "/create/emergencyService/{serviceName}/" })
-	public EmergencyServiceDto createEmergencyService(@PathVariable("serviceName") String serviceName,
+	public ResponseEntity<?> createEmergencyService(@PathVariable("serviceName") String serviceName,
 			@RequestParam int price) {
-		EmergencyService emergencyService = emergencyServiceService.createEmergencyService(serviceName, price);
-		EmergencyServiceDto emergencyServiceDto = convertToDto(emergencyService);
-		return emergencyServiceDto;
+		EmergencyService emergencyService = null;
+		try {
+			emergencyService = emergencyServiceService.createEmergencyService(serviceName, price);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(emergencyService), HttpStatus.CREATED);
+
 	}
 
-	@PostMapping(value = { "book/emergencyService/{userId}/{serviceName}",
-			"book/emergencyService/{userId}/{serviceName}/" })
-	public EmergencyServiceDto bookEmergencyService(@PathVariable("userId") String userId,
-			@PathVariable("serviceName") String serviceName, @RequestParam(name = "Location") String location,
+	@PostMapping(value = { "book/emergencyService/{userId}",
+			"book/emergencyService/{userId}/" })
+	public ResponseEntity<?> bookEmergencyService(@PathVariable("userId") String userId,
+			@RequestParam(name ="serviceName") String serviceName, @RequestParam(name = "Location") String location,
 			@RequestParam(name = "fieldTechnicianId") Long fieldTechnicianId) throws IllegalArgumentException {
 
-		// TODO: Only owner and admin can create an emergencyService
-
-		FieldTechnician fieldTechnician = fieldService.getFieldTechnicianById(fieldTechnicianId); // get
-
-		// ft
-		// A bookable emergency service will be created
-		String nameOfBooking = serviceName + " for " + userId; // service for that user
-		EmergencyService bookableEmergencyService = emergencyServiceService.bookEmergencyService(nameOfBooking,
-				serviceName, location, userId, fieldTechnician);
-		return convertToDto(bookableEmergencyService);
+		FieldTechnician fieldTechnician=null;
+		String nameOfBooking = null;
+		EmergencyService bookableEmergencyService=null;
+		try {
+			fieldTechnician = fieldService.getFieldTechnicianById(fieldTechnicianId); // get
+			nameOfBooking = serviceName + " for " + userId; // service for that user
+			bookableEmergencyService = emergencyServiceService.bookEmergencyService(nameOfBooking,
+					serviceName, location, userId, fieldTechnician);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDto(bookableEmergencyService),HttpStatus.CREATED);
 	}
 
 	// Will not allow updating emergency service as it is spontaneous
 
 	@PatchMapping(value = { "/edit/emergencyService/{serviceId}", "/edit/emergencyService/{serviceId}/" })
-	public void editEmergencyService(@PathVariable("serviceId") Long serviceId,
-			@RequestParam int price) throws IllegalArgumentException {
-		EmergencyService emergencyService = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
-		emergencyServiceService.editEmergencyService(emergencyService, price);
+	public ResponseEntity<?> editEmergencyService(@PathVariable("serviceId") Long serviceId, @RequestParam int price)
+			throws IllegalArgumentException {
+		EmergencyService emergencyService = null;
+		try {
+			emergencyService = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
+			emergencyServiceService.editEmergencyService(emergencyService, price);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(emergencyService), HttpStatus.CREATED);
+
 	}
 
 	@DeleteMapping(value = { "/delete/emergencyService/{serviceId}", "/delete/emergencyServices/{serviceId}/" })
-	public void deleteEmergencyService(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
-		EmergencyService emergencyService = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
-		emergencyServiceService.deleteEmergencyService(emergencyService);
+	public ResponseEntity<?> deleteEmergencyService(@PathVariable("serviceId") Long serviceId)
+			throws IllegalArgumentException {
+		EmergencyService emergencyService = null;
+		try {
+			emergencyService = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
+			emergencyServiceService.deleteEmergencyService(emergencyService);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(emergencyService), HttpStatus.CREATED);
+
 	}
 
 	@PostMapping(value = { "/end/emergencyService/{serviceId}", "/end/emergencyService/{serviceId}/" })
-	public void endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
-		EmergencyService emergencyServiceBooking = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
-		emergencyServiceService.endEmergencyService(emergencyServiceBooking);
+	public ResponseEntity<?> endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
+		EmergencyService emergencyServiceBooking = null;
+		try {
+			emergencyServiceBooking = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
+			emergencyServiceService.endEmergencyService(emergencyServiceBooking);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	} // only admin/owner can end an emergency service
 
 	//////////////////////////////// FIELD TECHNICIAN
 	////////////////////////////////////////////////////////////////////
-	
-	@GetMapping(value = {"/onGoingEmergencies","/onGoingEmergencies/"})
-	public List<EmergencyService> getOnGoingEmergencies(){
+
+	@GetMapping(value = { "/onGoingEmergencies", "/onGoingEmergencies/" })
+	public List<EmergencyService> getOnGoingEmergencies() {
 		return emergencyServiceService.getCurrentEmergencyServices();
 	}
 
@@ -661,23 +720,33 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/register/business/{name}", "/register/business/{name}/" }) // VERIFY PATH
-	public BusinessDto registerBusiness(@PathVariable("name") String name, @RequestParam String address,
+	public ResponseEntity<?> registerBusiness(@PathVariable("name") String name, @RequestParam String address,
 			@RequestParam String phoneNumber, @RequestParam String emailAddress) throws IllegalArgumentException {
-		List<BusinessHour> businessHour = businessHourService.getAllBusinessHours();
-		List<TimeSlot> timeSlots = timeService.getAllTimeSlots();
-		Business business = businessService.createBusiness(name, address, phoneNumber, emailAddress, businessHour,
-				timeSlots);
-		BusinessDto businessDto = convertToDto(business);
-		return businessDto;
+		List<BusinessHour> businessHour=null;
+		List<TimeSlot> timeSlots=null;
+		Business business =null;
+		try {
+			businessHour = businessHourService.getAllBusinessHours();
+			timeSlots = timeService.getAllTimeSlots();
+			business = businessService.createBusiness(name, address, phoneNumber, emailAddress, businessHour,
+					timeSlots);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(business),HttpStatus.CREATED);
 	}
 
 	@PatchMapping(value = { "/edit/businessInformation/{Id}", "/edit/businessInformation/{Id}/" })
-	public BusinessDto updateBusinessInfo(@PathVariable("Id") Long Id, @RequestParam String name,
+	public ResponseEntity<?> updateBusinessInfo(@PathVariable("Id") Long Id, @RequestParam String name,
 			@RequestParam String address, @RequestParam String phoneNumber, @RequestParam String emailAddress) {
-		Business business = businessService.updateBusinessInformation(Id, name, address, phoneNumber, emailAddress,
-				null, null);
-		BusinessDto businessDto = convertToDto(business);
-		return businessDto;
+		Business business = null;
+		try {
+			business = businessService.updateBusinessInformation(Id, name, address, phoneNumber, emailAddress,
+					null, null);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(business),HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = { "/delete/business/{Id}", "/delete/business/{Id}/" })
@@ -742,23 +811,33 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/add/businessHour/{dayOfWeek}", "/add/businessHour/{dayOfWeek}/" }) // VERIFY PATH
-	public BusinessHourDto createBusinessHour(@PathVariable("dayOfWeek") String dayOfWeek,
+	public ResponseEntity<?> createBusinessHour(@PathVariable("dayOfWeek") String dayOfWeek,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String startTime,
 			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String endTime)
 			throws IllegalArgumentException {
-		BusinessHour businessHour = businessHourService.createBusinessHour(dayOfWeek,
-				Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)));
-		BusinessHourDto businessHourDto = convertToDto(businessHour);
-		return businessHourDto;
+		BusinessHour businessHour = null;
+		try {
+			 businessHour = businessHourService.createBusinessHour(dayOfWeek,
+						Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)));
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDto(businessHour),HttpStatus.CREATED);
 	}
 
 	@PatchMapping(value = { "/edit/businessHour/{Id}", "/edit/businessHour/{Id}/" })
-	public BusinessHourDto editBusinessHour(@PathVariable("Id") Long Id, @RequestParam String dayOfWeek,
+	public ResponseEntity<?> editBusinessHour(@PathVariable("Id") Long Id, @RequestParam String dayOfWeek,
 			@RequestParam String startTime, @RequestParam String endTime) {
-		BusinessHour businessHour = businessHourService.updateBusinessHour(Id, dayOfWeek,
-				Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)));
-		BusinessHourDto businessHourDto = convertToDto(businessHour);
-		return businessHourDto;
+		BusinessHour businessHour = null;
+		try {
+			 businessHour = businessHourService.updateBusinessHour(Id, dayOfWeek,
+					Time.valueOf(LocalTime.parse(startTime)), Time.valueOf(LocalTime.parse(endTime)));
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDto(businessHour),HttpStatus.CREATED);
 
 	}
 
@@ -795,11 +874,15 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/register/administrativeAssistant/{userId}",
 			"/register/administrativeAssistant/{userId}/" })
-	public AdministrativeAssistantDto createAdministrativeAssistant(@PathVariable("userId") String userId,
-			@RequestParam String password) throws IllegalArgumentException {
-		AdministrativeAssistant administrativeAssistant = adminService.createAdministrativeAssistant(userId, password);
-		AdministrativeAssistantDto administrativeAssistantDto = convertToDto(administrativeAssistant);
-		return administrativeAssistantDto;
+	public ResponseEntity<?> createAdministrativeAssistant(@PathVariable("userId") String userId,
+			@RequestParam String password) {
+		AdministrativeAssistant administrativeAssistant = null;
+		try {
+			administrativeAssistant = adminService.createAdministrativeAssistant(userId, password);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(administrativeAssistant), HttpStatus.CREATED);
 	}
 
 	/////////////////////////////////////// APPOINTMENT
@@ -838,7 +921,7 @@ public class AutoRepairShopSystemRestController {
 	/////////////////////////////////////// SERVICE//////////////////////////////
 
 	@GetMapping(value = { "/bookableServices", "/bookableServices/" })
-	public List<BookableServiceDto> getAllBookabableServices() {
+	public List<BookableServiceDto> getAllBookableServices() {
 		List<BookableServiceDto> bookableServiceDtos = new ArrayList<>();
 		for (BookableService bookableService : bookService.getAllBookableServices()) {
 			bookableServiceDtos.add(convertToDto(bookableService));
@@ -857,11 +940,15 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/create/bookableService/{serviceName}", "/create/bookableService/{serviceName}/" })
-	public BookableServiceDto createBookableService(@PathVariable("serviceName") String name,
-			@RequestParam int duration, @RequestParam int price) {
-		BookableService bookableService = bookService.createBookableService(name, price, duration);
-		BookableServiceDto bookableServiceDto = convertToDto(bookableService);
-		return bookableServiceDto;
+	public ResponseEntity<?> createBookableService(@PathVariable("serviceName") String name, @RequestParam int duration,
+			@RequestParam int price) {
+		BookableService bookableService = null;
+		try {
+			bookableService = bookService.createBookableService(name, price, duration);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(bookableService), HttpStatus.CREATED);
 	}
 
 	/////////////////////////////////////// GARAGE
@@ -892,6 +979,16 @@ public class AutoRepairShopSystemRestController {
 		return convertToDto(garageTechnician);
 	}
 
+	@GetMapping(value = { "/fieldTechnicians/{name}", "/fieldTechnicians/{name}/" })
+	public FieldTechnicianDto getFieldTechnicianIdByName(@PathVariable("name") String name) {
+
+		FieldTechnician fieldTechnician = fieldService.getFieldTechnicianByName(name);
+		if (fieldTechnician == null) {
+			throw new IllegalArgumentException("No such field technician exists!");
+		}
+		return convertToDto(fieldTechnician);
+	}
+
 	@PostMapping(value = { "/register/garageTechnician/{name}", "/register/garageTechnician/{name}/" })
 	public GarageTechnicianDto createGarageTechnician(@PathVariable("name") String name)
 			throws IllegalArgumentException {
@@ -900,10 +997,9 @@ public class AutoRepairShopSystemRestController {
 		return garageTechnicianDto;
 	}
 
-	@PostMapping(value = { "/book/appointment/{userId}/{serviceName}", "/book/appointment/{userId}/{serviceName}/" })
-	@CrossOrigin(origins = "*")
+	@PostMapping(value = { "/book/appointment/{userId}", "/book/appointment/{userId}/" })
 	public AppointmentDto bookAppointment(@PathVariable("userId") String userId,
-			@PathVariable("serviceName") String serviceName,
+			@RequestParam(name ="serviceName") String serviceName,
 			@RequestParam(name = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE, pattern = "yyyy-MM-dd") String date,
 			@RequestParam(name = "garageSpot") Integer garageSpot,
 			@RequestParam(name = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "HH:mm") String startTime,
@@ -939,14 +1035,14 @@ public class AutoRepairShopSystemRestController {
 			@RequestParam(name = "Phone Number") String phoneNumber,
 			@RequestParam(name = "Address Line") String addressLine, @RequestParam(name = "Zip Code") String zipCode,
 			@RequestParam(name = "First Name") String firstName, @RequestParam(name = "Last Name") String lastName) {
-		Profile profile =null;
+		Profile profile = null;
 		try {
-			profile=profileService.editProfile(profileId, firstName, lastName, emailAddress, phoneNumber,
-					addressLine, zipCode);
-		} catch(IllegalArgumentException e) {
-			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+			profile = profileService.editProfile(profileId, firstName, lastName, emailAddress, phoneNumber, addressLine,
+					zipCode);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(convertToDto(profile),HttpStatus.CREATED);
+		return new ResponseEntity<>(convertToDto(profile), HttpStatus.CREATED);
 	}
 
 	/////////////////////////////////////// CUSTOMER///////////////////////////
@@ -970,20 +1066,25 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/register/customer/{userId}", "/register/customer/{userId}/" })
-	public CustomerDto registerCustomer(@PathVariable("userId") String userId, @RequestParam String password,
+	public ResponseEntity<?> registerCustomer(@PathVariable("userId") String userId, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName, @RequestParam String address,
 			@RequestParam String phoneNumber, @RequestParam String zipCode, @RequestParam String emailAddress,
 			@RequestParam String modelNumber, @RequestParam String year, @RequestParam String color)
-			throws IllegalArgumentException {
-
-		Car car1 = carService.createCar(modelNumber, year, color);
-		Profile profile1 = profileService.createProfile(address, phoneNumber, firstName, lastName, zipCode,
+			{
+		Customer customer = null;
+		
+		try {
+			Car car1 = carService.createCar(modelNumber, year, color);
+			Profile profile1 = profileService.createProfile(address, phoneNumber, firstName, lastName, zipCode,
 				emailAddress);
 
-		List<Reminder> reminder = new ArrayList<>();
-		Customer customer = customerService.createCustomer(userId, password, reminder, car1, profile1);
-		CustomerDto customerDto = convertToDto(customer);
-		return customerDto;
+			List<Reminder> reminder = new ArrayList<>();
+			customer = customerService.createCustomer(userId, password, reminder, car1, profile1);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDto(customer), HttpStatus.CREATED);
 	}
 
 	@PatchMapping(value = { "/edit/customer/{userId}", "/edit/customer/{userId}/" })
@@ -1077,13 +1178,14 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@DeleteMapping(value = { "/cancel/appointment/{appointmentId}", "/cancel/appointment/{appointmentId}/" })
-	public ResponseEntity<?> cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId) throws IllegalArgumentException {
-		Appointment appointment =null;
+	public ResponseEntity<?> cancelAppointmemt(@PathVariable("appointmentId") Long appointmentId)
+			throws IllegalArgumentException {
+		Appointment appointment = null;
 		try {
-			appointment =  appService.getAppointment(appointmentId);	
+			appointment = appService.getAppointment(appointmentId);
 			appService.deleteAppointment(appointment, null, null);
-		} catch(IllegalArgumentException e){
-			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
 
@@ -1105,16 +1207,29 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@DeleteMapping(value = { "/delete/bookableService/{serviceId}", "/delete/bookableService/{serviceId}/" })
-	public void deleteBookableService(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
-		BookableService bookableService = bookService.getBookableServiceById(serviceId);
-		bookService.deleteBookableService(bookableService);
+	public ResponseEntity<?> deleteBookableService(@PathVariable("serviceId") Long serviceId)
+			throws IllegalArgumentException {
+		BookableService bookableService = null;
+		try {
+			bookableService = bookService.getBookableServiceById(serviceId);
+			bookService.deleteBookableService(bookableService);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(bookableService), HttpStatus.CREATED);
 	}
 
 	@PatchMapping(value = { "/edit/bookableService/{serviceId}", "/edit/bookableService/{serviceId}/" })
-	public void editBookableService(@PathVariable("serviceId") Long serviceId, 
-			@RequestParam int duration, @RequestParam int price) throws IllegalArgumentException {
-		BookableService bookableService = bookService.getBookableServiceById(serviceId);
-		bookService.editBookableService(bookableService, duration, price);
+	public ResponseEntity<?> editBookableService(@PathVariable("serviceId") Long serviceId, @RequestParam int duration,
+			@RequestParam int price) throws IllegalArgumentException {
+		BookableService bookableService = null;
+		try {
+			bookableService = bookService.getBookableServiceById(serviceId);
+			bookService.editBookableService(bookableService, duration, price);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(bookableService), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = { "/delete/administrativeAssistant/{Id}", "/delete/administrativeAssistant/{Id}/" })
@@ -1145,13 +1260,13 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PatchMapping(value = { "/edit/car/{carId}", "/edit/car/{carId}/" })
-	public ResponseEntity<?> editCar(@PathVariable("carId") Long carId, @RequestParam String model, @RequestParam String year,
-			@RequestParam String color) throws IllegalArgumentException {
+	public ResponseEntity<?> editCar(@PathVariable("carId") Long carId, @RequestParam String model,
+			@RequestParam String year, @RequestParam String color) throws IllegalArgumentException {
 		Car car = null;
 		try {
 			car = carService.getCarByCarId(carId);
-			car =carService.editCar(car, model, year, color);
-		} catch(IllegalArgumentException e) {
+			car = carService.editCar(car, model, year, color);
+		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(convertToDto(car), HttpStatus.CREATED);
@@ -1181,6 +1296,7 @@ public class AutoRepairShopSystemRestController {
 		}
 		return appointmentsDto;
 	}
+
 	@GetMapping(value = { "/appointments/next/24Hours/{userId}", "/appointments/next/24Hours/{userId}/" })
 	public List<AppointmentDto> get24HoursAppointments(@PathVariable("userId") String userId) {
 		List<AppointmentDto> appointmentsDto = new ArrayList<AppointmentDto>();
@@ -1189,6 +1305,5 @@ public class AutoRepairShopSystemRestController {
 		}
 		return appointmentsDto;
 	}
-	
 
 }
