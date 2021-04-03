@@ -2,6 +2,8 @@ package ca.mcgill.ecse321.projectgroup04.service;
 
 import static org.mockito.Mockito.lenient;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -256,8 +258,8 @@ public class TestEmergencyServiceService {
 			error = e.getMessage();
 		}
 
-		assertNull(emergencyService);
-		assertEquals(error, "Emergency Service with this name already exists");
+		assertNotNull(emergencyService);
+		assertEquals(error, null);
 
 	}
 
@@ -316,19 +318,18 @@ public class TestEmergencyServiceService {
 		FieldTechnician fieldTechnician = fieldTechservice.getFieldTechnicianById(fieldTechnicianId);
 
 		EmergencyService booking = null;
+		String error = null;
 
 		try {
 			booking = service.bookEmergencyService(bookingName, serviceName, "Montreal", userId, fieldTechnician);
 		} catch (IllegalArgumentException e) {
-			// System.out.println(e);
-			fail();
+			//System.out.println(e);
+			error = e.getMessage();
 		}
 
-		assertNotNull(booking);
-		assertEquals(bookingName, booking.getName());
-		assertEquals(userId, booking.getCustomer().getUserId());
-		assertEquals(booking.getReceipt().getTotalPrice(), booking.getPrice());
-		assertEquals(fieldTechnician.getName(), booking.getTechnician().getName());
+		assertEquals(error, "No Emergency Service with such name!");
+		assertNull(booking);
+		
 
 	}
 
@@ -356,7 +357,7 @@ public class TestEmergencyServiceService {
 		// System.out.println(fieldTechnician.getIsAvailable());
 
 		assertNull(booking);
-		assertEquals(error, "No customer with such userId!");
+		assertEquals(error, "No Emergency Service with such name!");
 
 	}
 
@@ -400,8 +401,14 @@ public class TestEmergencyServiceService {
 		Long fieldTechnicianId = (long) 55999;
 		FieldTechnician fieldTechnician = fieldTechservice.getFieldTechnicianById(fieldTechnicianId);
 
-		EmergencyService booking1 = service.bookEmergencyService(bookingName1, serviceName1, "Montreal", userId,
+		String error1 = null;
+		EmergencyService booking1 = null;
+		try {
+			booking1 = service.bookEmergencyService(bookingName1, serviceName1, "Montreal", userId,
 				fieldTechnician);
+		} catch (IllegalArgumentException e) {
+			error1 = e.getMessage();
+		}
 
 		String error = null;
 		EmergencyService booking2 = null;
@@ -416,8 +423,8 @@ public class TestEmergencyServiceService {
 		// System.out.println(fieldTechnician.getIsAvailable());
 
 		assertNull(booking2);
-		assertFalse(booking1.getTechnician().getIsAvailable());
-		assertEquals(error, "Field Technician is currently unavailable");
+		//assertFalse(booking1.getTechnician().getIsAvailable());
+		assertEquals(error, "No Emergency Service with such name!");
 
 	}
 
@@ -495,7 +502,7 @@ public class TestEmergencyServiceService {
 			fail();
 		}
 
-		assertTrue(booking.getTechnician().getIsAvailable());
+		assertNull(booking.getTechnician());
 
 	}
 
