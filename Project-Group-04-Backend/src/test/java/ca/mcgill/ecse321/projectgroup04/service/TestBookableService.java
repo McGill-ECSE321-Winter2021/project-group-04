@@ -194,7 +194,8 @@ public class TestBookableService {
 
 	}
 
-	@Test
+
+  @Test
 	public void TestEditDurationBookableService() {
 		String name = "TestNameEditDuration";
 		int newDuration = 40;
