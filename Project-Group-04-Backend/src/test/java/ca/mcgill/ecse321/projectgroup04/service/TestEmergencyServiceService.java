@@ -292,7 +292,7 @@ public class TestEmergencyServiceService {
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
 		try {
-			emergencyService = service.editEmergencyService(emergencyService, newName, price);
+			emergencyService = service.editEmergencyService(emergencyService, price);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -314,7 +314,7 @@ public class TestEmergencyServiceService {
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
 		try {
-			emergencyService = service.editEmergencyService(emergencyService, newName, price);
+			emergencyService = service.editEmergencyService(emergencyService, price);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -335,7 +335,7 @@ public class TestEmergencyServiceService {
 		emergencyService.setName(name);
 		emergencyService.setPrice(price);
 		try {
-			emergencyService = service.editEmergencyService(emergencyService, name, newPrice);
+			emergencyService = service.editEmergencyService(emergencyService, newPrice);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}

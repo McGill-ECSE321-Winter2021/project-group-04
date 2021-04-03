@@ -189,7 +189,7 @@ public class TestBookableService {
 		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		try {
-			bookableService = service.editBookableService(bookableService, newName, duration, price);
+			bookableService = service.editBookableService(bookableService, duration, price);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -213,7 +213,7 @@ public class TestBookableService {
 		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		try {
-			bookableService = service.editBookableService(bookableService, newName, duration, price);
+			bookableService = service.editBookableService(bookableService, duration, price);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -237,7 +237,7 @@ public class TestBookableService {
 		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		try {
-			bookableService = service.editBookableService(bookableService, name, newDuration, price);
+			bookableService = service.editBookableService(bookableService, newDuration, price);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
@@ -260,7 +260,7 @@ public class TestBookableService {
 		bookableService.setDuration(duration);
 		bookableService.setPrice(price);
 		try {
-			bookableService = service.editBookableService(bookableService, name, duration, newPrice);
+			bookableService = service.editBookableService(bookableService, duration, newPrice);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}

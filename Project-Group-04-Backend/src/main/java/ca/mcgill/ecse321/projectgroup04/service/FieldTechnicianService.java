@@ -54,11 +54,11 @@ public class FieldTechnicianService {
     public FieldTechnician deleteFieldTechnician(FieldTechnician fieldTechnician) {
         List<EmergencyService> emergencyServices = (List<EmergencyService>) emergencyServiceRepository.findAll();
 
-        for (EmergencyService emergencyService : emergencyServices) {
-            if (emergencyService.getTechnician().equals(fieldTechnician)) {
-                throw new IllegalArgumentException("The field technician is assigned to an emergency service!");
-            }
-        }
+        // for (EmergencyService emergencyService : emergencyServices) {
+        //     if (emergencyService.getTechnician().equals(fieldTechnician)) {
+        //         throw new IllegalArgumentException("The field technician is assigned to an emergency service!");
+        //     }
+        // }
         fieldTechnicianRepository.delete(fieldTechnician);
         fieldTechnician = null;
         return fieldTechnician;
