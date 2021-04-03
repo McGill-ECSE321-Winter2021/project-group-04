@@ -41,10 +41,10 @@ project-group-04 created by GitHub Classroom
 ### Sprint 3
 | Name            | Tasks                                                                 | Time in hours |
 | --------------- |:--------------------------------------------------------------------------------:|---:|  
-| Mohamad Dimassi | Bookable Service, Emergency Service and booking, Appointment booking             | 70 |
-| Artus Julliard  | About us, Customer Homepage, Employee Homepages                                  | 70 |
-| Cesar Lahoud    | Business, Reminders, Receipt, Profile, Technicians                               | 70 |
-| Yasmina Matta   | Bookable Service,Emergency Service and booking, Appointment booking              | 70 |
+| Mohamad Dimassi | Appointment and Emergency Service booking, Profile, Car, Receipts, Reminder, Home pages | 70 |
+| Artus Julliard  | Business, Business Hour, Technicians                                             | 70 |
+| Cesar Lahoud    | Emergency Service and Bookable Service creation, Our services customer page      | 70 |
+| Yasmina Matta   | Appointment and Emergency Service booking, profile, car, receipts, Home Pages    | 70 |
 | Abrar Fahad     | Welcome page, Login, Logout, Registration, Profile and Car creation              | 70 |
 
 
