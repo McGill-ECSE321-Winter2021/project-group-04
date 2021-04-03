@@ -55,6 +55,7 @@ export default {
                 this.errorTeam=""
                 this.teams = response.data
                 swal("Success", "The garage technician " + name +  " has been added to the database", "success")
+                location.reload()
             })
             .catch(e => {
                 var errorMsg = e
@@ -64,24 +65,20 @@ export default {
       
         },
 
-        deleteGarageTechnician: function (name){
-          var i
-          for(i=0; i<teams.length; i++){
-            if(name == this.teams[i].name){
-              var garageTechnician = this.teams[i]
-            }
-          }
-            const technicianId = garageTechnician.id
-            AXIOS.delete('/delete/garageTechnician/' + technicianId, {}, {})
+        deleteGarageTechnician: function (garageTechnician){
+            const id = garageTechnician.technicianId
+            const name = garageTechnician.name
+            AXIOS.delete('/delete/garageTechnician/' + id, {}, {})
             .then(response => {
                 this.teams.pop(response.data)
                 this.errorTeam=""
+                swal("Success", "The garage technician " + name +  " has been deleted from the database", "success")
+                location.reload()
             })
             .catch(e => {
                 var errorMSg = e
                 console.log(errorMSg)
-                this.errorteams = errorMSg
-                window.alert(e)
+                swal("Error",e.response.data,"error");
             })
         },
 
