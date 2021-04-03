@@ -533,11 +533,15 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "register/owner/{userId}", "register/owner/{userId}/" })
-	public OwnerDto createOwner(@PathVariable("userId") String userId, @RequestParam String password)
-			throws IllegalArgumentException {
-		Owner owner = ownerService.createOwner(userId, password);
-		OwnerDto ownerDto = convertToDto(owner);
-		return ownerDto;
+	public ResponseEntity<?> createOwner(@PathVariable("userId") String userId, @RequestParam String password)
+			{
+		Owner owner = null;
+		try {
+			owner = ownerService.createOwner(userId, password);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(owner), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(value = { "/delete/owner/{Id}", "/delete/owner/{Id}/" })
@@ -870,11 +874,15 @@ public class AutoRepairShopSystemRestController {
 
 	@PostMapping(value = { "/register/administrativeAssistant/{userId}",
 			"/register/administrativeAssistant/{userId}/" })
-	public AdministrativeAssistantDto createAdministrativeAssistant(@PathVariable("userId") String userId,
-			@RequestParam String password) throws IllegalArgumentException {
-		AdministrativeAssistant administrativeAssistant = adminService.createAdministrativeAssistant(userId, password);
-		AdministrativeAssistantDto administrativeAssistantDto = convertToDto(administrativeAssistant);
-		return administrativeAssistantDto;
+	public ResponseEntity<?> createAdministrativeAssistant(@PathVariable("userId") String userId,
+			@RequestParam String password) {
+		AdministrativeAssistant administrativeAssistant = null;
+		try {
+			administrativeAssistant = adminService.createAdministrativeAssistant(userId, password);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(convertToDto(administrativeAssistant), HttpStatus.CREATED);
 	}
 
 	/////////////////////////////////////// APPOINTMENT
@@ -1058,20 +1066,25 @@ public class AutoRepairShopSystemRestController {
 	}
 
 	@PostMapping(value = { "/register/customer/{userId}", "/register/customer/{userId}/" })
-	public CustomerDto registerCustomer(@PathVariable("userId") String userId, @RequestParam String password,
+	public ResponseEntity<?> registerCustomer(@PathVariable("userId") String userId, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName, @RequestParam String address,
 			@RequestParam String phoneNumber, @RequestParam String zipCode, @RequestParam String emailAddress,
 			@RequestParam String modelNumber, @RequestParam String year, @RequestParam String color)
-			throws IllegalArgumentException {
-
-		Car car1 = carService.createCar(modelNumber, year, color);
-		Profile profile1 = profileService.createProfile(address, phoneNumber, firstName, lastName, zipCode,
+			{
+		Customer customer = null;
+		
+		try {
+			Car car1 = carService.createCar(modelNumber, year, color);
+			Profile profile1 = profileService.createProfile(address, phoneNumber, firstName, lastName, zipCode,
 				emailAddress);
 
-		List<Reminder> reminder = new ArrayList<>();
-		Customer customer = customerService.createCustomer(userId, password, reminder, car1, profile1);
-		CustomerDto customerDto = convertToDto(customer);
-		return customerDto;
+			List<Reminder> reminder = new ArrayList<>();
+			customer = customerService.createCustomer(userId, password, reminder, car1, profile1);
+		} catch(IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<>(convertToDto(customer), HttpStatus.CREATED);
 	}
 
 	@PatchMapping(value = { "/edit/customer/{userId}", "/edit/customer/{userId}/" })
