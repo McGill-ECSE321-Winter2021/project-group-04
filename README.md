@@ -48,14 +48,14 @@ project-group-04 created by GitHub Classroom
 | Abrar Fahad     | Welcome page, Login, Logout, Registration, Profile and Car creation              | 100 |
 
 
-Click [for meeting minutes!]
+Click for [ meeting minutes!]
 
-[for meeting minutes!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference
+[ meeting minutes!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference
 
 
 [quality assurance report!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Software-Quality-Assurance-Plan
 
-Click [quality assurance report!]
+Click for [quality assurance report!]
 
 [software architecture model!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Architecture-Model
 Click for [software architecture model!]
