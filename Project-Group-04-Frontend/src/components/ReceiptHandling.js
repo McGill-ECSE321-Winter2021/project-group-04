@@ -30,6 +30,8 @@ function myFunction() {
   }
 }
 
+
+
 export default {
   name: 'receiptHandling',
   data() {
@@ -38,7 +40,9 @@ export default {
       errorUsr: '',
       appointments: [],
       errorReceipt: '',
+      emergencyServices: [],
       response: []
+
     }
   },
   created: function () {
@@ -51,6 +55,15 @@ export default {
           .then(response => {
             // JSON responses are automatically parsed.
             this.appointments = response.data
+          })
+          .catch(e => {
+            this.errorReceipt = e
+          })
+
+          AXIOS.get('/booked/emergencies/' + this.userID)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.emergencyServices = response.data
           })
           .catch(e => {
             this.errorReceipt = e
@@ -75,6 +88,10 @@ export default {
           this.errorProfile = errorMsg
           swal("ERROR", e.response.data, "error")
         })
+    },
+    cutName: function(str) {
+      str = str.split('for')[0];
+      return str;
     }
   }
 

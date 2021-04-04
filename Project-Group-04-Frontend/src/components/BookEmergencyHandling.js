@@ -52,6 +52,7 @@ methods: {
    
 
   bookEmergency: function (selectedEmergencyService,  location, selectedFieldTechnician) {
+    console.log(location)
     AXIOS.get('/fieldTechnicians/' + selectedFieldTechnician)
       .then(response => {
         this.chosenFieldTech = response.data
@@ -59,7 +60,7 @@ methods: {
       })
       .catch(e => { this.errorChosenTechnicianId })
       .finally(() => {
-
+          console.log(this.chosenTechnicianId)
         AXIOS.post('/book/emergencyService/' + this.userID +'?serviceName=' +selectedEmergencyService + '&Location=' + location + '&fieldTechnicianId='
           + this.chosenTechnicianId , {}, {})
           .then(response => {

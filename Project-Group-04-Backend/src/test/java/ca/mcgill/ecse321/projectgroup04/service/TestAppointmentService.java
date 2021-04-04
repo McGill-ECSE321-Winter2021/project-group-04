@@ -779,7 +779,7 @@ public class TestAppointmentService {
 		}
 
 		assertNotNull(appointment);
-		assertEquals(error, "Cannot cancel appointment less than 24hours!");
+		assertEquals(error, "Cannot cancel appointment less than 24 hours!");
 
 	}
 

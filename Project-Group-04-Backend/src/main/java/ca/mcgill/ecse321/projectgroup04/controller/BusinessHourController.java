@@ -90,8 +90,8 @@ public class BusinessHourController {
 
 	@PostMapping(value = { "/add/businessHour/{dayOfWeek}", "/add/businessHour/{dayOfWeek}/" }) // VERIFY PATH
 	public ResponseEntity<?> createBusinessHour(@PathVariable("dayOfWeek") String dayOfWeek,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String startTime,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm:ss") String endTime)
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm") String startTime,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm") String endTime)
 			throws IllegalArgumentException {
 		BusinessHour businessHour = null;
 		try {
@@ -106,7 +106,8 @@ public class BusinessHourController {
 
 	@PatchMapping(value = { "/edit/businessHour/{Id}", "/edit/businessHour/{Id}/" })
 	public ResponseEntity<?> editBusinessHour(@PathVariable("Id") Long Id, @RequestParam String dayOfWeek,
-			@RequestParam String startTime, @RequestParam String endTime) {
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm") String startTime,
+	@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.TIME, pattern = "hh:mm") String endTime) {
 		BusinessHour businessHour = null;
 		try {
 			 businessHour = businessHourService.updateBusinessHour(Id, dayOfWeek,

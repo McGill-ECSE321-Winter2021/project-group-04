@@ -30,7 +30,7 @@ public class EmergencyServiceService {
             throw new IllegalArgumentException("Emergency Service with this name already exists");
         }
 
-        if (name == "") {
+        if (name == "" || name.equals("undefined")) {
             throw new IllegalArgumentException("Name can't be null");
         }
         if (price == 0) {
@@ -54,10 +54,10 @@ public class EmergencyServiceService {
         EmergencyService bookableEmergencyService = new EmergencyService();
         EmergencyService emergencyService = getEmergencyServiceByServiceName(serviceName);
 
-        if (aLocation == null) {
+        if (aLocation == null || aLocation.equals("undefined")){
             throw new IllegalArgumentException("Location can't be null");
         }
-        if (aFieldTechnician == null) {
+        if (aFieldTechnician == null ) {
             throw new IllegalArgumentException("Field Technician can't be null");
         }
         if (bookingName == null) {

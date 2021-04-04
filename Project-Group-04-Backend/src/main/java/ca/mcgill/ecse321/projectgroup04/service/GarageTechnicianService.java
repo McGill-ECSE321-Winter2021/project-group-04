@@ -19,7 +19,7 @@ public class GarageTechnicianService {
     @Transactional
     public GarageTechnician createGarageTechnician(String name) {
 
-        if (name == "") {
+        if (name == "" || name == null|| name.equals("undefined")) {
             throw new IllegalArgumentException("Name can't be empty");
         }
         GarageTechnician existingGarageTechnician = getGarageTechnicianByName(name);
@@ -63,7 +63,7 @@ public class GarageTechnicianService {
     public GarageTechnician deleteGarageTechnician(GarageTechnician garageTechnician) {
 
         List<Appointment> appointmentsList = (List<Appointment>) appointmentRepository.findAll();
-        ;
+        
 
         for (Appointment appointment : appointmentsList) {
             if (appointment.getTechnician().equals(garageTechnician)) {

@@ -53,7 +53,7 @@ public class OwnerController {
 		return convertToDto(ownerService.getOwnerByUserId(Id));
 	}
 
-	@PostMapping(value = { "register/owner/{userId}", "register/owner/{userId}/" })
+	@PostMapping(value = { "/register/owner/{userId}", "/register/owner/{userId}/" })
 	public ResponseEntity<?> createOwner(@PathVariable("userId") String userId, @RequestParam String password)
 			{
 		Owner owner = null;

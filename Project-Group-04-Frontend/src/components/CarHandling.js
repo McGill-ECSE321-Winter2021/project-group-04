@@ -60,6 +60,7 @@ export default {
   methods: {
     editCar: function (model, year, color) {
       // Create a new person and add it to the list of people
+
       AXIOS.patch('/edit/car/' + this.carId + '?model=' + model + '&year=' + year + '&color=' + color, {}, {})
         .then(response => {
           this.errorCar = '';

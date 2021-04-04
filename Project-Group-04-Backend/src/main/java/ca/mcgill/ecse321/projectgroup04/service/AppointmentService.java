@@ -104,7 +104,7 @@ public class AppointmentService {
         GarageTechnician garageTechnician = getGarageTechnicianById(garageTechnicianId);
         date = Date.valueOf(date.toLocalDate().minusDays(1)); // again get back your date object
         AppointmentReminder appReminder = createAppointmentReminder(date, startTime,
-                "You have an appointment within 24hours");
+                "You have an appointment within 24 hours");
         addAppointmentReminderToCustomer(customer, appReminder);
         Appointment appointment = createAppointment(customer, bookableService, garageTechnician, timeSlot, appReminder,
                 receipt);
@@ -340,7 +340,7 @@ public class AppointmentService {
             throw new IllegalArgumentException("Cannot cancel appointment on same day!");
         }
         if (today.plusDays(1).equals(appDate) && now.isAfter(appTime)) {
-            throw new IllegalArgumentException("Cannot cancel appointment less than 24hours!");
+            throw new IllegalArgumentException("Cannot cancel appointment less than 24 hours!");
         }
         Customer customer = appointment.getCustomer();
         AppointmentReminder appointmentReminder = appointment.getReminder();

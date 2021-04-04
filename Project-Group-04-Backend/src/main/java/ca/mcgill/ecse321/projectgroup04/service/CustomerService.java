@@ -29,8 +29,14 @@ public class CustomerService {
         for (Appointment a : appointmentRepository.findByCustomer(customer)) {
             customerReceipts.add(a.getReceipt());
         }
-        //TODO:
-       
+        
+       for (EmergencyService emergencyService : emergencyServiceRepository.findAll()){
+           if(emergencyService.getCustomer() != null){
+               if(emergencyService.getCustomer().getUserId().equals(userId)){
+                   customerReceipts.add(emergencyService.getReceipt());
+               }
+           }
+       }
 
         return customerReceipts;
     }
@@ -115,7 +121,7 @@ public class CustomerService {
         }
         return customer;
     }
-
+    @Transactional
     public Car getCustomerCar(String userId) {
         Customer customer = getCustomerByUserId(userId);
         Car car = customer.getCar();
@@ -123,5 +129,26 @@ public class CustomerService {
             throw new IllegalArgumentException("This customer does not have a car yet");
         }
         return car;
+    }
+
+    @Transactional
+    public List<EmergencyService> getEmergencyServiceOfCustomer(String userId){
+        Customer customer = getCustomerByUserId(userId);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer can't be null!");
+        }
+        List<EmergencyService> emergencyServices = new ArrayList<>();
+        // for (Appointment a : appointmentRepository.findByCustomer(customer)) {
+        //     customerReceipts.add(a.getReceipt());
+        // }
+        
+       for (EmergencyService emergencyService : emergencyServiceRepository.findAll()){
+           if(emergencyService.getCustomer() != null){
+               if(emergencyService.getCustomer().getUserId().equals(userId)){
+                emergencyServices.add(emergencyService);
+               }
+           }
+       }
+       return emergencyServices;
     }
 }

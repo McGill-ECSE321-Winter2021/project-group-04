@@ -26,10 +26,10 @@ function myFunction() {
   }
 
 export default {
-    name: 'teamHandling',
+    name: 'teamOwnerHandling',
     data() {
       return {
-        teams: [],
+        garageTechnicians: [],
         name: '',
         technicianId: '',
         errorTeam: '',
@@ -41,7 +41,7 @@ export default {
       AXIOS.get('/garageTechnicians')
         .then(response => {
           // JSON responses are automatically parsed.
-          this.teams = response.data 
+          this.garageTechnicians = response.data 
         })
         .catch(e => {
           this.errorProfile = e
@@ -53,10 +53,11 @@ export default {
             AXIOS.post('/register/garageTechnician/' + name, {}, {})
             .then(response => {
                 this.errorTeam=""
-                this.teams = response.data
-                swal("Success", "The garage technician " + name +  " has been added to the database", "success")
+                
+                this.garageTechnicians = response.data
+                swal("Success", "The garage technician " + name +  " has been added", "success")
                 location.reload()
-            })
+              })
             .catch(e => {
                 var errorMsg = e
                 console.log(errorMsg)
@@ -66,19 +67,22 @@ export default {
         },
 
         deleteGarageTechnician: function (garageTechnician){
-            const id = garageTechnician.technicianId
-            const name = garageTechnician.name
-            AXIOS.delete('/delete/garageTechnician/' + id, {}, {})
+          
+            const technicianId = garageTechnician.technicianId
+            AXIOS.delete('/delete/garageTechnician/' + technicianId, {}, {})
             .then(response => {
-                this.teams.pop(response.data)
+                this.garageTechnicians.pop(response.data)
                 this.errorTeam=""
-                swal("Success", "The garage technician " + name +  " has been deleted from the database", "success")
-                location.reload()
+                swal("Success", "The garage technician " + name +  " has been deleted", "success")
+             
+           
+               
             })
             .catch(e => {
                 var errorMSg = e
                 console.log(errorMSg)
-                swal("Error",e.response.data,"error");
+                this.errorTeams = errorMSg
+                window.alert(e)
             })
         },
 

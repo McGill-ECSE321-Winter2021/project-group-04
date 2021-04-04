@@ -48,7 +48,7 @@ public class BookableServiceService {
         if (duration == 0) {
             throw new IllegalArgumentException("Duration can't be equal to 0");
         }
-        if (name == "") {
+        if (name == "" || name.equals("undefined")) {
             throw new IllegalArgumentException("Name can't be empty");
         }
 
@@ -88,9 +88,21 @@ public class BookableServiceService {
     }
 
     public BookableService editBookableService(BookableService bookableService, int duration, int price) {
+        if (price == 0) {
+            throw new IllegalArgumentException("Price can't be 0");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Price can't be negative");
+        }
+        if (duration < 0) {
+            throw new IllegalArgumentException("Duration can't be negative");
+        }
         if ( duration == bookableService.getDuration()
                 && price == bookableService.getPrice()) {
             throw new IllegalArgumentException("You have to edit one of the fields");
+        }
+        if (duration == 0) {
+            throw new IllegalArgumentException("Duration can't be equal to 0");
         }
         
         

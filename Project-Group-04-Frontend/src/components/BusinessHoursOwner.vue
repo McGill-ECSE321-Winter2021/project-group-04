@@ -66,9 +66,9 @@
               <td>{{ businessHour.endTime }}</td>
           </tr>
           <tr class = "editBusinessHour">
-            <td><input type="text" v-model="dayOfWeek" placeholder="Which Day"></td>
-            <td><input type="text" v-model="startTime" placeholder="New Openning Hour"></td>
-            <td><input type="text" v-model="endTime" placeholder="New Closing Hour"></td>
+            <td><input type="text" v-model="dayOfWeek" placeholder="Day"></td>
+            <td><input type="text" v-model="startTime" placeholder="Example: 08:00"></td>
+            <td><input type="text" v-model="endTime" placeholder="Example: 18:00"></td>
             <td class = "button">
               ​<button v-on:click="updateBusinessHour(dayOfWeek, startTime, endTime)">Update</button>
             </td>

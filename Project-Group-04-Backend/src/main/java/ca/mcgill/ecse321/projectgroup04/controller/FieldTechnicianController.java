@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,26 +56,45 @@ public class FieldTechnicianController {
 	}
 
 	@PostMapping(value = { "/register/fieldTechnician/{name}", "/register/fieldTechnician/{name}/" })
-	public FieldTechnicianDto createFieldTechnician(@PathVariable("name") String name) throws IllegalArgumentException {
-		FieldTechnician fieldTechnician = fieldService.createFieldTechnician(name);
-		FieldTechnicianDto fieldTechnicianDto = convertToDto(fieldTechnician);
-		return fieldTechnicianDto;
+	public ResponseEntity<?> createFieldTechnician(@PathVariable("name") String name) throws IllegalArgumentException {
+		FieldTechnician fieldTechnician = null;
+		try{
+		 fieldTechnician = fieldService.createFieldTechnician(name);
+			}
+
+			catch(IllegalArgumentException e){
+				return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			return new ResponseEntity<>(convertToDto(fieldTechnician),HttpStatus.CREATED);
+		
 	}
 
 	@DeleteMapping(value = { "/delete/fieldTechnician/{Id}", "/delete/fieldTechnician/{Id}/" })
-	public void deleteFieldTechnician(@PathVariable("Id") Long id) throws IllegalArgumentException {
-		FieldTechnician fieldTechnician = fieldService.getFieldTechnicianById(id);
-		if (!fieldTechnician.getIsAvailable()) {
-			throw new IllegalArgumentException("The field technician is assigned to an emergency service!");
+	public ResponseEntity<?> deleteFieldTechnician(@PathVariable("Id") Long id) throws IllegalArgumentException {
+		FieldTechnician fieldTechnician = null;
+		try{
+			fieldTechnician = fieldService.getFieldTechnicianById(id);
+		
+			fieldService.deleteFieldTechnician(fieldTechnician);
 		}
-		fieldService.deleteFieldTechnician(fieldTechnician);
+		catch(IllegalArgumentException e){
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@PatchMapping(value = { "/edit/fieldTechnician/{Id}", "/edit/fieldTechnician/{Id}/" })
-	public void editFieldTechnician(@PathVariable("Id") Long id, @RequestParam String name)
+	public ResponseEntity<?> editFieldTechnician(@PathVariable("Id") Long id, @RequestParam String name)
 			throws IllegalArgumentException {
-		FieldTechnician fieldTechnician = fieldService.getFieldTechnicianById(id);
+				FieldTechnician fieldTechnician = null;
+		try{
+			fieldTechnician = fieldService.getFieldTechnicianById(id);
 		fieldService.editFieldTechnician(fieldTechnician, name);
+		}
+		catch(IllegalArgumentException e){
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new  ResponseEntity<>(convertToDto(fieldTechnician),HttpStatus.CREATED);
 	}
 	@GetMapping(value = { "/fieldTechnicians/{name}", "/fieldTechnicians/{name}/" })
 	public FieldTechnicianDto getFieldTechnicianIdByName(@PathVariable("name") String name) {

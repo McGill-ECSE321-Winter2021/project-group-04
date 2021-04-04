@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.projectgroup04.dto.*;
 import ca.mcgill.ecse321.projectgroup04.model.*;
+import ca.mcgill.ecse321.projectgroup04.service.CustomerService;
 import ca.mcgill.ecse321.projectgroup04.service.EmergencyServiceService;
 import ca.mcgill.ecse321.projectgroup04.service.FieldTechnicianService;
 
@@ -30,7 +31,8 @@ public class EmergencyServiceController {
 	private EmergencyServiceService emergencyServiceService;
 	@Autowired
 	private FieldTechnicianService fieldService;
-
+	@Autowired
+	private CustomerService customerService;
 
     private EmergencyServiceDto convertToDto(EmergencyService emergencyService) {
 		if (emergencyService == null) {
@@ -145,8 +147,8 @@ public class EmergencyServiceController {
 
 	}
 
-	@PostMapping(value = { "book/emergencyService/{userId}",
-			"book/emergencyService/{userId}/" })
+	@PostMapping(value = { "/book/emergencyService/{userId}",
+			"/book/emergencyService/{userId}/" })
 	public ResponseEntity<?> bookEmergencyService(@PathVariable("userId") String userId,
 			@RequestParam(name ="serviceName") String serviceName, @RequestParam(name = "Location") String location,
 			@RequestParam(name = "fieldTechnicianId") Long fieldTechnicianId) throws IllegalArgumentException {
@@ -155,6 +157,7 @@ public class EmergencyServiceController {
 		String nameOfBooking = null;
 		EmergencyService bookableEmergencyService=null;
 		try {
+			
 			fieldTechnician = fieldService.getFieldTechnicianById(fieldTechnicianId); // get
 			nameOfBooking = serviceName + " for " + userId; // service for that user
 			bookableEmergencyService = emergencyServiceService.bookEmergencyService(nameOfBooking,
@@ -212,5 +215,13 @@ public class EmergencyServiceController {
 	@GetMapping(value = { "/onGoingEmergencies", "/onGoingEmergencies/" })
 	public List<EmergencyService> getOnGoingEmergencies() {
 		return emergencyServiceService.getCurrentEmergencyServices();
+	}
+	@GetMapping(value= { "/booked/emergencies/{userId}", "/booked/emergencies/{userId}/"})
+	public List<EmergencyServiceDto> getReceiptsOfEmergencies(@PathVariable("userId") String userId){
+		List<EmergencyServiceDto> emergencyServiceDto = new ArrayList<EmergencyServiceDto>();
+		for (EmergencyService emergencies : customerService.getEmergencyServiceOfCustomer(userId) ) {
+			emergencyServiceDto.add(convertToDto(emergencies));
+		}
+		return emergencyServiceDto;
 	}
 }

@@ -52,7 +52,7 @@ export default {
             // Update appropriate DTO collections
             this.errorBusiness = ""
             this.business = response.data
-            swal("Success", "The new business infos have been saved successfully", "success").then(okay => {
+            swal("Success", "The new business information have been successfully updated", "success").then(okay => {
               if (okay) {
                 location.reload()
               }

@@ -35,7 +35,7 @@
          <tr v-for="booked in bookedEmergency" :key="booked.name">  
            <td> {{booked.customer.customerProfile.firstName }} {{booked.customer.customerProfile.lastName}}   </td>     
        
-        <td>{{ booked.name }}</td> 
+        <td>{{ cutName(booked.name) }}</td> 
         <td> {{booked.location}}</td> 
          <td> {{booked.technician.name}}</td> 
    

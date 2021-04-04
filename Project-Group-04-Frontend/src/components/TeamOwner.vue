@@ -53,7 +53,7 @@
           <tr class="table">
             <th>Name</th>
           </tr>
-       <tr  v-for="garageTechnician in teams" :key="garageTechnician.name">
+       <tr  v-for="garageTechnician in garageTechnicians" :key="garageTechnician.name">
         <td> {{ garageTechnician.name }}</td> 
          
           <td class="button">
