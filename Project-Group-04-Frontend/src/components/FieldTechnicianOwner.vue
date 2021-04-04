@@ -53,11 +53,11 @@
           <tr class="table">
             <th>Name</th>
           </tr>
-       <tr  v-for="team in teams" :key="team.teamHandling">
-        <td> {{ team.name }}</td> 
+       <tr  v-for="fieldTechnician in teams" :key="fieldTechnician.name">
+        <td> {{ fieldTechnician.name }}</td> 
          
           <td class="button">
-            ​<button v-on:click="deleteFieldTechnician(team)">Delete</button>
+            ​<button v-on:click="deleteFieldTechnician(fieldTechnician)">Delete</button>
           </td>
           </tr>
           <tr class = "addService">
