@@ -57,3 +57,6 @@ Click [for meeting minutes!]
 
 Click [quality assurance report!]
 
+[software architecture model!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/blob/main/Images/Architecture%20Model.jpg
+Click for [software architecture model!]
+
