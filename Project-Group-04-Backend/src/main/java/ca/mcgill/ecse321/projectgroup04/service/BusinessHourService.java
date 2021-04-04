@@ -87,6 +87,7 @@ public class BusinessHourService {
 
         if (startTime == null) {
             startTimeBool = false;
+
         }
 
         if (endTime == null) {

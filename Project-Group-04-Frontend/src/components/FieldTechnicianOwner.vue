@@ -63,7 +63,7 @@
           <tr class = "addService">
             <td><input id="myInput" size="10" type="text" v-model="name" placeholder="Name"></td>
             <td class = "button">
-              ​<button v-on:click="createFieldTechnician(name), document.getElementById('myInput').value = ''" >Add</button>
+              ​<button v-on:click="createFieldTechnician(name)" >Add</button>
             </td>
         </tr>
         </table>

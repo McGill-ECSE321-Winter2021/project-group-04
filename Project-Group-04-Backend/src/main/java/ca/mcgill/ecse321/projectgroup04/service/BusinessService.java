@@ -81,13 +81,13 @@ public class BusinessService {
         boolean businessHourBool = true;
         boolean regularBool = true;
 
-        if (aAddress == null || aAddress == "") {
+        if (aAddress == null || aAddress == "" || aAddress.equals("undefined")) {
             addressBool = false;
         }
-        if (aPhoneNumber == null || aPhoneNumber == "") {
+        if (aPhoneNumber == null || aPhoneNumber == ""|| aPhoneNumber.equals("undefined")) {
             phoneBool = false;
         }
-        if (aEmailAddress == null || aEmailAddress == "") {
+        if (aEmailAddress == null || aEmailAddress == ""|| aEmailAddress.equals("undefined")) {
             emailBool = false;
         }
 

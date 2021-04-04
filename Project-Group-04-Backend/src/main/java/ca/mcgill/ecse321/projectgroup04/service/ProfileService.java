@@ -19,28 +19,28 @@ public class ProfileService {
     @Transactional
     public Profile createProfile(String aAddressLine, String aPhoneNumber, String aFirstName, String aLastName,
             String aZipCode, String aEmailAddress) {
-        if (aAddressLine == null || aAddressLine == "") {
+        if (aAddressLine == null || aAddressLine == "" || aAddressLine.equals("undefined")) {
             throw new IllegalArgumentException("Address Line can't be null or empty");
         }
-        if (aPhoneNumber == null || aPhoneNumber == "") {
+        if (aPhoneNumber == null || aPhoneNumber == ""|| aPhoneNumber.equals("undefined")) {
             throw new IllegalArgumentException("Phone Number can't be null or empty");
         }
         if (aPhoneNumber.length() < 10 || aPhoneNumber.length() > 10) {
             throw new IllegalArgumentException("Phone Number must be 10 characters long");
         }
-        if (aFirstName == null || aFirstName == "") {
+        if (aFirstName == null || aFirstName == ""|| aFirstName.equals("undefined")) {
             throw new IllegalArgumentException("First Name can't be null or empty");
         }
-        if (aLastName == null || aLastName == "") {
+        if (aLastName == null || aLastName == ""|| aLastName.equals("undefined")) {
             throw new IllegalArgumentException("Last Name can't be null or empty");
         }
-        if (aZipCode == null || aZipCode == "") {
+        if (aZipCode == null || aZipCode == ""|| aZipCode.equals("undefined")) {
             throw new IllegalArgumentException("Zip Code can't be null or empty");
         }
         if (aZipCode.length() < 6 || aZipCode.length() > 6) {
             throw new IllegalArgumentException("Zip Code must be 6 characters long");
         }
-        if (aEmailAddress == null || aEmailAddress == "") {
+        if (aEmailAddress == null || aEmailAddress == ""|| aEmailAddress.equals("undefined")) {
             throw new IllegalArgumentException("Email Address can't be null or empty");
         }
         if (!aEmailAddress.contains("@")) {

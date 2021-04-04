@@ -90,7 +90,7 @@
      
       </table>
       </div>
-    ​<span v-if="errorReceipt" style="color:red">Error: {{errorRecepit}} </span>
+    ​<span v-if="errorReceipt" style="color:red">Error: {{errorReceipt}} </span>
     <hr>
     </div>
 </div>

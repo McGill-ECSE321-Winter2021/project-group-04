@@ -19,7 +19,7 @@ public class FieldTechnicianService {
     @Transactional
     public FieldTechnician createFieldTechnician(String name) {
 
-        if (name == "") {
+        if (name == ""|| name == null|| name.equals("undefined")) {
             throw new IllegalArgumentException("Name can't be empty");
         }
         FieldTechnician existingFieldTechnician = getFieldTechnicianByName(name);
@@ -37,7 +37,12 @@ public class FieldTechnicianService {
 
     @Transactional
     public FieldTechnician getFieldTechnicianById(Long technicianId) {
-        return fieldTechnicianRepository.findFieldTechnicianByTechnicianId(technicianId);
+        FieldTechnician fieldTechnician = fieldTechnicianRepository.findFieldTechnicianByTechnicianId(technicianId);
+        if(fieldTechnician == null){
+            throw new IllegalArgumentException("Technician doesn't exist");
+
+        }
+         return fieldTechnician;
     }
 
     @Transactional

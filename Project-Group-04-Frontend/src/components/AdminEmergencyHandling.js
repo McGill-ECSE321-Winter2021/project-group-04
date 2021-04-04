@@ -107,6 +107,10 @@ export default {
         this.errorProfile = errorMsg
         swal("ERROR", e.response.data, "error")
       })
+  },
+  cutName: function(str) {
+    str = str.split('for')[0];
+    return str;
   }
 
   }

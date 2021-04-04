@@ -19,7 +19,7 @@ public class GarageTechnicianService {
     @Transactional
     public GarageTechnician createGarageTechnician(String name) {
 
-        if (name == "") {
+        if (name == "" || name == null|| name.equals("undefined")) {
             throw new IllegalArgumentException("Name can't be empty");
         }
         GarageTechnician existingGarageTechnician = getGarageTechnicianByName(name);

@@ -63,19 +63,19 @@ public class CarService {
     }
 
     public Car editCar(Car car, String model, String year, String color) {
-        if (model == null || model == "") {
-            System.out.println("Model can't be empty");
+        if (model == null || model == "" || model.equals("undefined"))  {
+           
             throw new IllegalArgumentException("Model can't be empty");
         }
 
-        if (color == null || color == "") {
-            System.out.println("Color can't be empty");
+        if (color == null || color == ""|| color.equals("undefined")) {
+           
 
             throw new IllegalArgumentException("Color can't be empty");
         }
 
-        if (year == null || year == "") {
-            System.out.println("Year can't be empty");
+        if (year == null || year == "" || year.equals("undefined")) {
+            
 
             throw new IllegalArgumentException("Year can't be empty");
         }
