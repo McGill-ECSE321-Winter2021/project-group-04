@@ -2,8 +2,6 @@ package ca.mcgill.ecse321.projectgroup04.service;
 
 import static org.mockito.Mockito.lenient;
 
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,8 +25,6 @@ import ca.mcgill.ecse321.projectgroup04.model.Receipt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -283,7 +279,6 @@ public class TestEmergencyServiceService {
 
 	}
 
-
 	@Test
 	public void TestEditPriceEmergencyService() {
 		String name = "EmergencyTestNameEditPrice";
@@ -323,13 +318,12 @@ public class TestEmergencyServiceService {
 		try {
 			booking = service.bookEmergencyService(bookingName, serviceName, "Montreal", userId, fieldTechnician);
 		} catch (IllegalArgumentException e) {
-			//System.out.println(e);
+			// System.out.println(e);
 			error = e.getMessage();
 		}
 
 		assertEquals(error, "No Emergency Service with such name!");
 		assertNull(booking);
-		
 
 	}
 
@@ -391,9 +385,9 @@ public class TestEmergencyServiceService {
 
 	@Test
 	public void TestBookEmergencyServiceUnavailableFieldTechnician() {
-		String serviceName1 = "EmergencyService1";
+		// String serviceName1 = "EmergencyService1";
 		String userId = "UserTestId";
-		String bookingName1 = serviceName1 + " for " + userId;
+		// String bookingName1 = serviceName1 + " for " + userId;
 
 		String serviceName2 = "EmergencyService2";
 		String bookingName2 = serviceName2 + " for " + userId;
@@ -401,14 +395,14 @@ public class TestEmergencyServiceService {
 		Long fieldTechnicianId = (long) 55999;
 		FieldTechnician fieldTechnician = fieldTechservice.getFieldTechnicianById(fieldTechnicianId);
 
-		String error1 = null;
-		EmergencyService booking1 = null;
-		try {
-			booking1 = service.bookEmergencyService(bookingName1, serviceName1, "Montreal", userId,
-				fieldTechnician);
-		} catch (IllegalArgumentException e) {
-			error1 = e.getMessage();
-		}
+		// String error1 = null;
+		// EmergencyService booking1 = null;
+		// try {
+		// booking1 = service.bookEmergencyService(bookingName1, serviceName1,
+		// "Montreal", userId, fieldTechnician);
+		// } catch (IllegalArgumentException e) {
+		// error1 = e.getMessage();
+		// }
 
 		String error = null;
 		EmergencyService booking2 = null;
@@ -423,7 +417,7 @@ public class TestEmergencyServiceService {
 		// System.out.println(fieldTechnician.getIsAvailable());
 
 		assertNull(booking2);
-		//assertFalse(booking1.getTechnician().getIsAvailable());
+		// assertFalse(booking1.getTechnician().getIsAvailable());
 		assertEquals(error, "No Emergency Service with such name!");
 
 	}

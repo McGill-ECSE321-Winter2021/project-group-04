@@ -3,8 +3,6 @@ package ca.mcgill.ecse321.projectgroup04.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.ws.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +23,6 @@ public class GarageTechnicianController {
 
 	@Autowired
 	private GarageTechnicianService garageService;
-
 
 	public GarageTechnicianDto convertToDto(GarageTechnician garageTechnician) {
 		if (garageTechnician == null) {
@@ -64,35 +61,31 @@ public class GarageTechnicianController {
 	}
 
 	@PostMapping(value = { "/register/garageTechnician/{name}", "/register/garageTechnician/{name}/" })
-	public ResponseEntity<?> createGarageTechnician(@PathVariable("name") String name)
-			throws IllegalArgumentException {
-				GarageTechnician garageTechnician = null;
-				try{
-					 garageTechnician = garageService.createGarageTechnician(name);
-					
-				
-				}
-				catch(IllegalArgumentException e){
-					return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-				}
+	public ResponseEntity<?> createGarageTechnician(@PathVariable("name") String name) throws IllegalArgumentException {
+		GarageTechnician garageTechnician = null;
+		try {
+			garageTechnician = garageService.createGarageTechnician(name);
 
-				return new ResponseEntity<>(convertToDto(garageTechnician),HttpStatus.CREATED);
-		
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<>(convertToDto(garageTechnician), HttpStatus.CREATED);
+
 	}
 
 	@DeleteMapping(value = { "/delete/garageTechnician/{technicianId}", "/delete/garageTechnician/{technicianId}/" })
 
 	public ResponseEntity<?> deleteGarageTechnician(@PathVariable("technicianId") Long technicianId)
 			throws IllegalArgumentException {
-				GarageTechnician garageTechnician = null;
-				try{
-					garageTechnician = garageService.getGarageTechnicianById(technicianId);
-					garageService.deleteGarageTechnician(garageTechnician);
-				}
-				catch(IllegalArgumentException e){
-					return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-				}
-				return new ResponseEntity<>(HttpStatus.CREATED);
-		
+		GarageTechnician garageTechnician = null;
+		try {
+			garageTechnician = garageService.getGarageTechnicianById(technicianId);
+			garageService.deleteGarageTechnician(garageTechnician);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
+
 	}
 }
