@@ -1,0 +1,163 @@
+namespace ca.mcgill.ecse321.projectgroup04.model;
+
+class User
+{
+  abstract;
+  unique userID;
+  password;
+  }
+
+class Customer
+{
+  isA User;
+  1 -> * Reminder;
+  1 -> 1 Profile customerProfile;
+}
+
+class Owner
+{
+  isA User;
+}
+
+class AdministrativeAssistant
+{
+  isA User;
+}
+
+class Car
+{
+  carID;
+  model;
+  color;
+  year;
+  1 -> 1 Customer carOwner;
+}
+
+class Service
+{
+  string serviceID;
+  int price;
+  abstract;
+  unique name;
+  
+}
+
+class BookableService
+{
+  isA Service;
+  int duration;
+}
+
+class EmergencyService
+{
+  string location;
+  isA Service;
+  1 -> 1 FieldTechnician technician;
+}
+
+class Appointment
+{
+  string appointmentID;
+  * -> 1 Customer customer;
+  * -> 1 GarageTechnician technician;
+  * -> 1 TimeSlot timeSlot;
+  1 -> 1 AppointmentReminder reminder;
+  1 -> 1 Receipt receipt;
+  * -> 1 BookableService bookableServices;
+}
+
+class BusinessHour
+{
+String hourID;
+  enum DayOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday }
+  DayOfWeek dayOfWeek;
+  Time startTime; 
+Time endTime;
+  
+}
+
+class Business
+{
+  name;
+  address;
+  phoneNumber;
+  emailAddress;
+  
+   
+  0..1 -> * BusinessHour businessHours;
+  0..1 -> * TimeSlot regular;
+}
+
+class Technician
+{
+  string name;
+  string technicianID;
+  abstract;
+}
+
+class FieldTechnician
+{
+  isA Technician;
+}
+
+class GarageTechnician
+{
+  isA Technician;
+}
+
+class TimeSlot
+{
+timeSlotID;
+Time startTime; 
+Date startDate;
+Time endTime; 
+Date endDate;
+Integer garageSpot;
+}
+
+
+class AutoRepairShop
+{
+	
+	String name;
+  1 <@>- * User user;
+  1 <@>- 1 Business business;
+  1 <@>- * Appointment appointments;
+  1 <@>- * TimeSlot timeSlots;
+  1 <@>- * Service services;
+}
+
+class Reminder
+{
+  String reminderID;
+  Date date; 
+ Time time;
+ message;
+  abstract;
+}
+
+class AppointmentReminder
+{
+    isA Reminder;
+}
+
+class CheckupReminder
+{
+    isA Reminder;
+}
+
+class Receipt
+{
+  string receiptID;
+  double totalPrice;
+}
+class Profile
+{
+  String profileID
+  addressLine;
+  phoneNumber;
+  firstName;
+  lastName;
+  zipCode;
+  emailAddress;
+}

@@ -1,0 +1,19 @@
+{
+    "editor.formatOnSave": true,
+
+    "java.semanticHighlighting.enabled": true,
+    "window.zoomLevel": 0,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "java.requirements.JDK11Warning": false,
+    "http.proxyAuthorization": null,
+    "java.test.config": {
+        "name": "AutoRepairShopSystemApplicationTests",
+        "workingDirectory": "${workspaceFolder}",
+        "env": {
+            "SPRING_DATASOURCE_URL": "jdbc:postgresql://ec2-52-7-168-69.compute-1.amazonaws.com:5432/de9m33j62vjqie?password=1cfab9f77f8a769d1653a1fc1e3a0b5850eb67db1dd48abbac95d5f344f5f038&sslmode=require&user=zoxsrpeaojeruy"
+        }
+    },
+    "java.configuration.updateBuildConfiguration": "disabled",
+    "git.ignoreLimitWarning": true,
+}
