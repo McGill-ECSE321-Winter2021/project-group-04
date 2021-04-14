@@ -6,7 +6,23 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <string name="book_action">Book Appointment</string>
+    <string name="emergency_action">Request Emergency</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="newperson_hint">Who?</string>
+    <string name="newperson_button">Add Person</string>
+    <string name="newevent_date_label">Date?</string>
+    <string name="personspinner_label">Person?</string>
+    <string name="eventspinner_label">Event?</string>
+    <string name="starttime_label">Start time?</string>
+    <string name="endtime_label">End time?</string>
+    <string name="newevent_date_first">01-01-2017</string>
+    <string name="newevent_button">Add Event</string>
+    <string name="starttime_first">10:00</string>
+    <string name="endtime_first">11:00</string>
+    <string name="register_button">Register</string>
+    <string name="newevent_hint">Event name?</string>
+    <string name="refresh_button">Refresh lists</string>
+    <string name="name_prompt">Select name</string>
 </resources>
