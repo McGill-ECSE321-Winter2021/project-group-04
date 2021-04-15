@@ -29,9 +29,9 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
     private String error = null;
-    private List<String> personNames = new ArrayList<>();
+    private List<String> serviceNames = new ArrayList<>();
     private ArrayAdapter<String> serviceAdapter;
-    private List<String> eventNames = new ArrayList<>();
+    private List<String> technicianNames = new ArrayList<>();
     private ArrayAdapter<String> techniciansAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +52,17 @@ public class MainActivity extends AppCompatActivity {
         Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
         Spinner technicianSpinner = (Spinner) findViewById(R.id.technicianspinner);
 
-        serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, personNames);
+        serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, serviceNames);
         serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         serviceSpinner.setAdapter(serviceAdapter);
 
-        techniciansAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, eventNames);
+        techniciansAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, technicianNames);
         techniciansAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         technicianSpinner.setAdapter(techniciansAdapter);
 
         // Get initial content for spinners
-        refreshLists(this.getCurrentFocus());
+        getBookableServices(this.getCurrentFocus());
+        getGarageTechnicians(this.getCurrentFocus());
     }
 
     @Override
@@ -167,27 +168,61 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(String.format("%02d-%02d-%04d", d, m + 1, y));
     }
 
-    public void refreshLists(View view) {
-        refreshList(serviceAdapter ,personNames, "people");
-        refreshList(techniciansAdapter, eventNames, "events");
+    public void getBookableServices(View view){
+        getBookableServicesBackend(serviceAdapter,serviceNames,"bookableServices");
     }
-
-    private void refreshList(final ArrayAdapter<String> adapter, final List<String> names, final String restFunctionName) {
+    public void getGarageTechnicians(View view){
+        getGarageTechniciansBackend(techniciansAdapter,technicianNames,"garageTechnicians");
+    }
+    private void getBookableServicesBackend(final ArrayAdapter<String> serviceAdapter, final List<String> bookableServices, final String restFunctionName) {
+        System.out.println("Getting services");
         HttpUtils.get(restFunctionName, new RequestParams(), new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                names.clear();
-                names.add("Please select...");
+                System.out.println("Got services");
+                bookableServices.clear();
+                bookableServices.add("Please select...");
                 for( int i = 0; i < response.length(); i++){
                     try {
-                        names.add(response.getJSONObject(i).getString("name"));
+                        bookableServices.add(response.getJSONObject(i).getString("name"));
                     } catch (Exception e) {
                         error += e.getMessage();
                     }
                     refreshErrorMessage();
                 }
-                adapter.notifyDataSetChanged();
+                serviceAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println("Failed services");
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+    }
+
+    private void getGarageTechniciansBackend(final ArrayAdapter<String> techniciansAdapter, final List<String> technicians, final String restFunctionName) {
+        HttpUtils.get(restFunctionName, new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                technicians.clear();
+                technicians.add("Please select...");
+                for( int i = 0; i < response.length(); i++){
+                    try {
+                        technicians.add(response.getJSONObject(i).getString("name"));
+                    } catch (Exception e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+                serviceAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -201,4 +236,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
