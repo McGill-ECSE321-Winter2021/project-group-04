@@ -25,4 +25,6 @@
     <string name="newevent_hint">Event name?</string>
     <string name="refresh_button">Refresh lists</string>
     <string name="name_prompt">Select name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
