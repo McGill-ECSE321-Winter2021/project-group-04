@@ -9,4 +9,20 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="location">Location</string>
+    <string name="book">Book</string>
+    <string name="emergency_service">Emergency Service</string>
+    <string name="log_out">Log Out</string>
+    <string name="bookable_service">Bookable Service</string>
+    <string name="receipts">Receipts</string>
+        <string-array name="Services">
+            <item>Mercury</item>
+            <item>Venus</item>
+            <item>Earth</item>
+        </string-array>
+        <string-array name="Technicians">
+            <item>Mercury</item>
+            <item>Venus</item>
+            <item>Earth</item>
+        </string-array>
 </resources>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:textAlignment="center"
+    tools:context=".EmergencyService">
+
+    <LinearLayout
+        android:id="@+id/mainPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <Button
+            android:id="@+id/logOut"
+            android:backgroundTint="#696969"
+            android:textColor="#FFFFFF"
+            android:layout_width="123dp"
+            android:layout_height="wrap_content"
+            android:text="@string/log_out"
+            android:translationX="285dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:paddingTop="25dp"
+            android:text="@string/emergency_service"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <Spinner
+            android:id="@+id/Services"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_margin="50dp" />
+
+        <EditText
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:text="@string/location" />
+
+        <Spinner
+            android:id="@+id/Technicians"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:layout_margin="50dp" />
+
+        <Button
+            android:id="@+id/bookEmergency"
+            android:layout_width="313dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#696969"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:text="@string/book"
+            android:translationX="55dp" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigationBarEmergencyService"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent">
+
+            <LinearLayout
+
+                android:id="@+id/navBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingTop="30dp">
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#696969"
+                    android:textColor="#FFFFFF"
+                    android:text="@string/bookable_service"
+                    android:textSize="12dp" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#BC5F01"
+                    android:text="Emergency"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
