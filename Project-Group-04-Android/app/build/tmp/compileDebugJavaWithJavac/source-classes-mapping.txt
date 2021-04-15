@@ -1,0 +1,13 @@
+ca/mcgill/ecse321/projectgroup04/MainActivity.java
+ ca.mcgill.ecse321.projectgroup04.MainActivity
+ ca.mcgill.ecse321.projectgroup04.MainActivity$1
+ca/mcgill/ecse321/projectgroup04/FirstFragment.java
+ ca.mcgill.ecse321.projectgroup04.FirstFragment
+ ca.mcgill.ecse321.projectgroup04.FirstFragment$1
+ca/mcgill/ecse321/projectgroup04/SecondFragment.java
+ ca.mcgill.ecse321.projectgroup04.SecondFragment
+ ca.mcgill.ecse321.projectgroup04.SecondFragment$1
+ca/mcgill/ecse321/projectgroup04/BuildConfig.java
+ ca.mcgill.ecse321.projectgroup04.BuildConfig
+ca/mcgill/ecse321/projectgroup04/EmergencyService.java
+ ca.mcgill.ecse321.projectgroup04.EmergencyService
