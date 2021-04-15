@@ -30,9 +30,9 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
     private String error = null;
     private List<String> personNames = new ArrayList<>();
-    private ArrayAdapter<String> personAdapter;
+    private ArrayAdapter<String> serviceAdapter;
     private List<String> eventNames = new ArrayList<>();
-    private ArrayAdapter<String> eventAdapter;
+    private ArrayAdapter<String> techniciansAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,16 +49,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         refreshErrorMessage();
-        Spinner personSpinner = (Spinner) findViewById(R.id.personspinner);
-        Spinner eventSpinner = (Spinner) findViewById(R.id.eventspinner);
+        Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
+        Spinner technicianSpinner = (Spinner) findViewById(R.id.technicianspinner);
 
-        personAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, personNames);
-        personAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        personSpinner.setAdapter(personAdapter);
+        serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, personNames);
+        serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        serviceSpinner.setAdapter(serviceAdapter);
 
-        eventAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, eventNames);
-        eventAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        eventSpinner.setAdapter(eventAdapter);
+        techniciansAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, eventNames);
+        techniciansAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        technicianSpinner.setAdapter(techniciansAdapter);
 
         // Get initial content for spinners
         refreshLists(this.getCurrentFocus());
@@ -98,26 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void addPerson(View v) {
-        error = "";
-        final TextView tv = (TextView) findViewById(R.id.newperson_name);
-        HttpUtils.post("persons/" + tv.getText().toString(), new RequestParams(), new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                refreshErrorMessage();
-                tv.setText("");
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    error += errorResponse.get("message").toString();
-                } catch (JSONException e) {
-                    error += e.getMessage();
-                }
-                refreshErrorMessage();
-            }
-        });
-    }
+
 
     private Bundle getTimeFromLabel(String text) {
         Bundle rtn = new Bundle();
@@ -187,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshLists(View view) {
-        refreshList(personAdapter ,personNames, "people");
-        refreshList(eventAdapter, eventNames, "events");
+        refreshList(serviceAdapter ,personNames, "people");
+        refreshList(techniciansAdapter, eventNames, "events");
     }
 
     private void refreshList(final ArrayAdapter<String> adapter, final List<String> names, final String restFunctionName) {
