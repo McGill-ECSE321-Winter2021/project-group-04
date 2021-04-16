@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
-    tools:context=".WelcomeFragment">
+    tools:context=".WelcomeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Welcome to our Auto Repair Shop System!"
+                android:text="Welcome to our Auto Repair Shop!"
                 android:textColor="#696969"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -52,9 +52,11 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    app:hintEnabled="false" />
+                    app:hintEnabled="false">
+
+                </com.google.android.material.textfield.TextInputLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -70,21 +72,24 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     app:hintEnabled="false"
-                    app:passwordToggleEnabled="true"/>
+                    app:passwordToggleEnabled="true">
+
+
+                </com.google.android.material.textfield.TextInputLayout>
             </androidx.cardview.widget.CardView>
 
             <Button
 
-                android:id="@+id/log_in_btn2"
+                android:id="@+id/log_in_btn1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
 
                 android:layout_gravity="center"
-                android:text="Log In"/>
+                android:text="Login"/>
 
             <Button
-                android:id="@+id/register_btn2"
+                android:id="@+id/register_btn1"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
