@@ -6,9 +6,11 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <string name="book_action">Book Appointment</string>
+    <string name="emergency_action">Request Emergency</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+<<<<<<< HEAD
     <string name="location">Location</string>
     <string name="book">Book</string>
     <string name="emergency_service">Emergency Service</string>
@@ -25,4 +27,23 @@
             <item>Venus</item>
             <item>Earth</item>
         </string-array>
+=======
+    <string name="newperson_hint">Who?</string>
+    <string name="newperson_button">Add Person</string>
+    <string name="newappointment_date_label">Date?</string>
+    <string name="servicespinner_label">Service?</string>
+    <string name="technicianspinner_label">Technician?</string>
+    <string name="starttime_label">Time?</string>
+    <string name="spot_label">Spot?</string>
+    <string name="newappointment_date_first">01-01-2017</string>
+    <string name="newevent_button">Add Event</string>
+    <string name="starttime_first">10:00</string>
+    <string name="spot_first">1</string>
+    <string name="register_button">Register</string>
+    <string name="newevent_hint">Event name?</string>
+    <string name="refresh_button">Refresh lists</string>
+    <string name="name_prompt">Select name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+>>>>>>> b8db0b2521d0c7bf1aae7076ffa042d4effbf20d
 </resources>
