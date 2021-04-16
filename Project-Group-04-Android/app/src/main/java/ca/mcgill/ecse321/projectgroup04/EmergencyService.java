@@ -35,7 +35,7 @@ public class EmergencyService extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emergency_service_booking);
         refreshErrorMessage();
-        
+
 
         //Services spinner
         serviceSpinner = (Spinner) findViewById(R.id.Services);
