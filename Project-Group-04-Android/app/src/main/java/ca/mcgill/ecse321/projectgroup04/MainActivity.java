@@ -40,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        refreshErrorMessage();
+//        FloatingActionButton fab = findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
         Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
         Spinner technicianSpinner = (Spinner) findViewById(R.id.technicianspinner);
         Spinner garageSpotSpinner = (Spinner) findViewById(R.id.spotspinner);
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         techniciansAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, technicianNames);
         techniciansAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         technicianSpinner.setAdapter(techniciansAdapter);
-
+        refreshErrorMessage();
 
     }
 
