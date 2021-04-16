@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
-        refreshErrorMessage();
         Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
         Spinner technicianSpinner = (Spinner) findViewById(R.id.garage_techs);
         Spinner garageSpotSpinner = (Spinner) findViewById(R.id.spots);
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         techniciansAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, technicianNames);
         techniciansAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         technicianSpinner.setAdapter(techniciansAdapter);
-
+        refreshErrorMessage();
 
     }
 
