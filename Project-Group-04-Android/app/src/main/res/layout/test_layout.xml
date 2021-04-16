@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     android:textAlignment="center">
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <LinearLayout
         android:id="@+id/mainPage"
         android:layout_width="match_parent"
@@ -17,19 +22,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <Button
-            android:id="@+id/logOut"
-            android:layout_width="123dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#696969"
-            android:text="@string/log_out"
-            android:textColor="#FFFFFF"
-            android:translationX="270dp" />
-
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
-            android:layout_height="91dp"
+            android:layout_height="70dp"
             android:paddingTop="25dp"
             android:text="@string/emergency_service"
             android:textAlignment="center"
@@ -43,13 +39,13 @@
         <Spinner
             android:id="@+id/em_service"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="45dp"
             android:layout_margin="50dp" />
 
         <EditText
             android:id="@+id/location"
             android:layout_width="match_parent"
-            android:layout_height="88dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
             android:importantForAutofill="no"
@@ -59,7 +55,7 @@
         <Spinner
             android:id="@+id/field_techs"
             android:layout_width="match_parent"
-            android:layout_height="71dp"
+            android:layout_height="45dp"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="50dp"
             android:layout_marginRight="50dp"
@@ -71,7 +67,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#696969"
             android:gravity="center"
-            android:text="@string/book"
+            android:text="request"
             android:textColor="#FFFFFF"
             android:translationX="35dp" />
 
@@ -94,22 +90,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="#696969"
-                    android:text="@string/bookable_service"
+                    android:backgroundTint="#000000"
+                    android:text="Appointment"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
-
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/logOut"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:backgroundTint="#BC5F01"
-                    android:text="@string/emergency"
-                    android:textColor="#FFFFFF" />
+                    android:backgroundTint="#000000"
+                    android:text="@string/log_out"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"/>
 
             </LinearLayout>
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
