@@ -1,0 +1,4 @@
+ca/mcgill/ecse321/projectgroup04/ExampleInstrumentedTest.java
+ ca.mcgill.ecse321.projectgroup04.ExampleInstrumentedTest
+ca/mcgill/ecse321/projectgroup04/test/BuildConfig.java
+ ca.mcgill.ecse321.projectgroup04.test.BuildConfig
