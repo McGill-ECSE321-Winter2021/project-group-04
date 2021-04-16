@@ -1,5 +1,7 @@
 # Welcome to Group-04!
-project-group-04 created by GitHub Classroom
+
+Here is a link to the minutes of our meetings:
+[Minute Reference](https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference)
 
 ## Meet the Team
 
