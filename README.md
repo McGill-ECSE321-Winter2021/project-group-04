@@ -1,4 +1,4 @@
-# Welcom to Group-04!
+# Welcome to Group-04!
 project-group-04 created by GitHub Classroom
 
 ## Meet the Team
