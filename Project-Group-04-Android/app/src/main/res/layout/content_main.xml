@@ -25,15 +25,7 @@
             android:textColor="#FF0000"
             android:visibility="gone" />
 
-        <Button
-            android:id="@+id/logOut"
-            android:layout_width="123dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#696969"
-            android:text="@string/log_out"
-            android:textColor="#FFFFFF"
 
-            android:translationX="140dp" />
 
         <TextView
             android:id="@+id/textView5"
@@ -138,10 +130,45 @@
             android:translationX="35dp" />
 
 
-        
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/navigationBarEmergencyService"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent">
+
+        <LinearLayout
+
+            android:id="@+id/navBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingTop="10dp">
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#000000"
+                android:text="Emergency"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/logOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#000000"
+                android:text="@string/log_out"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
     </LinearLayout>
+
     </ScrollView>
 
-<!--    </LinearLayout>-->
 
 </RelativeLayout>
