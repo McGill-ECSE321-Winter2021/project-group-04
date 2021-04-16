@@ -22,13 +22,13 @@
 
     <string name="newperson_hint">Who?</string>
     <string name="newperson_button">Add Person</string>
-    <string name="newappointment_date_label">Date?</string>
-    <string name="servicespinner_label">Service?</string>
+    <string name="newappointment_date_label">Appointment date</string>
+<!--    <string name="servicespinner_label">Service?</string>-->
     <string name="technicianspinner_label">Technician?</string>
     <string name="spotspinner_label">Spot?</string>
-    <string name="starttime_label">Time?</string>
+    <string name="starttime_label">Appointment time</string>
     <string name="starttime_first">10:00</string>
-    <string name="spot_label">Spot?</string>
+    <string name="spt">Spot</string>
     <string name="spot_prompt">Select Garage Spot</string>
     <string name="technician_prompt">Select Technician</string>
     <string name="newappointment_date_first">04-16-2021</string>
