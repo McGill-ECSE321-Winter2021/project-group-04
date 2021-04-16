@@ -17,8 +17,8 @@
     <string name="log_out">Log Out</string>
     <string name="bookable_service">Bookable Service</string>
     <string name="receipts">Receipts</string>
-    <string name="Services">Services</string>
-    <string name="Technicians">Technicians</string>
+    <string name="em_service">Services</string>
+    <string name="field_techs">Technicians</string>
 
     <string name="newperson_hint">Who?</string>
     <string name="newperson_button">Add Person</string>
