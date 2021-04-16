@@ -1,6 +1,5 @@
 # Welcome to Group-04!
 
-Our project report can be found [here]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Project-Report
 ## Meet the Team
 
 | Name            | GitHub         | Major                | Year |
@@ -55,6 +54,10 @@ Our project report can be found [here]:https://github.com/McGill-ECSE321-Winter2
 | Cesar Lahoud    |  Book Emergency Service page | 50 |
 | Yasmina Matta   |  Book Appointment page  | 50 |
 | Abrar Fahad     |  Login Logout Register page     | 50 |
+
+Click for [ project report!]
+
+[ project report!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Project-Report
 
 Click for [ meeting minutes!]
 
