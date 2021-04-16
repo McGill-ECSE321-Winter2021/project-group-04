@@ -1,8 +1,6 @@
 # Welcome to Group-04!
 
-Here is a link to the minutes of our meetings:
-[Minute Reference](https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference)
-
+Our project report can be found [here]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Project-Report
 ## Meet the Team
 
 | Name            | GitHub         | Major                | Year |
