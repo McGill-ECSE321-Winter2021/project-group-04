@@ -5,8 +5,7 @@
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textAlignment="center"
-    tools:context=".EmergencyService">
+    android:textAlignment="center">
 
     <LinearLayout
         android:id="@+id/mainPage"
@@ -36,8 +35,13 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+        <TextView
+            android:id="@+id/emergencyError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Spinner
-            android:id="@+id/Services"
+            android:id="@+id/em_service"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_margin="50dp" />
@@ -53,20 +57,23 @@
             android:text="@string/location" />
 
         <Spinner
-            android:id="@+id/Technicians"
+            android:id="@+id/field_techs"
             android:layout_width="match_parent"
             android:layout_height="71dp"
-            android:layout_margin="50dp" />
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="30dp" />
 
         <Button
             android:id="@+id/bookEmergency"
             android:layout_width="313dp"
             android:layout_height="wrap_content"
             android:backgroundTint="#696969"
-            android:textColor="#FFFFFF"
             android:gravity="center"
             android:text="@string/book"
-            android:translationX="55dp" />
+            android:textColor="#FFFFFF"
+            android:translationX="35dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigationBarEmergencyService"
@@ -80,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:paddingTop="30dp">
+                android:paddingTop="10dp">
 
                 <Button
                     android:id="@+id/button4"
@@ -88,8 +95,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="#696969"
-                    android:textColor="#FFFFFF"
                     android:text="@string/bookable_service"
+                    android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 
                 <Button
