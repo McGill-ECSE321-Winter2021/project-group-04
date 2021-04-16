@@ -51,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
         refreshErrorMessage();
         Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
         Spinner technicianSpinner = (Spinner) findViewById(R.id.technicianspinner);
+        Spinner garageSpotSpinner = (Spinner) findViewById(R.id.spotspinner);
+
+        ArrayAdapter<CharSequence> spotAdapter = ArrayAdapter.createFromResource(this,R.array.spotspinner,android.R.layout.simple_spinner_item);
+        spotAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        garageSpotSpinner.setAdapter(spotAdapter);
+// Get initial content for spinners
+        getBookableServices(this.getCurrentFocus());
+        getGarageTechnicians(this.getCurrentFocus());
 
         serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, serviceNames);
         serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -60,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
         techniciansAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         technicianSpinner.setAdapter(techniciansAdapter);
 
-        // Get initial content for spinners
-        getBookableServices(this.getCurrentFocus());
-        getGarageTechnicians(this.getCurrentFocus());
+
     }
 
     @Override
