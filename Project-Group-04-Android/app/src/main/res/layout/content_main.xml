@@ -70,6 +70,26 @@
                         android:layout_margin="0dp"/>
 
                 </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:text="@string/spotspinner_label"/>
+
+                    <Spinner
+                        android:id="@+id/spotspinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Garage spot"
+                        android:layout_gravity="end"
+                        android:prompt="@string/spot_prompt"
+                        android:layout_margin="0dp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
@@ -130,25 +150,7 @@
                     android:text="@string/starttime_first" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/spot_label" />
-
-                <TextView
-                    android:id="@+id/endtime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:onClick="showTimePickerDialog"
-                    android:text="@string/spot_first" />
-            </LinearLayout>
 
             <Button
                 android:layout_width="wrap_content"
