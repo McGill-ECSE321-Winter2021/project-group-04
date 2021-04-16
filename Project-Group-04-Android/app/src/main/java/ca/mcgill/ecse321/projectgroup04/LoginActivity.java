@@ -51,10 +51,22 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser();
             }
         });
+
+        registerButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRegistrationActivity();
+            }
+        });
     }
 
     public void openWelcomeActivity(){
         Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
+    }
+
+    public void openRegistrationActivity(){
+        Intent intent = new Intent (this, CustomerRegistrationActivity.class);
         startActivity(intent);
     }
 
@@ -67,10 +79,10 @@ public class LoginActivity extends AppCompatActivity {
         String password = ePassword.getText().toString();
 
         RequestParams requestParams = new RequestParams();
-        requestParams.add("userId", userId);
         requestParams.add("password", password);
 
         String url = "/login/" + userId;
+        System.out.println(url);
 
         error = "";
 
@@ -81,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         HttpUtils.post(url, requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                System.out.println("Login Successful");
                 refreshErrorMessage();
                 goToCustomerHomePage();
                 eUserId.setText("");
@@ -89,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse){
                 try {
+                    System.out.println("Login Failed");
                     ePassword.setText("");
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e){
