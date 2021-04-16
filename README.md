@@ -54,7 +54,7 @@ project-group-04 created by GitHub Classroom
 | Artus Julliard  |  Book Emergency Service | 50 |
 | Cesar Lahoud    |  Book Emergency Service page | 50 |
 | Yasmina Matta   |  Book Appointment page  | 50 |
-| Abrar Fahad     |  Login Logout page     | 50 |
+| Abrar Fahad     |  Login Logout Register page     | 50 |
 
 Click for [ meeting minutes!]
 
