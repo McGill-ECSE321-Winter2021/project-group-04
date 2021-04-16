@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -69,11 +70,19 @@ public class LoginActivity extends AppCompatActivity {
         requestParams.add("userId", userId);
         requestParams.add("password", password);
 
-         error = "";
+        String url = "/login/" + userId;
 
-        HttpUtils.post("/login/", requestParams, new JsonHttpResponseHandler(){
+        error = "";
+
+        if (userId.isEmpty() || password.isEmpty()){
+            Toast.makeText(LoginActivity.this, "Please enter your login credentials!", Toast.LENGTH_SHORT).show();
+        }
+
+        HttpUtils.post(url, requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                refreshErrorMessage();
+                goToCustomerHomePage();
                 eUserId.setText("");
                 ePassword.setText("");
             }
@@ -85,21 +94,28 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e){
                     error += e.getMessage();
                 }
+
+                refreshErrorMessage();
             }
 
         });
 
-        if (userId.isEmpty() || password.isEmpty()){
-            Toast.makeText(LoginActivity.this, "Please enter your login credentials!", Toast.LENGTH_SHORT).show();
-        }
-
-        else {
-            goToCustomerHomePage();
-        }
     }
 
-    public void goToCustomerHomePage(){
+    private void goToCustomerHomePage(){
         Intent intent = new Intent(this, MainActivity.class); // Might need to be changed
         startActivity(intent);
+    }
+
+    private void refreshErrorMessage(){
+
+        TextView tvError = (TextView) findViewById(R.id.errorText1);
+        tvError.setText(error);
+
+        if (error == null || error.length() == 0){
+            tvError.setVisibility(View.GONE);
+        } else {
+            tvError.setVisibility(View.VISIBLE);
+        }
     }
 }

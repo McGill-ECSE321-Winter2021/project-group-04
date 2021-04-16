@@ -32,7 +32,7 @@ public class WelcomeActivity extends AppCompatActivity {
         registerButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openUserSelectActivity();
+                openCustomerRegistrationActivity();
             }
         });
 
@@ -44,8 +44,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
 
-    public void openUserSelectActivity(){
-        Intent intent = new Intent(this, UserSelectActivity.class);
+    public void openCustomerRegistrationActivity(){
+        Intent intent = new Intent(this, CustomerRegistrationActivity.class);
         startActivity(intent);
     }
 }
