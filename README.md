@@ -1,5 +1,7 @@
-# Welcom to Group-04!
-project-group-04 created by GitHub Classroom
+# Welcome to Group-04!
+
+Here is a link to the minutes of our meetings:
+[Minute Reference](https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference)
 
 ## Meet the Team
 
@@ -47,6 +49,14 @@ project-group-04 created by GitHub Classroom
 | Yasmina Matta   | Appointment and Emergency Service booking, profile, car, receipts, Home Pages    | 100 |
 | Abrar Fahad     | Welcome page, Login, Logout, Registration, Profile and Car creation              | 100 |
 
+### Sprint 4
+| Name            | Tasks                                                                 | Time in hours |
+| --------------- |:--------------------------------------------------------------------------------:|---:|  
+| Mohamad Dimassi |  Book Appointment page | 50 |
+| Artus Julliard  |  Book Emergency Service page | 50 |
+| Cesar Lahoud    |  Book Emergency Service page | 50 |
+| Yasmina Matta   |  Book Appointment page  | 50 |
+| Abrar Fahad     |  Login Logout Register page     | 50 |
 
 Click for [ meeting minutes!]
 
