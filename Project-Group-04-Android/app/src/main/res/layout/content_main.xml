@@ -32,6 +32,7 @@
             android:backgroundTint="#696969"
             android:text="@string/log_out"
             android:textColor="#FFFFFF"
+
             android:translationX="140dp" />
 
         <TextView
@@ -127,6 +128,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="10dp"
+
             android:layout_marginRight="50dp"
             android:layout_marginBottom="00dp"
             android:backgroundTint="#696969"
@@ -135,17 +137,11 @@
             android:textColor="#FFFFFF"
             android:translationX="35dp" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
+        
     </LinearLayout>
     </ScrollView>
+
 <!--    </LinearLayout>-->
 
 </RelativeLayout>
