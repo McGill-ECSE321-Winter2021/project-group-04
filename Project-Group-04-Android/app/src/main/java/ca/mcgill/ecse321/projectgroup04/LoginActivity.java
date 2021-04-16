@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestParams requestParams = new RequestParams();
         requestParams.add("password", password);
 
-        String url = "/login/" + userId;
+        String url = "/login/" + userId + "/";
         System.out.println(url);
 
         error = "";
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse){
                 try {
-                    System.out.println("Login Failed");
+                    System.out.println(errorResponse);
                     ePassword.setText("");
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e){
