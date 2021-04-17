@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +47,15 @@ public class EmergencyService extends AppCompatActivity {
 
         getFieldTechnicians();
         getEmergencyServices();
+
+        Button logoutButton = findViewById(R.id.logOut2);
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
 
         //requestEmergencyService(this.getCurrentFocus());
 
@@ -258,6 +268,35 @@ public class EmergencyService extends AppCompatActivity {
         } else {
             tvError.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void logoutUser(){
+        error = "";
+        HttpUtils.post("/logout/", new RequestParams(), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                goToWelcomePage();
+                System.out.println("Logged Out");
+                refreshErrorMessage();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse){
+                try {
+                    System.out.println(errorResponse);
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e){
+                    error += e.getMessage();
+                }
+
+                refreshErrorMessage();
+            }
+        });
+    }
+
+    public void goToWelcomePage(){
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
     }
 
 }
