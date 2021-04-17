@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -43,7 +44,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button logoutButton = findViewById(R.id.logOut);
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutUser();
+            }
+        });
 
         Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
         Spinner technicianSpinner = (Spinner) findViewById(R.id.technicianspinner);
@@ -410,7 +418,34 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void logoutUser(){
+        error = "";
+        HttpUtils.post("/logout", new RequestParams(), new JsonHttpResponseHandler(){
+           @Override
+           public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+               goToWelcomePage();
+               System.out.println("Logged Out");
+               refreshErrorMessage();
+           }
 
+           @Override
+           public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse){
+               try {
+                   System.out.println(errorResponse);
+                   error += errorResponse.get("message").toString();
+               } catch (JSONException e){
+                   error += e.getMessage();
+               }
+
+               refreshErrorMessage();
+           }
+        });
+    }
+
+    public void goToWelcomePage(){
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        startActivity(intent);
+    }
 
 }
 
