@@ -50,8 +50,8 @@
 | Name            | Tasks                                                                 | Time in hours |
 | --------------- |:--------------------------------------------------------------------------------:|---:|  
 | Mohamad Dimassi |  Book Appointment page | 50 |
-| Artus Julliard  |  Book Emergency Service page | 50 |
-| Cesar Lahoud    |  Book Emergency Service page | 50 |
+| Artus Julliard  |  Book Emergency Service page and wiki documentation | 50 |
+| Cesar Lahoud    |  Book Emergency Service page and wiki documentation | 50 |
 | Yasmina Matta   |  Book Appointment page  | 50 |
 | Abrar Fahad     |  Login Logout Register page     | 50 |
 
