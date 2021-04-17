@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.projectgroup04.controller;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,6 @@ import ca.mcgill.ecse321.projectgroup04.service.CustomerService;
 import ca.mcgill.ecse321.projectgroup04.service.EmergencyServiceService;
 import ca.mcgill.ecse321.projectgroup04.service.FieldTechnicianService;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class EmergencyServiceController {
@@ -34,7 +32,7 @@ public class EmergencyServiceController {
 	@Autowired
 	private CustomerService customerService;
 
-    private EmergencyServiceDto convertToDto(EmergencyService emergencyService) {
+	private EmergencyServiceDto convertToDto(EmergencyService emergencyService) {
 		if (emergencyService == null) {
 			throw new IllegalArgumentException("There is no such Emergency Service!");
 		}
@@ -62,7 +60,7 @@ public class EmergencyServiceController {
 
 	}
 
-    private CustomerDto convertToDto(Customer customer) {
+	private CustomerDto convertToDto(Customer customer) {
 		if (customer == null) {
 			throw new IllegalArgumentException("There is no such Customer!");
 		}
@@ -73,7 +71,7 @@ public class EmergencyServiceController {
 		return customerDto;
 	}
 
-    public ReceiptDto convertToDto(Receipt receipt) {
+	public ReceiptDto convertToDto(Receipt receipt) {
 		if (receipt == null) {
 			throw new IllegalArgumentException("There is no such Receipt!");
 		}
@@ -82,7 +80,7 @@ public class EmergencyServiceController {
 		return receiptDto;
 	}
 
-    private FieldTechnicianDto convertToDto(FieldTechnician fieldTechnician) {
+	private FieldTechnicianDto convertToDto(FieldTechnician fieldTechnician) {
 		if (fieldTechnician == null) {
 			throw new IllegalArgumentException("There is no such Field Technician!");
 		}
@@ -94,7 +92,7 @@ public class EmergencyServiceController {
 
 	}
 
-    private CarDto convertToDto(Car car) {
+	private CarDto convertToDto(Car car) {
 		if (car == null) {
 			throw new IllegalArgumentException("There is no such Car!");
 		}
@@ -103,7 +101,7 @@ public class EmergencyServiceController {
 		return carDto;
 	}
 
-    private ProfileDto convertToDto(Profile profile) {
+	private ProfileDto convertToDto(Profile profile) {
 		if (profile == null) {
 			throw new IllegalArgumentException("There is no such Profile!");
 		}
@@ -114,16 +112,15 @@ public class EmergencyServiceController {
 
 	}
 
-    @GetMapping(value = { "/emergencyServices", "/emergencyServices/" })
+	@GetMapping(value = { "/emergencyServices", "/emergencyServices/" })
 	public List<EmergencyServiceDto> getAllEmergencyServices() {
-		
-		
+
 		List<EmergencyServiceDto> emergencyServiceDtos = new ArrayList<>();
 		for (EmergencyService emergencyService : emergencyServiceService.getAllEmergencyServices()) {
 			if (!emergencyService.getName().contains("for")) {
-				emergencyServiceDtos.add(convertToDto(emergencyService));			
+				emergencyServiceDtos.add(convertToDto(emergencyService));
 			}
-			
+
 		}
 
 		return emergencyServiceDtos;
@@ -147,26 +144,25 @@ public class EmergencyServiceController {
 
 	}
 
-	@PostMapping(value = { "/book/emergencyService/{userId}",
-			"/book/emergencyService/{userId}/" })
+	@PostMapping(value = { "/book/emergencyService/{userId}", "/book/emergencyService/{userId}/" })
 	public ResponseEntity<?> bookEmergencyService(@PathVariable("userId") String userId,
-			@RequestParam(name ="serviceName") String serviceName, @RequestParam(name = "Location") String location,
+			@RequestParam(name = "serviceName") String serviceName, @RequestParam(name = "Location") String location,
 			@RequestParam(name = "fieldTechnicianId") Long fieldTechnicianId) throws IllegalArgumentException {
 
-		FieldTechnician fieldTechnician=null;
+		FieldTechnician fieldTechnician = null;
 		String nameOfBooking = null;
-		EmergencyService bookableEmergencyService=null;
+		EmergencyService bookableEmergencyService = null;
 		try {
-			
+
 			fieldTechnician = fieldService.getFieldTechnicianById(fieldTechnicianId); // get
 			nameOfBooking = serviceName + " for " + userId; // service for that user
-			bookableEmergencyService = emergencyServiceService.bookEmergencyService(nameOfBooking,
-					serviceName, location, userId, fieldTechnician);
-		} catch(IllegalArgumentException e) {
-			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+			bookableEmergencyService = emergencyServiceService.bookEmergencyService(nameOfBooking, serviceName,
+					location, userId, fieldTechnician);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		return new ResponseEntity<>(convertToDto(bookableEmergencyService),HttpStatus.CREATED);
+
+		return new ResponseEntity<>(convertToDto(bookableEmergencyService), HttpStatus.CREATED);
 	}
 
 	// Will not allow updating emergency service as it is spontaneous
@@ -200,37 +196,41 @@ public class EmergencyServiceController {
 	}
 
 	@PostMapping(value = { "/end/emergencyService/{serviceId}", "/end/emergencyService/{serviceId}/" })
-	public ResponseEntity<?> endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId) throws IllegalArgumentException {
+	public ResponseEntity<?> endEmergencyServiceBooking(@PathVariable("serviceId") Long serviceId)
+			throws IllegalArgumentException {
 		EmergencyService emergencyServiceBooking = null;
 		try {
 			emergencyServiceBooking = emergencyServiceService.getEmergencyServiceByServiceId(serviceId);
 			emergencyServiceService.endEmergencyService(emergencyServiceBooking);
-		} catch(IllegalArgumentException e) {
-			return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	} // only admin/owner can end an emergency service
-
 
 	@GetMapping(value = { "/onGoingEmergencies", "/onGoingEmergencies/" })
 	public List<EmergencyService> getOnGoingEmergencies() {
 		return emergencyServiceService.getCurrentEmergencyServices();
 	}
-	@GetMapping(value= { "/booked/emergencies/{userId}", "/booked/emergencies/{userId}/"})
-	public List<EmergencyServiceDto> getReceiptsOfEmergencies(@PathVariable("userId") String userId){
+
+	@GetMapping(value = { "/booked/emergencies/{userId}", "/booked/emergencies/{userId}/" })
+	public List<EmergencyServiceDto> getReceiptsOfEmergencies(@PathVariable("userId") String userId) {
 		List<EmergencyServiceDto> emergencyServiceDto = new ArrayList<EmergencyServiceDto>();
-		for (EmergencyService emergencies : customerService.getEmergencyServiceOfCustomer(userId) ) {
+		for (EmergencyService emergencies : customerService.getEmergencyServiceOfCustomer(userId)) {
 			emergencyServiceDto.add(convertToDto(emergencies));
 		}
 		return emergencyServiceDto;
 	}
-	@GetMapping(value = { "/emergencyServices/{name}", "/emergencyServices/{name}/" })
-	public EmergencyServiceDto getEmergencyServiceByName(@PathVariable("name") String name) {
+	// @GetMapping(value = { "/emergencyServices/{name}",
+	// "/emergencyServices/{name}/" })
+	// public EmergencyServiceDto getEmergencyServiceByName(@PathVariable("name")
+	// String name) {
 
-		EmergencyService emergencyService = emergencyServiceService.findEmergencyServiceByServiceName(name);
-		if (emergencyService == null) {
-			throw new IllegalArgumentException("No such emergency service exists!");
-		}
-		return convertToDto(emergencyService);
-	}
+	// EmergencyService emergencyService =
+	// emergencyServiceService.findEmergencyServiceByServiceName(name);
+	// if (emergencyService == null) {
+	// throw new IllegalArgumentException("No such emergency service exists!");
+	// }
+	// return convertToDto(emergencyService);
+	// }
 }

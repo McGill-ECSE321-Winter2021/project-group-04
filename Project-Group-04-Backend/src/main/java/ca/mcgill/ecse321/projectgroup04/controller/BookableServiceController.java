@@ -19,17 +19,14 @@ import ca.mcgill.ecse321.projectgroup04.dto.*;
 import ca.mcgill.ecse321.projectgroup04.model.*;
 import ca.mcgill.ecse321.projectgroup04.service.BookableServiceService;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class BookableServiceController {
 
-
 	@Autowired
 	private BookableServiceService bookService;
 
-
-    public BookableServiceDto convertToDto(BookableService bookableService) {
+	public BookableServiceDto convertToDto(BookableService bookableService) {
 		if (bookableService == null) {
 			throw new IllegalArgumentException("There is no such BookableService!");
 		}
@@ -39,7 +36,7 @@ public class BookableServiceController {
 		return bookableServiceDto;
 	}
 
-    @GetMapping(value = { "/bookableServices", "/bookableServices/" })
+	@GetMapping(value = { "/bookableServices", "/bookableServices/" })
 	public List<BookableServiceDto> getAllBookableServices() {
 		List<BookableServiceDto> bookableServiceDtos = new ArrayList<>();
 		for (BookableService bookableService : bookService.getAllBookableServices()) {
@@ -70,7 +67,7 @@ public class BookableServiceController {
 		return new ResponseEntity<>(convertToDto(bookableService), HttpStatus.CREATED);
 	}
 
-    @DeleteMapping(value = { "/delete/bookableService/{serviceId}", "/delete/bookableService/{serviceId}/" })
+	@DeleteMapping(value = { "/delete/bookableService/{serviceId}", "/delete/bookableService/{serviceId}/" })
 	public ResponseEntity<?> deleteBookableService(@PathVariable("serviceId") Long serviceId)
 			throws IllegalArgumentException {
 		BookableService bookableService = null;
@@ -95,14 +92,16 @@ public class BookableServiceController {
 		}
 		return new ResponseEntity<>(convertToDto(bookableService), HttpStatus.CREATED);
 	}
-	
-	@GetMapping(value = { "/bookableServices/{name}", "/bookableServices/{name}/" })
-	public BookableServiceDto getBookableServiceByName(@PathVariable("name") String name) {
 
-		BookableService bookableService = bookableServiceService.findBookableServiceByServiceName(name);
-		if (bookableService == null) {
-			throw new IllegalArgumentException("No such bookable service exists!");
-		}
-		return convertToDto(bookableService);
-	}
+	// @GetMapping(value = { "/bookableServices/{name}", "/bookableServices/{name}/"
+	// })
+	// public BookableServiceDto getBookableServiceByName(@PathVariable("name")
+	// String name) {
+
+	// BookableService bookableService = bookService.get
+	// if (bookableService == null) {
+	// throw new IllegalArgumentException("No such bookable service exists!");
+	// }
+	// return convertToDto(bookableService);
+	// }
 }
