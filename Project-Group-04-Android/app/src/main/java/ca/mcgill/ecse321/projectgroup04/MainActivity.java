@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.projectgroup04;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,6 +31,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
+    private String currentCustomer;
     private String error = null;
     private List<String> serviceNames = new ArrayList<>();
     private ArrayAdapter<String> serviceAdapter;
@@ -101,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    public void goToEmergencyPage(View view){
+        Intent intent = new Intent(this,EmergencyService.class);
+        startActivity(intent);
+    }
     private Bundle getTimeFromLabel(String text) {
         Bundle rtn = new Bundle();
         String comps[] = text.toString().split(":");
@@ -235,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     refreshErrorMessage();
                 }
-                serviceAdapter.notifyDataSetChanged();
+                techniciansAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -284,6 +289,37 @@ public class MainActivity extends AppCompatActivity {
         return technicianId[0];
     }
 
+    public void getCurrentCustomer(){
+        error="";
+        currentCustomer = "";
+        HttpUtils.get("/login/currentCustomer", new RequestParams() ,new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                System.out.println("test");
+                for( int i = 0; i < response.length(); i++) {
+                    try {
+                        currentCustomer = response.getJSONObject(i).getString("userID"); //change name to userId?
+                    } catch (Exception e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println(errorResponse);
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+
+    }
      /**
         @author: Mohamad Dimassi & Yasmina Matta
         @param: View v
@@ -303,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
         int day = Integer.parseInt(comps[0]);
 
 
-         tv = (TextView) findViewById(R.id.newappointment_date);
+         tv = (TextView) findViewById(R.id.starttime);
          text = tv.getText().toString();
          comps = text.split(":");
         int startHours = Integer.parseInt(comps[0]);
@@ -373,6 +409,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }
