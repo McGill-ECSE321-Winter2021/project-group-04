@@ -40,20 +40,16 @@ public class EmergencyService extends AppCompatActivity {
 
         refreshErrorMessage();
 
-
-        Spinner personSpinner = (Spinner) findViewById(R.id.em_service);
-        Spinner eventSpinner = (Spinner) findViewById(R.id.field_techs);
+//        refreshLists(this.getCurrentFocus());
 
         serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, serviceNames);
-        serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        personSpinner.setAdapter(serviceAdapter);
-
         techAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, techNames);
-        techAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        eventSpinner.setAdapter(techAdapter);
+
+        getEmergencyServices();
+
 
         // Get initial content for spinners
-        refreshLists(this.getCurrentFocus());
+
 
 
     }
@@ -95,16 +91,34 @@ public class EmergencyService extends AppCompatActivity {
 
     public void getEmergencyServices(){
         error="";
-        final Spinner sp = (Spinner) findViewById(R.id.em_service);
-        HttpUtils.get("emergencyServices/", new RequestParams() ,new JsonHttpResponseHandler() {
+//        final Spinner sp = (Spinner) findViewById(R.id.em_service);
+        HttpUtils.get("/emergencyServices/", new RequestParams() ,new JsonHttpResponseHandler() {
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                refreshErrorMessage();
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                System.out.println("test");
+                for( int i = 0; i < response.length(); i++) {
+                    try {
+                        serviceNames.add(response.getJSONObject(i).getString("name"));
+                    } catch (Exception e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+                Spinner personSpinner = (Spinner) findViewById(R.id.em_service);
+                Spinner eventSpinner = (Spinner) findViewById(R.id.field_techs);
 
+
+                serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                personSpinner.setAdapter(serviceAdapter);
+
+
+                techAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                eventSpinner.setAdapter(techAdapter);
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println(errorResponse);
                 try {
                     error += errorResponse.get("message").toString();
                 } catch (JSONException e) {

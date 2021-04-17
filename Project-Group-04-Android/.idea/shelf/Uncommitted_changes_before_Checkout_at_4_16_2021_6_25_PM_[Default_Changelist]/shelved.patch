@@ -1,0 +1,57 @@
+Index: app/src/main/java/ca/mcgill/ecse321/projectgroup04/EmergencyService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ca.mcgill.ecse321.projectgroup04;\r\n\r\n\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.AdapterView;\r\nimport android.widget.ArrayAdapter;\r\nimport android.widget.Spinner;\r\nimport android.widget.TextView;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.loopj.android.http.JsonHttpResponseHandler;\r\nimport com.loopj.android.http.RequestParams;\r\n\r\nimport org.json.JSONArray;\r\nimport org.json.JSONException;\r\nimport org.json.JSONObject;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.List;\r\n\r\nimport cz.msebera.android.httpclient.Header;\r\n\r\npublic class EmergencyService extends AppCompatActivity {\r\n\r\n    private String error = \"\";\r\n    private List<String> serviceNames = new ArrayList<>();\r\n    private ArrayAdapter<String> serviceAdapter;\r\n    private List<String> techNames = new ArrayList<>();\r\n    private ArrayAdapter<String> techAdapter;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.test_layout);\r\n\r\n        refreshErrorMessage();\r\n\r\n\r\n        Spinner personSpinner = (Spinner) findViewById(R.id.em_service);\r\n        Spinner eventSpinner = (Spinner) findViewById(R.id.field_techs);\r\n\r\n        serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, serviceNames);\r\n        serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);\r\n        personSpinner.setAdapter(serviceAdapter);\r\n\r\n        techAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, techNames);\r\n        techAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);\r\n        eventSpinner.setAdapter(techAdapter);\r\n\r\n        // Get initial content for spinners\r\n        refreshLists(this.getCurrentFocus());\r\n\r\n\r\n    }\r\n\r\n    private void refreshLists(View currentFocus) {\r\n        refreshList(serviceAdapter , serviceNames, \"emergencyServices\");\r\n        refreshList(techAdapter, techNames, \"fieldTechnicians\");\r\n    }\r\n\r\n    public  void refreshList(final ArrayAdapter<String> adapter, final List<String> names, final String restFunctionName){\r\n        HttpUtils.get(restFunctionName, new RequestParams(), new JsonHttpResponseHandler() {\r\n\r\n            @Override\r\n            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {\r\n                names.clear();\r\n                names.add(\"Please select\");\r\n                for( int i = 0; i < response.length(); i++){\r\n                    try {\r\n                        names.add(response.getJSONObject(i).getString(\"name\"));\r\n                    } catch (Exception e) {\r\n                        error += e.getMessage();\r\n                    }\r\n                    refreshErrorMessage();\r\n                }\r\n                adapter.notifyDataSetChanged();\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {\r\n                try {\r\n                    error += errorResponse.get(\"message\").toString();\r\n                } catch (JSONException e) {\r\n                    error += e.getMessage();\r\n                }\r\n                refreshErrorMessage();\r\n            }\r\n        });\r\n    }\r\n\r\n    public void getEmergencyServices(){\r\n        error=\"\";\r\n        final Spinner sp = (Spinner) findViewById(R.id.em_service);\r\n        HttpUtils.get(\"emergencyServices/\", new RequestParams() ,new JsonHttpResponseHandler() {\r\n\r\n            @Override\r\n            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {\r\n                refreshErrorMessage();\r\n\r\n            }\r\n            @Override\r\n            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {\r\n                try {\r\n                    error += errorResponse.get(\"message\").toString();\r\n                } catch (JSONException e) {\r\n                    error += e.getMessage();\r\n                }\r\n                refreshErrorMessage();\r\n            }\r\n\r\n        });\r\n\r\n    }\r\n\r\n    private void refreshErrorMessage() {\r\n        // set the error message\r\n        TextView tvError = (TextView) findViewById(R.id.emergencyError);\r\n        tvError.setText(error);\r\n\r\n        if (error == null || error.length() == 0) {\r\n            tvError.setVisibility(View.GONE);\r\n        } else {\r\n            tvError.setVisibility(View.VISIBLE);\r\n        }\r\n    }\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/ca/mcgill/ecse321/projectgroup04/EmergencyService.java	(revision 1f306e902d67a487332f4f7ccd540d6dde6e59a0)
++++ app/src/main/java/ca/mcgill/ecse321/projectgroup04/EmergencyService.java	(date 1618611933945)
+@@ -40,6 +40,7 @@
+ 
+         refreshErrorMessage();
+ 
++        getEmergencyServices();
+ 
+         Spinner personSpinner = (Spinner) findViewById(R.id.em_service);
+         Spinner eventSpinner = (Spinner) findViewById(R.id.field_techs);
+@@ -53,10 +54,11 @@
+         eventSpinner.setAdapter(techAdapter);
+ 
+         // Get initial content for spinners
+-        refreshLists(this.getCurrentFocus());
++
+ 
+ 
+     }
++
+ 
+     private void refreshLists(View currentFocus) {
+         refreshList(serviceAdapter , serviceNames, "emergencyServices");
+@@ -94,15 +96,20 @@
+     }
+ 
+     public void getEmergencyServices(){
+-        error="";
+-        final Spinner sp = (Spinner) findViewById(R.id.em_service);
+-        HttpUtils.get("emergencyServices/", new RequestParams() ,new JsonHttpResponseHandler() {
++
++        HttpUtils.get("/emergencyServices/", new RequestParams(), new JsonHttpResponseHandler() {
+ 
+             @Override
+-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+-                refreshErrorMessage();
+-
++            public void onSuccess(int statusCode, Header[] headers, JSONArray response){
++                for(int i=0; i<response.length(); i++){
++                    try {
++                        serviceNames.add(response.getJSONObject(i).getString("name"));
++                    } catch (JSONException e) {
++                        e.printStackTrace();
++                    }
++                }
+             }
++
+             @Override
+             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                 try {
