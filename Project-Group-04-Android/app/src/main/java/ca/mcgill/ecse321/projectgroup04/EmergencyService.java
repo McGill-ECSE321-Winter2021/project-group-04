@@ -49,51 +49,10 @@ public class EmergencyService extends AppCompatActivity {
         getFieldTechnicians();
         getEmergencyServices();
 
-
-        // Get initial content for spinners
-
-
-
     }
-
-//    private void refreshLists(View currentFocus) {
-//        refreshList(serviceAdapter , serviceNames, "emergencyServices");
-//        refreshList(techAdapter, techNames, "fieldTechnicians");
-////    }
-//
-//    public  void refreshList(final ArrayAdapter<String> adapter, final List<String> names, final String restFunctionName){
-//        HttpUtils.get(restFunctionName, new RequestParams(), new JsonHttpResponseHandler() {
-//
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-//                names.clear();
-//                names.add("Please select");
-//                for( int i = 0; i < response.length(); i++){
-//                    try {
-//                        names.add(response.getJSONObject(i).getString("name"));
-//                    } catch (Exception e) {
-//                        error += e.getMessage();
-//                    }
-//                    refreshErrorMessage();
-//                }
-//                adapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                try {
-//                    error += errorResponse.get("message").toString();
-//                } catch (JSONException e) {
-//                    error += e.getMessage();
-//                }
-//                refreshErrorMessage();
-//            }
-//        });
-//    }
 
     public void getEmergencyServices(){
         error="";
-//        final Spinner sp = (Spinner) findViewById(R.id.em_service);
         HttpUtils.get("/emergencyServices/", new RequestParams() ,new JsonHttpResponseHandler() {
 
             @Override
@@ -129,7 +88,6 @@ public class EmergencyService extends AppCompatActivity {
 
     public void getFieldTechnicians(){
         error="";
-//        final Spinner sp = (Spinner) findViewById(R.id.em_service);
         HttpUtils.get("/fieldTechnician/", new RequestParams() ,new JsonHttpResponseHandler() {
 
             @Override
