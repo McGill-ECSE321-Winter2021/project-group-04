@@ -127,7 +127,8 @@
                 android:gravity="center"
                 android:text="@string/book"
                 android:textColor="#FFFFFF"
-                android:translationX="35dp" />
+                android:translationX="35dp"
+                android:onClick="bookAppointment"/>
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/navigationBarEmergencyService"
@@ -151,7 +152,8 @@
                         android:backgroundTint="#000000"
                         android:text="Emergency"
                         android:textColor="#FFFFFF"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:onClick="goToEmergencyPage"/>
 
                     <Button
                         android:id="@+id/logOut"
