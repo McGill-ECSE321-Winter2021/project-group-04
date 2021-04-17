@@ -224,4 +224,13 @@ public class EmergencyServiceController {
 		}
 		return emergencyServiceDto;
 	}
+	@GetMapping(value = { "/emergencyServices/{name}", "/emergencyServices/{name}/" })
+	public EmergencyServiceDto getEmergencyServiceByName(@PathVariable("name") String name) {
+
+		EmergencyService emergencyService = emergencyServiceService.findEmergencyServiceByServiceName(name);
+		if (emergencyService == null) {
+			throw new IllegalArgumentException("No such emergency service exists!");
+		}
+		return convertToDto(emergencyService);
+	}
 }
