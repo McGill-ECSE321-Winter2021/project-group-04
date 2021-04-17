@@ -40,9 +40,6 @@ public class EmergencyService extends AppCompatActivity {
 
         refreshErrorMessage();
 
-
-//        refreshLists(this.getCurrentFocus());
-
         serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, serviceNames);
         techAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, techNames);
 
