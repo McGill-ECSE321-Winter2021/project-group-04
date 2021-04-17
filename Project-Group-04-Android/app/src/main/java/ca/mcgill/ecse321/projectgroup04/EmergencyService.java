@@ -46,8 +46,14 @@ public class EmergencyService extends AppCompatActivity {
         getFieldTechnicians();
         getEmergencyServices();
 
+        requestEmergencyService(this.getCurrentFocus());
+
     }
 
+    /**
+     * @author Cesar Lahoud
+     * This method adds all the available emergency services to the spinner
+     */
     public void getEmergencyServices(){
         error="";
         HttpUtils.get("/emergencyServices/", new RequestParams() ,new JsonHttpResponseHandler() {
@@ -55,6 +61,8 @@ public class EmergencyService extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 System.out.println("test");
+                serviceNames.clear();
+                serviceNames.add("Please select...");
                 for( int i = 0; i < response.length(); i++) {
                     try {
                         serviceNames.add(response.getJSONObject(i).getString("name"));
@@ -83,6 +91,10 @@ public class EmergencyService extends AppCompatActivity {
 
     }
 
+    /**
+     * @author Cesar Lahoud
+     * This method adds all the available field technicians to the spinner
+     */
     public void getFieldTechnicians(){
         error="";
         HttpUtils.get("/fieldTechnician/", new RequestParams() ,new JsonHttpResponseHandler() {
@@ -90,6 +102,8 @@ public class EmergencyService extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 System.out.println("test");
+                techNames.clear();
+                techNames.add("Please select...");
                 for( int i = 0; i < response.length(); i++) {
                     try {
                         techNames.add(response.getJSONObject(i).getString("name"));
@@ -119,6 +133,114 @@ public class EmergencyService extends AppCompatActivity {
 
     }
 
+    /**
+     * @author Artus Julliard
+     * @param name
+     * @return the field technician Id
+     * This method returns the field technician's Id
+     */
+    public int getFieldTechnicianIdByName(String name) {
+        final int[] technicianId = new int[1];
+        HttpUtils.post("fieldTechnicians/" + name, new RequestParams(), new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONArray response) {
+                try {
+                    technicianId[0] = Integer.parseInt(response.getJSONObject(0).getString("technicianId"));
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+        return technicianId[0];
+    }
+
+    /**
+     * @Author Artus Julliard
+     * @param view
+     * This method books an emergency service
+     */
+    public void requestEmergencyService(View view){
+        final Spinner em_service = findViewById(R.id.em_service);
+        final Spinner field_techs = findViewById(R.id.field_techs);
+
+        final String[] userId = {""};
+
+        RequestParams rp = new RequestParams();
+        TextView tv = (TextView) findViewById(R.id.location);
+        String location = tv.getText().toString();
+
+        String nameService = em_service.getSelectedItem().toString();
+        String fieldTech = field_techs.getSelectedItem().toString();
+        int fieldTechId = getFieldTechnicianIdByName(fieldTech);
+
+        rp.add("serviceName", nameService);
+        rp.add("Location", location);
+        rp.put("fieldTechnicianId", fieldTechId);
+
+
+        HttpUtils.get("/login/currentCustomer", new RequestParams(), new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response){
+                try {
+                    userId[0] =response.getJSONObject(0).getString("userID");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+
+        HttpUtils.post("/book/emergencyService/" + userId[0], rp, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try{
+                    System.out.println("success");
+                    super.onSuccess(statusCode, headers, response);
+                    JSONObject serverResp = new JSONObject(response.toString());
+                }catch(JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    System.out.println(errorResponse);
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+        });
+    }
+
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.emergencyError);
@@ -130,7 +252,5 @@ public class EmergencyService extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }
-
-
 
 }
