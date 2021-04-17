@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
-        Spinner technicianSpinner = (Spinner) findViewById(R.id.garage_techs);
-        Spinner garageSpotSpinner = (Spinner) findViewById(R.id.spots);
+        Spinner technicianSpinner = (Spinner) findViewById(R.id.technicianspinner);
+        Spinner garageSpotSpinner = (Spinner) findViewById(R.id.spotspinner);
 
         ArrayAdapter<CharSequence> spotAdapter = ArrayAdapter.createFromResource(this,R.array.spotspinner,android.R.layout.simple_spinner_item);
         spotAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

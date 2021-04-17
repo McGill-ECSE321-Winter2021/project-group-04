@@ -40,11 +40,13 @@ public class EmergencyService extends AppCompatActivity {
 
         refreshErrorMessage();
 
+
 //        refreshLists(this.getCurrentFocus());
 
         serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, serviceNames);
         techAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, techNames);
 
+        getFieldTechnicians();
         getEmergencyServices();
 
 
@@ -54,40 +56,40 @@ public class EmergencyService extends AppCompatActivity {
 
     }
 
-    private void refreshLists(View currentFocus) {
-        refreshList(serviceAdapter , serviceNames, "emergencyServices");
-        refreshList(techAdapter, techNames, "fieldTechnicians");
-    }
-
-    public  void refreshList(final ArrayAdapter<String> adapter, final List<String> names, final String restFunctionName){
-        HttpUtils.get(restFunctionName, new RequestParams(), new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                names.clear();
-                names.add("Please select");
-                for( int i = 0; i < response.length(); i++){
-                    try {
-                        names.add(response.getJSONObject(i).getString("name"));
-                    } catch (Exception e) {
-                        error += e.getMessage();
-                    }
-                    refreshErrorMessage();
-                }
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    error += errorResponse.get("message").toString();
-                } catch (JSONException e) {
-                    error += e.getMessage();
-                }
-                refreshErrorMessage();
-            }
-        });
-    }
+//    private void refreshLists(View currentFocus) {
+//        refreshList(serviceAdapter , serviceNames, "emergencyServices");
+//        refreshList(techAdapter, techNames, "fieldTechnicians");
+////    }
+//
+//    public  void refreshList(final ArrayAdapter<String> adapter, final List<String> names, final String restFunctionName){
+//        HttpUtils.get(restFunctionName, new RequestParams(), new JsonHttpResponseHandler() {
+//
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+//                names.clear();
+//                names.add("Please select");
+//                for( int i = 0; i < response.length(); i++){
+//                    try {
+//                        names.add(response.getJSONObject(i).getString("name"));
+//                    } catch (Exception e) {
+//                        error += e.getMessage();
+//                    }
+//                    refreshErrorMessage();
+//                }
+//                adapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                try {
+//                    error += errorResponse.get("message").toString();
+//                } catch (JSONException e) {
+//                    error += e.getMessage();
+//                }
+//                refreshErrorMessage();
+//            }
+//        });
+//    }
 
     public void getEmergencyServices(){
         error="";
@@ -105,16 +107,47 @@ public class EmergencyService extends AppCompatActivity {
                     }
                     refreshErrorMessage();
                 }
-                Spinner personSpinner = (Spinner) findViewById(R.id.em_service);
-                Spinner eventSpinner = (Spinner) findViewById(R.id.field_techs);
-
+                Spinner serviceSpinner = (Spinner) findViewById(R.id.em_service);
 
                 serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                personSpinner.setAdapter(serviceAdapter);
+                serviceSpinner.setAdapter(serviceAdapter);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println(errorResponse);
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
 
+        });
+
+    }
+
+    public void getFieldTechnicians(){
+        error="";
+//        final Spinner sp = (Spinner) findViewById(R.id.em_service);
+        HttpUtils.get("/fieldTechnician/", new RequestParams() ,new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                System.out.println("test");
+                for( int i = 0; i < response.length(); i++) {
+                    try {
+                        techNames.add(response.getJSONObject(i).getString("name"));
+                    } catch (Exception e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+
+                Spinner techSpinner = (Spinner) findViewById(R.id.field_techs);
 
                 techAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                eventSpinner.setAdapter(techAdapter);
+                techSpinner.setAdapter(techAdapter);
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
