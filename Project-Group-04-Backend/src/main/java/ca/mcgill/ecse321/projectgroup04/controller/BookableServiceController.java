@@ -95,4 +95,14 @@ public class BookableServiceController {
 		}
 		return new ResponseEntity<>(convertToDto(bookableService), HttpStatus.CREATED);
 	}
+	
+	@GetMapping(value = { "/bookableServices/{name}", "/bookableServices/{name}/" })
+	public BookableServiceDto getBookableServiceByName(@PathVariable("name") String name) {
+
+		BookableService bookableService = bookableServiceService.findBookableServiceByName(name);
+		if (bookableService == null) {
+			throw new IllegalArgumentException("No such bookable service exists!");
+		}
+		return convertToDto(bookableService);
+	}
 }
