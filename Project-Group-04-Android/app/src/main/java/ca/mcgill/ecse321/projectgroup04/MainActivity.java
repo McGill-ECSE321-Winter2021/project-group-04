@@ -30,15 +30,19 @@ import cz.msebera.android.httpclient.Header;
 public class MainActivity extends AppCompatActivity {
     private String error = null;
     private List<String> serviceNames = new ArrayList<>();
+
+    private String currentCustomer;
+
     private ArrayAdapter<String> serviceAdapter;
     private List<String> technicianNames = new ArrayList<>();
     private ArrayAdapter<String> techniciansAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -48,24 +52,24 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
-        Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
-        Spinner technicianSpinner = (Spinner) findViewById(R.id.garage_techs);
-        Spinner garageSpotSpinner = (Spinner) findViewById(R.id.spots);
+//        Spinner serviceSpinner = (Spinner) findViewById(R.id.servicespinner);
+//        Spinner technicianSpinner = (Spinner) findViewById(R.id.garage_techs);
+//        Spinner garageSpotSpinner = (Spinner) findViewById(R.id.spots);
 
-        ArrayAdapter<CharSequence> spotAdapter = ArrayAdapter.createFromResource(this,R.array.spotspinner,android.R.layout.simple_spinner_item);
-        spotAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        garageSpotSpinner.setAdapter(spotAdapter);
+//        ArrayAdapter<CharSequence> spotAdapter = ArrayAdapter.createFromResource(this,R.array.spotspinner,android.R.layout.simple_spinner_item);
+//        spotAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        garageSpotSpinner.setAdapter(spotAdapter);
 // Get initial content for spinners
         getBookableServices(this.getCurrentFocus());
         getGarageTechnicians(this.getCurrentFocus());
 
         serviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, serviceNames);
         serviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        serviceSpinner.setAdapter(serviceAdapter);
+//        serviceSpinner.setAdapter(serviceAdapter);
 
         techniciansAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, technicianNames);
         techniciansAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        technicianSpinner.setAdapter(techniciansAdapter);
+//        technicianSpinner.setAdapter(techniciansAdapter);
         refreshErrorMessage();
 
     }
@@ -240,6 +244,38 @@ public class MainActivity extends AppCompatActivity {
                 refreshErrorMessage();
             }
         });
+    }
+
+    public void getCurrentCustomer(){
+        error="";
+        currentCustomer = "";
+        HttpUtils.get("/login/currentCustomer", new RequestParams() ,new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                System.out.println("test");
+                for( int i = 0; i < response.length(); i++) {
+                    try {
+                        currentCustomer = response.getJSONObject(i).getString("name"); //change name to userId?
+                    } catch (Exception e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println(errorResponse);
+                try {
+                    error += errorResponse.get("message").toString();
+                } catch (JSONException e) {
+                    error += e.getMessage();
+                }
+                refreshErrorMessage();
+            }
+
+        });
+
     }
 
 }

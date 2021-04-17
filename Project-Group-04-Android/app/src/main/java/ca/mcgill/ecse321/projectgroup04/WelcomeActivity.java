@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,15 +14,24 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+
 public class WelcomeActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
         Button loginButton1 = findViewById(R.id.log_in_btn1);
         Button registerButton1 = findViewById(R.id.register_btn1);
+
 
         loginButton1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -48,4 +59,5 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CustomerRegistrationActivity.class);
         startActivity(intent);
     }
+
 }

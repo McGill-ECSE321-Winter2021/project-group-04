@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestParams requestParams = new RequestParams();
         requestParams.add("password", password);
 
-        String url = "/login/" + userId + "/";
+        String url = "/login/" + userId;
         System.out.println(url);
 
         error = "";
@@ -93,9 +93,9 @@ public class LoginActivity extends AppCompatActivity {
         HttpUtils.post(url, requestParams, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response){
+                goToCustomerHomePage();
                 System.out.println("Login Successful");
                 refreshErrorMessage();
-                goToCustomerHomePage();
                 eUserId.setText("");
                 ePassword.setText("");
             }

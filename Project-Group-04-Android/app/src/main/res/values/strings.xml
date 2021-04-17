@@ -23,7 +23,7 @@
     <string name="newperson_hint">Who?</string>
     <string name="newperson_button">Add Person</string>
     <string name="newappointment_date_label">Appointment date</string>
-<!--    <string name="servicespinner_label">Service?</string>-->
+    <!--    <string name="servicespinner_label">Service?</string>-->
     <string name="technicianspinner_label">Technician?</string>
     <string name="spotspinner_label">Spot?</string>
     <string name="starttime_label">Appointment time</string>
