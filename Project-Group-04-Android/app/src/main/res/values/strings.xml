@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project-Group-04-Android</string>
+    <string name="app_name">Auto Repair Shop</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -10,22 +10,41 @@
     <string name="emergency_action">Request Emergency</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="location">Location</string>
+    <string name="book">Book</string>
+    <string name="emergency_service">Emergency Service</string>
+    <string name="log_out">Log Out</string>
+    <string name="bookable_service">Bookable Service</string>
+    <string name="receipts">Receipts</string>
+    <string name="em_service">Services</string>
+    <string name="field_techs">Technicians</string>
+
     <string name="newperson_hint">Who?</string>
     <string name="newperson_button">Add Person</string>
-    <string name="newappointment_date_label">Date?</string>
-    <string name="servicespinner_label">Service?</string>
+    <string name="newappointment_date_label">Appointment date</string>
+    <!--    <string name="servicespinner_label">Service?</string>-->
     <string name="technicianspinner_label">Technician?</string>
-    <string name="starttime_label">Time?</string>
-    <string name="spot_label">Spot?</string>
-    <string name="newappointment_date_first">01-01-2017</string>
-    <string name="newevent_button">Add Event</string>
+    <string name="spotspinner_label">Spot?</string>
+    <string name="starttime_label">Appointment time</string>
     <string name="starttime_first">10:00</string>
+    <string name="spt">Spot</string>
+    <string name="spot_prompt">Select Garage Spot</string>
+    <string name="technician_prompt">Select Technician</string>
+    <string name="newappointment_date_first">04-16-2021</string>
+    <string name="newevent_button">Add Event</string>
     <string name="spot_first">1</string>
     <string name="register_button">Register</string>
-    <string name="newevent_hint">Event name?</string>
     <string name="refresh_button">Refresh lists</string>
-    <string name="name_prompt">Select name</string>
+    <string name="service_prompt">Select Service</string>
+    <string-array name="spotspinner">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="emergency">Emergency</string>
 </resources>
