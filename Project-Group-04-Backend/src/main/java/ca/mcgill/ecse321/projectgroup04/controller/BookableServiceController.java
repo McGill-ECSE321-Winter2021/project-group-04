@@ -99,7 +99,7 @@ public class BookableServiceController {
 	@GetMapping(value = { "/bookableServices/{name}", "/bookableServices/{name}/" })
 	public BookableServiceDto getBookableServiceByName(@PathVariable("name") String name) {
 
-		BookableService bookableService = bookableServiceService.findBookableServiceByName(name);
+		BookableService bookableService = bookableServiceService.findBookableServiceByServiceName(name);
 		if (bookableService == null) {
 			throw new IllegalArgumentException("No such bookable service exists!");
 		}
