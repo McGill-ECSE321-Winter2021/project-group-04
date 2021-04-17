@@ -46,7 +46,7 @@ public class EmergencyService extends AppCompatActivity {
         getFieldTechnicians();
         getEmergencyServices();
 
-        requestEmergencyService(this.getCurrentFocus());
+        //requestEmergencyService(this.getCurrentFocus());
 
     }
 
