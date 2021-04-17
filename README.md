@@ -59,6 +59,10 @@ Click for [ project report!]
 
 [ project report!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Project-Report
 
+Click for [ user documentation!]
+
+[ user documentation!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/User-Documentation
+
 Click for [ meeting minutes!]
 
 [ meeting minutes!]:https://github.com/McGill-ECSE321-Winter2021/project-group-04/wiki/Minute-Reference
